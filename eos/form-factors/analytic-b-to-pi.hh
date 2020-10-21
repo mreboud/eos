@@ -1,7 +1,8 @@
 /* vim: set sw=4 sts=4 et foldmethod=syntax : */
 
 /*
- * Copyright (c) 2014, 2015 Danny van Dyk
+ * Copyright (c) 2014, 2015, 2020 Danny van Dyk
+ * Copyright (c) 2019, 2020 Domagoj Leljak
  *
  * This file is part of the EOS project. EOS is free software;
  * you can redistribute it and/or modify it under the terms of the GNU General
@@ -44,10 +45,17 @@ namespace eos
             double F_lo_tw4(const double & q2) const;
             double Ftil_lo_tw3(const double & q2) const;
             double Ftil_lo_tw4(const double & q2) const;
+            double FT_lo_tw2(const double & q2) const;
+            double FT_lo_tw3(const double & q2) const;
+            double FT_lo_tw4(const double & q2) const;
 
             /* Next-to-leading-order terms */
             double F_nlo_tw2(const double & q2) const;
             double F_nlo_tw3(const double & q2) const;
+            double Ftil_nlo_tw2(const double & q2) const;
+            double Ftil_nlo_tw3(const double & q2) const;
+            double FT_nlo_tw2(const double & q2) const;
+            double FT_nlo_tw3(const double & q2) const;
 
             /* Form factors */
             virtual double f_p(const double & q2) const;
@@ -55,7 +63,9 @@ namespace eos
             virtual double f_t(const double & q2) const;
 
             /* B mass from the LCSR and the SVZ sum rule, respectively */
-            double MB_lcsr(const double & q2) const;
+            double MBp_lcsr(const double & q2) const;
+            double MB0_lcsr(const double & q2) const;
+            double MBT_lcsr(const double & q2) const;
             double MB_svz() const;
 
             /* B meson decay constant at NLO */

@@ -1,5 +1,5 @@
 # Copyright (c) 2018 Frederik Beaujean
-# Copyright (c) 2017, 2018 Danny van Dyk
+# Copyright (c) 2017, 2018, 2020 Danny van Dyk
 #
 # This file is part of the EOS project. EOS is free software;
 # you can redistribute it and/or modify it under the terms of the GNU General
@@ -14,18 +14,43 @@
 # this program; if not, write to the Free Software Foundation, Inc., 59 Temple
 # Place, Suite 330, Boston, MA  02111-1307  USA
 
+from .config import *
+
+# make sure that EOS_HOME points to the location of the wheel supplied data
+# if unset.
+import os as _os
+try:
+    if is_wheel:
+        if not 'EOS_HOME' in _os.environ:
+            _os.environ['EOS_HOME'] = _os.path.normpath(_os.path.join(_os.path.dirname(__file__), '..', '_eos_data/'))
+except NameError:
+    pass
+
 from _eos import *
 from .data import *
 from .plot import *
 from .analysis import Analysis, BestFitPoint
+from .analysis_file import AnalysisFile
 from .constraint import Constraints
 from .observable import Observables
 from .parameter import Parameters
 from .reference import References
 
 import logging
-logger = logging.getLogger()
+logger = logging.getLogger('EOS')
 logger.setLevel(logging.INFO)
+
+def debug(msg, *args, **kwargs):
+    logger.debug(msg, *args, **kwargs)
+
+def error(msg, *args, **kwargs):
+    logger.error(msg, *args, **kwargs)
+
+def info(msg, *args, **kwargs):
+    logger.info(msg, *args, **kwargs)
+
+def warn(msg, *args, **kwargs):
+    logger.warn(msg, *args, **kwargs)
 
 __ipython__ = False
 try:

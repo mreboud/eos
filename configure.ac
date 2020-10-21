@@ -1,6 +1,6 @@
 dnl vim: set sw=8 sts=8 noet ft=config foldmethod=marker foldmarker={{{,}}}:
 
-AC_INIT([EOS], [0.3.1])
+AC_INIT([EOS], [0.3.2])
 AC_PREREQ(2.5)
 AC_CONFIG_SRCDIR([])
 AC_CONFIG_AUX_DIR(config)
@@ -84,6 +84,24 @@ AC_COMPILE_IFELSE([AC_LANG_SOURCE([
 CXXFLAGS=$save_CXXFLAGS
 dnl }}}
 CXXFLAGS="$CXXFLAGS -std=c++14"
+dnl }}}
+
+dnl {{{ determine which pieces of EOS to build
+AC_ARG_ENABLE([cli],
+	[AS_HELP_STRING([--enable-cli],
+	    [build command-line utilities (default is yes)])]
+)
+if test "x$enable_cli" = xno ; then
+    MAYBE_SRC=
+    need_minuit2=
+else
+    MAYBE_SRC=src
+    need_minuit2=yes
+fi
+AC_SUBST([MAYBE_SRC])
+if test "x$need_minuit2" = xyes ; then
+	AC_DEFINE([HAVE_MINUIT2], [1], [Define if building against Minuit2 is enabled.])
+fi
 dnl }}}
 
 dnl {{{ check for required packages
@@ -248,6 +266,7 @@ AC_SUBST([GSL_CXXFLAGS])
 dnl }}}
 
 dnl {{{ use Minuit2 path if supplied via --with-minuit2=
+if test "x$need_minuit2" == xyes ; then
 AC_ARG_WITH([minuit2],
 	[AS_HELP_STRING([--with-minuit2], [used to find starting points for population Monte Carlo sampling])]
 	[],
@@ -266,10 +285,14 @@ elif test "x$with_minuit2" != xno -a "x$with_minuit2" != x ; then
 	fi
 	MINUIT2_CXXFLAGS="-I$with_minuit2/include"
 	MINUIT2_LDFLAGS="-L$with_minuit2/lib -lMinuit2"
+	MINUIT2_LIBADD="-lMinuit2"
 else
 	MINUIT2_CXXFLAGS=""
 	MINUIT2_LDFLAGS="-lMinuit2"
+	MINUIT2_LIBADD="-lMinuit2"
 fi
+fi
+AC_SUBST([MINUIT2_LIBADD])
 AC_SUBST([MINUIT2_LDFLAGS])
 AC_SUBST([MINUIT2_CXXFLAGS])
 dnl }}}
@@ -322,6 +345,11 @@ if test "x$enable_python" == xyes ; then
 	AM_PATH_PYTHON([3.5])
 	PY_PREFIX=`$PYTHON -c 'import sys ; print(sys.prefix)'`
 	PYTHON_LIBS="`python$PYTHON_VERSION-config --libs`"
+	if python$PYTHON_VERSION-config --libs --embed 2>&1 > /dev/null ; then
+		PYTHON_LIBS_CONFTEST=`python$PYTHON_VERSION-config --libs --embed`
+	else
+		PYTHON_LIBS_CONFTEST=$PYTHON_LIBS
+	fi
 	PYTHON_LDFLAGS="`python$PYTHON_VERSION-config --ldflags`"
 	PYTHON_CXXFLAGS="`python$PYTHON_VERSION-config --includes`"
 	if test "x$has_boost_python_suffix" == "xno"; then
@@ -345,11 +373,15 @@ if test "x$enable_python" == xyes ; then
 		fi
 	else
 		BOOST_PYTHON_SUFFIX=$with_boost_python_suffix
+		PYTHON_CXXFLAGS="$PYTHON_CXXFLAGS $BOOST_PYTHON_CXXFLAGS"
+		PYTHON_LDFLAGS="$PYTHON_LDFLAGS $BOOST_PYTHON_LDFLAGS"
 	fi
 	AC_SUBST([PYTHON_LIBS])
 	AC_SUBST([PYTHON_LDFLAGS])
 	AC_SUBST([PYTHON_CXXFLAGS])
 	AC_SUBST([BOOST_PYTHON_SUFFIX])
+	AC_SUBST([BOOST_PYTHON_LDFLAGS])
+	AC_SUBST([BOOST_PYTHON_CXXFLAGS])
 	if test "x$with_custom_pythondir" != "x"; then
 		# override: Debian/Ubuntu use 'dist-packages' rather than 'site-packages'
 		AC_MSG_NOTICE([replacing python script directory with \${prefix}/lib/python$PYTHON_VERSION/$with_custom_pythondir])
@@ -366,8 +398,13 @@ if test "x$enable_python" == xyes ; then
 
 	CXXFLAGS=$PYTHON_CXXFLAGS
 	LDFLAGS=$PYTHON_LDFLAGS
-	LIBS=$PYTHON_LIBS
+	LIBS=$PYTHON_LIBS_CONFTEST
 
+	if test "x$BOOST_PYTHON_SKIP" == "xyes"; then
+	AC_MSG_NOTICE([skipping checks for -lboost_python$BOOST_PYTHON_SUFFIX])
+	PYTHON_LDFLAGS="$BOOST_PYTHON_LDFLAGS"
+	PYTHON_LIBS="$BOOST_PYTHON_LIBS"
+	else
 	AC_CHECK_LIB([boost_python$BOOST_PYTHON_SUFFIX], main,
 	        [],
 	        [AC_MSG_ERROR([you do seem to be lacking 'libboost_python'.])]
@@ -389,7 +426,7 @@ if test "x$enable_python" == xyes ; then
 		 AC_MSG_ERROR([boost_python example does not compile])
 		]
 	)
-	CXXFLAGS=$save_CXXFLAGS
+	fi
 
 	CXXFLAGS=$_CXXFLAGS
 	LDFLAGS=$_LDFLAGS
@@ -446,5 +483,6 @@ AC_OUTPUT(
 	src/scripts/Makefile
 	test/Makefile
 	python/Makefile
+	python/setup.py
 	)
 dnl }}}

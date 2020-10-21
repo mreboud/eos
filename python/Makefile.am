@@ -3,12 +3,16 @@ CLEANFILES = *~
 EXTRA_DIST = \
 	eos/__init__.py \
 	eos/analysis.py \
+	eos/analysis_file.py \
+	eos/config.py \
 	eos/constraint.py \
 	eos/ipython.py \
 	eos/observable.py \
 	eos/parameter.py \
 	eos/reference.py \
 	eos/data/__init__.py \
+	eos/data/hdf5.py \
+	eos/data/pypmc.py \
 	eos/plot/__init__.py \
 	eos/plot/config.py \
 	eos/plot/plotter.py
@@ -29,6 +33,8 @@ eos_PYTHON =
 eos_SCRIPTS = \
 	eos/__init__.py \
 	eos/analysis.py \
+	eos/analysis_file.py \
+	eos/config.py \
 	eos/constraint.py \
 	eos/ipython.py \
 	eos/observable.py \
@@ -37,7 +43,9 @@ eos_SCRIPTS = \
 
 eosdatadir = $(pkgpythondir)/data
 eosdata_SCRIPTS = \
-	eos/data/__init__.py
+	eos/data/__init__.py \
+	eos/data/hdf5.py \
+	eos/data/pypmc.py
 
 eosplotdir = $(pkgpythondir)/plot
 eosplot_SCRIPTS = \
@@ -48,8 +56,8 @@ eosplot_SCRIPTS = \
 _eosdir = $(pythondir)
 _eos_LTLIBRARIES = _eos.la
 _eos_la_SOURCES = _eos.cc
-_eos_la_CXXFLAGS = $(PYTHON_CXXFLAGS) @AM_CXXFLAGS@ @GSL_CXXFLAGS@
-_eos_la_LDFLAGS = -module -avoid-version -export-symbols-regex PyInit__eos
+_eos_la_CXXFLAGS = @BOOST_PYTHON_CXXFLAGS@ @PYTHON_CXXFLAGS@ @AM_CXXFLAGS@ @GSL_CXXFLAGS@
+_eos_la_LDFLAGS = -module -avoid-version -export-symbols-regex PyInit__eos @BOOST_PYTHON_LDFLAGS@
 _eos_la_LIBADD = $(top_builddir)/eos/libeos.la $(top_builddir)/eos/utils/libeosutils.la -lboost_python$(BOOST_PYTHON_SUFFIX)
 
 TESTS = \

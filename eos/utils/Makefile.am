@@ -21,7 +21,6 @@ libeosutils_la_SOURCES = \
 	derivative.cc derivative.hh \
 	destringify.cc destringify.hh \
 	diagnostics.cc diagnostics.hh \
-	equation_solver.cc equation_solver.hh \
 	exception.cc exception.hh \
 	gsl-cblas-hack.cc \
 	hdf5.cc hdf5.hh hdf5-fwd.hh \
@@ -74,16 +73,14 @@ libeosutils_la_LIBADD = \
 	-lboost_filesystem -lboost_system \
 	-lgsl -lgslcblas -lm \
 	-lhdf5 -lhdf5_hl \
-	-lMinuit2 \
 	-lpthread \
 	-lyaml-cpp
 libeosutils_la_CXXFLAGS = $(AM_CXXFLAGS) \
 	-DEOS_DATADIR='"$(datadir)"' \
 	$(GSL_CXXFLAGS) \
 	$(HDF5_CXXFLAGS) \
-	$(MINUIT2_CXXFLAGS) \
 	$(YAMLCPP_CXXFLAGS)
-libeosutils_la_LDFLAGS = $(AM_CXXFLAGS) $(GSL_LDFLAGS) $(HDF5_LDFLAGS) $(MINUIT2_LDFLAGS) $(YAMLCPP_LDFLAGS)
+libeosutils_la_LDFLAGS = $(AM_CXXFLAGS) $(GSL_LDFLAGS) $(HDF5_LDFLAGS) $(YAMLCPP_LDFLAGS)
 
 EXTRA_DIST = \
 	polylog_TEST_dilog.bin \
@@ -103,7 +100,6 @@ include_eos_utils_HEADERS = \
 	density.hh density-fwd.hh \
 	derivative.hh \
 	destringify.hh \
-	equation_solver.hh \
 	exception.hh \
 	hdf5.hh hdf5-fwd.hh \
 	indirect-iterator.hh indirect-iterator-fwd.hh \
@@ -153,7 +149,6 @@ TESTS = \
 	cartesian-product_TEST \
 	ckm_scan_model_TEST \
 	derivative_TEST \
-	equation_solver_TEST \
 	hdf5_TEST \
 	indirect-iterator_TEST \
 	integrate_TEST \
