@@ -9,6 +9,8 @@
 #include <gsl/gsl_complex.h>
 #include <gsl/gsl_complex_math.h>
 #include <array>
+#include <vector>
+#include <memory>
 
 namespace eos
 
@@ -22,8 +24,10 @@ namespace eos
     struct Channel;
     struct Resonance;
 
-    std::array<KMatrix::Channel, nchannels_> _channels;
-    std::array<KMatrix::Resonance, nresonances_> _resonances;
+    //ptr vector with nchannels_ Channels
+    std::vector<std::shared_ptr<KMatrix::Channel>> _channels;
+    //ptr vector with nresonances_ Resonances
+    std::vector<std::shared_ptr<KMatrix::Resonance>> _resonances;
     const std::string & _prefix;
 
     // Khat contains the normalized K-matrix entries
@@ -39,14 +43,11 @@ namespace eos
     gsl_permutation * _perm;
 
     // Constructor
-    // KMatrix(std::initializer_list<KMatrix::Channel> channels,
-    //         std::initializer_list<KMatrix::Resonance> resonances,
-    //         const std::string & prefix);
-    KMatrix(std::array<KMatrix::Channel, nchannels_> channels,
-            std::array<KMatrix::Resonance, nresonances_> resonances,
+    KMatrix(std::initializer_list<std::shared_ptr<KMatrix::Channel>> channels,
+            std::initializer_list<std::shared_ptr<KMatrix::Resonance>> resonances,
             const std::string & prefix);
 
-    
+
     // Destuctor
     ~KMatrix();
 
@@ -56,31 +57,49 @@ namespace eos
 
   };
 
+
   template <unsigned nchannels_, unsigned nresonances_>
   struct KMatrix<nchannels_, nresonances_>::Channel
   {
-    std::string name;
+    std::string _name;
 
     //Masses of the two final state particles
-    double m1;
-    double m2;
+    double _m1;
+    double _m2;
+
+    Channel(std::string name, double m1, double m2) : _name(name), _m1(m1), _m2(m2)
+    {
+    if (m1 < 0 || m2 < 0)
+      {
+        throw InternalError("Channels masses cannot be negative.");
+      }
+    };
 
     // Normalized couplings to the resonances
-    virtual std::array<double, nresonances_> g0() const = 0;
+    std::array<double, nresonances_> g0s;
 
     // Phase space factor
-    virtual double beta(const double & s) const = 0;
+    virtual double beta(const double & s) = 0;
     // Analytic continuation of the phase space factor
-    virtual complex<double> rho(const double & s) const = 0;
+    virtual complex<double> rho(const double & s) = 0;
   };
+
 
   template <unsigned nchannels_, unsigned nresonances_>
   struct KMatrix<nchannels_, nresonances_>::Resonance
   {
-    std::string name;
+    std::string _name;
 
     //Mass of the resonance
-    double m;
+    double _m;
+
+    Resonance(std::string name, double m) : _name(name), _m(m)
+    {
+      if (m < 0)
+      {
+        throw InternalError("Resonance masse cannot be negative.");
+      }
+    };
   };
 
 }
