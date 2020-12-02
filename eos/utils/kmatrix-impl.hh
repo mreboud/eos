@@ -86,7 +86,7 @@ namespace eos
     for (size_t i = 0 ; i < nchannels_ ; ++i)
       {
         complex<double> rhoentry = channels[i]->rho(s);
-        std::cout << " --- Channel "<< i << " rho(s) = " << rhoentry << std::endl;
+        std::cout << " --- Channel "<< i << " rho(s) = " << rhoentry.real() << " + i*" <<  rhoentry.imag() << std::endl;
         gsl_matrix_complex_set(_tmp_1,  i,  i, gsl_complex_rect(rhoentry.real(), rhoentry.imag()));
       }
 
@@ -124,10 +124,11 @@ namespace eos
 
               }
 
-            std::cout << " --- Khat "<< i << " " << j << " = " << entry << std::endl;            
+            std::cout << " --- Khat "<< i << " " << j << " = " << entry << std::endl;
             gsl_matrix_complex_set(_Khat, i, j, gsl_complex_rect(entry.real(), entry.imag()));
           }
       }
+    std::cout << " --- KMatrix computed " << std::endl;
 
 
 
@@ -135,18 +136,22 @@ namespace eos
     // 3. Compute That
     ///////////////////
 
+    std::cout << " --- Entering TMatrix inversion: " << std::endl;
+
     // For the moment I am computing the full T matrix, while we only need one row
     static const gsl_complex one  = gsl_complex_rect(1.0, 0.0);
+    static const gsl_complex minusi  = gsl_complex_rect(0.0, -1.0);
     static const gsl_complex zero = gsl_complex_rect(0.0, 0.0);
 
     // 3a. multiply -i*rho with Khat from the right
-    // -> tmp_2 = one * tmp_1 * Khat + zero * tmp_2 ; no transpose anywhere
-    gsl_blas_zgemm(CblasNoTrans, CblasNoTrans, one, _tmp_1, _Khat, zero, _tmp_2);
+    // -> tmp_2 = -i * tmp_1 * Khat + zero * tmp_2 ; no transpose anywhere
+    gsl_blas_zgemm(CblasNoTrans, CblasNoTrans, minusi, _tmp_1, _Khat, zero, _tmp_2);
 
     // 3b. add 1.0 to the diagonal elements of tmp_2
     for (unsigned i = 0 ; i < nchannels_ ; ++i)
       {
         gsl_complex value = gsl_matrix_complex_get(_tmp_2, i, i);
+        std::cout << " --- (1-i*rho*K)_{" << i << "," << i << "} = " << GSL_REAL(gsl_complex_add_real(value, 1.0)) << " + i*" << GSL_IMAG(gsl_complex_add_real(value, 1.0)) << std::endl;
         gsl_matrix_complex_set(_tmp_2, i, i, gsl_complex_add_real(value, 1.0));
       }
 
@@ -169,8 +174,9 @@ namespace eos
         gsl_complex value = gsl_matrix_complex_get(_That, rowindex, i);
         complex<double> cvalue(GSL_REAL(value), GSL_IMAG(value));
         tmatrixrow[i] = cvalue;
+        std::cout << " --- That_{"<< rowindex << "," << i << "} = " << GSL_REAL(value) << " + i*" << GSL_IMAG(value) << std::endl << std::endl;
       }
-
+    std::cout << std::endl;
     return tmatrixrow;
   }
 
