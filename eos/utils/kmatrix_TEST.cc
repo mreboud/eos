@@ -261,14 +261,6 @@ public:
 
 	}
 
-
-
-
-
-    
-	TEST_CHECK_NEARLY_EQUAL(3.,	9.,	eps);
-
-
     }
 } kmatrix_test;
 
