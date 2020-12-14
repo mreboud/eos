@@ -18,6 +18,7 @@ CONSTRAINTS_FILES = \
 	hqet.yaml \
 	Lb-to-L-ll.yaml \
 	Lb-to-Lq-form-factors.yaml \
+	ee-to-ccbar.yaml \
 	miscellaneous.yaml
 
 EXTRA_DIST = $(CONSTRAINTS_FILES)
