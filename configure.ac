@@ -476,6 +476,7 @@ AC_OUTPUT(
 	eos/utils/Makefile
 	eos/optimize/Makefile
 	eos/statistics/Makefile
+        eos/scattering/Makefile
 	manual/Makefile
 	manual/appendices/Makefile
 	manual/figures/Makefile
