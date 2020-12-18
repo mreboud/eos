@@ -660,3 +660,166 @@ groups:
           max:     +0.25
           latex:   '$\rho_D^3(1\,\GeV)$'
           comment: 'cf. @REF[MvD2015]@'
+  # }}}
+
+  # Parameters of the ee -> ccbar scattering processes
+  # {{{
+  - title: 'Parameters of the ee -> ccbar scattering processes'
+    description: ''
+    parameters:
+      # e^+ e^- channel
+      'ee->ccbar::g0(psi(2S),ee)' :
+          central: 0
+          min:     0
+          max:     0
+          latex:   '$g^0(\psi(2S),e^+e^-)$'
+          comment: 'Initially set to 0'
+      'ee->ccbar::g0(psi(3770),ee)' :
+          central: 0
+          min:     0
+          max:     0
+          latex:   '$g^0(\psi(3770),e^+e^-)$'
+          comment: 'Initially set to 0'
+      'ee->ccbar::g0(psi(4040),ee)' :
+          central: 0
+          min:     0
+          max:     0
+          latex:   '$g^0(\psi(4040),e^+e^-)$'
+          comment: 'Initially set to 0'
+      'ee->ccbar::g0(psi(4160),ee)' :
+          central: 0
+          min:     0
+          max:     0
+          latex:   '$g^0(\psi(4160),e^+e^-)$'
+          comment: 'Initially set to 0'
+      'ee->ccbar::g0(psi(4415),ee)' :
+          central: 0
+          min:     0
+          max:     0
+          latex:   '$g^0(\psi(4415),e^+e^-)$'
+          comment: 'Initially set to 0'
+      # D^+ D^- channel
+      # D^0 \bar{D}^0 channel
+      'ee->ccbar::g0(psi(2S),D^0Dbar^0)' :
+          central: 0
+          min:     0
+          max:     0
+          latex:   '$g^0(\psi(2S),D^0\bar{D}^0)$'
+          comment: 'Initially set to 0'
+      'ee->ccbar::g0(psi(3770),D^0Dbar^0)' :
+          central: 0
+          min:     0
+          max:     0
+          latex:   '$g^0(\psi(3770),D^0\bar{D}^0)$'
+          comment: 'Initially set to 0'
+      'ee->ccbar::g0(psi(4040),D^0Dbar^0)' :
+          central: 0
+          min:     0
+          max:     0
+          latex:   '$g^0(\psi(4040),D^0\bar{D}^0)$'
+          comment: 'Initially set to 0'
+      'ee->ccbar::g0(psi(4160),D^0Dbar^0)' :
+          central: 0
+          min:     0
+          max:     0
+          latex:   '$g^0(\psi(4160),D^0\bar{D}^0)$'
+          comment: 'Initially set to 0'
+      'ee->ccbar::g0(psi(4415),D^0Dbar^0)' :
+          central: 0
+          min:     0
+          max:     0
+          latex:   '$g^0(\psi(4415),D^0\bar{D}^0)$'
+          comment: 'Initially set to 0'
+      # D^+ D^- channel
+      'ee->ccbar::g0(psi(2S),D^+D^-)' :
+          central: 0
+          min:     0
+          max:     0
+          latex:   '$g^0(\psi(2S),D^+D^-)$'
+          comment: 'Initially set to 0'
+      'ee->ccbar::g0(psi(3770),D^+D^-)' :
+          central: 0
+          min:     0
+          max:     0
+          latex:   '$g^0(\psi(3770),D^+D^-)$'
+          comment: 'Initially set to 0'
+      'ee->ccbar::g0(psi(4040),D^+D^-)' :
+          central: 0
+          min:     0
+          max:     0
+          latex:   '$g^0(\psi(4040),D^+D^-)$'
+          comment: 'Initially set to 0'
+      'ee->ccbar::g0(psi(4160),D^+D^-)' :
+          central: 0
+          min:     0
+          max:     0
+          latex:   '$g^0(\psi(4160),D^+D^-)$'
+          comment: 'Initially set to 0'
+      'ee->ccbar::g0(psi(4415),D^+D^-)' :
+          central: 0
+          min:     0
+          max:     0
+          latex:   '$g^0(\psi(4415),D^+D^-)$'
+          comment: 'Initially set to 0'
+      # D^0 \bar{D}^{*0} channel
+      'ee->ccbar::g0(psi(2S),D^0Dbar^*0)' :
+          central: 0
+          min:     0
+          max:     0
+          latex:   '$g^0(\psi(2S),D^0\bar{D}^{*0})$'
+          comment: 'Initially set to 0'
+      'ee->ccbar::g0(psi(3770),D^0Dbar^*0)' :
+          central: 0
+          min:     0
+          max:     0
+          latex:   '$g^0(\psi(3770),D^0\bar{D}^{*0})$'
+          comment: 'Initially set to 0'
+      'ee->ccbar::g0(psi(4040),D^0Dbar^*0)' :
+          central: 0
+          min:     0
+          max:     0
+          latex:   '$g^0(\psi(4040),D^0\bar{D}^{*0})$'
+          comment: 'Initially set to 0'
+      'ee->ccbar::g0(psi(4160),D^0Dbar^*0)' :
+          central: 0
+          min:     0
+          max:     0
+          latex:   '$g^0(\psi(4160),D^0\bar{D}^{*0})$'
+          comment: 'Initially set to 0'
+      'ee->ccbar::g0(psi(4415),D^0Dbar^*0)' :
+          central: 0
+          min:     0
+          max:     0
+          latex:   '$g^0(\psi(4415),D^0\bar{D}^{*0})$'
+          comment: 'Initially set to 0'
+      # D^+ D^{*-} channel
+      'ee->ccbar::g0(psi(2S),D^+D^*-)' :
+          central: 0
+          min:     0
+          max:     0
+          latex:   '$g^0(\psi(2S),D^+D^{*-})$'
+          comment: 'Initially set to 0'
+      'ee->ccbar::g0(psi(3770),D^+D^*-)' :
+          central: 0
+          min:     0
+          max:     0
+          latex:   '$g^0(\psi(3770),D^+D^{*-})$'
+          comment: 'Initially set to 0'
+      'ee->ccbar::g0(psi(4040),D^+D^*-)' :
+          central: 0
+          min:     0
+          max:     0
+          latex:   '$g^0(\psi(4040),D^+D^{*-})$'
+          comment: 'Initially set to 0'
+      'ee->ccbar::g0(psi(4160),D^+D^*-)' :
+          central: 0
+          min:     0
+          max:     0
+          latex:   '$g^0(\psi(4160),D^+D^{*-})$'
+          comment: 'Initially set to 0'
+      'ee->ccbar::g0(psi(4415),D^+D^*-)' :
+          central: 0
+          min:     0
+          max:     0
+          latex:   '$g^0(\psi(4415),D^+D^{*-})$'
+          comment: 'Initially set to 0'
