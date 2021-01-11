@@ -10,7 +10,7 @@
 #include <gsl/gsl_complex.h>
 #include <gsl/gsl_complex_math.h>
 
-#include <iostream>
+//#include <iostream>
 
 namespace eos
 
@@ -74,8 +74,8 @@ namespace eos
 	auto resonances = this->_resonances;
 
 
-	std::cout << "Entering tmatrix row evaluation, nbr channels = " << channels.size() << " nbr resonances = " << resonances.size() << std::endl;
-	std::cout << " --- Working at s = " << s << std::endl;
+	// std::cout << "Entering tmatrix row evaluation, nbr channels = " << channels.size() << " nbr resonances = " << resonances.size() << std::endl;
+	// std::cout << " --- Working at s = " << s << std::endl;
 
 
 	///////////////////
@@ -88,7 +88,8 @@ namespace eos
 	for (size_t i = 0 ; i < nchannels_ ; ++i)
 	    {
 		complex<double> rhoentry = channels[i]->rho(s);
-		std::cout << " --- Channel "<< i << " rho(s) = " << rhoentry.real() << " + i*" <<  rhoentry.imag() << std::endl;
+		// std::cout << " --- Channel "<< i << " m1 " << channels[i]->_m1 << " m2 " << channels[i]->_m2 << std::endl;
+		// std::cout << " ------" << " rho(s) = " << rhoentry.real() << " + i*" <<  rhoentry.imag() << std::endl;
 		gsl_matrix_complex_set(_tmp_1,  i,  i, gsl_complex_rect(rhoentry.real(), rhoentry.imag()));
 	    }
 
@@ -111,10 +112,10 @@ namespace eos
 
 				double mres = resonances[a]->_m;
 
-				Parameter g0rci = channels[i]->g0s[a];
-				Parameter g0rcj = channels[j]->g0s[a];
+				Parameter g0rci = channels[i]->_g0s[a];
+				Parameter g0rcj = channels[j]->_g0s[a];
 
-				std::cout << " --- Resonance "<< a << " m = " << mres << " g0rci = " << g0rci << " g0rcj = " << g0rcj << std::endl;
+				// std::cout << " --- Resonance "<< a << " m = " << mres << " g0rci = " << g0rci << " g0rcj = " << g0rcj << std::endl;
 
 				// DO SOMETHING TO AVOID THE POLES (DIVISION BY 0)
 				// * A first solution is to add an small imaginary part
@@ -126,11 +127,11 @@ namespace eos
 
 			    }
 
-			std::cout << " --- Khat "<< i << " " << j << " = " << entry << std::endl;
+			// std::cout << " --- Khat "<< i << " " << j << " = " << entry << std::endl;
 			gsl_matrix_complex_set(_Khat, i, j, gsl_complex_rect(entry.real(), entry.imag()));
 		    }
 	    }
-	std::cout << " --- KMatrix computed " << std::endl;
+	// std::cout << " --- KMatrix computed " << std::endl;
 
 
 
@@ -138,7 +139,7 @@ namespace eos
 	// 3. Compute That
 	///////////////////
 
-	std::cout << " --- Entering KMatrix inversion: " << std::endl;
+	// std::cout << " --- Entering KMatrix inversion: " << std::endl;
 
 	// For the moment I am computing the full T matrix, while we only need one row
 	static const gsl_complex one  = gsl_complex_rect(1.0, 0.0);
@@ -153,7 +154,7 @@ namespace eos
 	for (unsigned i = 0 ; i < nchannels_ ; ++i)
 	    {
 		gsl_complex value = gsl_matrix_complex_get(_tmp_2, i, i);
-		std::cout << " --- (1-i*rho*K)_{" << i << "," << i << "} = " << GSL_REAL(gsl_complex_add_real(value, 1.0)) << " + i*" << GSL_IMAG(gsl_complex_add_real(value, 1.0)) << std::endl;
+		// std::cout << " --- (1-i*rho*K)_{" << i << "," << i << "} = " << GSL_REAL(gsl_complex_add_real(value, 1.0)) << " + i*" << GSL_IMAG(gsl_complex_add_real(value, 1.0)) << std::endl;
 		gsl_matrix_complex_set(_tmp_2, i, i, gsl_complex_add_real(value, 1.0));
 	    }
 
@@ -176,9 +177,9 @@ namespace eos
 		gsl_complex value = gsl_matrix_complex_get(_That, rowindex, i);
 		complex<double> cvalue(GSL_REAL(value), GSL_IMAG(value));
 		tmatrixrow[i] = cvalue;
-		std::cout << " --- That_{"<< rowindex << "," << i << "} = " << GSL_REAL(value) << " + i*" << GSL_IMAG(value) << std::endl << std::endl;
+		// std::cout << " --- That_{"<< rowindex << "," << i << "} = " << GSL_REAL(value) << " + i*" << GSL_IMAG(value) << std::endl << std::endl;
 	    }
-	std::cout << std::endl;
+	// std::cout << std::endl;
 	return tmatrixrow;
     }
 

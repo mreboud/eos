@@ -18,11 +18,11 @@
 namespace eos
 
 {
-    template <unsigned nchannels_, unsigned nresonances_>
-    class KMatrix
-    {
+template <unsigned nchannels_, unsigned nresonances_>
+class KMatrix
+{
 
-    public:
+public:
 
 	struct Channel;
 	struct Resonance;
@@ -56,40 +56,40 @@ namespace eos
 
 	// Return rowindex^th row of the T matrix defined as T = (1-i*rho*K)^(-1)*K
 	std::array<complex<double>, nchannels_> tmatrix_row(unsigned rowindex,
-							    const double s) const;
+		const double s) const;
 
-    };
+};
 
 
-    template <unsigned nchannels_, unsigned nresonances_>
-    struct KMatrix<nchannels_, nresonances_>::Channel
-    {
+template <unsigned nchannels_, unsigned nresonances_>
+struct KMatrix<nchannels_, nresonances_>::Channel
+{
 	std::string _name;
 	//Masses of the two final state particles
 	double _m1;
 	double _m2;
 
-	Channel(std::string name, double m1, double m2) : _name(name), _m1(m1), _m2(m2)
+	std::vector<Parameter> _g0s;
+
+	Channel(std::string name, double m1, double m2, std::vector<Parameter> g0s) : _name(name), _m1(m1), _m2(m2), _g0s(g0s)
 	{
-	    if (m1 < 0 || m2 < 0)
+		if (m1 < 0 || m2 < 0)
 		{
-		    throw InternalError("Channels masses cannot be negative.");
+			throw InternalError("Channels masses cannot be negative.");
 		}
 	};
 
-	// Normalized couplings to the resonances
-	std::array<Parameter, nresonances_> g0s;
 
 	// Phase space factor
 	virtual double beta(const double & s) = 0;
 	// Analytic continuation of the phase space factor
 	virtual complex<double> rho(const double & s) = 0;
-    };
+};
 
 
-    template <unsigned nchannels_, unsigned nresonances_>
-    struct KMatrix<nchannels_, nresonances_>::Resonance
-    {
+template <unsigned nchannels_, unsigned nresonances_>
+struct KMatrix<nchannels_, nresonances_>::Resonance
+{
 	std::string _name;
 
 	//Mass of the resonance
@@ -97,12 +97,12 @@ namespace eos
 
 	Resonance(std::string name, double m) : _name(name), _m(m)
 	{
-	    if (m < 0)
+		if (m < 0)
 		{
-		    throw InternalError("Resonance masse cannot be negative.");
+			throw InternalError("Resonance masse cannot be negative.");
 		}
 	};
-    };
+};
 
 }
 
