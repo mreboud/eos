@@ -10,6 +10,8 @@
 #include <gsl/gsl_complex.h>
 #include <gsl/gsl_complex_math.h>
 
+#include <iostream>
+
 namespace eos
 
 {
@@ -109,8 +111,8 @@ namespace eos
 
 				double mres = resonances[a]->_m;
 
-				double g0rci = channels[i]->g0s[a];
-				double g0rcj = channels[j]->g0s[a];
+				Parameter g0rci = channels[i]->g0s[a];
+				Parameter g0rcj = channels[j]->g0s[a];
 
 				std::cout << " --- Resonance "<< a << " m = " << mres << " g0rci = " << g0rci << " g0rcj = " << g0rcj << std::endl;
 
@@ -136,7 +138,7 @@ namespace eos
 	// 3. Compute That
 	///////////////////
 
-	std::cout << " --- Entering TMatrix inversion: " << std::endl;
+	std::cout << " --- Entering KMatrix inversion: " << std::endl;
 
 	// For the moment I am computing the full T matrix, while we only need one row
 	static const gsl_complex one  = gsl_complex_rect(1.0, 0.0);

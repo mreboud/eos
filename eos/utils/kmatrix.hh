@@ -3,6 +3,9 @@
 
 
 #include <eos/utils/complex.hh>
+#include <eos/utils/exception.hh>
+#include <eos/utils/parameters.hh>
+
 #include <gsl/gsl_blas.h>
 #include <gsl/gsl_linalg.h>
 #include <gsl/gsl_matrix.h>
@@ -62,7 +65,6 @@ namespace eos
     struct KMatrix<nchannels_, nresonances_>::Channel
     {
 	std::string _name;
-
 	//Masses of the two final state particles
 	double _m1;
 	double _m2;
@@ -76,7 +78,7 @@ namespace eos
 	};
 
 	// Normalized couplings to the resonances
-	std::array<double, nresonances_> g0s;
+	std::array<Parameter, nresonances_> g0s;
 
 	// Phase space factor
 	virtual double beta(const double & s) = 0;
