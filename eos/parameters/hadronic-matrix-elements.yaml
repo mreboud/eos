@@ -3391,9 +3391,9 @@ groups:
           min:     +0.0
           max:     +0.0
       'b->sccbar::chiOPE@GRvDV2021' :
-          central: +0.000183
-          min:     +0.000181
-          max:     +0.000185
+          central: +0.000181
+          min:     +0.000179
+          max:     +0.000183
           comments: 'Dispersive bound in the OPE at t_s = -m_b^2'
       'B->K^*ccbar::Re{alpha_0^perp}@GRvDV2021' :
           central: +0.0

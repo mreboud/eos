@@ -76,6 +76,7 @@ namespace eos
             ///@{
 
             virtual complex<double> H_plus(const double & q2) const = 0;
+            virtual complex<double> Hhat_plus(const double & q2) const = 0;
 
             ///@}
 
@@ -143,6 +144,10 @@ namespace eos
 
             double arg_H_plus(const double & q2) const;
 
+            double re_Hhat_plus(const double & q2) const;
+            double im_Hhat_plus(const double & q2) const;
+            double abs_Hhat_plus(const double & q2) const;
+
             ///@}
 
             ///@name First moment of the formfactor as observable
@@ -184,10 +189,13 @@ namespace eos
             ///@{
 
             virtual complex<double> H_perp(const double & q2) const = 0;
+            virtual complex<double> Hhat_perp(const double & q2) const = 0;
 
             virtual complex<double> H_para(const double & q2) const = 0;
+            virtual complex<double> Hhat_para(const double & q2) const = 0;
 
             virtual complex<double> H_long(const double & q2) const = 0;
+            virtual complex<double> Hhat_long(const double & q2) const = 0;
 
             ///@}
 
@@ -291,6 +299,16 @@ namespace eos
 
             double arg_H_long(const double & q2) const;
 
+            double re_Hhat_perp(const double & q2) const;
+            double im_Hhat_perp(const double & q2) const;
+            double abs_Hhat_perp(const double & q2) const;
+            double re_Hhat_para(const double & q2) const;
+            double im_Hhat_para(const double & q2) const;
+            double abs_Hhat_para(const double & q2) const;
+            double re_Hhat_long(const double & q2) const;
+            double im_Hhat_long(const double & q2) const;
+            double abs_Hhat_long(const double & q2) const;
+
             ///@}
 
             ///@name First moment of the formfactor as observable
@@ -318,7 +336,8 @@ namespace eos
 
         complex<double> z(const double & q2, complex<double> s_plus, complex<double> s_0);
         complex<double> blaschke_cc(const complex<double> z, const complex<double> z_Jpsi, const complex<double> z_psi2S);
-        complex<double> P(complex<double> z, const complex<double> & alpha_0, const complex<double> & alpha_1, const complex<double> & alpha_2);
+        complex<double> P(complex<double> z,
+            const complex<double> & alpha_0, const complex<double> & alpha_1, const complex<double> & alpha_2);
         complex<double> PGvDV2020(complex<double> z, const complex<double> zXY,
             const complex<double> & alpha_0, const complex<double> & alpha_1, const complex<double> & alpha_2);
 

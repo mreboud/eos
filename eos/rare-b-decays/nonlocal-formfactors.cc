@@ -110,7 +110,7 @@ namespace eos
         //Expansion in z monomials (they form a basis on the unit circle)
         complex<double> P(complex<double> z, const complex<double> & alpha_0, const complex<double> & alpha_1, const complex<double> & alpha_2)
         {
-            return alpha_0 + alpha_1*z + alpha_2*z*z;
+            return 1.0 / sqrt(2*M_PI) * (alpha_0 + alpha_1*z + alpha_2*z*z);
         }
 
         //Expansion in polynomials orthogonal on the arc of the unit circle (zXY, zXY*)

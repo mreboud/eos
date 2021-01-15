@@ -64,6 +64,17 @@ AM_TESTS_ENVIRONMENT = \
 #	exclusive-b-to-s-dilepton-low-recoil_TEST \
 #	exclusive-b-to-s-dilepton-large-recoil_TEST \
 #	exclusive-b-to-s-gamma_TEST
+
+#LONGTESTS
+# --> Add variable in the configure, new tagret longcheck
+# make check
+# make longcheck
+
+#longcheck-local: $(LONGTESTS)
+#	$(MAKE) check TESTS=$(LONGTESTS)
+
+
+#SHORTTESTS
 TESTS = \
 	bremsstrahlung_TEST \
 	charm-loops_TEST \
@@ -76,7 +87,7 @@ TESTS = \
 	qcdf-integrals_TEST \
 	nonlocal-formfactors-p-to-p_TEST \
 	nonlocal-formfactors-p-to-v_TEST \
-	b-to-kstar-charmonium-gvdv2020_TEST
+	b-to-kstar-charmonium_TEST
 XFAIL_TESTS = \
 	exclusive-b-to-s-dilepton-large-recoil_TEST # One of the QCDF integrals has a bug in the imaginary part
 LDADD = \
@@ -92,13 +103,13 @@ charm_loops_TEST_SOURCES = charm-loops_TEST.cc
 
 em_contributions_TEST_SOURCES = em-contributions_TEST.cc
 
-exclusive_b_to_dilepton_TEST_SOURCES = exclusive-b-to-dilepton_TEST.cc
+#exclusive_b_to_dilepton_TEST_SOURCES = exclusive-b-to-dilepton_TEST.cc
 
 #exclusive_b_to_s_dilepton_low_recoil_TEST_SOURCES = exclusive-b-to-s-dilepton-low-recoil_TEST.cc
 
 #exclusive_b_to_s_dilepton_large_recoil_TEST_SOURCES = exclusive-b-to-s-dilepton-large-recoil_TEST.cc
 
-exclusive_b_to_s_gamma_TEST_SOURCES = exclusive-b-to-s-gamma_TEST.cc
+#exclusive_b_to_s_gamma_TEST_SOURCES = exclusive-b-to-s-gamma_TEST.cc
 
 inclusive_b_to_s_dilepton_TEST_SOURCES = inclusive-b-to-s-dilepton_TEST.cc
 
@@ -116,4 +127,4 @@ nonlocal_formfactors_p_to_p_TEST_SOURCES = nonlocal-formfactors-p-to-p_TEST.cc
 
 nonlocal_formfactors_p_to_v_TEST_SOURCES = nonlocal-formfactors-p-to-v_TEST.cc
 
-b_to_kstar_charmonium_gvdv2020_TEST_SOURCES = b-to-kstar-charmonium-gvdv2020_TEST.cc
+b_to_kstar_charmonium_TEST_SOURCES = b-to-kstar-charmonium_TEST.cc
