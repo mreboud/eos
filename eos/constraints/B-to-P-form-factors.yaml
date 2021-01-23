@@ -833,6 +833,42 @@ B->K::FormFactors[parametric,LCSRLattice]@GKvD2018:
   - [-0.008735577280746972, 0.012955858154551175, 0.1815217605873468, -0.03625274068996743,
     -0.031088495311645113, -0.01317771713338687, 0.07818343313003755, 0.7596448963087041]
   dof: 8
+B->K::re_H_plus5@GvDV2020:
+  type: Gaussian
+  observable: "B->K::re_H_plus(q2)"
+  kinematics: {q2: -5}
+  options: {}
+  mean: 6.1e-6
+  sigma-stat: {hi: 0, lo: 0}
+  sigma-sys: {hi: 6.8e-6, lo: 6.8e-6}
+  dof: 1
+B->K::im_H_plus5@GvDV2020:
+  type: Gaussian
+  observable: "B->K::im_H_plus(q2)"
+  kinematics: {q2: -5}
+  options: {}
+  mean: -7.4e-7
+  sigma-stat: {hi: 0, lo: 0}
+  sigma-sys: {hi: 1.9e-7, lo: 1.9e-7}
+  dof: 1
+B->K::re_H_plus1@GvDV2020:
+  type: Gaussian
+  observable: "B->K::re_H_plus(q2)"
+  kinematics: {q2: -1}
+  options: {}
+  mean: 3.4e-6
+  sigma-stat: {hi: 0, lo: 0}
+  sigma-sys: {hi: 2.4e-6, lo: 2.4e-6}
+  dof: 1
+B->K::im_H_plus1@GvDV2020:
+  type: Gaussian
+  observable: "B->K::im_H_plus(q2)"
+  kinematics: {q2: -1}
+  options: {}
+  mean: -6.5e-7
+  sigma-stat: {hi: 0, lo: 0}
+  sigma-sys: {hi: 2.4e-7, lo: 2.4e-7}
+  dof: 1
 # }}}
 
 #######################

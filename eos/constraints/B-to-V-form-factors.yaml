@@ -9514,6 +9514,114 @@ B_s->K^*::FormFactors[parametric,LCSRLattice]@GvDV2019:
     - 0.4294709976723102
     - 3.220091006107702
   dof: 19
+B->K^*::re_H_perp5@GvDV2020:
+  type: Gaussian
+  observable: "B->K^*::re_H_perp(q2)"
+  kinematics: {q2: -5}
+  options: {}
+  mean: 1.4e-4
+  sigma-stat: {hi: 0, lo: 0}
+  sigma-sys: {hi: 0.4e-4, lo: 0.4e-4}
+  dof: 1
+B->K^*::im_H_perp5@GvDV2020:
+  type: Gaussian
+  observable: "B->K^*::im_H_perp(q2)"
+  kinematics: {q2: -5}
+  options: {}
+  mean: 8.0e-6
+  sigma-stat: {hi: 0, lo: 0}
+  sigma-sys: {hi: 2.6e-6, lo: 2.6e-6}
+  dof: 1
+B->K^*::re_H_perp1@GvDV2020:
+  type: Gaussian
+  observable: "B->K^*::re_H_perp(q2)"
+  kinematics: {q2: -1}
+  options: {}
+  mean: 1.4e-4
+  sigma-stat: {hi: 0, lo: 0}
+  sigma-sys: {hi: 0.4e-4, lo: 0.4e-4}
+  dof: 1
+B->K^*::im_H_perp1@GvDV2020:
+  type: Gaussian
+  observable: "B->K^*::im_H_perp(q2)"
+  kinematics: {q2: -1}
+  options: {}
+  mean: 1.2e-5
+  sigma-stat: {hi: 0, lo: 0}
+  sigma-sys: {hi: 0.4e-5, lo: 0.4e-5}
+  dof: 1
+B->K^*::re_H_para5@GvDV2020:
+  type: Gaussian
+  observable: "B->K^*::re_H_para(q2)"
+  kinematics: {q2: -5}
+  options: {}
+  mean: 1.4e-4
+  sigma-stat: {hi: 0, lo: 0}
+  sigma-sys: {hi: 0.4e-4, lo: 0.4e-4}
+  dof: 1
+B->K^*::im_H_para5@GvDV2020:
+  type: Gaussian
+  observable: "B->K^*::im_H_para(q2)"
+  kinematics: {q2: -5}
+  options: {}
+  mean: 7.9e-6
+  sigma-stat: {hi: 0, lo: 0}
+  sigma-sys: {hi: 2.5e-6, lo: 2.5e-6}
+  dof: 1
+B->K^*::re_H_para1@GvDV2020:
+  type: Gaussian
+  observable: "B->K^*::re_H_para(q2)"
+  kinematics: {q2: -1}
+  options: {}
+  mean: 1.4e-4
+  sigma-stat: {hi: 0, lo: 0}
+  sigma-sys: {hi: 0.4e-4, lo: 0.4e-4}
+  dof: 1
+B->K^*::im_H_para1@GvDV2020:
+  type: Gaussian
+  observable: "B->K^*::im_H_para(q2)"
+  kinematics: {q2: -1}
+  options: {}
+  mean: 1.2e-5
+  sigma-stat: {hi: 0, lo: 0}
+  sigma-sys: {hi: 0.4e-5, lo: 0.4e-5}
+  dof: 1
+B->K^*::re_H_long5@GvDV2020:
+  type: Gaussian
+  observable: "B->K^*::re_H_long(q2)"
+  kinematics: {q2: -5}
+  options: {}
+  mean: 0.4e-5
+  sigma-stat: {hi: 0, lo: 0}
+  sigma-sys: {hi: 2.4e-4, lo: 2.4e-5}
+  dof: 1
+B->K^*::im_H_long5@GvDV2020:
+  type: Gaussian
+  observable: "B->K^*::im_H_long(q2)"
+  kinematics: {q2: -5}
+  options: {}
+  mean: -1.2e-6
+  sigma-stat: {hi: 0, lo: 0}
+  sigma-sys: {hi: 0.8e-6, lo: 0.8e-6}
+  dof: 1
+B->K^*::re_H_long1@GvDV2020:
+  type: Gaussian
+  observable: "B->K^*::re_H_long(q2)"
+  kinematics: {q2: -1}
+  options: {}
+  mean: 3.0e-6
+  sigma-stat: {hi: 0, lo: 0}
+  sigma-sys: {hi: 7.2e-6, lo: 7.2e-6}
+  dof: 1
+B->K^*::im_H_long1@GvDV2020:
+  type: Gaussian
+  observable: "B->K^*::im_H_long(q2)"
+  kinematics: {q2: -1}
+  options: {}
+  mean: -4.7e-7
+  sigma-stat: {hi: 0, lo: 0}
+  sigma-sys: {hi: 3.1e-7, lo: 3.1e-7}
+  dof: 1
 # }}}
 
 #########################
