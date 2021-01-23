@@ -1,0 +1,117 @@
+#############
+# PDG's fit #
+#############
+#
+# PDG:2020
+#
+# {{{
+B^0->K^0Jpsi::BR@PDG2020:
+    type: Gaussian
+    observable: B->Kcharmonium::branching_ratio
+    kinematics: {}
+    options: {q: d, psi: "J/psi"}
+    mean: 8.68e-4
+    sigma-stat: {hi: 0., lo: 0.}
+    sigma-sys: {hi: 3.e-5, lo: 3.e-5}
+    dof: 1
+B^0->K^*0Jpsi::BR@PDG2020:
+    type: Gaussian
+    observable: B->K^*charmonium::branching_ratio
+    kinematics: {}
+    options: {q: d, psi: "J/psi"}
+    mean: 1.27e-3
+    sigma-stat: {hi: 0., lo: 0.}
+    sigma-sys: {hi: 5.e-5, lo: 5.e-5}
+    dof: 1
+B^0->K^*0psi2S:BR@PDG2020:
+    type: Gaussian
+    observable: B->K^*charmonium::branching_ratio
+    kinematics: {}
+    options: {q: d, psi: "psi(2S)"}
+    mean: 5.9e-4
+    sigma-stat: {hi: 0., lo: 0.}
+    sigma-sys: {hi: 4.e-5, lo: 4.e-5}
+    dof: 1
+# }}}
+
+
+########
+# LHCb #
+########
+#
+# Unpublished
+#
+# {{{
+B^0->K^*0charmonium::S_1s_LHCb@LHCb-2018:
+    type: Gaussian
+    observable: B->K^*charmonium::S_1s_LHCb
+    kinematics: {}
+    options: {q: d, psi: "J/psi"}
+    mean: 0.321
+    sigma-stat: {hi: 0., lo: 0.}
+    sigma-sys: {hi: 0.004, lo: 0.004}
+    dof: 1
+B^0->K^*0charmonium::S_3_LHCb@LHCb-2018:
+    type: Gaussian
+    observable: B->K^*charmonium::S_3_LHCb
+    kinematics: {}
+    options: {q: d, psi: "J/psi"}
+    mean: -0.002
+    sigma-stat: {hi: 0., lo: 0.}
+    sigma-sys: {hi: 0.007, lo: 0.007}
+    dof: 1
+B^0->K^*0charmonium::S_4_LHCb@LHCb-2018:
+    type: Gaussian
+    observable: B->K^*charmonium::S_4_LHCb
+    kinematics: {}
+    options: {q: d, psi: "J/psi"}
+    mean: -0.246
+    sigma-stat: {hi: 0., lo: 0.}
+    sigma-sys: {hi: 0.008, lo: 0.008}
+    dof: 1
+B^0->K^*0charmonium::S_5_LHCb@LHCb-2018:
+    type: Gaussian
+    observable: B->K^*charmonium::S_5_LHCb
+    kinematics: {}
+    options: {q: d, psi: "J/psi"}
+    mean: -0.003
+    sigma-stat: {hi: 0., lo: 0.}
+    sigma-sys: {hi: 0.008, lo: 0.008}
+    dof: 1
+B^0->K^*0charmonium::S_6s_LHCb@LHCb-2018:
+    type: Gaussian
+    observable: B->K^*charmonium::S_6s_LHCb
+    kinematics: {}
+    options: {q: d, psi: "J/psi"}
+    mean: -0.003
+    sigma-stat: {hi: 0., lo: 0.}
+    sigma-sys: {hi: 0.008, lo: 0.008}
+    dof: 1
+B^0->K^*0charmonium::S_7_LHCb@LHCb-2018:
+    type: Gaussian
+    observable: B->K^*charmonium::S_7_LHCb
+    kinematics: {}
+    options: {q: d, psi: "J/psi"}
+    mean: -0.001
+    sigma-stat: {hi: 0., lo: 0.}
+    sigma-sys: {hi: 0.008, lo: 0.008}
+    dof: 1
+B^0->K^*0charmonium::S_8_LHCb@LHCb-2018:
+    type: Gaussian
+    observable: B->K^*charmonium::S_8_LHCb
+    kinematics: {}
+    options: {q: d, psi: "J/psi"}
+    mean: -0.063
+    sigma-stat: {hi: 0., lo: 0.}
+    sigma-sys: {hi: 0.008, lo: 0.008}
+    dof: 1
+B^0->K^*0charmonium::S_9_LHCb@LHCb-2018:
+    type: Gaussian
+    observable: B->K^*charmonium::S_9_LHCb
+    kinematics: {}
+    options: {q: d, psi: "J/psi"}
+    mean: -0.084
+    sigma-stat: {hi: 0., lo: 0.}
+    sigma-sys: {hi: 0.007, lo: 0.007}
+    dof: 1
+# }}}
