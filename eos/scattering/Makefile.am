@@ -5,7 +5,8 @@ AM_CXXFLAGS = @AM_CXXFLAGS@
 
 lib_LTLIBRARIES = libeosscattering.la
 libeosscattering_la_SOURCES = \
-	ee-to-ccbar.cc ee-to-ccbar.hh
+	ee-to-ccbar.cc ee-to-ccbar.hh \
+	observables.cc observables.hh
 libeosscattering_la_LIBADD = \
 	$(top_builddir)/eos/utils/libeosutils.la \
 	-lgslcblas \
