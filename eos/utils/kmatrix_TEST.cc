@@ -16,7 +16,7 @@ using namespace eos;
 ///////////////////////
 struct PPchan11 : public KMatrix<1,1>::Channel
 {
-    PPchan11(std::string name, double m1, double m2, const Parameters & p) : Channel(name, m1, m2, {{
+    PPchan11(std::string name, double m1, double m2, unsigned N_orbital, const Parameters & p) : Channel(name, m1, m2, N_orbital, {{
         p["ee->ccbar::g0(psi(2S),ee)"]
     }})
     {
@@ -88,7 +88,7 @@ double BreitWigner(double const s, double const M, double const Ga)
 struct PPchan12 : public KMatrix<1,2>::Channel
 {
 
-    PPchan12(std::string name, double m1, double m2, const Parameters & p) : Channel(name, m1, m2, {{
+    PPchan12(std::string name, double m1, double m2, unsigned N_orbital, const Parameters & p) : Channel(name, m1, m2, N_orbital, {{
         p["ee->ccbar::g0(psi(2S),ee)"],
         p["ee->ccbar::g0(psi(3770),ee)"]
     }})
@@ -183,7 +183,7 @@ public:
         // than the channel masses, one recover a simple Breit-Wigner distribution
         {
             auto Res = std::make_shared<res11>("Res", 15.0);
-            auto Chan = std::make_shared<PPchan11>("Chan", 0.7, 0.8, p);
+            auto Chan = std::make_shared<PPchan11>("Chan", 0.7, 0.8, 3, p);
 
             KMatrix<1,1> simplestKM({Chan}, {Res}, "simplestKM");
 
@@ -227,18 +227,18 @@ public:
             auto myres2 = std::make_shared<res12>("myres2", 2.0);
 
 
-            auto myPPchan = std::make_shared<PPchan12>("myPPchan", 0.7, 0.8, p);
+            auto myPPchan = std::make_shared<PPchan12>("myPPchan", 0.7, 0.8, 3, p);
 
             //Test beta and rho for a PP channel
-            TEST_CHECK_NEARLY_EQUAL(myPPchan->beta(9.0),        0.865544,        eps);
-            TEST_CHECK_NEARLY_EQUAL(myPPchan->beta(1.5),        0.,        eps);
+            TEST_CHECK_NEARLY_EQUAL(myPPchan->beta(9.0),          0.865544,  eps);
+            TEST_CHECK_NEARLY_EQUAL(myPPchan->beta(1.5),          0.,        eps);
 
-            TEST_CHECK_NEARLY_EQUAL(myPPchan->rho(9.0).real(),        0.865544,        eps);
-            TEST_CHECK_NEARLY_EQUAL(myPPchan->rho(9.0).imag(),        0.724611,        eps);
-            TEST_CHECK_NEARLY_EQUAL(myPPchan->rho(1.5).real(),        0.,        eps);
-            TEST_CHECK_NEARLY_EQUAL(myPPchan->rho(1.5).imag(),        0.429317,        eps);
-            TEST_CHECK_NEARLY_EQUAL(myPPchan->rho(0.001).real(),        0.,        eps);
-            TEST_CHECK_NEARLY_EQUAL(myPPchan->rho(0.001).imag(),        0.635582,        eps);
+            TEST_CHECK_NEARLY_EQUAL(myPPchan->rho(9.0).real(),    0.865544,  eps);
+            TEST_CHECK_NEARLY_EQUAL(myPPchan->rho(9.0).imag(),    0.724611,  eps);
+            TEST_CHECK_NEARLY_EQUAL(myPPchan->rho(1.5).real(),    0.,        eps);
+            TEST_CHECK_NEARLY_EQUAL(myPPchan->rho(1.5).imag(),    0.429317,  eps);
+            TEST_CHECK_NEARLY_EQUAL(myPPchan->rho(0.001).real(),  0.,        eps);
+            TEST_CHECK_NEARLY_EQUAL(myPPchan->rho(0.001).imag(),  0.635582,  eps);
 
 
             //Test KMatrix inversion into TMatrix
@@ -248,12 +248,15 @@ public:
             auto myK0ats1 = myKM.tmatrix_row(0, 1.5);
             auto myK0ats2 = myKM.tmatrix_row(0, 0.001);
 
-            TEST_CHECK_NEARLY_EQUAL(myK0ats0[0].real(),        -0.217114,        eps);
-            TEST_CHECK_NEARLY_EQUAL(myK0ats0[0].imag(),        1.11299,        eps);
-            TEST_CHECK_NEARLY_EQUAL(myK0ats1[0].real(),        -0.610949,        eps);
-            TEST_CHECK_NEARLY_EQUAL(myK0ats1[0].imag(),        0.,        eps);
-            TEST_CHECK_NEARLY_EQUAL(myK0ats2[0].real(),        0.953701,        eps);
-            TEST_CHECK_NEARLY_EQUAL(myK0ats2[0].imag(),        0.,        eps);
+            TEST_CHECK_NEARLY_EQUAL(myK0ats0[0].real(),  -0.217114,   eps);
+            TEST_CHECK_NEARLY_EQUAL(myK0ats0[0].imag(),   1.11299,    eps);
+            TEST_CHECK_NEARLY_EQUAL(myK0ats1[0].real(),  -0.610949,   eps);
+            TEST_CHECK_NEARLY_EQUAL(myK0ats1[0].imag(),   0.,         eps);
+            TEST_CHECK_NEARLY_EQUAL(myK0ats2[0].real(),   0.953701,   eps);
+            TEST_CHECK_NEARLY_EQUAL(myK0ats2[0].imag(),   0.,         eps);
+
+            TEST_CHECK_NEARLY_EQUAL(myKM.width(1),        1.598678,   eps);
+
 
         }
 
