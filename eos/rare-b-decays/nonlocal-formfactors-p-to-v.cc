@@ -5713,10 +5713,11 @@ namespace eos
         NameOption opt_formfactor;
         NonlocalFormFactorPtr<nc::PToV> nc;
 
-        Implementation(const Parameters & p, const Options & o) :
+        Implementation(const Parameters & p, const Options & o, ParameterUser & u) :
             opt_formfactor(o, "formfactor", qnp::Name("GvDV2020")),
             nc(NonlocalFormFactor<nc::PToV>::make(QualifiedName(qnp::Prefix(Process_::prefix), opt_formfactor.value()), p, o))
         {
+            u.uses(*nc);
         }
 
         ~Implementation() = default;
@@ -5724,7 +5725,7 @@ namespace eos
 
     template <typename Process_>
     NonlocalFormFactorObservable<Process_, nc::PToV>::NonlocalFormFactorObservable(const Parameters & p, const Options & o) :
-        PrivateImplementationPattern<NonlocalFormFactorObservable<Process_, nc::PToV>>(new Implementation<NonlocalFormFactorObservable<Process_, nc::PToV>>(p, o))
+        PrivateImplementationPattern<NonlocalFormFactorObservable<Process_, nc::PToV>>(new Implementation<NonlocalFormFactorObservable<Process_, nc::PToV>>(p, o, *this))
     {
     }
 

@@ -1941,8 +1941,6 @@ namespace eos
             public NonlocalFormFactor<nc::PToP>
         {
             public:
-                std::shared_ptr<Model> model;
-
                 //Polynomial expansion parameters
                 UsedParameter re_alpha_0_plus;
                 UsedParameter im_alpha_0_plus;
@@ -2399,10 +2397,11 @@ namespace eos
         NameOption opt_formfactor;
         NonlocalFormFactorPtr<nc::PToP> nc;
 
-        Implementation(const Parameters & p, const Options & o) :
+        Implementation(const Parameters & p, const Options & o, ParameterUser & u) :
             opt_formfactor(o, "formfactor", qnp::Name("GvDV2020")),
             nc(NonlocalFormFactor<nc::PToP>::make(QualifiedName(qnp::Prefix(Process_::label), opt_formfactor.value()), p, o))
         {
+            u.uses(*nff);
         }
 
         ~Implementation() = default;
@@ -2410,7 +2409,7 @@ namespace eos
 
     template <typename Process_>
     NonlocalFormFactorObservable<Process_, nc::PToP>::NonlocalFormFactorObservable(const Parameters & p, const Options & o) :
-        PrivateImplementationPattern<NonlocalFormFactorObservable<Process_, nc::PToP>>(new Implementation<NonlocalFormFactorObservable<Process_, nc::PToP>>(p, o))
+        PrivateImplementationPattern<NonlocalFormFactorObservable<Process_, nc::PToP>>(new Implementation<NonlocalFormFactorObservable<Process_, nc::PToP>>(p, o, *this))
     {
     }
 
