@@ -48,10 +48,10 @@ class BToKstarCharmoniumGvDV2020Test :
             p["B->K^*ccbar::Im{alpha_2^long}@GvDV2020"]  = 19.0;
 
             Options oo;
-            oo.set("model",          "WilsonScan");
-            oo.set("q",              "d");
-            oo.set("formfactor",     "GvDV2020");
-            oo.set("psi",            "J/psi");
+            oo.set("model",               "WilsonScan");
+            oo.set("q",                   "d");
+            oo.set("nonlocal-formfactor", "GvDV2020");
+            oo.set("psi",                 "J/psi");
 
             BToKstarCharmonium c(p, oo);
 
@@ -111,10 +111,10 @@ class BToKstarCharmoniumGRvDV2021Test :
             p["B->K^*ccbar::Im{alpha_2^long}@GRvDV2021"]  = 19.0;
 
             Options oo;
-            oo.set("model",          "WilsonScan");
-            oo.set("q",              "d");
-            oo.set("formfactor",     "GRvDV2021");
-            oo.set("psi",            "J/psi");
+            oo.set("model",               "WilsonScan");
+            oo.set("q",                   "d");
+            oo.set("nonlocal-formfactor", "GRvDV2021");
+            oo.set("psi",                 "J/psi");
 
             BToKstarCharmonium c(p, oo);
 

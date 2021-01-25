@@ -49,7 +49,7 @@ namespace eos
 
         std::shared_ptr<Model> model;
 
-        SwitchOption q;
+        SwitchOption opt_q;
 
         UsedParameter m_B;
 
@@ -57,17 +57,15 @@ namespace eos
 
         UsedParameter m_Kstar;
 
-        SwitchOption formfactor;
+        SwitchOption opt_nonlocal_formfactor;
 
         NonlocalFormFactorPtr<nc::PToV> nonlocal_formfactor;
 
-        SwitchOption psi;
+        SwitchOption opt_psi;
 
         UsedParameter m_psi;
 
         UsedParameter f_psi;
-
-        std::shared_ptr<FormFactors<PToV>> form_factors;
 
         std::function<complex<double> ()> residue_H_long;
         std::function<complex<double> ()> residue_H_perp;
@@ -77,21 +75,20 @@ namespace eos
             g_fermi(p["G_Fermi"], u),
             hbar(p["hbar"], u),
             model(Model::make(o.get("model", "SM"), p, o)),
-            q(o, "q", { "d", "u" }, "d"),
-            m_B(p["mass::B_" + q.value()], u),
-            tau_B(p["life_time::B_" + q.value()], u),
-            m_Kstar(p["mass::K_" + q.value() + "^*"], u),
-            formfactor(o, "formfactor", { "GvDV2020", "GRvDV2021" }, "GvDV2020"),
-            nonlocal_formfactor(NonlocalFormFactor<nc::PToV>::make("B->K^*::" + formfactor.value(), p, o)),
-            psi(o, "psi", { "J/psi", "psi(2S)" }, "J/psi"),
-            m_psi(p["mass::" + psi.value()], u),
-            f_psi(p["decay-constant::" + psi.value()], u),
-            form_factors(FormFactorFactory<PToV>::create("B->K^*::" + o.get("form-factors", "BSZ2015"), p))
+            opt_q(o, "q", { "d", "u" }, "d"),
+            m_B(p["mass::B_" + opt_q.value()], u),
+            tau_B(p["life_time::B_" + opt_q.value()], u),
+            m_Kstar(p["mass::K_" + opt_q.value() + "^*"], u),
+            opt_nonlocal_formfactor(o, "nonlocal-formfactor", { "GvDV2020", "GRvDV2021" }, "GvDV2020"),
+            nonlocal_formfactor(NonlocalFormFactor<nc::PToV>::make("B->K^*::" + opt_nonlocal_formfactor.value(), p, o)),
+            opt_psi(o, "psi", { "J/psi", "psi(2S)" }, "J/psi"),
+            m_psi(p["mass::" + opt_psi.value()], u),
+            f_psi(p["decay-constant::" + opt_psi.value()], u)
         {
             if (! nonlocal_formfactor.get())
                 throw InternalError("Cannot construct the nonlocal formfactor");
 
-            if ("J/psi" == psi.value())
+            if ("J/psi" == opt_psi.value())
             {
                 residue_H_long = std::bind(&NonlocalFormFactor<nc::PToV>::H_long_residue_jpsi, nonlocal_formfactor);
                 residue_H_perp = std::bind(&NonlocalFormFactor<nc::PToV>::H_perp_residue_jpsi, nonlocal_formfactor);
@@ -106,7 +103,6 @@ namespace eos
 
             u.uses(*model);
             u.uses(*nonlocal_formfactor);
-            u.uses(*form_factors);
         }
 
         ~Implementation() = default;
@@ -165,41 +161,6 @@ namespace eos
             return prefactor * (norm(amps.A_perp) + norm(amps.A_para) + r * norm(amps.A_long));
         }
 
-        complex<double> ratio_perp() const
-        {
-            const double m_B2     = pow(m_B, 2);
-            const double m_Kstar2 = pow(m_Kstar, 2);
-            const double m_psi2   = pow(m_psi, 2);
-
-            const double lambda   = eos::lambda(m_B2, m_Kstar2, m_psi2);
-
-            const double F_perp   = sqrt(2.0 * lambda) / (m_B * (m_B + m_Kstar)) * form_factors->v(m_psi2);
-
-            return residue_H_perp() / F_perp;
-        }
-
-        complex<double> ratio_para() const
-        {
-            const double m_psi2   = pow(m_psi, 2);
-
-            const double F_para   = sqrt(2.0) * (m_B + m_Kstar) / m_B * form_factors->a_1(m_psi2);
-
-            return residue_H_para() / F_para;
-        }
-
-        complex<double> ratio_long() const
-        {
-            const double m_B2     = pow(m_B, 2);
-            const double m_Kstar2 = pow(m_Kstar, 2);
-            const double m_psi2   = pow(m_psi, 2);
-
-            const double lambda   = eos::lambda(m_B2, m_Kstar2, m_psi2);
-
-            const double F_long   = ((m_B2 - m_Kstar2 - m_psi2) * pow(m_B + m_Kstar, 2) * form_factors->a_1(m_psi2) - lambda * form_factors->a_2(m_psi2))
-                                  / (2.0 * m_psi * m_Kstar * pow(m_B + m_Kstar, 2));
-
-            return residue_H_long() / F_long;
-        }
     };
 
     BToKstarCharmonium::BToKstarCharmonium(const Parameters & p, const Options & o) :
@@ -311,57 +272,4 @@ namespace eos
         return +sqrt(this->para_polarization() * this->perp_polarization() / 2.0) * sin(this->delta_perp_long() - this->delta_para_long());
     }
 
-    double
-    BToKstarCharmonium::re_ratio_perp() const
-    {
-        return real(_imp->ratio_perp());
-    }
-
-    double
-    BToKstarCharmonium::re_ratio_para() const
-    {
-        return real(_imp->ratio_para());
-    }
-
-    double
-    BToKstarCharmonium::re_ratio_long() const
-    {
-        return real(_imp->ratio_long());
-    }
-
-    double
-    BToKstarCharmonium::im_ratio_perp() const
-    {
-        return imag(_imp->ratio_perp());
-    }
-
-    double
-    BToKstarCharmonium::im_ratio_para() const
-    {
-        return imag(_imp->ratio_para());
-    }
-
-    double
-    BToKstarCharmonium::im_ratio_long() const
-    {
-        return imag(_imp->ratio_long());
-    }
-
-    double
-    BToKstarCharmonium::abs_ratio_perp() const
-    {
-        return abs(_imp->ratio_perp());
-    }
-
-    double
-    BToKstarCharmonium::abs_ratio_para() const
-    {
-        return abs(_imp->ratio_para());
-    }
-
-    double
-    BToKstarCharmonium::abs_ratio_long() const
-    {
-        return abs(_imp->ratio_long());
-    }
 }

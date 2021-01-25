@@ -66,17 +66,6 @@ namespace eos
             double S_8_LHCb() const;
             double S_9_LHCb() const;
 
-            /// Auxilliary observables used to reduce the number of fit parameters
-            double re_ratio_perp() const;
-            double re_ratio_para() const;
-            double re_ratio_long() const;
-            double im_ratio_perp() const;
-            double im_ratio_para() const;
-            double im_ratio_long() const;
-            double abs_ratio_perp() const;
-            double abs_ratio_para() const;
-            double abs_ratio_long() const;
-
             ///@}
     };
 }
