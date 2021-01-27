@@ -232,10 +232,10 @@ class NonlocalFormFactorGvDV2020Test :
                 TEST_CHECK_NEARLY_EQUAL(real(nc->H_plus(12.0)), 14.5673,  10*eps);
                 TEST_CHECK_NEARLY_EQUAL(imag(nc->H_plus(12.0)), 16.9699,  10*eps);
 
-                TEST_CHECK_NEARLY_EQUAL(real(nc->H_plus_residue_jpsi()),  -1.09287,  eps);
-                TEST_CHECK_NEARLY_EQUAL(imag(nc->H_plus_residue_jpsi()),  -1.2799,   eps);
-                TEST_CHECK_NEARLY_EQUAL(real(nc->H_plus_residue_psi2s()),  3.10823,  eps);
-                TEST_CHECK_NEARLY_EQUAL(imag(nc->H_plus_residue_psi2s()),  3.60742,  eps);
+                TEST_CHECK_NEARLY_EQUAL(real(nc->H_plus_residue_jpsi()),   19.0589,  10*eps);
+                TEST_CHECK_NEARLY_EQUAL(imag(nc->H_plus_residue_jpsi()),   22.3204,  10*eps);
+                TEST_CHECK_NEARLY_EQUAL(real(nc->H_plus_residue_psi2s()), -6.68208,     eps);
+                TEST_CHECK_NEARLY_EQUAL(imag(nc->H_plus_residue_psi2s()), -7.75525,     eps);
             }
         }
 } nonlocal_formfactor_gvdv2020_test;
@@ -309,10 +309,10 @@ class NonlocalFormFactorGvDV2021Test :
                 TEST_CHECK_NEARLY_EQUAL(real(nc->H_plus(12.0)), -1.18903,    eps);
                 TEST_CHECK_NEARLY_EQUAL(imag(nc->H_plus(12.0)), -1.88908,    eps);
 
-                TEST_CHECK_NEARLY_EQUAL(real(nc->H_plus_residue_jpsi()),   0.180334,  eps);
-                TEST_CHECK_NEARLY_EQUAL(imag(nc->H_plus_residue_jpsi()),   0.273359,  eps);
-                TEST_CHECK_NEARLY_EQUAL(real(nc->H_plus_residue_psi2s()), -0.155624,  eps);
-                TEST_CHECK_NEARLY_EQUAL(imag(nc->H_plus_residue_psi2s()), -0.225437,  eps);
+                TEST_CHECK_NEARLY_EQUAL(real(nc->H_plus_residue_jpsi()),  -3.14489,   eps);
+                TEST_CHECK_NEARLY_EQUAL(imag(nc->H_plus_residue_jpsi()),  -4.76717,   eps);
+                TEST_CHECK_NEARLY_EQUAL(real(nc->H_plus_residue_psi2s()),  0.334561,  eps);
+                TEST_CHECK_NEARLY_EQUAL(imag(nc->H_plus_residue_psi2s()),  0.484645,  eps);
             }
         }
 } nonlocal_formfactor_grvdv2021_test;

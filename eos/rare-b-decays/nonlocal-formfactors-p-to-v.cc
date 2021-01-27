@@ -5058,6 +5058,7 @@ namespace eos
                     return Nlambda * pow(1.+z, 0.5) * pow(1.-z, a-b+c+d-1.5) * pow(phi1, a) * pow(phi2, 0.5*b) * pow(phi3, c) * pow(phi4, d); //(C5)
                 }
 
+                // Residue of H at s = m_Jpsi2 computed as the residue wrt z -z_Jpsi divided by dz/ds evaluated at s = m_Jpsi2
                 inline complex<double> H_residue_jpsi(const unsigned phiParam[4], const complex<double> & alpha_0, const complex<double> & alpha_1,
                                                       const complex<double> & alpha_2) const
                 {
@@ -5070,10 +5071,13 @@ namespace eos
                     const auto z_Jpsi  = eos::nc_utils::z(m_Jpsi2,         s_p, s_0);
                     const auto z_psi2S = eos::nc_utils::z(m_psi2S2,        s_p, s_0);
 
+                    const complex<double> dzds = -pow(s_p - s_0, 0.5) * pow(s_p - m_Jpsi2, -0.5) * pow(pow(s_p - m_Jpsi2, 0.5) + pow(s_p - s_0, 0.5), -2);
+
                     return eos::nc_utils::PGvDV2020(z_Jpsi, zBV, alpha_0, alpha_1, alpha_2) / phi(m_Jpsi2, phiParam) *
-                            (1 - norm(z_Jpsi)) * (1. - z_Jpsi*std::conj(z_psi2S)) / (z_Jpsi - z_psi2S);
+                            (1 - norm(z_Jpsi)) * (1. - z_Jpsi*std::conj(z_psi2S)) / (z_Jpsi - z_psi2S) / dzds;
                 };
 
+                // Residue of H at s = m_psi2S2 computed as the residue wrt z -z_psi2S divided by dz/ds evaluated at s = m_psi2S2
                 inline complex<double> H_residue_psi2s(const unsigned phiParam[4], const complex<double> & alpha_0, const complex<double> & alpha_1,
                                                        const complex<double> & alpha_2) const
                 {
@@ -5086,8 +5090,10 @@ namespace eos
                     const auto z_Jpsi  = eos::nc_utils::z(m_Jpsi2,         s_p, s_0);
                     const auto z_psi2S = eos::nc_utils::z(m_psi2S2,        s_p, s_0);
 
+                    const complex<double> dzds = -pow(s_p - s_0, 0.5) * pow(s_p - m_psi2S2, -0.5) * pow(pow(s_p - m_psi2S2, 0.5) + pow(s_p - s_0, 0.5), -2);
+
                     return eos::nc_utils::PGvDV2020(z_psi2S, zBV, alpha_0, alpha_1, alpha_2) / phi(m_psi2S2, phiParam) *
-                            (1 - norm(z_psi2S)) * (1. - z_psi2S*std::conj(z_Jpsi)) / (z_psi2S - z_Jpsi);
+                            (1 - norm(z_psi2S)) * (1. - z_psi2S*std::conj(z_Jpsi)) / (z_psi2S - z_Jpsi) / dzds;
                 };
 
             
@@ -5446,6 +5452,7 @@ namespace eos
                     return Nlambda * pow(1.+z, 0.5) * pow(1.-z, a-b+c+d-e-1.5) * pow(phi1, a) * pow(phi2, 0.5*b) * pow(phi3, c) * pow(phi4, d) * pow(phi5, e);
                 }
 
+                // Residue of H at s = m_Jpsi2 computed as the residue wrt z -z_Jpsi divided by dz/ds evaluated at s = m_Jpsi2
                 inline complex<double> H_residue_jpsi(const unsigned phiParam[5], const complex<double> & alpha_0, const complex<double> & alpha_1,
                                                       const complex<double> & alpha_2) const
                 {
@@ -5457,10 +5464,13 @@ namespace eos
                     const auto z_Jpsi  = eos::nc_utils::z(m_Jpsi2,         s_p, s_0);
                     const auto z_psi2S = eos::nc_utils::z(m_psi2S2,        s_p, s_0);
 
+                    const complex<double> dzds = -pow(s_p - s_0, 0.5) * pow(s_p - m_Jpsi2, -0.5) * pow(pow(s_p - m_Jpsi2, 0.5) + pow(s_p - s_0, 0.5), -2);
+
                     return eos::nc_utils::P(z_Jpsi, alpha_0, alpha_1, alpha_2) / phi(m_Jpsi2, phiParam) *
-                            (1 - norm(z_Jpsi)) * (1. - z_Jpsi*std::conj(z_psi2S)) / (z_Jpsi - z_psi2S);
+                            (1 - norm(z_Jpsi)) * (1. - z_Jpsi*std::conj(z_psi2S)) / (z_Jpsi - z_psi2S) / dzds;
                 };
 
+                // Residue of H at s = m_psi2S2 computed as the residue wrt z -z_psi2S divided by dz/ds evaluated at s = m_psi2S2
                 inline complex<double> H_residue_psi2s(const unsigned phiParam[5], const complex<double> & alpha_0, const complex<double> & alpha_1,
                                                        const complex<double> & alpha_2) const
                 {
@@ -5472,8 +5482,10 @@ namespace eos
                     const auto z_Jpsi  = eos::nc_utils::z(m_Jpsi2,         s_p, s_0);
                     const auto z_psi2S = eos::nc_utils::z(m_psi2S2,        s_p, s_0);
 
+                    const complex<double> dzds = -pow(s_p - s_0, 0.5) * pow(s_p - m_psi2S2, -0.5) * pow(pow(s_p - m_psi2S2, 0.5) + pow(s_p - s_0, 0.5), -2);
+
                     return eos::nc_utils::P(z_psi2S, alpha_0, alpha_1, alpha_2) / phi(m_psi2S2, phiParam) *
-                            (1 - norm(z_psi2S)) * (1. - z_psi2S*std::conj(z_Jpsi)) / (z_psi2S - z_Jpsi);
+                            (1 - norm(z_psi2S)) * (1. - z_psi2S*std::conj(z_Jpsi)) / (z_psi2S - z_Jpsi) / dzds;
                 };
 
             

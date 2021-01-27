@@ -505,18 +505,18 @@ class NonlocalFormFactorGvDV2020Test :
                 TEST_CHECK_NEARLY_EQUAL(real(nc->H_long(16.0)),   5.53271,     eps);
                 TEST_CHECK_NEARLY_EQUAL(imag(nc->H_long(16.0)),   0.443831,    eps);
 
-                TEST_CHECK_NEARLY_EQUAL(real(nc->H_perp_residue_jpsi()),   3.00101,   eps);
-                TEST_CHECK_NEARLY_EQUAL(imag(nc->H_perp_residue_jpsi()),   3.50296,   eps);
-                TEST_CHECK_NEARLY_EQUAL(real(nc->H_perp_residue_psi2s()), -3.57057,   eps);
-                TEST_CHECK_NEARLY_EQUAL(imag(nc->H_perp_residue_psi2s()), -4.14177,   eps);
-                TEST_CHECK_NEARLY_EQUAL(real(nc->H_para_residue_jpsi()),   6.01269,   eps);
-                TEST_CHECK_NEARLY_EQUAL(imag(nc->H_para_residue_jpsi()),   6.51464,   eps);
-                TEST_CHECK_NEARLY_EQUAL(real(nc->H_para_residue_psi2s()), -6.99773,   eps);
-                TEST_CHECK_NEARLY_EQUAL(imag(nc->H_para_residue_psi2s()), -7.56893,   eps);
-                TEST_CHECK_NEARLY_EQUAL(real(nc->H_long_residue_jpsi()),  -2.81615,   eps);
-                TEST_CHECK_NEARLY_EQUAL(imag(nc->H_long_residue_jpsi()),  -2.97279,   eps);
-                TEST_CHECK_NEARLY_EQUAL(real(nc->H_long_residue_psi2s()),  6.19006,   eps);
-                TEST_CHECK_NEARLY_EQUAL(imag(nc->H_long_residue_psi2s()),  6.52922,   eps);
+                TEST_CHECK_NEARLY_EQUAL(real(nc->H_perp_residue_jpsi()),   -52.3353,   10*eps);
+                TEST_CHECK_NEARLY_EQUAL(imag(nc->H_perp_residue_jpsi()),   -61.0889,   10*eps);
+                TEST_CHECK_NEARLY_EQUAL(real(nc->H_perp_residue_psi2s()),    7.67603,     eps);
+                TEST_CHECK_NEARLY_EQUAL(imag(nc->H_perp_residue_psi2s()),    8.90398,     eps);
+                TEST_CHECK_NEARLY_EQUAL(real(nc->H_para_residue_jpsi()),  -104.857,   100*eps);
+                TEST_CHECK_NEARLY_EQUAL(imag(nc->H_para_residue_jpsi()),  -113.610,   100*eps);
+                TEST_CHECK_NEARLY_EQUAL(real(nc->H_para_residue_psi2s()),   15.0437,   10*eps);
+                TEST_CHECK_NEARLY_EQUAL(imag(nc->H_para_residue_psi2s()),   16.2717,   10*eps);
+                TEST_CHECK_NEARLY_EQUAL(real(nc->H_long_residue_jpsi()),    49.1116,   10*eps);
+                TEST_CHECK_NEARLY_EQUAL(imag(nc->H_long_residue_jpsi()),    51.8432,   10*eps);
+                TEST_CHECK_NEARLY_EQUAL(real(nc->H_long_residue_psi2s()),  -13.3074,   10*eps);
+                TEST_CHECK_NEARLY_EQUAL(imag(nc->H_long_residue_psi2s()),  -14.0365,   10*eps);
             }
         }
 } nonlocal_formfactor_gvdv2020_test;
@@ -617,18 +617,18 @@ class NonlocalFormFactorGRvDV2021Test :
                 TEST_CHECK_NEARLY_EQUAL(real(nc->H_long(12.)), -5.5288,      eps);
                 TEST_CHECK_NEARLY_EQUAL(imag(nc->H_long(12.)), -5.93241,     eps);
 
-                TEST_CHECK_NEARLY_EQUAL(real(nc->H_perp_residue_jpsi()),  -0.381689,   eps);
-                TEST_CHECK_NEARLY_EQUAL(imag(nc->H_perp_residue_jpsi()),  -0.578581,   eps);
-                TEST_CHECK_NEARLY_EQUAL(real(nc->H_perp_residue_psi2s()),  0.136974,   eps);
-                TEST_CHECK_NEARLY_EQUAL(imag(nc->H_perp_residue_psi2s()),  0.198421,   eps);
-                TEST_CHECK_NEARLY_EQUAL(real(nc->H_para_residue_jpsi()),  -1.56304,    eps);
-                TEST_CHECK_NEARLY_EQUAL(imag(nc->H_para_residue_jpsi()),  -1.75993,    eps);
-                TEST_CHECK_NEARLY_EQUAL(real(nc->H_para_residue_psi2s()),  0.505653,   eps);
-                TEST_CHECK_NEARLY_EQUAL(imag(nc->H_para_residue_psi2s()),  0.5671,     eps);
-                TEST_CHECK_NEARLY_EQUAL(real(nc->H_long_residue_jpsi()),   0.856417,   eps);
-                TEST_CHECK_NEARLY_EQUAL(imag(nc->H_long_residue_jpsi()),   0.917859,   eps);
-                TEST_CHECK_NEARLY_EQUAL(real(nc->H_long_residue_psi2s()), -0.519158,   eps);
-                TEST_CHECK_NEARLY_EQUAL(imag(nc->H_long_residue_psi2s()), -0.555643,   eps);
+                TEST_CHECK_NEARLY_EQUAL(real(nc->H_perp_residue_jpsi()),    6.65637,     eps);
+                TEST_CHECK_NEARLY_EQUAL(imag(nc->H_perp_residue_jpsi()),   10.09,        eps);
+                TEST_CHECK_NEARLY_EQUAL(real(nc->H_perp_residue_psi2s()),  -0.294468,    eps);
+                TEST_CHECK_NEARLY_EQUAL(imag(nc->H_perp_residue_psi2s()),  -0.426566,    eps);
+                TEST_CHECK_NEARLY_EQUAL(real(nc->H_para_residue_jpsi()),   27.2582,   10*eps);
+                TEST_CHECK_NEARLY_EQUAL(imag(nc->H_para_residue_jpsi()),   30.6919,   10*eps);
+                TEST_CHECK_NEARLY_EQUAL(real(nc->H_para_residue_psi2s()),  -1.08705,     eps);
+                TEST_CHECK_NEARLY_EQUAL(imag(nc->H_para_residue_psi2s()),  -1.21915,     eps);
+                TEST_CHECK_NEARLY_EQUAL(real(nc->H_long_residue_jpsi()),  -14.9353,   10*eps);
+                TEST_CHECK_NEARLY_EQUAL(imag(nc->H_long_residue_jpsi()),  -16.0068,   10*eps);
+                TEST_CHECK_NEARLY_EQUAL(real(nc->H_long_residue_psi2s()),   1.11609,     eps);
+                TEST_CHECK_NEARLY_EQUAL(imag(nc->H_long_residue_psi2s()),   1.19452,     eps);
             }
         }
 } nonlocal_formfactor_grvdv2021_test;
