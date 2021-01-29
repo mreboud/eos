@@ -667,7 +667,7 @@ groups:
   - title: 'Parameters of the ee -> ccbar scattering processes'
     description: ''
     parameters:
-      # e^+ e^- channel
+      # Non-ccbar component of R_c
       'ee->ccbar::Rconstant' :
           central: 0
           min:     0
@@ -705,7 +705,37 @@ groups:
           max:     0
           latex:   '$g^0(\psi(4415),e^+e^-)$'
           comment: ''
-      # D^+ D^- channel
+      # effective channel
+      'ee->ccbar::g0(psi(2S),eff)' :
+          central: 0
+          min:     0
+          max:     0
+          latex:   '$g^0(\psi(2S),\textrm{eff})$'
+          comment: ''
+      'ee->ccbar::g0(psi(3770),eff)' :
+          central: 0
+          min:     0
+          max:     0
+          latex:   '$g^0(\psi(3770),\textrm{eff})$'
+          comment: ''
+      'ee->ccbar::g0(psi(4040),eff)' :
+          central: 0
+          min:     0
+          max:     0
+          latex:   '$g^0(\psi(4040),\textrm{eff})$'
+          comment: ''
+      'ee->ccbar::g0(psi(4160),eff)' :
+          central: 0
+          min:     0
+          max:     0
+          latex:   '$g^0(\psi(4160),\textrm{eff})$'
+          comment: ''
+      'ee->ccbar::g0(psi(4415),eff)' :
+          central: 0
+          min:     0
+          max:     0
+          latex:   '$g^0(\psi(4415),\textrm{eff})$'
+          comment: ''
       # D^0 \bar{D}^0 channel
       'ee->ccbar::g0(psi(2S),D^0Dbar^0)' :
           central: 0

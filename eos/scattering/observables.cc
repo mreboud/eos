@@ -33,11 +33,18 @@ namespace eos
                 make_observable("ee->ccbar::psi2S_ee_width", R"($\Gamma(\psi(2S) \to ee)$)",
                         &EEToCCBar::psi2S_ee_width),
 
+                make_observable("ee->ccbar::psi2S_eff_width", R"($\Gamma(\psi(2S) \to \textrm{eff})$)",
+                        &EEToCCBar::psi2S_eff_width),
+
                 make_observable("ee->ccbar::psi2S_total_width", R"($\Gamma_{\psi(2S)}$)",
                         &EEToCCBar::psi2S_total_width),
 
                 make_observable("ee->ccbar::sigma_eetoee(E)", R"($\sigma(ee \to ee)$)",
                         &EEToCCBar::sigma_eetoee,
+                        std::make_tuple("E")),
+
+                make_observable("ee->ccbar::sigma_eetoeff(E)", R"($\sigma(ee \to \textrm{eff})$)",
+                        &EEToCCBar::sigma_eetoeff,
                         std::make_tuple("E")),
 
                 make_observable("ee->ccbar::sigma_eetoD0Dbar0(E)", R"($\sigma(ee \to D^0 \bar{D}^0)$)",
