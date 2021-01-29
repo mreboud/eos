@@ -37,13 +37,13 @@ public:
         auto psi2S_res = std::make_shared<charmonium_resonance<3, 2>>("psi2S_res", p["mass::psi(2S)"]);
         auto psi3770_res = std::make_shared<charmonium_resonance<3, 2>>("psi3770_res", p["mass::psi(3770)"]);
 
-        std::vector<Parameter> ee_g0s       {{p["ee->ccbar::g0(psi(2S),ee)"], p["ee->ccbar::g0(psi(3770),ee)"]}};
-        std::vector<Parameter> D0Dbar0_g0s  {{p["ee->ccbar::g0(psi(2S),D^0Dbar^0)"], p["ee->ccbar::g0(psi(3770),D^0Dbar^0)"]}};
-        std::vector<Parameter> DpDm_g0s     {{p["ee->ccbar::g0(psi(2S),D^+D^-)"], p["ee->ccbar::g0(psi(3770),D^+D^-)"]}};
+        std::vector<Parameter> ee_g0s       {{p["ee->ccbar::g0(psi(2S),ee)"],           p["ee->ccbar::g0(psi(3770),ee)"]}};
+        std::vector<Parameter> D0Dbar0_g0s  {{p["ee->ccbar::g0(psi(2S),D^0Dbar^0)"],    p["ee->ccbar::g0(psi(3770),D^0Dbar^0)"]}};
+        std::vector<Parameter> DpDm_g0s     {{p["ee->ccbar::g0(psi(2S),D^+D^-)"],       p["ee->ccbar::g0(psi(3770),D^+D^-)"]}};
 
-        auto ee_chan        = std::make_shared<PPchan<3, 2>>("ee_chan", p["mass::e"], p["mass::e"], 3, ee_g0s);
-        auto D0Dbar0_chan   = std::make_shared<PPchan<3, 2>>("D0Dbar0_chan", p["mass::D^0"], p["mass::D^0"], 3, D0Dbar0_g0s);
-        auto DpDm_chan      = std::make_shared<PPchan<3, 2>>("DpDm_chan", p["mass::D^+"], p["mass::D^+"], 3, DpDm_g0s);
+        auto ee_chan        = std::make_shared<SPPchan<3, 2>>("ee_chan", p["mass::e"], p["mass::e"], 3, ee_g0s);
+        auto D0Dbar0_chan   = std::make_shared<SPPchan<3, 2>>("D0Dbar0_chan", p["mass::D^0"], p["mass::D^0"], 3, D0Dbar0_g0s);
+        auto DpDm_chan      = std::make_shared<SPPchan<3, 2>>("DpDm_chan", p["mass::D^+"], p["mass::D^+"], 3, DpDm_g0s);
 
         KMatrix<3, 2> KMatrix32({ee_chan, D0Dbar0_chan, DpDm_chan}, {psi2S_res, psi3770_res}, "KMatrix");
 
