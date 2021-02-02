@@ -58,8 +58,8 @@ using namespace eos;
 
 //                 Options o = { { "model", "WilsonScan" } };
 
-//                 auto nc = NonlocalFormFactor<nc::PToP>::make("B->K::LCSR", p, o);
-//                 auto diagnostics = nc->diagnostics();
+//                 auto nff = NonlocalFormFactor<nff::PToP>::make("B->K::LCSR", p, o);
+//                 auto diagnostics = nff->diagnostics();
 
 //                 std::cout << "Diagnostics:" << std::endl;
 //                 for (auto & d : diagnostics)
@@ -143,23 +143,23 @@ using namespace eos;
 //                 };
 //                 TEST_CHECK_DIAGNOSTICS(diagnostics, reference);
 
-//                 TEST_CHECK_NEARLY_EQUAL(real(nc->H_plus( 0.0)),  0.0,        1.0e-11);
-//                 TEST_CHECK_NEARLY_EQUAL(imag(nc->H_plus( 0.0)),  0.0,        1.0e-11);
-//                 TEST_CHECK_NEARLY_EQUAL(real(nc->H_plus( 1.0)), -7.58964e-9, 1.0e-11);
-//                 TEST_CHECK_NEARLY_EQUAL(imag(nc->H_plus( 1.0)),  0.0,        1.0e-11);
-//                 TEST_CHECK_NEARLY_EQUAL(real(nc->H_plus( 3.0)), -7.58213e-8, 1.0e-10);
-//                 TEST_CHECK_NEARLY_EQUAL(imag(nc->H_plus( 3.0)),  0.0,        1.0e-11);
-//                 TEST_CHECK_NEARLY_EQUAL(real(nc->H_plus(-5.0)), -5.20521e-8, 1.0e-10);
-//                 TEST_CHECK_NEARLY_EQUAL(imag(nc->H_plus(-5.0)),  0.0,        1.0e-11);
+//                 TEST_CHECK_NEARLY_EQUAL(real(nff->H_plus( 0.0)),  0.0,        1.0e-11);
+//                 TEST_CHECK_NEARLY_EQUAL(imag(nff->H_plus( 0.0)),  0.0,        1.0e-11);
+//                 TEST_CHECK_NEARLY_EQUAL(real(nff->H_plus( 1.0)), -7.58964e-9, 1.0e-11);
+//                 TEST_CHECK_NEARLY_EQUAL(imag(nff->H_plus( 1.0)),  0.0,        1.0e-11);
+//                 TEST_CHECK_NEARLY_EQUAL(real(nff->H_plus( 3.0)), -7.58213e-8, 1.0e-10);
+//                 TEST_CHECK_NEARLY_EQUAL(imag(nff->H_plus( 3.0)),  0.0,        1.0e-11);
+//                 TEST_CHECK_NEARLY_EQUAL(real(nff->H_plus(-5.0)), -5.20521e-8, 1.0e-10);
+//                 TEST_CHECK_NEARLY_EQUAL(imag(nff->H_plus(-5.0)),  0.0,        1.0e-11);
 
-//                 TEST_CHECK_NEARLY_EQUAL(real(nc->normalized_moment_A( 0.0)),  0.734885, 1.0e-4);
-//                 TEST_CHECK_NEARLY_EQUAL(imag(nc->normalized_moment_A( 0.0)),  0.0,      1.0e-4);
-//                 TEST_CHECK_NEARLY_EQUAL(real(nc->normalized_moment_A( 1.0)),  0.526179, 1.0e-4);
-//                 TEST_CHECK_NEARLY_EQUAL(imag(nc->normalized_moment_A( 1.0)),  0.0,      1.0e-4);
-//                 TEST_CHECK_NEARLY_EQUAL(real(nc->normalized_moment_A( 3.0)),  0.468461, 1.0e-4);
-//                 TEST_CHECK_NEARLY_EQUAL(imag(nc->normalized_moment_A( 3.0)),  0.0,      1.0e-4);
-//                 TEST_CHECK_NEARLY_EQUAL(real(nc->normalized_moment_A(-5.0)),  0.394032, 1.0e-3);
-//                 TEST_CHECK_NEARLY_EQUAL(imag(nc->normalized_moment_A(-5.0)),  0.0,      1.0e-4);
+//                 TEST_CHECK_NEARLY_EQUAL(real(nff->normalized_moment_A( 0.0)),  0.734885, 1.0e-4);
+//                 TEST_CHECK_NEARLY_EQUAL(imag(nff->normalized_moment_A( 0.0)),  0.0,      1.0e-4);
+//                 TEST_CHECK_NEARLY_EQUAL(real(nff->normalized_moment_A( 1.0)),  0.526179, 1.0e-4);
+//                 TEST_CHECK_NEARLY_EQUAL(imag(nff->normalized_moment_A( 1.0)),  0.0,      1.0e-4);
+//                 TEST_CHECK_NEARLY_EQUAL(real(nff->normalized_moment_A( 3.0)),  0.468461, 1.0e-4);
+//                 TEST_CHECK_NEARLY_EQUAL(imag(nff->normalized_moment_A( 3.0)),  0.0,      1.0e-4);
+//                 TEST_CHECK_NEARLY_EQUAL(real(nff->normalized_moment_A(-5.0)),  0.394032, 1.0e-3);
+//                 TEST_CHECK_NEARLY_EQUAL(imag(nff->normalized_moment_A(-5.0)),  0.0,      1.0e-4);
 //             }
 //         }
 // } nonlocal_formfactor_lcsr_test;
@@ -196,10 +196,10 @@ class NonlocalFormFactorGvDV2020Test :
 
                 Options o = { { "model", "WilsonScan" } };
 
-                auto nc = NonlocalFormFactor<nc::PToP>::make("B->K::GvDV2020", p, o);
+                auto nff = NonlocalFormFactor<nff::PToP>::make("B->K::GvDV2020", p, o);
 
 
-                auto diagnostics = nc->diagnostics();
+                auto diagnostics = nff->diagnostics();
 
                 std::cout << "Diagnostics:" << std::endl;
                 for (auto & d : diagnostics)
@@ -223,19 +223,19 @@ class NonlocalFormFactorGvDV2020Test :
                 };
                 TEST_CHECK_DIAGNOSTICS(diagnostics, reference);
 
-                TEST_CHECK_NEARLY_EQUAL(real(nc->H_plus(-1.0)),  0.131447,   eps);
-                TEST_CHECK_NEARLY_EQUAL(imag(nc->H_plus(-1.0)),  0.156871,   eps);
-                TEST_CHECK_NEARLY_EQUAL(real(nc->H_plus(0.0)),   0.,         eps);
-                TEST_CHECK_NEARLY_EQUAL(imag(nc->H_plus(0.0)),   0.,         eps);
-                TEST_CHECK_NEARLY_EQUAL(real(nc->H_plus(4.0)),  -1.09013,    eps);
-                TEST_CHECK_NEARLY_EQUAL(imag(nc->H_plus(4.0)),  -1.2906,     eps);
-                TEST_CHECK_NEARLY_EQUAL(real(nc->H_plus(12.0)), 14.5673,  10*eps);
-                TEST_CHECK_NEARLY_EQUAL(imag(nc->H_plus(12.0)), 16.9699,  10*eps);
+                TEST_CHECK_NEARLY_EQUAL(real(nff->H_plus(-1.0)),  0.131447,   eps);
+                TEST_CHECK_NEARLY_EQUAL(imag(nff->H_plus(-1.0)),  0.156871,   eps);
+                TEST_CHECK_NEARLY_EQUAL(real(nff->H_plus(0.0)),   0.,         eps);
+                TEST_CHECK_NEARLY_EQUAL(imag(nff->H_plus(0.0)),   0.,         eps);
+                TEST_CHECK_NEARLY_EQUAL(real(nff->H_plus(4.0)),  -1.09013,    eps);
+                TEST_CHECK_NEARLY_EQUAL(imag(nff->H_plus(4.0)),  -1.2906,     eps);
+                TEST_CHECK_NEARLY_EQUAL(real(nff->H_plus(12.0)), 14.5673,  10*eps);
+                TEST_CHECK_NEARLY_EQUAL(imag(nff->H_plus(12.0)), 16.9699,  10*eps);
 
-                TEST_CHECK_NEARLY_EQUAL(real(nc->H_plus_residue_jpsi()),   19.0589,  10*eps);
-                TEST_CHECK_NEARLY_EQUAL(imag(nc->H_plus_residue_jpsi()),   22.3204,  10*eps);
-                TEST_CHECK_NEARLY_EQUAL(real(nc->H_plus_residue_psi2s()), -6.68208,     eps);
-                TEST_CHECK_NEARLY_EQUAL(imag(nc->H_plus_residue_psi2s()), -7.75525,     eps);
+                TEST_CHECK_NEARLY_EQUAL(real(nff->H_plus_residue_jpsi()),   19.0589,  10*eps);
+                TEST_CHECK_NEARLY_EQUAL(imag(nff->H_plus_residue_jpsi()),   22.3204,  10*eps);
+                TEST_CHECK_NEARLY_EQUAL(real(nff->H_plus_residue_psi2s()), -6.68208,     eps);
+                TEST_CHECK_NEARLY_EQUAL(imag(nff->H_plus_residue_psi2s()), -7.75525,     eps);
             }
         }
 } nonlocal_formfactor_gvdv2020_test;
@@ -274,10 +274,10 @@ class NonlocalFormFactorGvDV2021Test :
 
                 Options o = { { "model", "WilsonScan" } };
 
-                auto nc = NonlocalFormFactor<nc::PToP>::make("B->K::GRvDV2021", p, o);
+                auto nff = NonlocalFormFactor<nff::PToP>::make("B->K::GRvDV2021", p, o);
 
 
-                auto diagnostics = nc->diagnostics();
+                auto diagnostics = nff->diagnostics();
 
                 std::cout << "Diagnostics:" << std::endl;
                 for (auto & d : diagnostics)
@@ -300,19 +300,19 @@ class NonlocalFormFactorGvDV2021Test :
                 TEST_CHECK_DIAGNOSTICS(diagnostics, reference);
 
 
-                TEST_CHECK_NEARLY_EQUAL(real(nc->H_plus(-1.0)), -0.071174,   eps);
-                TEST_CHECK_NEARLY_EQUAL(imag(nc->H_plus(-1.0)), -0.0983567,  eps);
-                TEST_CHECK_NEARLY_EQUAL(real(nc->H_plus(0.0)),   0.,         eps);
-                TEST_CHECK_NEARLY_EQUAL(imag(nc->H_plus(0.0)),   0.,         eps);
-                TEST_CHECK_NEARLY_EQUAL(real(nc->H_plus(4.0)),   0.410774,   eps);
-                TEST_CHECK_NEARLY_EQUAL(imag(nc->H_plus(4.0)),   0.58287,    eps);
-                TEST_CHECK_NEARLY_EQUAL(real(nc->H_plus(12.0)), -1.18903,    eps);
-                TEST_CHECK_NEARLY_EQUAL(imag(nc->H_plus(12.0)), -1.88908,    eps);
+                TEST_CHECK_NEARLY_EQUAL(real(nff->H_plus(-1.0)), -0.071174,   eps);
+                TEST_CHECK_NEARLY_EQUAL(imag(nff->H_plus(-1.0)), -0.0983567,  eps);
+                TEST_CHECK_NEARLY_EQUAL(real(nff->H_plus(0.0)),   0.,         eps);
+                TEST_CHECK_NEARLY_EQUAL(imag(nff->H_plus(0.0)),   0.,         eps);
+                TEST_CHECK_NEARLY_EQUAL(real(nff->H_plus(4.0)),   0.410774,   eps);
+                TEST_CHECK_NEARLY_EQUAL(imag(nff->H_plus(4.0)),   0.58287,    eps);
+                TEST_CHECK_NEARLY_EQUAL(real(nff->H_plus(12.0)), -1.18903,    eps);
+                TEST_CHECK_NEARLY_EQUAL(imag(nff->H_plus(12.0)), -1.88908,    eps);
 
-                TEST_CHECK_NEARLY_EQUAL(real(nc->H_plus_residue_jpsi()),  -3.14489,   eps);
-                TEST_CHECK_NEARLY_EQUAL(imag(nc->H_plus_residue_jpsi()),  -4.76717,   eps);
-                TEST_CHECK_NEARLY_EQUAL(real(nc->H_plus_residue_psi2s()),  0.334561,  eps);
-                TEST_CHECK_NEARLY_EQUAL(imag(nc->H_plus_residue_psi2s()),  0.484645,  eps);
+                TEST_CHECK_NEARLY_EQUAL(real(nff->H_plus_residue_jpsi()),  -3.14489,   eps);
+                TEST_CHECK_NEARLY_EQUAL(imag(nff->H_plus_residue_jpsi()),  -4.76717,   eps);
+                TEST_CHECK_NEARLY_EQUAL(real(nff->H_plus_residue_psi2s()),  0.334561,  eps);
+                TEST_CHECK_NEARLY_EQUAL(imag(nff->H_plus_residue_psi2s()),  0.484645,  eps);
             }
         }
 } nonlocal_formfactor_grvdv2021_test;

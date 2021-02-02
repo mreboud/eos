@@ -29,12 +29,12 @@ using std::sqrt;
 namespace eos
 {
     // B -> P
-    NonlocalFormFactor<nc::PToP>::~NonlocalFormFactor()
+    NonlocalFormFactor<nff::PToP>::~NonlocalFormFactor()
     {
     }
 
     complex<double>
-    NonlocalFormFactor<nc::PToP>::jpsi_residues_not_implemented() const
+    NonlocalFormFactor<nff::PToP>::jpsi_residues_not_implemented() const
     {
         throw InternalError("A NonlocalFormFactor without implementation of the J/psi residues has been erroneously used.");
 
@@ -43,7 +43,7 @@ namespace eos
     }
 
     complex<double>
-    NonlocalFormFactor<nc::PToP>::psi2s_residues_not_implemented() const
+    NonlocalFormFactor<nff::PToP>::psi2s_residues_not_implemented() const
     {
         throw InternalError("A NonlocalFormFactor without implementation of the psi(2S) residues has been erroneously used.");
 
@@ -52,7 +52,7 @@ namespace eos
     }
 
     complex<double>
-    NonlocalFormFactor<nc::PToP>::moments_not_implemented() const
+    NonlocalFormFactor<nff::PToP>::moments_not_implemented() const
     {
         throw InternalError("A NonlocalFormFactor without implementation of the LCSR moments has been erroneously used.");
 
@@ -61,12 +61,12 @@ namespace eos
     }
 
     // B -> V
-    NonlocalFormFactor<nc::PToV>::~NonlocalFormFactor()
+    NonlocalFormFactor<nff::PToV>::~NonlocalFormFactor()
     {
     }
 
     complex<double>
-    NonlocalFormFactor<nc::PToV>::jpsi_residues_not_implemented() const
+    NonlocalFormFactor<nff::PToV>::jpsi_residues_not_implemented() const
     {
         throw InternalError("A NonlocalFormFactor without implementation of the J/psi residues has been erroneously used.");
 
@@ -75,7 +75,7 @@ namespace eos
     }
 
     complex<double>
-    NonlocalFormFactor<nc::PToV>::psi2s_residues_not_implemented() const
+    NonlocalFormFactor<nff::PToV>::psi2s_residues_not_implemented() const
     {
         throw InternalError("A NonlocalFormFactor without implementation of the psi(2S) residues has been erroneously used.");
 
@@ -84,7 +84,7 @@ namespace eos
     }
 
     complex<double>
-    NonlocalFormFactor<nc::PToV>::moments_not_implemented() const
+    NonlocalFormFactor<nff::PToV>::moments_not_implemented() const
     {
         throw InternalError("A NonlocalFormFactor without implementation of the LCSR moments has been erroneously used.");
 
@@ -93,7 +93,7 @@ namespace eos
     }
 
 
-    namespace nc_utils
+    namespace nff_utils
     {
 
         complex<double> z(const double & q2, complex<double> s_plus, complex<double> s_0)

@@ -23,7 +23,7 @@
 
 namespace eos
 {
-    namespace nc
+    namespace nff
     {
         // P -> P
         struct PToP { };

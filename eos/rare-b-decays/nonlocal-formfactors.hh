@@ -51,7 +51,7 @@ namespace eos
     // P -> P
 
     template <>
-    class NonlocalFormFactor<nc::PToP> :
+    class NonlocalFormFactor<nff::PToP> :
         public ParameterUser
     {
         protected:
@@ -102,7 +102,7 @@ namespace eos
             ///@}
 
             /// Factory method.
-            static NonlocalFormFactorPtr<nc::PToP> make(const QualifiedName & name, const Parameters & p, const Options & o);
+            static NonlocalFormFactorPtr<nff::PToP> make(const QualifiedName & name, const Parameters & p, const Options & o);
 
             ///@name Internal diagnostics for unit tests
             ///@{
@@ -111,9 +111,9 @@ namespace eos
     };
 
     template <typename Process_>
-    class NonlocalFormFactorObservable<Process_, nc::PToP> :
+    class NonlocalFormFactorObservable<Process_, nff::PToP> :
         public ParameterUser,
-        public PrivateImplementationPattern<NonlocalFormFactorObservable<Process_, nc::PToP>>
+        public PrivateImplementationPattern<NonlocalFormFactorObservable<Process_, nff::PToP>>
     {
         public:
             ///@name Basic operations
@@ -159,12 +159,12 @@ namespace eos
 
             ///@}
     };
-    extern template class NonlocalFormFactorObservable<nc::BToK, nc::PToP>;
+    extern template class NonlocalFormFactorObservable<nff::BToK, nff::PToP>;
 
     // P -> V
 
     template <>
-    class NonlocalFormFactor<nc::PToV> :
+    class NonlocalFormFactor<nff::PToV> :
         public ParameterUser
     {
         protected:
@@ -233,7 +233,7 @@ namespace eos
             ///@}
 
             /// Factory method.
-            static NonlocalFormFactorPtr<nc::PToV> make(const QualifiedName & name, const Parameters & p, const Options & o);
+            static NonlocalFormFactorPtr<nff::PToV> make(const QualifiedName & name, const Parameters & p, const Options & o);
 
             ///@name Internal diagnostics for unit tests
             ///@{
@@ -242,9 +242,9 @@ namespace eos
     };
 
     template <typename Process_>
-    class NonlocalFormFactorObservable<Process_, nc::PToV> :
+    class NonlocalFormFactorObservable<Process_, nff::PToV> :
         public ParameterUser,
-        public PrivateImplementationPattern<NonlocalFormFactorObservable<Process_, nc::PToV>>
+        public PrivateImplementationPattern<NonlocalFormFactorObservable<Process_, nff::PToV>>
     {
         public:
             ///@name Basic operations
@@ -328,10 +328,10 @@ namespace eos
 
             ///@}
     };
-    extern template class NonlocalFormFactorObservable<nc::BToKstar, nc::PToV>;
+    extern template class NonlocalFormFactorObservable<nff::BToKstar, nff::PToV>;
 
 
-    namespace nc_utils
+    namespace nff_utils
     {
 
         complex<double> z(const double & q2, complex<double> s_plus, complex<double> s_0);

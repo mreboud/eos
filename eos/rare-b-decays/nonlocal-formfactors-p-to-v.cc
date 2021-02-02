@@ -40,10 +40,10 @@
 
 namespace eos
 {
-    namespace nc_p_to_v
+    namespace nff_p_to_v
     {
         class Naive :
-            public NonlocalFormFactor<nc::PToV>
+            public NonlocalFormFactor<nff::PToV>
         {
             public:
                 Naive(const Parameters &, const Options &)
@@ -95,9 +95,9 @@ namespace eos
                     return 0.0;
                 }
 
-                static NonlocalFormFactorPtr<nc::PToV> make(const Parameters & p, const Options & o)
+                static NonlocalFormFactorPtr<nff::PToV> make(const Parameters & p, const Options & o)
                 {
-                    return NonlocalFormFactorPtr<nc::PToV>(new Naive(p, o));
+                    return NonlocalFormFactorPtr<nff::PToV>(new Naive(p, o));
                 }
 
                 virtual Diagnostics diagnostics() const
@@ -111,7 +111,7 @@ namespace eos
          * as given in [BFS2001] and [BFS2004].
          */
         class QCDF :
-            public NonlocalFormFactor<nc::PToV>
+            public NonlocalFormFactor<nff::PToV>
         {
             public:
                 std::shared_ptr<Model> model;
@@ -406,9 +406,9 @@ namespace eos
                     return 0.0;
                 }
 
-                static NonlocalFormFactorPtr<nc::PToV> make(const Parameters & p, const Options & o)
+                static NonlocalFormFactorPtr<nff::PToV> make(const Parameters & p, const Options & o)
                 {
-                    return NonlocalFormFactorPtr<nc::PToV>(new QCDF(p, o));
+                    return NonlocalFormFactorPtr<nff::PToV>(new QCDF(p, o));
                 }
 
                 virtual Diagnostics diagnostics() const
@@ -418,7 +418,7 @@ namespace eos
         };
 
         class LCSR :
-            public NonlocalFormFactor<nc::PToV>
+            public NonlocalFormFactor<nff::PToV>
         {
             private:
                 std::shared_ptr<Model> model;
@@ -4896,9 +4896,9 @@ namespace eos
                     return this->normalized_first_moment_V23(q2);
                 }
 
-                static NonlocalFormFactorPtr<nc::PToV> make(const Parameters & p, const Options & o)
+                static NonlocalFormFactorPtr<nff::PToV> make(const Parameters & p, const Options & o)
                 {
-                    return NonlocalFormFactorPtr<nc::PToV>(new LCSR(p, o));
+                    return NonlocalFormFactorPtr<nff::PToV>(new LCSR(p, o));
                 }
 
         };
@@ -4923,7 +4923,7 @@ namespace eos
          */
         template <typename Process_>
         class GvDV2020 :
-            public NonlocalFormFactor<nc::PToV>
+            public NonlocalFormFactor<nff::PToV>
         {
             private:
                 std::shared_ptr<FormFactors<PToV>> form_factors;
@@ -5041,7 +5041,7 @@ namespace eos
                     const double m_B2  = pow(m_B, 2),  m_B4 =  pow(m_B, 4);
                     const double m_D02 = pow(m_D0, 2), m_D04 = pow(m_D0, 4);
                     const double s_0   = this->t_0();
-                    const auto   z     = eos::nc_utils::z(q2, 4.0 * pow(m_D0, 2), s_0);
+                    const auto   z     = eos::nff_utils::z(q2, 4.0 * pow(m_D0, 2), s_0);
                     const double Q2   = this->t_s();
                     const double chi = this->chiOPE();
 
@@ -5067,13 +5067,13 @@ namespace eos
 
                     const double s_0   = this->t_0();
                     const double s_p   = 4.0 * pow(m_D0, 2);
-                    const auto zBV     = eos::nc_utils::z(pow(m_B+m_V, 2), s_p, s_0);
-                    const auto z_Jpsi  = eos::nc_utils::z(m_Jpsi2,         s_p, s_0);
-                    const auto z_psi2S = eos::nc_utils::z(m_psi2S2,        s_p, s_0);
+                    const auto zBV     = eos::nff_utils::z(pow(m_B+m_V, 2), s_p, s_0);
+                    const auto z_Jpsi  = eos::nff_utils::z(m_Jpsi2,         s_p, s_0);
+                    const auto z_psi2S = eos::nff_utils::z(m_psi2S2,        s_p, s_0);
 
                     const complex<double> dzds = -pow(s_p - s_0, 0.5) * pow(s_p - m_Jpsi2, -0.5) * pow(pow(s_p - m_Jpsi2, 0.5) + pow(s_p - s_0, 0.5), -2);
 
-                    return eos::nc_utils::PGvDV2020(z_Jpsi, zBV, alpha_0, alpha_1, alpha_2) / phi(m_Jpsi2, phiParam) *
+                    return eos::nff_utils::PGvDV2020(z_Jpsi, zBV, alpha_0, alpha_1, alpha_2) / phi(m_Jpsi2, phiParam) *
                             (1 - norm(z_Jpsi)) * (1. - z_Jpsi*std::conj(z_psi2S)) / (z_Jpsi - z_psi2S) / dzds;
                 };
 
@@ -5086,13 +5086,13 @@ namespace eos
 
                     const double s_0   = this->t_0();
                     const double s_p   = 4.0 * pow(m_D0, 2);
-                    const auto zBV     = eos::nc_utils::z(pow(m_B+m_V, 2), s_p, s_0);
-                    const auto z_Jpsi  = eos::nc_utils::z(m_Jpsi2,         s_p, s_0);
-                    const auto z_psi2S = eos::nc_utils::z(m_psi2S2,        s_p, s_0);
+                    const auto zBV     = eos::nff_utils::z(pow(m_B+m_V, 2), s_p, s_0);
+                    const auto z_Jpsi  = eos::nff_utils::z(m_Jpsi2,         s_p, s_0);
+                    const auto z_psi2S = eos::nff_utils::z(m_psi2S2,        s_p, s_0);
 
                     const complex<double> dzds = -pow(s_p - s_0, 0.5) * pow(s_p - m_psi2S2, -0.5) * pow(pow(s_p - m_psi2S2, 0.5) + pow(s_p - s_0, 0.5), -2);
 
-                    return eos::nc_utils::PGvDV2020(z_psi2S, zBV, alpha_0, alpha_1, alpha_2) / phi(m_psi2S2, phiParam) *
+                    return eos::nff_utils::PGvDV2020(z_psi2S, zBV, alpha_0, alpha_1, alpha_2) / phi(m_psi2S2, phiParam) *
                             (1 - norm(z_psi2S)) * (1. - z_psi2S*std::conj(z_Jpsi)) / (z_psi2S - z_Jpsi) / dzds;
                 };
 
@@ -5105,16 +5105,16 @@ namespace eos
 
                     const double s_0   = this->t_0();
                     const double s_p   = 4.0 * pow(m_D0, 2);
-                    const auto z       = eos::nc_utils::z(q2,              s_p, s_0);
-                    const auto zBV     = eos::nc_utils::z(pow(m_B+m_V, 2), s_p, s_0);
-                    const auto z_Jpsi  = eos::nc_utils::z(pow(m_Jpsi, 2),  s_p, s_0);
-                    const auto z_psi2S = eos::nc_utils::z(pow(m_psi2S, 2), s_p, s_0);
+                    const auto z       = eos::nff_utils::z(q2,              s_p, s_0);
+                    const auto zBV     = eos::nff_utils::z(pow(m_B+m_V, 2), s_p, s_0);
+                    const auto z_Jpsi  = eos::nff_utils::z(pow(m_Jpsi, 2),  s_p, s_0);
+                    const auto z_psi2S = eos::nff_utils::z(pow(m_psi2S, 2), s_p, s_0);
 
-                    const complex<double> blaschke_factor = eos::nc_utils::blaschke_cc(z, z_Jpsi, z_psi2S);
+                    const complex<double> blaschke_factor = eos::nff_utils::blaschke_cc(z, z_Jpsi, z_psi2S);
 
                     const unsigned phiParam[4] = {3, 1, 3, 0};
 
-                    return eos::nc_utils::PGvDV2020(z, zBV, alpha_0, alpha_1, alpha_2) / phi(q2, phiParam) / blaschke_factor;
+                    return eos::nff_utils::PGvDV2020(z, zBV, alpha_0, alpha_1, alpha_2) / phi(q2, phiParam) / blaschke_factor;
                 }
 
                 virtual complex<double> Hhat_perp(const double & q2) const
@@ -5125,10 +5125,10 @@ namespace eos
 
                     const double s_0   = this->t_0();
                     const double s_p   = 4.0 * pow(m_D0, 2);
-                    const auto z       = eos::nc_utils::z(q2,              s_p, s_0);
-                    const auto zBV     = eos::nc_utils::z(pow(m_B+m_V, 2), s_p, s_0);
+                    const auto z       = eos::nff_utils::z(q2,              s_p, s_0);
+                    const auto zBV     = eos::nff_utils::z(pow(m_B+m_V, 2), s_p, s_0);
 
-                    return eos::nc_utils::PGvDV2020(z, zBV, alpha_0, alpha_1, alpha_2);
+                    return eos::nff_utils::PGvDV2020(z, zBV, alpha_0, alpha_1, alpha_2);
                 }
 
                 virtual complex<double> H_para(const double & q2) const
@@ -5139,16 +5139,16 @@ namespace eos
 
                     const double s_0   = this->t_0();
                     const double s_p   = 4.0 * pow(m_D0, 2);
-                    const auto z       = eos::nc_utils::z(q2,              s_p, s_0);
-                    const auto zBV     = eos::nc_utils::z(pow(m_B+m_V, 2), s_p, s_0);
-                    const auto z_Jpsi  = eos::nc_utils::z(pow(m_Jpsi, 2),  s_p, s_0);
-                    const auto z_psi2S = eos::nc_utils::z(pow(m_psi2S, 2), s_p, s_0);
+                    const auto z       = eos::nff_utils::z(q2,              s_p, s_0);
+                    const auto zBV     = eos::nff_utils::z(pow(m_B+m_V, 2), s_p, s_0);
+                    const auto z_Jpsi  = eos::nff_utils::z(pow(m_Jpsi, 2),  s_p, s_0);
+                    const auto z_psi2S = eos::nff_utils::z(pow(m_psi2S, 2), s_p, s_0);
 
-                    const complex<double> blaschke_factor = eos::nc_utils::blaschke_cc(z, z_Jpsi, z_psi2S);
+                    const complex<double> blaschke_factor = eos::nff_utils::blaschke_cc(z, z_Jpsi, z_psi2S);
 
                     const unsigned phiParam[4] = {3, 1, 3, 0};
 
-                    return eos::nc_utils::PGvDV2020(z, zBV, alpha_0, alpha_1, alpha_2) / phi(q2, phiParam) / blaschke_factor;
+                    return eos::nff_utils::PGvDV2020(z, zBV, alpha_0, alpha_1, alpha_2) / phi(q2, phiParam) / blaschke_factor;
                 }
 
                 virtual complex<double> Hhat_para(const double & q2) const
@@ -5159,10 +5159,10 @@ namespace eos
 
                     const double s_0   = this->t_0();
                     const double s_p   = 4.0 * pow(m_D0, 2);
-                    const auto z       = eos::nc_utils::z(q2,              s_p, s_0);
-                    const auto zBV     = eos::nc_utils::z(pow(m_B+m_V, 2), s_p, s_0);
+                    const auto z       = eos::nff_utils::z(q2,              s_p, s_0);
+                    const auto zBV     = eos::nff_utils::z(pow(m_B+m_V, 2), s_p, s_0);
 
-                    return eos::nc_utils::PGvDV2020(z, zBV, alpha_0, alpha_1, alpha_2);
+                    return eos::nff_utils::PGvDV2020(z, zBV, alpha_0, alpha_1, alpha_2);
                 }
 
                 virtual complex<double> H_long(const double & q2) const
@@ -5173,16 +5173,16 @@ namespace eos
 
                     const double s_0   = this->t_0();
                     const double s_p   = 4.0 * pow(m_D0, 2);
-                    const auto z       = eos::nc_utils::z(q2,              s_p, s_0);
-                    const auto zBV     = eos::nc_utils::z(pow(m_B+m_V, 2), s_p, s_0);
-                    const auto z_Jpsi  = eos::nc_utils::z(pow(m_Jpsi, 2),  s_p, s_0);
-                    const auto z_psi2S = eos::nc_utils::z(pow(m_psi2S, 2), s_p, s_0);
+                    const auto z       = eos::nff_utils::z(q2,              s_p, s_0);
+                    const auto zBV     = eos::nff_utils::z(pow(m_B+m_V, 2), s_p, s_0);
+                    const auto z_Jpsi  = eos::nff_utils::z(pow(m_Jpsi, 2),  s_p, s_0);
+                    const auto z_psi2S = eos::nff_utils::z(pow(m_psi2S, 2), s_p, s_0);
 
-                    const complex<double> blaschke_factor = eos::nc_utils::blaschke_cc(z, z_Jpsi, z_psi2S);
+                    const complex<double> blaschke_factor = eos::nff_utils::blaschke_cc(z, z_Jpsi, z_psi2S);
 
                     const unsigned phiParam[4] = {3, 1, 2, 2};
 
-                    return eos::nc_utils::PGvDV2020(z, zBV, alpha_0, alpha_1, alpha_2) / phi(q2, phiParam) / blaschke_factor;
+                    return eos::nff_utils::PGvDV2020(z, zBV, alpha_0, alpha_1, alpha_2) / phi(q2, phiParam) / blaschke_factor;
                 }
 
                 virtual complex<double> Hhat_long(const double & q2) const
@@ -5193,10 +5193,10 @@ namespace eos
 
                     const double s_0   = this->t_0();
                     const double s_p   = 4.0 * pow(m_D0, 2);
-                    const auto z       = eos::nc_utils::z(q2,              s_p, s_0);
-                    const auto zBV     = eos::nc_utils::z(pow(m_B+m_V, 2), s_p, s_0);
+                    const auto z       = eos::nff_utils::z(q2,              s_p, s_0);
+                    const auto zBV     = eos::nff_utils::z(pow(m_B+m_V, 2), s_p, s_0);
 
-                    return eos::nc_utils::PGvDV2020(z, zBV, alpha_0, alpha_1, alpha_2);
+                    return eos::nff_utils::PGvDV2020(z, zBV, alpha_0, alpha_1, alpha_2);
                 }
 
 
@@ -5283,9 +5283,9 @@ namespace eos
                 }
 
 
-                static NonlocalFormFactorPtr<nc::PToV> make(const Parameters & p, const Options & o)
+                static NonlocalFormFactorPtr<nff::PToV> make(const Parameters & p, const Options & o)
                 {
-                    return NonlocalFormFactorPtr<nc::PToV>(new GvDV2020<Process_>(p, o));
+                    return NonlocalFormFactorPtr<nff::PToV>(new GvDV2020<Process_>(p, o));
                 }
 
                 virtual Diagnostics diagnostics() const
@@ -5313,7 +5313,7 @@ namespace eos
          */
         template <typename Process_>
         class GRvDV2021 :
-            public NonlocalFormFactor<nc::PToV>
+            public NonlocalFormFactor<nff::PToV>
         {
             private:
                 std::shared_ptr<FormFactors<PToV>> form_factors;
@@ -5434,7 +5434,7 @@ namespace eos
                     const double m_B2  = pow(m_B, 2),  m_B4 =  pow(m_B, 4);
                     const double m_D02 = pow(m_D0, 2), m_D04 = pow(m_D0, 4);
                     const double s_0   = this->t_0();
-                    const auto   z     = eos::nc_utils::z(q2, 4.0 * pow(m_D0, 2), s_0);
+                    const auto   z     = eos::nff_utils::z(q2, 4.0 * pow(m_D0, 2), s_0);
                     const double Q2   = this->t_s();
                     const double chi = this->chiOPE();
 
@@ -5461,12 +5461,12 @@ namespace eos
 
                     const double s_0   = this->t_0();
                     const double s_p   = 4.0 * pow(m_D0, 2);
-                    const auto z_Jpsi  = eos::nc_utils::z(m_Jpsi2,         s_p, s_0);
-                    const auto z_psi2S = eos::nc_utils::z(m_psi2S2,        s_p, s_0);
+                    const auto z_Jpsi  = eos::nff_utils::z(m_Jpsi2,         s_p, s_0);
+                    const auto z_psi2S = eos::nff_utils::z(m_psi2S2,        s_p, s_0);
 
                     const complex<double> dzds = -pow(s_p - s_0, 0.5) * pow(s_p - m_Jpsi2, -0.5) * pow(pow(s_p - m_Jpsi2, 0.5) + pow(s_p - s_0, 0.5), -2);
 
-                    return eos::nc_utils::P(z_Jpsi, alpha_0, alpha_1, alpha_2) / phi(m_Jpsi2, phiParam) *
+                    return eos::nff_utils::P(z_Jpsi, alpha_0, alpha_1, alpha_2) / phi(m_Jpsi2, phiParam) *
                             (1 - norm(z_Jpsi)) * (1. - z_Jpsi*std::conj(z_psi2S)) / (z_Jpsi - z_psi2S) / dzds;
                 };
 
@@ -5479,12 +5479,12 @@ namespace eos
 
                     const double s_0   = this->t_0();
                     const double s_p   = 4.0 * pow(m_D0, 2);
-                    const auto z_Jpsi  = eos::nc_utils::z(m_Jpsi2,         s_p, s_0);
-                    const auto z_psi2S = eos::nc_utils::z(m_psi2S2,        s_p, s_0);
+                    const auto z_Jpsi  = eos::nff_utils::z(m_Jpsi2,         s_p, s_0);
+                    const auto z_psi2S = eos::nff_utils::z(m_psi2S2,        s_p, s_0);
 
                     const complex<double> dzds = -pow(s_p - s_0, 0.5) * pow(s_p - m_psi2S2, -0.5) * pow(pow(s_p - m_psi2S2, 0.5) + pow(s_p - s_0, 0.5), -2);
 
-                    return eos::nc_utils::P(z_psi2S, alpha_0, alpha_1, alpha_2) / phi(m_psi2S2, phiParam) *
+                    return eos::nff_utils::P(z_psi2S, alpha_0, alpha_1, alpha_2) / phi(m_psi2S2, phiParam) *
                             (1 - norm(z_psi2S)) * (1. - z_psi2S*std::conj(z_Jpsi)) / (z_psi2S - z_Jpsi) / dzds;
                 };
 
@@ -5497,15 +5497,15 @@ namespace eos
 
                     const double s_0   = this->t_0();
                     const double s_p   = 4.0 * pow(m_D0, 2);
-                    const auto z       = eos::nc_utils::z(q2,              s_p, s_0);
-                    const auto z_Jpsi  = eos::nc_utils::z(pow(m_Jpsi, 2),  s_p, s_0);
-                    const auto z_psi2S = eos::nc_utils::z(pow(m_psi2S, 2), s_p, s_0);
+                    const auto z       = eos::nff_utils::z(q2,              s_p, s_0);
+                    const auto z_Jpsi  = eos::nff_utils::z(pow(m_Jpsi, 2),  s_p, s_0);
+                    const auto z_psi2S = eos::nff_utils::z(pow(m_psi2S, 2), s_p, s_0);
 
-                    const complex<double> blaschke_factor = eos::nc_utils::blaschke_cc(z, z_Jpsi, z_psi2S);
+                    const complex<double> blaschke_factor = eos::nff_utils::blaschke_cc(z, z_Jpsi, z_psi2S);
 
                     const unsigned phiParam[5] = {5, 1, 3, 0, 2};
 
-                    return eos::nc_utils::P(z, alpha_0, alpha_1, alpha_2) / phi(q2, phiParam) / blaschke_factor;
+                    return eos::nff_utils::P(z, alpha_0, alpha_1, alpha_2) / phi(q2, phiParam) / blaschke_factor;
                 }
 
                 virtual complex<double> Hhat_perp(const double & q2) const
@@ -5516,9 +5516,9 @@ namespace eos
 
                     const double s_0   = this->t_0();
                     const double s_p   = 4.0 * pow(m_D0, 2);
-                    const auto z       = eos::nc_utils::z(q2, s_p, s_0);
+                    const auto z       = eos::nff_utils::z(q2, s_p, s_0);
 
-                    return eos::nc_utils::P(z, alpha_0, alpha_1, alpha_2);
+                    return eos::nff_utils::P(z, alpha_0, alpha_1, alpha_2);
                 }
 
                 virtual complex<double> H_para(const double & q2) const
@@ -5529,15 +5529,15 @@ namespace eos
 
                     const double s_0   = this->t_0();
                     const double s_p   = 4.0 * pow(m_D0, 2);
-                    const auto z       = eos::nc_utils::z(q2,              s_p, s_0);
-                    const auto z_Jpsi  = eos::nc_utils::z(pow(m_Jpsi, 2),  s_p, s_0);
-                    const auto z_psi2S = eos::nc_utils::z(pow(m_psi2S, 2), s_p, s_0);
+                    const auto z       = eos::nff_utils::z(q2,              s_p, s_0);
+                    const auto z_Jpsi  = eos::nff_utils::z(pow(m_Jpsi, 2),  s_p, s_0);
+                    const auto z_psi2S = eos::nff_utils::z(pow(m_psi2S, 2), s_p, s_0);
 
-                    const complex<double> blaschke_factor = eos::nc_utils::blaschke_cc(z, z_Jpsi, z_psi2S);
+                    const complex<double> blaschke_factor = eos::nff_utils::blaschke_cc(z, z_Jpsi, z_psi2S);
 
                     const unsigned phiParam[5] = {5, 1, 3, 0, 2};
 
-                    return eos::nc_utils::P(z, alpha_0, alpha_1, alpha_2) / phi(q2, phiParam) / blaschke_factor;
+                    return eos::nff_utils::P(z, alpha_0, alpha_1, alpha_2) / phi(q2, phiParam) / blaschke_factor;
                 }
 
                 virtual complex<double> Hhat_para(const double & q2) const
@@ -5548,9 +5548,9 @@ namespace eos
 
                     const double s_0   = this->t_0();
                     const double s_p   = 4.0 * pow(m_D0, 2);
-                    const auto z       = eos::nc_utils::z(q2,              s_p, s_0);
+                    const auto z       = eos::nff_utils::z(q2,              s_p, s_0);
 
-                    return eos::nc_utils::P(z, alpha_0, alpha_1, alpha_2);
+                    return eos::nff_utils::P(z, alpha_0, alpha_1, alpha_2);
                 }
 
                 virtual complex<double> H_long(const double & q2) const
@@ -5561,15 +5561,15 @@ namespace eos
 
                     const double s_0   = this->t_0();
                     const double s_p   = 4.0 * pow(m_D0, 2);
-                    const auto z       = eos::nc_utils::z(q2,              s_p, s_0);
-                    const auto z_Jpsi  = eos::nc_utils::z(pow(m_Jpsi, 2),  s_p, s_0);
-                    const auto z_psi2S = eos::nc_utils::z(pow(m_psi2S, 2), s_p, s_0);
+                    const auto z       = eos::nff_utils::z(q2,              s_p, s_0);
+                    const auto z_Jpsi  = eos::nff_utils::z(pow(m_Jpsi, 2),  s_p, s_0);
+                    const auto z_psi2S = eos::nff_utils::z(pow(m_psi2S, 2), s_p, s_0);
 
-                    const complex<double> blaschke_factor = eos::nc_utils::blaschke_cc(z, z_Jpsi, z_psi2S);
+                    const complex<double> blaschke_factor = eos::nff_utils::blaschke_cc(z, z_Jpsi, z_psi2S);
 
                     const unsigned phiParam[5] = {5, 1, 2, 2, 2};
 
-                    return eos::nc_utils::P(z, alpha_0, alpha_1, alpha_2) / phi(q2, phiParam) / blaschke_factor;
+                    return eos::nff_utils::P(z, alpha_0, alpha_1, alpha_2) / phi(q2, phiParam) / blaschke_factor;
                 }
 
                 virtual complex<double> Hhat_long(const double & q2) const
@@ -5580,9 +5580,9 @@ namespace eos
 
                     const double s_0   = this->t_0();
                     const double s_p   = 4.0 * pow(m_D0, 2);
-                    const auto z       = eos::nc_utils::z(q2, s_p, s_0);
+                    const auto z       = eos::nff_utils::z(q2, s_p, s_0);
 
-                    return eos::nc_utils::P(z, alpha_0, alpha_1, alpha_2);
+                    return eos::nff_utils::P(z, alpha_0, alpha_1, alpha_2);
                 }
 
 
@@ -5670,9 +5670,9 @@ namespace eos
                 }
 
 
-                static NonlocalFormFactorPtr<nc::PToV> make(const Parameters & p, const Options & o)
+                static NonlocalFormFactorPtr<nff::PToV> make(const Parameters & p, const Options & o)
                 {
-                    return NonlocalFormFactorPtr<nc::PToV>(new GRvDV2021<Process_>(p, o));
+                    return NonlocalFormFactorPtr<nff::PToV>(new GRvDV2021<Process_>(p, o));
                 }
 
                 virtual Diagnostics diagnostics() const
@@ -5692,207 +5692,207 @@ namespace eos
         };
     }
 
-    NonlocalFormFactorPtr<nc::PToV>
-    NonlocalFormFactor<nc::PToV>::make(const QualifiedName & name, const Parameters & p, const Options & o)
+    NonlocalFormFactorPtr<nff::PToV>
+    NonlocalFormFactor<nff::PToV>::make(const QualifiedName & name, const Parameters & p, const Options & o)
     {
         typedef QualifiedName KeyType;
-        typedef std::function<NonlocalFormFactorPtr<nc::PToV> (const Parameters &, const Options &)> ValueType;
+        typedef std::function<NonlocalFormFactorPtr<nff::PToV> (const Parameters &, const Options &)> ValueType;
         std::map<KeyType, ValueType> entries
         {
             // trivial
-            std::make_pair("B->K^*::naive",         &nc_p_to_v::Naive::make),
+            std::make_pair("B->K^*::naive",         &nff_p_to_v::Naive::make),
             // analytic
-            std::make_pair("B->K^*::QCDF",          &nc_p_to_v::QCDF::make),
-            std::make_pair("B->K^*::LCSR",          &nc_p_to_v::LCSR::make),
-            std::make_pair("B_s->phi::LCSR",        &nc_p_to_v::LCSR::make),
+            std::make_pair("B->K^*::QCDF",          &nff_p_to_v::QCDF::make),
+            std::make_pair("B->K^*::LCSR",          &nff_p_to_v::LCSR::make),
+            std::make_pair("B_s->phi::LCSR",        &nff_p_to_v::LCSR::make),
             // parametrizations
-            std::make_pair("B->K^*::GvDV2020",      &nc_p_to_v::GvDV2020<nc_p_to_v::BToKstar>::make),
-            std::make_pair("B->K^*::GRvDV2021",     &nc_p_to_v::GRvDV2021<nc_p_to_v::BToKstar>::make),
+            std::make_pair("B->K^*::GvDV2020",      &nff_p_to_v::GvDV2020<nff_p_to_v::BToKstar>::make),
+            std::make_pair("B->K^*::GRvDV2021",     &nff_p_to_v::GRvDV2021<nff_p_to_v::BToKstar>::make),
         };
 
         auto i = entries.find(name);
         if (entries.end() == i)
         {
-            return NonlocalFormFactorPtr<nc::PToV>(nullptr);
+            return NonlocalFormFactorPtr<nff::PToV>(nullptr);
         }
 
         return i->second(p, o);
     }
 
     template <typename Process_>
-    struct Implementation<NonlocalFormFactorObservable<Process_, nc::PToV>>
+    struct Implementation<NonlocalFormFactorObservable<Process_, nff::PToV>>
     {
         NameOption opt_formfactor;
-        NonlocalFormFactorPtr<nc::PToV> nc;
+        NonlocalFormFactorPtr<nff::PToV> nff;
 
         Implementation(const Parameters & p, const Options & o, ParameterUser & u) :
             opt_formfactor(o, "formfactor", qnp::Name("GvDV2020")),
-            nc(NonlocalFormFactor<nc::PToV>::make(QualifiedName(qnp::Prefix(Process_::prefix), opt_formfactor.value()), p, o))
+            nff(NonlocalFormFactor<nff::PToV>::make(QualifiedName(qnp::Prefix(Process_::prefix), opt_formfactor.value()), p, o))
         {
-            u.uses(*nc);
+            u.uses(*nff);
         }
 
         ~Implementation() = default;
     };
 
     template <typename Process_>
-    NonlocalFormFactorObservable<Process_, nc::PToV>::NonlocalFormFactorObservable(const Parameters & p, const Options & o) :
-        PrivateImplementationPattern<NonlocalFormFactorObservable<Process_, nc::PToV>>(new Implementation<NonlocalFormFactorObservable<Process_, nc::PToV>>(p, o, *this))
+    NonlocalFormFactorObservable<Process_, nff::PToV>::NonlocalFormFactorObservable(const Parameters & p, const Options & o) :
+        PrivateImplementationPattern<NonlocalFormFactorObservable<Process_, nff::PToV>>(new Implementation<NonlocalFormFactorObservable<Process_, nff::PToV>>(p, o, *this))
     {
     }
 
     template <typename Process_>
-    NonlocalFormFactorObservable<Process_, nc::PToV>::~NonlocalFormFactorObservable() = default;
+    NonlocalFormFactorObservable<Process_, nff::PToV>::~NonlocalFormFactorObservable() = default;
 
     template <typename Process_>
     double
-    NonlocalFormFactorObservable<Process_, nc::PToV>::re_H_perp(const double & q2) const
+    NonlocalFormFactorObservable<Process_, nff::PToV>::re_H_perp(const double & q2) const
     {
-        return real(this->_imp->nc->H_perp(q2));
-    }
-
-    template <typename Process_>
-    double
-    NonlocalFormFactorObservable<Process_, nc::PToV>::im_H_perp(const double & q2) const
-    {
-        return imag(this->_imp->nc->H_perp(q2));
+        return real(this->_imp->nff->H_perp(q2));
     }
 
     template <typename Process_>
     double
-    NonlocalFormFactorObservable<Process_, nc::PToV>::abs_H_perp(const double & q2) const
+    NonlocalFormFactorObservable<Process_, nff::PToV>::im_H_perp(const double & q2) const
     {
-        return abs(this->_imp->nc->H_perp(q2));
+        return imag(this->_imp->nff->H_perp(q2));
     }
 
     template <typename Process_>
     double
-    NonlocalFormFactorObservable<Process_, nc::PToV>::re_Hhat_perp(const double & q2) const
+    NonlocalFormFactorObservable<Process_, nff::PToV>::abs_H_perp(const double & q2) const
     {
-        return real(this->_imp->nc->Hhat_perp(q2));
+        return abs(this->_imp->nff->H_perp(q2));
     }
 
     template <typename Process_>
     double
-    NonlocalFormFactorObservable<Process_, nc::PToV>::im_Hhat_perp(const double & q2) const
+    NonlocalFormFactorObservable<Process_, nff::PToV>::re_Hhat_perp(const double & q2) const
     {
-        return imag(this->_imp->nc->Hhat_perp(q2));
+        return real(this->_imp->nff->Hhat_perp(q2));
     }
 
     template <typename Process_>
     double
-    NonlocalFormFactorObservable<Process_, nc::PToV>::abs_Hhat_perp(const double & q2) const
+    NonlocalFormFactorObservable<Process_, nff::PToV>::im_Hhat_perp(const double & q2) const
     {
-        return abs(this->_imp->nc->Hhat_perp(q2));
+        return imag(this->_imp->nff->Hhat_perp(q2));
     }
 
     template <typename Process_>
     double
-    NonlocalFormFactorObservable<Process_, nc::PToV>::re_H_para(const double & q2) const
+    NonlocalFormFactorObservable<Process_, nff::PToV>::abs_Hhat_perp(const double & q2) const
     {
-        return real(this->_imp->nc->H_para(q2));
+        return abs(this->_imp->nff->Hhat_perp(q2));
     }
 
     template <typename Process_>
     double
-    NonlocalFormFactorObservable<Process_, nc::PToV>::im_H_para(const double & q2) const
+    NonlocalFormFactorObservable<Process_, nff::PToV>::re_H_para(const double & q2) const
     {
-        return imag(this->_imp->nc->H_para(q2));
+        return real(this->_imp->nff->H_para(q2));
     }
 
     template <typename Process_>
     double
-    NonlocalFormFactorObservable<Process_, nc::PToV>::abs_H_para(const double & q2) const
+    NonlocalFormFactorObservable<Process_, nff::PToV>::im_H_para(const double & q2) const
     {
-        return abs(this->_imp->nc->H_para(q2));
+        return imag(this->_imp->nff->H_para(q2));
     }
 
     template <typename Process_>
     double
-    NonlocalFormFactorObservable<Process_, nc::PToV>::re_Hhat_para(const double & q2) const
+    NonlocalFormFactorObservable<Process_, nff::PToV>::abs_H_para(const double & q2) const
     {
-        return real(this->_imp->nc->Hhat_para(q2));
+        return abs(this->_imp->nff->H_para(q2));
     }
 
     template <typename Process_>
     double
-    NonlocalFormFactorObservable<Process_, nc::PToV>::im_Hhat_para(const double & q2) const
+    NonlocalFormFactorObservable<Process_, nff::PToV>::re_Hhat_para(const double & q2) const
     {
-        return imag(this->_imp->nc->Hhat_para(q2));
+        return real(this->_imp->nff->Hhat_para(q2));
     }
 
     template <typename Process_>
     double
-    NonlocalFormFactorObservable<Process_, nc::PToV>::abs_Hhat_para(const double & q2) const
+    NonlocalFormFactorObservable<Process_, nff::PToV>::im_Hhat_para(const double & q2) const
     {
-        return abs(this->_imp->nc->Hhat_para(q2));
+        return imag(this->_imp->nff->Hhat_para(q2));
     }
 
     template <typename Process_>
     double
-    NonlocalFormFactorObservable<Process_, nc::PToV>::re_H_long(const double & q2) const
+    NonlocalFormFactorObservable<Process_, nff::PToV>::abs_Hhat_para(const double & q2) const
     {
-        return real(this->_imp->nc->H_long(q2));
+        return abs(this->_imp->nff->Hhat_para(q2));
     }
 
     template <typename Process_>
     double
-    NonlocalFormFactorObservable<Process_, nc::PToV>::im_H_long(const double & q2) const
+    NonlocalFormFactorObservable<Process_, nff::PToV>::re_H_long(const double & q2) const
     {
-        return imag(this->_imp->nc->H_long(q2));
+        return real(this->_imp->nff->H_long(q2));
     }
 
     template <typename Process_>
     double
-    NonlocalFormFactorObservable<Process_, nc::PToV>::abs_H_long(const double & q2) const
+    NonlocalFormFactorObservable<Process_, nff::PToV>::im_H_long(const double & q2) const
     {
-        return abs(this->_imp->nc->H_long(q2));
+        return imag(this->_imp->nff->H_long(q2));
     }
 
     template <typename Process_>
     double
-    NonlocalFormFactorObservable<Process_, nc::PToV>::re_Hhat_long(const double & q2) const
+    NonlocalFormFactorObservable<Process_, nff::PToV>::abs_H_long(const double & q2) const
     {
-        return real(this->_imp->nc->Hhat_long(q2));
+        return abs(this->_imp->nff->H_long(q2));
     }
 
     template <typename Process_>
     double
-    NonlocalFormFactorObservable<Process_, nc::PToV>::im_Hhat_long(const double & q2) const
+    NonlocalFormFactorObservable<Process_, nff::PToV>::re_Hhat_long(const double & q2) const
     {
-        return imag(this->_imp->nc->Hhat_long(q2));
+        return real(this->_imp->nff->Hhat_long(q2));
     }
 
     template <typename Process_>
     double
-    NonlocalFormFactorObservable<Process_, nc::PToV>::abs_Hhat_long(const double & q2) const
+    NonlocalFormFactorObservable<Process_, nff::PToV>::im_Hhat_long(const double & q2) const
     {
-        return abs(this->_imp->nc->Hhat_long(q2));
+        return imag(this->_imp->nff->Hhat_long(q2));
+    }
+
+    template <typename Process_>
+    double
+    NonlocalFormFactorObservable<Process_, nff::PToV>::abs_Hhat_long(const double & q2) const
+    {
+        return abs(this->_imp->nff->Hhat_long(q2));
     }
 
 
     template <typename Process_>
     double
-    NonlocalFormFactorObservable<Process_, nc::PToV>::re_normalized_moment_V1(const double & q2) const
+    NonlocalFormFactorObservable<Process_, nff::PToV>::re_normalized_moment_V1(const double & q2) const
     {
-        return real(this->_imp->nc->normalized_moment_V1(q2));
+        return real(this->_imp->nff->normalized_moment_V1(q2));
     }
 
     template <typename Process_>
     double
-    NonlocalFormFactorObservable<Process_, nc::PToV>::re_normalized_moment_V2(const double & q2) const
+    NonlocalFormFactorObservable<Process_, nff::PToV>::re_normalized_moment_V2(const double & q2) const
     {
-        return real(this->_imp->nc->normalized_moment_V2(q2));
+        return real(this->_imp->nff->normalized_moment_V2(q2));
     }
 
     template <typename Process_>
     double
-    NonlocalFormFactorObservable<Process_, nc::PToV>::re_normalized_moment_V23(const double & q2) const
+    NonlocalFormFactorObservable<Process_, nff::PToV>::re_normalized_moment_V23(const double & q2) const
     {
-        return real(this->_imp->nc->normalized_moment_V23(q2));
+        return real(this->_imp->nff->normalized_moment_V23(q2));
     }
 
-    namespace nc
+    namespace nff
     {
         struct BToKstar
         {
@@ -5900,9 +5900,9 @@ namespace eos
         };
     }
 
-    template class NonlocalFormFactorObservable<nc::BToKstar, nc::PToV>;
+    template class NonlocalFormFactorObservable<nff::BToKstar, nff::PToV>;
 
-    namespace nc
+    namespace nff
     {
         struct BsToPhi
         {
@@ -5910,5 +5910,5 @@ namespace eos
         };
     }
 
-    template class NonlocalFormFactorObservable<nc::BsToPhi, nc::PToV>;
+    template class NonlocalFormFactorObservable<nff::BsToPhi, nff::PToV>;
 }
