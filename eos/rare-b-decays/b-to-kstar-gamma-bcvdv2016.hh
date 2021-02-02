@@ -19,7 +19,7 @@ namespace eos
             UsedParameter m_s_MSbar;
 
             SwitchOption formfactor;
-            NonlocalFormFactorPtr<nc::PToV> nonlocal_formfactor;
+            NonlocalFormFactorPtr<nff::PToV> nonlocal_formfactor;
 
             BToKstarGammaAmplitudes(const Parameters & p, const Options & o);
             ~BToKstarGammaAmplitudes() = default;

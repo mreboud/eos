@@ -39,7 +39,7 @@ namespace eos
         tau(p["life_time::B_" + o.get("q", "d")], *this),
         q(o, "q", { "d", "u" }, "d"),
         formfactor(o, "formfactor", { "GvDV2020ModelA", "GvDV2020ModelB", "naive" }, "GvDV2020ModelA"),
-        nonlocal_formfactor(NonlocalFormFactor<nc::PToV>::make(formfactor.value(), p, o))
+        nonlocal_formfactor(NonlocalFormFactor<nff::PToV>::make(formfactor.value(), p, o))
     {
     }
 

@@ -33,7 +33,7 @@ namespace eos
         m_b_MSbar(p["mass::b(MSbar)"], *this),
         m_s_MSbar(p["mass::s(2GeV)"], *this),
         formfactor(o, "formfactor", { "BCvDV2016ModelA", "BCvDV2016ModelB", "naive" }, "BCvDV2016ModelA"),
-        nonlocal_formfactor(NonlocalFormFactor<nc::PToV>::make(formfactor.value(), p, o))
+        nonlocal_formfactor(NonlocalFormFactor<nff::PToV>::make(formfactor.value(), p, o))
     {
     }
 
