@@ -156,9 +156,8 @@ namespace eos
             const auto lambda = eos::lambda(pow(m_B, 2), pow(m_Kstar, 2), pow(m_psi, 2));
             const auto prefactor = pow(g_fermi * abs(model->ckm_cb() * conj(model->ckm_cs())), 2)
                     * tau_B() / hbar() * sqrt(lambda) / (2.0 * M_PI * m_B);
-            const auto r = pow(1.0 + m_Kstar / m_B, 2);
 
-            return prefactor * (norm(amps.A_perp) + norm(amps.A_para) + r * norm(amps.A_long));
+            return prefactor * (norm(amps.A_perp) + norm(amps.A_para) + pow(m_B/m_psi, 2) * norm(amps.A_long));
         }
 
     };

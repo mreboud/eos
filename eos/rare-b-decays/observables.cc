@@ -19,6 +19,7 @@
 
 #include <eos/observable-impl.hh>
 #include <eos/rare-b-decays/decays.hh>
+#include <eos/rare-b-decays/b-to-k-charmonium.hh>
 #include <eos/rare-b-decays/b-to-kstar-charmonium.hh>
 #include <eos/rare-b-decays/b-to-kstar-gamma.hh>
 #include <eos/rare-b-decays/b-to-kstar-ll.hh>
@@ -290,6 +291,26 @@ namespace eos
     }
     // }}}
 
+    // B_q -> P charmonium
+    // {{{
+    ObservableGroup
+    make_b_to_p_charmonium_group()
+    {
+        auto imp = new Implementation<ObservableGroup>(
+            R"(Observables in $B_q \to P charmonium$ decays)",
+            R"(The option "q" selects the spectator quark flavour.)",
+            {
+                /// Branching ratio of B -> K psi
+                make_observable("B->Kcharmonium::branching_ratio",
+                        &BToKCharmonium::branching_ratio)
+
+            }
+        );
+
+        return ObservableGroup(imp);
+    }
+    // }}}
+
     // B_q -> V charmonium
     // {{{
     ObservableGroup
@@ -311,9 +332,13 @@ namespace eos
                 make_observable("B->K^*charmonium::S_8_LHCb",
                         &BToKstarCharmonium::S_8_LHCb),
                 make_observable("B->K^*charmonium::S_9_LHCb",
-                        &BToKstarCharmonium::S_9_LHCb)
+                        &BToKstarCharmonium::S_9_LHCb),
 
-                }
+                /// Branching ratio of B -> K^* psi
+                make_observable("B->K^*charmonium::branching_ratio",
+                        &BToKstarCharmonium::branching_ratio)
+
+            }
 
         );
 
@@ -1230,7 +1255,8 @@ namespace eos
                 // B_q -> V
                 make_b_to_v_group(),
 
-                // B_q -> V charmonium
+                // B_q -> M charmonium
+                make_b_to_p_charmonium_group(),
                 make_b_to_v_charmonium_group(),
 
                 // Lambda_b -> Lambda l^+ l^-
