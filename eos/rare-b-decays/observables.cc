@@ -357,22 +357,22 @@ namespace eos
             R"(The option "q" selects the spectator quark flavour.)",
             {
                 make_observable("B->K::re_H_plus(q2)",
-                        &NonlocalFormFactorObservable<nc::BToK, nc::PToP>::re_H_plus,
+                        &NonlocalFormFactorObservable<nff::BToK, nff::PToP>::re_H_plus,
                         std::make_tuple("q2")),
                 make_observable("B->K::im_H_plus(q2)",
-                        &NonlocalFormFactorObservable<nc::BToK, nc::PToP>::im_H_plus,
+                        &NonlocalFormFactorObservable<nff::BToK, nff::PToP>::im_H_plus,
                         std::make_tuple("q2")),
                 make_observable("B->K::abs_H_plus(q2)",
-                        &NonlocalFormFactorObservable<nc::BToK, nc::PToP>::abs_H_plus,
+                        &NonlocalFormFactorObservable<nff::BToK, nff::PToP>::abs_H_plus,
                         std::make_tuple("q2")),
                 make_observable("B->K::re_Hhat_plus(q2)",
-                        &NonlocalFormFactorObservable<nc::BToK, nc::PToP>::re_Hhat_plus,
+                        &NonlocalFormFactorObservable<nff::BToK, nff::PToP>::re_Hhat_plus,
                         std::make_tuple("q2")),
                 make_observable("B->K::im_Hhat_plus(q2)",
-                        &NonlocalFormFactorObservable<nc::BToK, nc::PToP>::im_Hhat_plus,
+                        &NonlocalFormFactorObservable<nff::BToK, nff::PToP>::im_Hhat_plus,
                         std::make_tuple("q2")),
                 make_observable("B->K::abs_Hhat_plus(q2)",
-                        &NonlocalFormFactorObservable<nc::BToK, nc::PToP>::abs_Hhat_plus,
+                        &NonlocalFormFactorObservable<nff::BToK, nff::PToP>::abs_Hhat_plus,
                         std::make_tuple("q2"))
             }
 
@@ -392,42 +392,42 @@ namespace eos
             R"(The option "q" selects the spectator quark flavour.)",
             {
                 make_observable("B->K^*::re_H_perp(q2)",
-                        &NonlocalFormFactorObservable<nc::BToKstar, nc::PToV>::re_H_perp,
+                        &NonlocalFormFactorObservable<nff::BToKstar, nff::PToV>::re_H_perp,
                         std::make_tuple("q2")),
                 make_observable("B->K^*::im_H_perp(q2)",
-                        &NonlocalFormFactorObservable<nc::BToKstar, nc::PToV>::im_H_perp,
+                        &NonlocalFormFactorObservable<nff::BToKstar, nff::PToV>::im_H_perp,
                         std::make_tuple("q2")),
                 make_observable("B->K^*::abs_H_perp(q2)",
-                        &NonlocalFormFactorObservable<nc::BToKstar, nc::PToV>::abs_H_perp,
+                        &NonlocalFormFactorObservable<nff::BToKstar, nff::PToV>::abs_H_perp,
                         std::make_tuple("q2")),
                 make_observable("B->K^*::abs_Hhat_perp(q2)",
-                        &NonlocalFormFactorObservable<nc::BToKstar, nc::PToV>::abs_Hhat_perp,
+                        &NonlocalFormFactorObservable<nff::BToKstar, nff::PToV>::abs_Hhat_perp,
                         std::make_tuple("q2")),
 
                 make_observable("B->K^*::re_H_para(q2)",
-                        &NonlocalFormFactorObservable<nc::BToKstar, nc::PToV>::re_H_para,
+                        &NonlocalFormFactorObservable<nff::BToKstar, nff::PToV>::re_H_para,
                         std::make_tuple("q2")),
                 make_observable("B->K^*::im_H_para(q2)",
-                        &NonlocalFormFactorObservable<nc::BToKstar, nc::PToV>::im_H_para,
+                        &NonlocalFormFactorObservable<nff::BToKstar, nff::PToV>::im_H_para,
                         std::make_tuple("q2")),
                 make_observable("B->K^*::abs_H_para(q2)",
-                        &NonlocalFormFactorObservable<nc::BToKstar, nc::PToV>::abs_H_para,
+                        &NonlocalFormFactorObservable<nff::BToKstar, nff::PToV>::abs_H_para,
                         std::make_tuple("q2")),
                 make_observable("B->K^*::abs_Hhat_para(q2)",
-                        &NonlocalFormFactorObservable<nc::BToKstar, nc::PToV>::abs_Hhat_para,
+                        &NonlocalFormFactorObservable<nff::BToKstar, nff::PToV>::abs_Hhat_para,
                         std::make_tuple("q2")),
 
                 make_observable("B->K^*::re_H_long(q2)",
-                        &NonlocalFormFactorObservable<nc::BToKstar, nc::PToV>::re_H_long,
+                        &NonlocalFormFactorObservable<nff::BToKstar, nff::PToV>::re_H_long,
                         std::make_tuple("q2")),
                 make_observable("B->K^*::im_H_long(q2)",
-                        &NonlocalFormFactorObservable<nc::BToKstar, nc::PToV>::im_H_long,
+                        &NonlocalFormFactorObservable<nff::BToKstar, nff::PToV>::im_H_long,
                         std::make_tuple("q2")),
                 make_observable("B->K^*::abs_H_long(q2)",
-                        &NonlocalFormFactorObservable<nc::BToKstar, nc::PToV>::abs_H_long,
+                        &NonlocalFormFactorObservable<nff::BToKstar, nff::PToV>::abs_H_long,
                         std::make_tuple("q2")),
                 make_observable("B->K^*::abs_Hhat_long(q2)",
-                        &NonlocalFormFactorObservable<nc::BToKstar, nc::PToV>::abs_Hhat_long,
+                        &NonlocalFormFactorObservable<nff::BToKstar, nff::PToV>::abs_Hhat_long,
                         std::make_tuple("q2")),
             }
 
@@ -1172,54 +1172,54 @@ namespace eos
             {
                 // B->K
                 make_observable("B->Kgamma^*::Re{H_+}(q2)",
-                        &NonlocalFormFactorObservable<nc::BToK, nc::PToP>::re_H_plus,
+                        &NonlocalFormFactorObservable<nff::BToK, nff::PToP>::re_H_plus,
                         std::make_tuple("q2")),
 
                 // auxiliary variables, e.g. for determining the B-LCSR threshold parameters
                 make_observable("B->Kgamma^*::Re{H_+}[s^1/s^0](q2)",
-                        &NonlocalFormFactorObservable<nc::BToK, nc::PToP>::re_normalized_moment_A,
+                        &NonlocalFormFactorObservable<nff::BToK, nff::PToP>::re_normalized_moment_A,
                         std::make_tuple("q2")),
 
                 // B->K^*
                 make_observable("B->K^*gamma^*::Re{H_perp}(q2)",
-                        &NonlocalFormFactorObservable<nc::BToKstar, nc::PToV>::re_H_perp,
+                        &NonlocalFormFactorObservable<nff::BToKstar, nff::PToV>::re_H_perp,
                         std::make_tuple("q2")),
 
                 make_observable("B->K^*gamma^*::Re{H_para}(q2)",
-                        &NonlocalFormFactorObservable<nc::BToKstar, nc::PToV>::re_H_para,
+                        &NonlocalFormFactorObservable<nff::BToKstar, nff::PToV>::re_H_para,
                         std::make_tuple("q2")),
 
                 make_observable("B->K^*gamma^*::Re{H_long}(q2)",
-                        &NonlocalFormFactorObservable<nc::BToKstar, nc::PToV>::re_H_long,
+                        &NonlocalFormFactorObservable<nff::BToKstar, nff::PToV>::re_H_long,
                         std::make_tuple("q2")),
 
                 // B_s->phi
                 make_observable("B_s->phigamma^*::Re{H_perp}(q2)",
-                        &NonlocalFormFactorObservable<nc::BsToPhi, nc::PToV>::re_H_perp,
+                        &NonlocalFormFactorObservable<nff::BsToPhi, nff::PToV>::re_H_perp,
                         std::make_tuple("q2"),
                         Options{ { "q", "s" } }),
 
                 make_observable("B_s->phigamma^*::Re{H_para}(q2)",
-                        &NonlocalFormFactorObservable<nc::BsToPhi, nc::PToV>::re_H_para,
+                        &NonlocalFormFactorObservable<nff::BsToPhi, nff::PToV>::re_H_para,
                         std::make_tuple("q2"),
                         Options{ { "q", "s" } }),
 
                 make_observable("B_s->phigamma^*::Re{H_long}(q2)",
-                        &NonlocalFormFactorObservable<nc::BsToPhi, nc::PToV>::re_H_long,
+                        &NonlocalFormFactorObservable<nff::BsToPhi, nff::PToV>::re_H_long,
                         std::make_tuple("q2"),
                         Options{ { "q", "s" } }),
 
                 // auxiliary variables, e.g. for determining the B-LCSR threshold parameters
                 make_observable("B->K^*gamma^*::Re{H_1}[s^1/s^0](q2)",
-                        &NonlocalFormFactorObservable<nc::BToKstar, nc::PToV>::re_normalized_moment_V1,
+                        &NonlocalFormFactorObservable<nff::BToKstar, nff::PToV>::re_normalized_moment_V1,
                         std::make_tuple("q2")),
 
                 make_observable("B->K^*gamma^*::Re{H_2}[s^1/s^0](q2)",
-                        &NonlocalFormFactorObservable<nc::BToKstar, nc::PToV>::re_normalized_moment_V2,
+                        &NonlocalFormFactorObservable<nff::BToKstar, nff::PToV>::re_normalized_moment_V2,
                         std::make_tuple("q2")),
 
                 make_observable("B->K^*gamma^*::Re{H_23}[s^1/s^0](q2)",
-                        &NonlocalFormFactorObservable<nc::BToKstar, nc::PToV>::re_normalized_moment_V23,
+                        &NonlocalFormFactorObservable<nff::BToKstar, nff::PToV>::re_normalized_moment_V23,
                         std::make_tuple("q2")),
             }
         );
