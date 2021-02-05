@@ -860,3 +860,35 @@ groups:
           max:     0
           latex:   '$g^0(\psi(4415),D^+D^{*-})$'
           comment: ''
+      # D_s^+ D_s^- channel
+      'ee->ccbar::g0(psi(2S),D_s^+D_s^-)' :
+          central: 0
+          min:     0
+          max:     0
+          latex:   '$g^0(\psi(2S),D_s^+D_s^-)$'
+          comment: ''
+      'ee->ccbar::g0(psi(3770),D_s^+D_s^-)' :
+          central: 0
+          min:     0
+          max:     0
+          latex:   '$g^0(\psi(3770),D_s^+D_s^-)$'
+          comment: ''
+      'ee->ccbar::g0(psi(4040),D_s^+D_s^-)' :
+          central: 0
+          min:     0
+          max:     0
+          latex:   '$g^0(\psi(4040),D_s^+D_s^-)$'
+          comment: ''
+      'ee->ccbar::g0(psi(4160),D_s^+D_s^-)' :
+          central: 0
+          min:     0
+          max:     0
+          latex:   '$g^0(\psi(4160),D_s^+D_s^-)$'
+          comment: ''
+      'ee->ccbar::g0(psi(4415),D_s^+D_s^-)' :
+          central: 0
+          min:     0
+          max:     0
+          latex:   '$g^0(\psi(4415),D_s^+D_s^-)$'
+          comment: ''
+# }}}
