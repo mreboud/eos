@@ -16,7 +16,6 @@ class BToKCharmoniumGvDV2020Test :
 
         virtual void run() const
         {
-            static const double eps = 1e-5;
 
             Parameters p = Parameters::Defaults();
             p["mass::B_d"]                               = 5.27942;
@@ -43,7 +42,7 @@ class BToKCharmoniumGvDV2020Test :
 
             BToKCharmonium c(p, oo);
 
-            TEST_CHECK_RELATIVE_ERROR(c.branching_ratio(),  15., eps);
+            TEST_CHECK_NEARLY_EQUAL(c.branching_ratio(),  303297., 1.);
 
         }
 } b_to_k_charmonium_GvDV2020_test;
@@ -60,7 +59,6 @@ class BToKCharmoniumGRvDV2021Test :
 
         virtual void run() const
         {
-            static const double eps = 1e-5;
 
             Parameters p = Parameters::Defaults();
             p["mass::B_d"]                                = 5.27942;
@@ -87,7 +85,7 @@ class BToKCharmoniumGRvDV2021Test :
 
             BToKCharmonium c(p, oo);
 
-            TEST_CHECK_RELATIVE_ERROR(c.branching_ratio(),  15., eps);
+            TEST_CHECK_NEARLY_EQUAL(c.branching_ratio(),  11420.6, .1);
 
         }
 } b_to_k_charmonium_GRvDV2021_test;
