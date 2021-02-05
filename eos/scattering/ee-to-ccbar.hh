@@ -217,6 +217,7 @@ namespace eos
             double sigma_eetoDpDm(const double & E) const;
             double sigma_eetoD0Dbarst0(const double & E) const;
             double sigma_eetoDpDstm(const double & E) const;
+            double sigma_eetoDspDsm(const double & E) const;
 
             // Rc ratio
             double Rc(const double & E) const;

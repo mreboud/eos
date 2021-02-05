@@ -63,6 +63,10 @@ namespace eos
                         &EEToCCBar::sigma_eetoDpDstm,
                         std::make_tuple("E")),
 
+                make_observable("ee->ccbar::sigma_eetoDspDsm(E)", R"($\sigma(ee \to D_s^+ D_s^-)$)",
+                        &EEToCCBar::sigma_eetoDspDsm,
+                        std::make_tuple("E")),
+
                 make_observable("ee->ccbar::R_c(E)", R"($R_c$)",
                         &EEToCCBar::Rc,
                         std::make_tuple("E")),
