@@ -31,6 +31,9 @@ namespace eos
         std::vector<std::shared_ptr<KMatrix::Channel>> _channels;
         //ptr vector with nresonances_ Resonances
         std::vector<std::shared_ptr<KMatrix::Resonance>> _resonances;
+        //background constants
+        std::vector<std::vector<Parameter>> _bkgcst;
+
         const std::string & _prefix;
 
         // Khat contains the normalized K-matrix entries
@@ -48,6 +51,7 @@ namespace eos
         // Constructor
         KMatrix(std::initializer_list<std::shared_ptr<KMatrix::Channel>> channels,
             std::initializer_list<std::shared_ptr<KMatrix::Resonance>> resonances,
+            std::vector<std::vector<Parameter>> bkgcst,
             const std::string & prefix);
 
         // Destuctor

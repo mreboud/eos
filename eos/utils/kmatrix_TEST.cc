@@ -176,6 +176,7 @@ public:
 
         Parameters p = Parameters::Defaults();
         p["ee->ccbar::g0(psi(2S),ee)"] = 1.0;
+        p["ee->ccbar::c(ee,eff)"] = 0.0;
 
 
         // One channel, one resonnance:
@@ -185,7 +186,7 @@ public:
             auto Res = std::make_shared<res11>("Res", 15.0);
             auto Chan = std::make_shared<PPchan11>("Chan", 0.7, 0.8, 3, p);
 
-            KMatrix<1,1> simplestKM({Chan}, {Res}, "simplestKM");
+            KMatrix<1,1> simplestKM({Chan}, {Res}, {{p["ee->ccbar::c(ee,eff)"]}}, "simplestKM");
 
             //Check |T-Matrix|^2 against Breit-Wigner
             // The mass of the BW gets correction from the channels loop
@@ -242,7 +243,7 @@ public:
 
 
             //Test KMatrix inversion into TMatrix
-            KMatrix<1,2> myKM({myPPchan}, {myres1, myres2}, "myKM");
+            KMatrix<1,2> myKM({myPPchan}, {myres1, myres2}, {{p["ee->ccbar::c(ee,eff)"]}}, "myKM");
 
             auto myK0ats0 = myKM.tmatrix_row(0, 9.0);
             auto myK0ats1 = myKM.tmatrix_row(0, 1.5);
