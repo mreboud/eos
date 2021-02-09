@@ -108,6 +108,11 @@ namespace eos
         // Constant terms of the K matrix
         UsedParameter Rconstant;
 
+        const static unsigned nchannels = 7;
+        const static unsigned nresonances = 3;
+
+        std::shared_ptr<KMatrix<nchannels, nresonances>> K;
+
         Implementation(const Parameters & p, const Options & o, ParameterUser & u) :
             hbar(p["hbar"], u),
             alpha_em(p["QED::alpha_e(0)"], u),
@@ -181,219 +186,94 @@ namespace eos
 
             Rconstant(p["ee->ccbar::Rconstant"], u)
         {
+
+            // Build K Matrix
+            auto psi2S_res = std::make_shared<charmonium_resonance<nchannels, nresonances>>("psi2S_res", m_psi2S);
+            auto psi3770_res = std::make_shared<charmonium_resonance<nchannels, nresonances>>("psi3770_res", m_psi3770);
+            auto psi4040_res = std::make_shared<charmonium_resonance<nchannels, nresonances>>("psi4040_res", m_psi4040);
+
+            std::vector<std::vector<Parameter>> bkgcst {
+                {c_ee_ee,        c_ee_eff,        c_ee_D0Dbar0,        c_ee_DpDm,        c_ee_D0Dbarst0,        c_ee_DpDstm,        c_ee_DspDsm},
+                {c_ee_eff,       c_eff_eff,       c_eff_D0Dbar0,       c_eff_DpDm,       c_eff_D0Dbarst0,       c_eff_DpDstm,       c_eff_DspDsm},
+                {c_ee_D0Dbar0,   c_eff_D0Dbar0,   c_D0Dbar0_D0Dbar0,   c_D0Dbar0_DpDm,   c_D0Dbar0_D0Dbarst0,   c_D0Dbar0_DpDstm,   c_D0Dbar0_DspDsm},
+                {c_ee_DpDm,      c_eff_DpDm,      c_D0Dbar0_DpDm,      c_DpDm_DpDm,      c_DpDm_D0Dbarst0,      c_DpDm_DpDstm,      c_DpDm_DspDsm},
+                {c_ee_D0Dbarst0, c_eff_D0Dbarst0, c_D0Dbar0_D0Dbarst0, c_DpDm_D0Dbarst0, c_D0Dbarst0_D0Dbarst0, c_D0Dbarst0_DpDstm, c_D0Dbarst0_DspDsm},
+                {c_ee_DpDstm,    c_eff_DpDstm,    c_D0Dbar0_DpDstm,    c_DpDm_DpDstm,    c_D0Dbarst0_DpDstm,    c_DpDstm_DpDstm,    c_DpDstm_DspDsm},
+                {c_ee_DspDsm,    c_eff_DspDsm,    c_D0Dbar0_DspDsm,    c_DpDm_DspDsm,    c_D0Dbarst0_DspDsm,    c_DpDstm_DspDsm,    c_DspDsm_DspDsm}
+            };
+
+            std::vector<Parameter> ee_g0s         {{g0_psi2S_ee,        g0_psi3770_ee,        g0_psi4040_ee,        }};
+            std::vector<Parameter> eff_g0s        {{g0_psi2S_eff,       g0_psi3770_eff,       g0_psi4040_eff,       }};
+            std::vector<Parameter> D0Dbar0_g0s    {{g0_psi2S_D0Dbar0,   g0_psi3770_D0Dbar0,   g0_psi4040_D0Dbar0,   }};
+            std::vector<Parameter> DpDm_g0s       {{g0_psi2S_DpDm,      g0_psi3770_DpDm,      g0_psi4040_DpDm,      }};
+            std::vector<Parameter> D0Dbarst0_g0s  {{g0_psi2S_D0Dbarst0, g0_psi3770_D0Dbarst0, g0_psi4040_D0Dbarst0, }};
+            std::vector<Parameter> DpDstm_g0s     {{g0_psi2S_DpDstm,    g0_psi3770_DpDstm,    g0_psi4040_DpDstm,    }};
+            std::vector<Parameter> DspDsm_g0s     {{g0_psi2S_DspDsm,    g0_psi3770_DspDsm,    g0_psi4040_DspDsm,    }};
+
+            auto ee_chan        = std::make_shared<PPchan<nchannels, nresonances>>("ee_chan", m_e, m_e, 3, ee_g0s);
+            // Massless effective channel
+            auto eff_chan       = std::make_shared<PPchan<nchannels, nresonances>>("eff_chan", m_e, m_e, 3, eff_g0s);
+            auto D0Dbar0_chan   = std::make_shared<PPchan<nchannels, nresonances>>("D0Dbar0_chan", m_D0, m_D0, 3, D0Dbar0_g0s);
+            auto DpDm_chan      = std::make_shared<PPchan<nchannels, nresonances>>("DpDm_chan", m_D, m_D, 3, DpDm_g0s);
+            auto D0Dbarst0_chan = std::make_shared<VPchan<nchannels, nresonances>>("D0Dbarst0_chan", m_D0, m_Dst0, 3, D0Dbarst0_g0s);
+            auto DpDstm_chan    = std::make_shared<VPchan<nchannels, nresonances>>("DpDstm_chan", m_D, m_Dst, 3, DpDstm_g0s);
+            auto DspDsm_chan    = std::make_shared<PPchan<nchannels, nresonances>>("DspDsm_chan", m_Ds, m_Ds, 3, DspDsm_g0s);
+
+            K = std::shared_ptr<KMatrix<nchannels, nresonances>> (
+                new KMatrix<nchannels, nresonances>(
+                        {ee_chan, eff_chan, D0Dbar0_chan, DpDm_chan, D0Dbarst0_chan, DpDstm_chan, DspDsm_chan},
+                        {psi2S_res, psi3770_res, psi4040_res},
+                        bkgcst,
+                        "KMatrix")
+                );
         }
 
-        const static unsigned nchannels = 7;
-        const static unsigned nresonances = 3;
-
-        inline double sigma_eetomumu(const double & s)
+        inline double sigma_eetomumu(const double & E)
         {
             // Conversion factor between GeV^2 and nb
             const double speedoflight = 299792458.; //Exact value
             const double GeVtonb = 10 * pow( 1.e18 * hbar * speedoflight, 2.0);
 
-            return GeVtonb * 4.0 * M_PI * alpha_em*alpha_em / (3.0 * s);
+            return GeVtonb * 4.0 * M_PI * alpha_em*alpha_em / (3.0 * E*E);
         }
 
-        inline double sigma_eetof(const double & s, const KMatrix<nchannels, nresonances> & K, const unsigned & channel)
+        double sigma_eetochannel(const double & E, const unsigned & channel)
         {
             // Conversion factor between GeV^2 and nb
             const double speedoflight = 299792458.; //Exact value
             const double GeVtonb = 10 * pow( 1.e18 * hbar * speedoflight, 2.0);
 
             // Channel properties
-            const double Nf = K._channels[channel]->_N_orbital;
-            const double rhof = real(K._channels[channel]->rho(s));
+            const double Nf = K->_channels[channel]->_N_orbital;
+            const double rhof = real(K->_channels[channel]->rho(E*E));
 
             // Get T-matrix[ee, channel]
-            const complex<double> T1f = K.tmatrix_row(0, s)[channel];
+            const complex<double> T1f = K->tmatrix_row(0, E*E)[channel];
 
-            return GeVtonb * 16.*M_PI/s * Nf * rhof * norm(T1f);
+            return GeVtonb * 16. * M_PI / (E*E) * Nf * rhof * norm(T1f);
         }
 
-        inline double sigma_eetoccbar(const double & s, const KMatrix<nchannels, nresonances> & K)
+        double Rc(const double & E)
         {
 
             double total_xsec = 0.0;
 
             for (unsigned i = 0; i < nchannels; i++)
             {
-                total_xsec += sigma_eetof(s, K, i);
+                total_xsec += sigma_eetochannel(E, i);
             }
 
-            return total_xsec;
-        }
-
-        double sigma_eetochannel(const double & E, const unsigned & channel)
-        {
-
-            // Build K Matrix
-            auto psi2S_res = std::make_shared<charmonium_resonance<nchannels, nresonances>>("psi2S_res", m_psi2S);
-            auto psi3770_res = std::make_shared<charmonium_resonance<nchannels, nresonances>>("psi3770_res", m_psi3770);
-            auto psi4040_res = std::make_shared<charmonium_resonance<nchannels, nresonances>>("psi4040_res", m_psi4040);
-
-            std::vector<std::vector<Parameter>> bkgcst {
-                {c_ee_ee,        c_ee_eff,        c_ee_D0Dbar0,        c_ee_DpDm,        c_ee_D0Dbarst0,        c_ee_DpDstm,        c_ee_DspDsm},
-                {c_ee_eff,       c_eff_eff,       c_eff_D0Dbar0,       c_eff_DpDm,       c_eff_D0Dbarst0,       c_eff_DpDstm,       c_eff_DspDsm},
-                {c_ee_D0Dbar0,   c_eff_D0Dbar0,   c_D0Dbar0_D0Dbar0,   c_D0Dbar0_DpDm,   c_D0Dbar0_D0Dbarst0,   c_D0Dbar0_DpDstm,   c_D0Dbar0_DspDsm},
-                {c_ee_DpDm,      c_eff_DpDm,      c_D0Dbar0_DpDm,      c_DpDm_DpDm,      c_DpDm_D0Dbarst0,      c_DpDm_DpDstm,      c_DpDm_DspDsm},
-                {c_ee_D0Dbarst0, c_eff_D0Dbarst0, c_D0Dbar0_D0Dbarst0, c_DpDm_D0Dbarst0, c_D0Dbarst0_D0Dbarst0, c_D0Dbarst0_DpDstm, c_D0Dbarst0_DspDsm},
-                {c_ee_DpDstm,    c_eff_DpDstm,    c_D0Dbar0_DpDstm,    c_DpDm_DpDstm,    c_D0Dbarst0_DpDstm,    c_DpDstm_DpDstm,    c_DpDstm_DspDsm},
-                {c_ee_DspDsm,    c_eff_DspDsm,    c_D0Dbar0_DspDsm,    c_DpDm_DspDsm,    c_D0Dbarst0_DspDsm,    c_DpDstm_DspDsm,    c_DspDsm_DspDsm}
-            };
-
-            std::vector<Parameter> ee_g0s         {{g0_psi2S_ee,        g0_psi3770_ee,        g0_psi4040_ee,        }};
-            std::vector<Parameter> eff_g0s        {{g0_psi2S_eff,       g0_psi3770_eff,       g0_psi4040_eff,       }};
-            std::vector<Parameter> D0Dbar0_g0s    {{g0_psi2S_D0Dbar0,   g0_psi3770_D0Dbar0,   g0_psi4040_D0Dbar0,   }};
-            std::vector<Parameter> DpDm_g0s       {{g0_psi2S_DpDm,      g0_psi3770_DpDm,      g0_psi4040_DpDm,      }};
-            std::vector<Parameter> D0Dbarst0_g0s  {{g0_psi2S_D0Dbarst0, g0_psi3770_D0Dbarst0, g0_psi4040_D0Dbarst0, }};
-            std::vector<Parameter> DpDstm_g0s     {{g0_psi2S_DpDstm,    g0_psi3770_DpDstm,    g0_psi4040_DpDstm,    }};
-            std::vector<Parameter> DspDsm_g0s     {{g0_psi2S_DspDsm,    g0_psi3770_DspDsm,    g0_psi4040_DspDsm,    }};
-
-            auto ee_chan        = std::make_shared<PPchan<nchannels, nresonances>>("ee_chan", m_e, m_e, 3, ee_g0s);
-            // Massless effective channel
-            auto eff_chan       = std::make_shared<PPchan<nchannels, nresonances>>("eff_chan", m_e, m_e, 3, eff_g0s);
-            auto D0Dbar0_chan   = std::make_shared<PPchan<nchannels, nresonances>>("D0Dbar0_chan", m_D0, m_D0, 3, D0Dbar0_g0s);
-            auto DpDm_chan      = std::make_shared<PPchan<nchannels, nresonances>>("DpDm_chan", m_D, m_D, 3, DpDm_g0s);
-            auto D0Dbarst0_chan = std::make_shared<VPchan<nchannels, nresonances>>("D0Dbarst0_chan", m_D0, m_Dst0, 3, D0Dbarst0_g0s);
-            auto DpDstm_chan    = std::make_shared<VPchan<nchannels, nresonances>>("DpDstm_chan", m_D, m_Dst, 3, DpDstm_g0s);
-            auto DspDsm_chan    = std::make_shared<PPchan<nchannels, nresonances>>("DspDsm_chan", m_Ds, m_Ds, 3, DspDsm_g0s);
-
-            KMatrix<nchannels, nresonances> K({ee_chan, eff_chan, D0Dbar0_chan, DpDm_chan, D0Dbarst0_chan, DpDstm_chan, DspDsm_chan},
-                                              {psi2S_res, psi3770_res, psi4040_res},
-                                              bkgcst,
-                                              "KMatrix");
-
-            return sigma_eetof(E*E, K, channel);
-        }
-
-        double Rc(const double & E)
-        {
-
-            // Build K Matrix
-            auto psi2S_res = std::make_shared<charmonium_resonance<nchannels, nresonances>>("psi2S_res", m_psi2S);
-            auto psi3770_res = std::make_shared<charmonium_resonance<nchannels, nresonances>>("psi3770_res", m_psi3770);
-            auto psi4040_res = std::make_shared<charmonium_resonance<nchannels, nresonances>>("psi4040_res", m_psi4040);
-
-            std::vector<std::vector<Parameter>> bkgcst {
-                {c_ee_ee,        c_ee_eff,        c_ee_D0Dbar0,        c_ee_DpDm,        c_ee_D0Dbarst0,        c_ee_DpDstm,        c_ee_DspDsm},
-                {c_ee_eff,       c_eff_eff,       c_eff_D0Dbar0,       c_eff_DpDm,       c_eff_D0Dbarst0,       c_eff_DpDstm,       c_eff_DspDsm},
-                {c_ee_D0Dbar0,   c_eff_D0Dbar0,   c_D0Dbar0_D0Dbar0,   c_D0Dbar0_DpDm,   c_D0Dbar0_D0Dbarst0,   c_D0Dbar0_DpDstm,   c_D0Dbar0_DspDsm},
-                {c_ee_DpDm,      c_eff_DpDm,      c_D0Dbar0_DpDm,      c_DpDm_DpDm,      c_DpDm_D0Dbarst0,      c_DpDm_DpDstm,      c_DpDm_DspDsm},
-                {c_ee_D0Dbarst0, c_eff_D0Dbarst0, c_D0Dbar0_D0Dbarst0, c_DpDm_D0Dbarst0, c_D0Dbarst0_D0Dbarst0, c_D0Dbarst0_DpDstm, c_D0Dbarst0_DspDsm},
-                {c_ee_DpDstm,    c_eff_DpDstm,    c_D0Dbar0_DpDstm,    c_DpDm_DpDstm,    c_D0Dbarst0_DpDstm,    c_DpDstm_DpDstm,    c_DpDstm_DspDsm},
-                {c_ee_DspDsm,    c_eff_DspDsm,    c_D0Dbar0_DspDsm,    c_DpDm_DspDsm,    c_D0Dbarst0_DspDsm,    c_DpDstm_DspDsm,    c_DspDsm_DspDsm}
-            };
-
-            std::vector<Parameter> ee_g0s         {{g0_psi2S_ee,        g0_psi3770_ee,        g0_psi4040_ee,        }};
-            std::vector<Parameter> eff_g0s        {{g0_psi2S_eff,       g0_psi3770_eff,       g0_psi4040_eff,       }};
-            std::vector<Parameter> D0Dbar0_g0s    {{g0_psi2S_D0Dbar0,   g0_psi3770_D0Dbar0,   g0_psi4040_D0Dbar0,   }};
-            std::vector<Parameter> DpDm_g0s       {{g0_psi2S_DpDm,      g0_psi3770_DpDm,      g0_psi4040_DpDm,      }};
-            std::vector<Parameter> D0Dbarst0_g0s  {{g0_psi2S_D0Dbarst0, g0_psi3770_D0Dbarst0, g0_psi4040_D0Dbarst0, }};
-            std::vector<Parameter> DpDstm_g0s     {{g0_psi2S_DpDstm,    g0_psi3770_DpDstm,    g0_psi4040_DpDstm,    }};
-            std::vector<Parameter> DspDsm_g0s     {{g0_psi2S_DspDsm,    g0_psi3770_DspDsm,    g0_psi4040_DspDsm,    }};
-
-            auto ee_chan        = std::make_shared<PPchan<nchannels, nresonances>>("ee_chan", m_e, m_e, 3, ee_g0s);
-            // Massless effective channel
-            auto eff_chan       = std::make_shared<PPchan<nchannels, nresonances>>("eff_chan", m_e, m_e, 3, eff_g0s);
-            auto D0Dbar0_chan   = std::make_shared<PPchan<nchannels, nresonances>>("D0Dbar0_chan", m_D0, m_D0, 3, D0Dbar0_g0s);
-            auto DpDm_chan      = std::make_shared<PPchan<nchannels, nresonances>>("DpDm_chan", m_D, m_D, 3, DpDm_g0s);
-            auto D0Dbarst0_chan = std::make_shared<VPchan<nchannels, nresonances>>("D0Dbarst0_chan", m_D0, m_Dst0, 3, D0Dbarst0_g0s);
-            auto DpDstm_chan    = std::make_shared<VPchan<nchannels, nresonances>>("DpDstm_chan", m_D, m_Dst, 3, DpDstm_g0s);
-            auto DspDsm_chan    = std::make_shared<PPchan<nchannels, nresonances>>("DspDsm_chan", m_Ds, m_Ds, 3, DspDsm_g0s);
-
-            KMatrix<nchannels, nresonances> K({ee_chan, eff_chan, D0Dbar0_chan, DpDm_chan, D0Dbarst0_chan, DpDstm_chan, DspDsm_chan},
-                                              {psi2S_res, psi3770_res, psi4040_res},
-                                              bkgcst,
-                                              "KMatrix");
-
-            return sigma_eetoccbar(E*E, K) / sigma_eetomumu(E*E) + Rconstant; //Add constant
+            return total_xsec / sigma_eetomumu(E) + Rconstant; //Add constant term 
         }
 
         double psi2S_partial_width(unsigned channel)
         {
-
-            // Build K Matrix
-            auto psi2S_res = std::make_shared<charmonium_resonance<nchannels, nresonances>>("psi2S_res", m_psi2S);
-            auto psi3770_res = std::make_shared<charmonium_resonance<nchannels, nresonances>>("psi3770_res", m_psi3770);
-            auto psi4040_res = std::make_shared<charmonium_resonance<nchannels, nresonances>>("psi4040_res", m_psi4040);
-
-            std::vector<std::vector<Parameter>> bkgcst {
-                {c_ee_ee,        c_ee_eff,        c_ee_D0Dbar0,        c_ee_DpDm,        c_ee_D0Dbarst0,        c_ee_DpDstm,        c_ee_DspDsm},
-                {c_ee_eff,       c_eff_eff,       c_eff_D0Dbar0,       c_eff_DpDm,       c_eff_D0Dbarst0,       c_eff_DpDstm,       c_eff_DspDsm},
-                {c_ee_D0Dbar0,   c_eff_D0Dbar0,   c_D0Dbar0_D0Dbar0,   c_D0Dbar0_DpDm,   c_D0Dbar0_D0Dbarst0,   c_D0Dbar0_DpDstm,   c_D0Dbar0_DspDsm},
-                {c_ee_DpDm,      c_eff_DpDm,      c_D0Dbar0_DpDm,      c_DpDm_DpDm,      c_DpDm_D0Dbarst0,      c_DpDm_DpDstm,      c_DpDm_DspDsm},
-                {c_ee_D0Dbarst0, c_eff_D0Dbarst0, c_D0Dbar0_D0Dbarst0, c_DpDm_D0Dbarst0, c_D0Dbarst0_D0Dbarst0, c_D0Dbarst0_DpDstm, c_D0Dbarst0_DspDsm},
-                {c_ee_DpDstm,    c_eff_DpDstm,    c_D0Dbar0_DpDstm,    c_DpDm_DpDstm,    c_D0Dbarst0_DpDstm,    c_DpDstm_DpDstm,    c_DpDstm_DspDsm},
-                {c_ee_DspDsm,    c_eff_DspDsm,    c_D0Dbar0_DspDsm,    c_DpDm_DspDsm,    c_D0Dbarst0_DspDsm,    c_DpDstm_DspDsm,    c_DspDsm_DspDsm}
-            };
-
-            std::vector<Parameter> ee_g0s         {{g0_psi2S_ee,        g0_psi3770_ee,        g0_psi4040_ee,        }};
-            std::vector<Parameter> eff_g0s        {{g0_psi2S_eff,       g0_psi3770_eff,       g0_psi4040_eff,       }};
-            std::vector<Parameter> D0Dbar0_g0s    {{g0_psi2S_D0Dbar0,   g0_psi3770_D0Dbar0,   g0_psi4040_D0Dbar0,   }};
-            std::vector<Parameter> DpDm_g0s       {{g0_psi2S_DpDm,      g0_psi3770_DpDm,      g0_psi4040_DpDm,      }};
-            std::vector<Parameter> D0Dbarst0_g0s  {{g0_psi2S_D0Dbarst0, g0_psi3770_D0Dbarst0, g0_psi4040_D0Dbarst0, }};
-            std::vector<Parameter> DpDstm_g0s     {{g0_psi2S_DpDstm,    g0_psi3770_DpDstm,    g0_psi4040_DpDstm,    }};
-            std::vector<Parameter> DspDsm_g0s     {{g0_psi2S_DspDsm,    g0_psi3770_DspDsm,    g0_psi4040_DspDsm,    }};
-
-            auto ee_chan        = std::make_shared<PPchan<nchannels, nresonances>>("ee_chan", m_e, m_e, 3, ee_g0s);
-            // Massless effective channel
-            auto eff_chan       = std::make_shared<PPchan<nchannels, nresonances>>("eff_chan", m_e, m_e, 3, eff_g0s);
-            auto D0Dbar0_chan   = std::make_shared<PPchan<nchannels, nresonances>>("D0Dbar0_chan", m_D0, m_D0, 3, D0Dbar0_g0s);
-            auto DpDm_chan      = std::make_shared<PPchan<nchannels, nresonances>>("DpDm_chan", m_D, m_D, 3, DpDm_g0s);
-            auto D0Dbarst0_chan = std::make_shared<VPchan<nchannels, nresonances>>("D0Dbarst0_chan", m_D0, m_Dst0, 3, D0Dbarst0_g0s);
-            auto DpDstm_chan    = std::make_shared<VPchan<nchannels, nresonances>>("DpDstm_chan", m_D, m_Dst, 3, DpDstm_g0s);
-            auto DspDsm_chan    = std::make_shared<PPchan<nchannels, nresonances>>("DspDsm_chan", m_Ds, m_Ds, 3, DspDsm_g0s);
-
-            KMatrix<nchannels, nresonances> K({ee_chan, eff_chan, D0Dbar0_chan, DpDm_chan, D0Dbarst0_chan, DpDstm_chan, DspDsm_chan},
-                                              {psi2S_res, psi3770_res, psi4040_res},
-                                              bkgcst,
-                                              "KMatrix");
-
-            return K.partial_width(0, channel);
+            return K->partial_width(0, channel);
         }
 
         double psi2S_total_width()
         {
-
-            // Build K Matrix
-            auto psi2S_res = std::make_shared<charmonium_resonance<nchannels, nresonances>>("psi2S_res", m_psi2S);
-            auto psi3770_res = std::make_shared<charmonium_resonance<nchannels, nresonances>>("psi3770_res", m_psi3770);
-            auto psi4040_res = std::make_shared<charmonium_resonance<nchannels, nresonances>>("psi4040_res", m_psi4040);
-
-            std::vector<std::vector<Parameter>> bkgcst {
-                {c_ee_ee,        c_ee_eff,        c_ee_D0Dbar0,        c_ee_DpDm,        c_ee_D0Dbarst0,        c_ee_DpDstm,        c_ee_DspDsm},
-                {c_ee_eff,       c_eff_eff,       c_eff_D0Dbar0,       c_eff_DpDm,       c_eff_D0Dbarst0,       c_eff_DpDstm,       c_eff_DspDsm},
-                {c_ee_D0Dbar0,   c_eff_D0Dbar0,   c_D0Dbar0_D0Dbar0,   c_D0Dbar0_DpDm,   c_D0Dbar0_D0Dbarst0,   c_D0Dbar0_DpDstm,   c_D0Dbar0_DspDsm},
-                {c_ee_DpDm,      c_eff_DpDm,      c_D0Dbar0_DpDm,      c_DpDm_DpDm,      c_DpDm_D0Dbarst0,      c_DpDm_DpDstm,      c_DpDm_DspDsm},
-                {c_ee_D0Dbarst0, c_eff_D0Dbarst0, c_D0Dbar0_D0Dbarst0, c_DpDm_D0Dbarst0, c_D0Dbarst0_D0Dbarst0, c_D0Dbarst0_DpDstm, c_D0Dbarst0_DspDsm},
-                {c_ee_DpDstm,    c_eff_DpDstm,    c_D0Dbar0_DpDstm,    c_DpDm_DpDstm,    c_D0Dbarst0_DpDstm,    c_DpDstm_DpDstm,    c_DpDstm_DspDsm},
-                {c_ee_DspDsm,    c_eff_DspDsm,    c_D0Dbar0_DspDsm,    c_DpDm_DspDsm,    c_D0Dbarst0_DspDsm,    c_DpDstm_DspDsm,    c_DspDsm_DspDsm}
-            };
-
-            std::vector<Parameter> ee_g0s         {{g0_psi2S_ee,        g0_psi3770_ee,        g0_psi4040_ee,        }};
-            std::vector<Parameter> eff_g0s        {{g0_psi2S_eff,       g0_psi3770_eff,       g0_psi4040_eff,       }};
-            std::vector<Parameter> D0Dbar0_g0s    {{g0_psi2S_D0Dbar0,   g0_psi3770_D0Dbar0,   g0_psi4040_D0Dbar0,   }};
-            std::vector<Parameter> DpDm_g0s       {{g0_psi2S_DpDm,      g0_psi3770_DpDm,      g0_psi4040_DpDm,      }};
-            std::vector<Parameter> D0Dbarst0_g0s  {{g0_psi2S_D0Dbarst0, g0_psi3770_D0Dbarst0, g0_psi4040_D0Dbarst0, }};
-            std::vector<Parameter> DpDstm_g0s     {{g0_psi2S_DpDstm,    g0_psi3770_DpDstm,    g0_psi4040_DpDstm,    }};
-            std::vector<Parameter> DspDsm_g0s     {{g0_psi2S_DspDsm,    g0_psi3770_DspDsm,    g0_psi4040_DspDsm,    }};
-
-            auto ee_chan        = std::make_shared<PPchan<nchannels, nresonances>>("ee_chan", m_e, m_e, 3, ee_g0s);
-            // Massless effective channel
-            auto eff_chan       = std::make_shared<PPchan<nchannels, nresonances>>("eff_chan", m_e, m_e, 3, eff_g0s);
-            auto D0Dbar0_chan   = std::make_shared<PPchan<nchannels, nresonances>>("D0Dbar0_chan", m_D0, m_D0, 3, D0Dbar0_g0s);
-            auto DpDm_chan      = std::make_shared<PPchan<nchannels, nresonances>>("DpDm_chan", m_D, m_D, 3, DpDm_g0s);
-            auto D0Dbarst0_chan = std::make_shared<VPchan<nchannels, nresonances>>("D0Dbarst0_chan", m_D0, m_Dst0, 3, D0Dbarst0_g0s);
-            auto DpDstm_chan    = std::make_shared<VPchan<nchannels, nresonances>>("DpDstm_chan", m_D, m_Dst, 3, DpDstm_g0s);
-            auto DspDsm_chan    = std::make_shared<PPchan<nchannels, nresonances>>("DspDsm_chan", m_Ds, m_Ds, 3, DspDsm_g0s);
-
-            KMatrix<nchannels, nresonances> K({ee_chan, eff_chan, D0Dbar0_chan, DpDm_chan, D0Dbarst0_chan, DpDstm_chan, DspDsm_chan},
-                                              {psi2S_res, psi3770_res, psi4040_res},
-                                              bkgcst,
-                                              "KMatrix");
-
-            return K.width(0);
+            return K->width(0);
         }
 
 
