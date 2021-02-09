@@ -17,10 +17,12 @@ namespace eos
 {
     template <unsigned nchannels_, unsigned nresonances_>
     KMatrix<nchannels_, nresonances_>::KMatrix(std::initializer_list<std::shared_ptr<KMatrix::Channel>> channels,
-                           std::initializer_list<std::shared_ptr<KMatrix::Resonance>> resonances,
-                           const std::string & prefix) :
+                            std::initializer_list<std::shared_ptr<KMatrix::Resonance>> resonances,
+                            std::vector<std::vector<Parameter>> bkgcst,
+                            const std::string & prefix) :
     _channels(channels),
     _resonances(resonances),
+    _bkgcst(bkgcst),
     _prefix(prefix),
     _Khat(gsl_matrix_complex_calloc(nchannels_, nchannels_)),
     _That(gsl_matrix_complex_calloc(nchannels_, nchannels_)),
@@ -32,6 +34,14 @@ namespace eos
     if (channels.size() != nchannels_)
         {
         throw InternalError("The size of the channels array does not match nchannels_");
+        }
+    if (bkgcst.size() != nchannels_)
+        {
+        throw InternalError("The size of the array of background constant does not match nchannels_");
+        }
+    if (bkgcst.size() != 0 and bkgcst[0].size() != nchannels_)
+        {
+        throw InternalError("The size of the array of background constant does not match nchannels_");
         }
     if (resonances.size() != nresonances_)
         {
@@ -99,6 +109,7 @@ namespace eos
         std::array<complex<double>, nchannels_> tmatrixrow;
         auto channels = this->_channels;
         auto resonances = this->_resonances;
+        auto bkgcst = this->_bkgcst;
 
 
         // std::cout << "Entering tmatrix row evaluation, nbr channels = " << channels.size() << " nbr resonances = " << resonances.size() << std::endl;
@@ -131,7 +142,7 @@ namespace eos
             for (size_t j = 0 ; j < nchannels_ ; ++j)
                 {
 
-                complex<double> entry = 0.0;
+                complex<double> entry = complex<double>(bkgcst[i][j].evaluate(), 0.0);
 
                 // resonance index
                 for (size_t a = 0 ; a < nresonances_ ; ++a)
@@ -169,6 +180,9 @@ namespace eos
         // std::cout << " --- Entering KMatrix inversion: " << std::endl;
 
         // For the moment I am computing the full T matrix, while we only need one row
+        // This means that we can use gsl_linalg_complex_LU_solve instead of invert
+        // but this requires transposing the matrices to solve
+        //      (1-i*rho*K)^t T_1j = K_1j
         static const gsl_complex one  = gsl_complex_rect(1.0, 0.0);
         static const gsl_complex minusi  = gsl_complex_rect(0.0, -1.0);
         static const gsl_complex zero = gsl_complex_rect(0.0, 0.0);

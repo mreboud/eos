@@ -33,9 +33,23 @@ public:
         p["ee->ccbar::g0(psi(3770),D^+D^-)"] = 0.6;
 
 
+        //Set all cst to zero
+        p["ee->ccbar::c(ee,ee)"] = 0.0;
+        p["ee->ccbar::c(ee,D^0Dbar^0)"] = 0.0;
+        p["ee->ccbar::c(ee,D^+D^-)"] = 0.0;
+        p["ee->ccbar::c(D^0Dbar^0,D^0Dbar^0)"] = 0.0;
+        p["ee->ccbar::c(D^0Dbar^0,D^+D^-)"] = 0.0;
+        p["ee->ccbar::c(D^+D^-,D^+D^-)"] = 0.0;
+
         // Build K Matrix
         auto psi2S_res = std::make_shared<charmonium_resonance<3, 2>>("psi2S_res", p["mass::psi(2S)"]);
         auto psi3770_res = std::make_shared<charmonium_resonance<3, 2>>("psi3770_res", p["mass::psi(3770)"]);
+
+        std::vector<std::vector<Parameter>> bkgcst {
+            {p["ee->ccbar::c(ee,ee)"],        p["ee->ccbar::c(ee,D^0Dbar^0)"],        p["ee->ccbar::c(ee,D^+D^-)"]},
+            {p["ee->ccbar::c(ee,D^0Dbar^0)"], p["ee->ccbar::c(D^0Dbar^0,D^0Dbar^0)"], p["ee->ccbar::c(D^0Dbar^0,D^+D^-)"]},
+            {p["ee->ccbar::c(ee,D^+D^-)"],    p["ee->ccbar::c(D^0Dbar^0,D^+D^-)"],    p["ee->ccbar::c(D^+D^-,D^+D^-)"]},
+        };
 
         std::vector<Parameter> ee_g0s       {{p["ee->ccbar::g0(psi(2S),ee)"],           p["ee->ccbar::g0(psi(3770),ee)"]}};
         std::vector<Parameter> D0Dbar0_g0s  {{p["ee->ccbar::g0(psi(2S),D^0Dbar^0)"],    p["ee->ccbar::g0(psi(3770),D^0Dbar^0)"]}};
@@ -45,22 +59,37 @@ public:
         auto D0Dbar0_chan   = std::make_shared<SPPchan<3, 2>>("D0Dbar0_chan", p["mass::D^0"], p["mass::D^0"], 3, D0Dbar0_g0s);
         auto DpDm_chan      = std::make_shared<SPPchan<3, 2>>("DpDm_chan", p["mass::D^+"], p["mass::D^+"], 3, DpDm_g0s);
 
-        KMatrix<3, 2> KMatrix32({ee_chan, D0Dbar0_chan, DpDm_chan}, {psi2S_res, psi3770_res}, "KMatrix");
+        KMatrix<3, 2> KMatrix32({ee_chan, D0Dbar0_chan, DpDm_chan}, {psi2S_res, psi3770_res}, bkgcst, "KMatrix");
 
 
 
-        auto KMatrix32s0 = KMatrix32.tmatrix_row(0, 9.0);
-        auto KMatrix32s1 = KMatrix32.tmatrix_row(0, 1.5);
-        auto KMatrix32s2 = KMatrix32.tmatrix_row(0, 0.001);
+        auto KMatrix32s0 = KMatrix32.tmatrix_row(0, 20.0);
+        auto KMatrix32s1 = KMatrix32.tmatrix_row(0, 13.94);
+        auto KMatrix32s2 = KMatrix32.tmatrix_row(0,  0.0001);
 
 
-        TEST_CHECK_NEARLY_EQUAL(KMatrix32s0[0].real(), 0.00870921,  eps);
-        TEST_CHECK_NEARLY_EQUAL(KMatrix32s0[0].imag(), 0.000075856, eps);
-        TEST_CHECK_NEARLY_EQUAL(KMatrix32s1[0].real(), 0.0037429,   eps);
-        TEST_CHECK_NEARLY_EQUAL(KMatrix32s1[0].imag(), 0.0000140095,eps);
-        TEST_CHECK_NEARLY_EQUAL(KMatrix32s2[0].real(), 0.00338731,  eps);
-        TEST_CHECK_NEARLY_EQUAL(KMatrix32s2[0].imag(), 0.000011468, eps);
+        TEST_CHECK_NEARLY_EQUAL(KMatrix32s0[0].real(), -0.0084434, eps);
+        TEST_CHECK_NEARLY_EQUAL(KMatrix32s0[0].imag(),  0.0007069, eps);
+        TEST_CHECK_NEARLY_EQUAL(KMatrix32s1[0].real(),  0.1031590, eps);
+        TEST_CHECK_NEARLY_EQUAL(KMatrix32s1[0].imag(),  0.0122801, eps);
+        TEST_CHECK_NEARLY_EQUAL(KMatrix32s2[0].real(),  0.0035448, eps);
+        TEST_CHECK_NEARLY_EQUAL(KMatrix32s2[0].imag(),  0.0000125, eps);
 
+
+
+        //Set ee -> ee cst to .5
+        p["ee->ccbar::c(ee,ee)"] = 0.5;
+
+        KMatrix32s0 = KMatrix32.tmatrix_row(0, 20.0);
+        KMatrix32s1 = KMatrix32.tmatrix_row(0, 13.94);
+        KMatrix32s2 = KMatrix32.tmatrix_row(0,  0.0001);
+
+        TEST_CHECK_NEARLY_EQUAL(KMatrix32s0[0].real(),  0.395486, eps);
+        TEST_CHECK_NEARLY_EQUAL(KMatrix32s0[0].imag(),  0.194911, eps);
+        TEST_CHECK_NEARLY_EQUAL(KMatrix32s1[0].real(),  0.441778, eps);
+        TEST_CHECK_NEARLY_EQUAL(KMatrix32s1[0].imag(),  0.268202, eps);
+        TEST_CHECK_NEARLY_EQUAL(KMatrix32s2[0].real(),  0.402543, eps);
+        TEST_CHECK_NEARLY_EQUAL(KMatrix32s2[0].imag(),  0.201637, eps);
 
 
     }
