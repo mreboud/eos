@@ -28,6 +28,29 @@
 namespace eos
 
 {
+
+    /*
+    Channels follow the following convention
+    #   name          type    Nf      copy
+    0   ee            PP (P)  3       -
+    1   eff           PP (P)  3       -
+    2   D0   D0bar    PP (P)  3       -
+    3   D+   D-       PP (P)  3       2 (isospin)
+    4   D0   D*0bar   VP      3       -
+    5   D*0  D0bar    VP      3       4 (c.c.)
+    6   D+   D*-      VP      3       4 (isospin)
+    7   D*+  D-       VP      3       4 (c.c.)
+    8   Ds   Ds       PP (P)  3       -
+    9   D*0  D*0bar   VV (P)  3       -
+    10  D*0  D*0bar   VV (F)  7       9 (waves)
+    11  D*+  D*-      VV (P)  3       9 (isospin)
+    12  D*+  D*-      VV (F)  7       11 (waves)
+    13  Ds+  Ds*-     VP      3       -
+    14  Ds*+ Ds-      VP      3       13 (c.c.)
+    15  Ds*+ Ds*-     VV (P)  3       -
+    16  Ds*+ Ds*-     VV (F)  7       15 (waves)
+    */
+
     // S -> PP channel
     template <unsigned nchannels_, unsigned nresonances_>
     struct SPPchan :
@@ -48,8 +71,6 @@ namespace eos
         }
         const double pi = M_PI;
         const complex<double> i =  complex<double>(0.0, 1.0);
-
-        const unsigned N_orbital = 3;
 
         double beta(const double & s){
             if (s < mp*mp) { return 0.; } //Kinematic threshold
@@ -83,11 +104,11 @@ namespace eos
 
     // V -> PP channel
     template <unsigned nchannels_, unsigned nresonances_>
-    struct PPchan :
+    struct PPPwavechan :
     public KMatrix<nchannels_, nresonances_>::Channel
     {
 
-        PPchan(std::string name, double m1, double m2, unsigned N_orbital, std::vector<Parameter> g0s) :
+        PPPwavechan(std::string name, double m1, double m2, unsigned N_orbital, std::vector<Parameter> g0s) :
         KMatrix<nchannels_, nresonances_>::Channel(name, m1, m2, N_orbital, g0s)
         {
         };
@@ -101,8 +122,6 @@ namespace eos
         }
         const double pi = M_PI;
         const complex<double> i =  complex<double>(0.0, 1.0);
-
-        const unsigned N_orbital = 3;
 
         double beta(const double & s){
             if (s < mp*mp) { return 0.; } //Kinematic threshold
@@ -136,11 +155,11 @@ namespace eos
 
     // V -> VP channel
     template <unsigned nchannels_, unsigned nresonances_>
-    struct VPchan :
+    struct VPPwavechan :
     public KMatrix<nchannels_, nresonances_>::Channel
     {
 
-        VPchan(std::string name, double m1, double m2, unsigned N_orbital, std::vector<Parameter> g0s) :
+        VPPwavechan(std::string name, double m1, double m2, unsigned N_orbital, std::vector<Parameter> g0s) :
         KMatrix<nchannels_, nresonances_>::Channel(name, m1, m2, N_orbital, g0s)
         {
         };
@@ -154,8 +173,6 @@ namespace eos
         }
         const double pi = M_PI;
         const complex<double> i =  complex<double>(0.0, 1.0);
-
-        const unsigned N_orbital = 3;
 
         double beta(const double & s){
             if (s < mp*mp) { return 0.; } //Kinematic threshold
@@ -181,6 +198,107 @@ namespace eos
                 // result += mp*sqlk(s)*std::log((2*s+2*sqlk(s)-mm*mm-mp*mp)/(mp*mp-mm*mm));
                 // result *= i/(mp*pi*s);
                 result += sqlk(s)/s;
+                return result;
+            }
+        }
+    };
+
+
+    // V -> VV channel
+    template <unsigned nchannels_, unsigned nresonances_>
+    struct VVPwavechan :
+    public KMatrix<nchannels_, nresonances_>::Channel
+    {
+
+        VVPwavechan(std::string name, double m1, double m2, unsigned N_orbital, std::vector<Parameter> g0s) :
+        KMatrix<nchannels_, nresonances_>::Channel(name, m1, m2, N_orbital, g0s)
+        {
+        };
+
+        //Usefull definitions for beta and rho
+        const double mm = this->_m1 - this->_m2;
+        const double mp = this->_m1 + this->_m2;
+        //sqrt of the Källen factor, defined with an absolute value
+        double sqlk(const double & s) {
+            return std::sqrt(std::abs((s-mp*mp)*(s-mm*mm)));
+        }
+        const double pi = M_PI;
+        const complex<double> i =  complex<double>(0.0, 1.0);
+
+        double beta(const double & s){
+            if (s < mp*mp) { return 0.; } //Kinematic threshold
+            else { return pow(sqlk(s)/s, 3.); }
+        }
+
+        complex<double> rho(const double & s) {
+            complex<double> result = 0.0;
+            if (s < mm*mm){
+                // result += mm*sqlk(s)*(2*mm*mp*s-(-3*mp*mp*s+mm*mm*(2*mp*mp+s))*std::log((mp+mm)/(mp-mm)));
+                // result += 2*pow(mp,3)*pow(mm*mm-s,2)*std::log((-2*(s+sqlk(s))+mm*mm+mp*mp)/(mp*mp-mm*mm));
+                // result *= i*pow(mp*mp-s,1.5)/(2*pow(mp,3)*pi*s*s*sqrt(mm*mm-s));
+                return result;
+            }
+            else if (s < mp*mp){
+                // result += mm*sqlk(s)*(2*mm*mp*s-(-3*mp*mp*s+mm*mm*(2*mp*mp+s))*std::log((mp+mm)/(mp-mm)));
+                // result += 4*pow(mp,3)*pow(s-mm*mm,2)*std::atan(sqrt((s-mm*mm)/(mp*mp-s)));
+                // result *= i*pow(mp*mp-s,1.5)/(2*pow(mp,3)*pi*s*s*sqrt(s-mm*mm));
+                return result;
+            }
+            else {
+                // result += mm*sqlk(s)*(-2*mm*mp*s+(-3*mp*mp*s+mm*mm*(2*mp*mp+s))*std::log((mp+mm)/(mp-mm)));
+                // result += 2*pow(mp,3)*pow(s-mm*mm,2)*std::log((2*(s+sqlk(s))-mm*mm-mp*mp)/(mp*mp-mm*mm));
+                // result *= i*pow(s-mp*mp,1.5)/(2*pow(mp,3)*pi*s*s*sqrt(s-mm*mm));
+                result += pow(sqlk(s)/s, 3.);
+                return result;
+            }
+        }
+    };
+
+    // V -> VV channel
+    template <unsigned nchannels_, unsigned nresonances_>
+    struct VVFwavechan :
+    public KMatrix<nchannels_, nresonances_>::Channel
+    {
+
+        VVFwavechan(std::string name, double m1, double m2, unsigned N_orbital, std::vector<Parameter> g0s) :
+        KMatrix<nchannels_, nresonances_>::Channel(name, m1, m2, N_orbital, g0s)
+        {
+        };
+
+        //Usefull definitions for beta and rho
+        const double mm = this->_m1 - this->_m2;
+        const double mp = this->_m1 + this->_m2;
+        //sqrt of the Källen factor, defined with an absolute value
+        double sqlk(const double & s) {
+            return std::sqrt(std::abs((s-mp*mp)*(s-mm*mm)));
+        }
+        const double pi = M_PI;
+        const complex<double> i =  complex<double>(0.0, 1.0);
+
+        double beta(const double & s){
+            if (s < mp*mp) { return 0.; } //Kinematic threshold
+            else { return pow(sqlk(s)/s, 7.); }
+        }
+
+        complex<double> rho(const double & s) {
+            complex<double> result = 0.0;
+            if (s < mm*mm){
+                // result += mm*sqlk(s)*(2*mm*mp*s-(-3*mp*mp*s+mm*mm*(2*mp*mp+s))*std::log((mp+mm)/(mp-mm)));
+                // result += 2*pow(mp,3)*pow(mm*mm-s,2)*std::log((-2*(s+sqlk(s))+mm*mm+mp*mp)/(mp*mp-mm*mm));
+                // result *= i*pow(mp*mp-s,1.5)/(2*pow(mp,3)*pi*s*s*sqrt(mm*mm-s));
+                return result;
+            }
+            else if (s < mp*mp){
+                // result += mm*sqlk(s)*(2*mm*mp*s-(-3*mp*mp*s+mm*mm*(2*mp*mp+s))*std::log((mp+mm)/(mp-mm)));
+                // result += 4*pow(mp,3)*pow(s-mm*mm,2)*std::atan(sqrt((s-mm*mm)/(mp*mp-s)));
+                // result *= i*pow(mp*mp-s,1.5)/(2*pow(mp,3)*pi*s*s*sqrt(s-mm*mm));
+                return result;
+            }
+            else {
+                // result += mm*sqlk(s)*(-2*mm*mp*s+(-3*mp*mp*s+mm*mm*(2*mp*mp+s))*std::log((mp+mm)/(mp-mm)));
+                // result += 2*pow(mp,3)*pow(s-mm*mm,2)*std::log((2*(s+sqlk(s))-mm*mm-mp*mp)/(mp*mp-mm*mm));
+                // result *= i*pow(s-mp*mp,1.5)/(2*pow(mp,3)*pi*s*s*sqrt(s-mm*mm));
+                result += pow(sqlk(s)/s, 7.);
                 return result;
             }
         }
@@ -218,6 +336,10 @@ namespace eos
             double sigma_eetoD0Dbarst0(const double & E) const;
             double sigma_eetoDpDstm(const double & E) const;
             double sigma_eetoDspDsm(const double & E) const;
+            double sigma_eetoDst0Dbarst0(const double & E) const;
+            double sigma_eetoDstpDstm(const double & E) const;
+            double sigma_eetoDspDsstm(const double & E) const;
+            double sigma_eetoDsstpDsstm(const double & E) const;
 
             // Rc ratio
             double Rc(const double & E) const;
