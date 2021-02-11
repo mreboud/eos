@@ -91,6 +91,13 @@ public:
         TEST_CHECK_NEARLY_EQUAL(KMatrix32s2[0].real(),  0.402543, eps);
         TEST_CHECK_NEARLY_EQUAL(KMatrix32s2[0].imag(),  0.201637, eps);
 
+        // //Test the full K matrix
+
+        // Options oo;
+
+        // EEToCCBar c(p, oo);
+        // TEST_CHECK_NEARLY_EQUAL(c.sigma_eetoee(3.5),  0.201637, eps);
+
 
     }
 } eetoccbar_test;
