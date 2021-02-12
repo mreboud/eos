@@ -113,7 +113,7 @@ namespace eos
             complex<double> A_perp, A_para, A_long;
         };
 
-        // The amplitudes in the conventions of [T2002], eq. (2.38)
+        // The amplitudes in the conventions of ??
         struct AmplitudesExperimental
         {
             complex<double> A_perp, A_para, A_long;
@@ -135,7 +135,6 @@ namespace eos
             return { A_perp, A_para, A_long };
         }
 
-        // Returns amplitudes in convention of e.g. [T:2002A], eq. (2.38),
         // Amplitudes are CP invariant according to [BRY:2006A].
         AmplitudesExperimental amplitudes_experimental() const
         {
@@ -144,20 +143,20 @@ namespace eos
             const auto amps = this->amplitudes_bcvdv2016();
 
             return {
-                    -I * amps.A_perp,
-                    -I * amps.A_para,
-                    +I * (m_B() + m_Kstar()) / m_B() * amps.A_long
+                    amps.A_perp,
+                    amps.A_para,
+                    m_B / m_psi * amps.A_long
                 };
         }
 
         double branching_ratio() const
         {
-            const auto amps = amplitudes_bcvdv2016();
+            const auto amps = amplitudes_experimental();
             const auto lambda = eos::lambda(pow(m_B, 2), pow(m_Kstar, 2), pow(m_psi, 2));
             const auto prefactor = pow(g_fermi * abs(model->ckm_cb() * conj(model->ckm_cs())), 2)
                     * tau_B() / hbar() * sqrt(lambda) / (2.0 * M_PI * m_B);
 
-            return prefactor * (norm(amps.A_perp) + norm(amps.A_para) + pow(m_B/m_psi, 2) * norm(amps.A_long));
+            return prefactor * (norm(amps.A_perp) + norm(amps.A_para) + norm(amps.A_long));
         }
 
     };
