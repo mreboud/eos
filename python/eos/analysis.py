@@ -165,27 +165,46 @@ class Analysis:
         if start_point == None:
             start_point = [float(p) for p in self.varied_parameters]
 
-        default_kwargs = { 'method': 'SLSQP', 'options': { 'ftol': 1.0e-13 } }
-        if kwargs is None:
-            kwargs = default_kwargs
+        # default_kwargs = { 'method': 'SLSQP', 'options': { 'ftol': 1.0e-13 } }
+        # if kwargs is None:
+        #     kwargs = default_kwargs
 
-        res = scipy.optimize.minimize(
+        # res = scipy.optimize.minimize(
+        #     self.negative_log_pdf,
+        #     start_point,
+        #     args=None,
+        #     bounds=self.bounds,
+        #     **kwargs)
+
+        # if not res.success:
+        #     eos.warn('Optimization did not succeed')
+        #     eos.warn('  optimizer'' message reas: {}'.format(res.message))
+        # else:
+        #     eos.info('Optimization goal achieved after {nfev} function evaluations'.format(nfev=res.nfev))
+
+        try:
+            from iminuit import Minuit
+        except ImportError:
+            eos.ImportError('Could not import Minuit. Consider installing iminuit.')
+
+        res = Minuit(
             self.negative_log_pdf,
-            start_point,
-            args=None,
-            bounds=self.bounds,
-            **kwargs)
+            start_point)
 
-        if not res.success:
+        res.errordef = Minuit.LIKELIHOOD #Set errordef to 0.5 as recommanded for likelihood fits.
+        res.migrad()
+        res.hesse()
+
+        if not res.valid:
             eos.warn('Optimization did not succeed')
-            eos.warn('  optimizer'' message reas: {}'.format(res.message))
-        else:
-            eos.info('Optimization goal achieved after {nfev} function evaluations'.format(nfev=res.nfev))
+#            eos.warn('  optimizer'' message reas: {}'.format(res.message))
+#        else:
+#            eos.info('Optimization goal achieved after {nfev} function evaluations'.format(nfev=res.nfev))
 
-        for p, v in zip(self.varied_parameters, res.x):
+        for p, v in zip(self.varied_parameters, res.values):
             p.set(v)
 
-        return eos.BestFitPoint(self, res.x)
+        return eos.BestFitPoint(self, res.values)
 
 
     def log_pdf(self, x, *args):
