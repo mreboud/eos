@@ -57,12 +57,12 @@ class BToKstarCharmoniumGvDV2020Test :
 
             TEST_CHECK_NEARLY_EQUAL(c.branching_ratio(),  12481750, 1.);
 
-            TEST_CHECK_NEARLY_EQUAL(c.S_1c_LHCb(),  0.18679,    eps);
-            TEST_CHECK_NEARLY_EQUAL(c.S_1s_LHCb(),  0.60990,    eps);
-            TEST_CHECK_NEARLY_EQUAL(c.S_3_LHCb(),  -0.23336,    eps);
-            TEST_CHECK_NEARLY_EQUAL(c.S_4_LHCb(),   0.24446,    eps);
-            TEST_CHECK_NEARLY_EQUAL(c.S_8_LHCb(),  -0.00635388, eps);
-            TEST_CHECK_NEARLY_EQUAL(c.S_9_LHCb(),   0.00870404, eps);
+            TEST_CHECK_NEARLY_EQUAL(c.S_1c_LHCb(),  0.327932,    eps);
+            TEST_CHECK_NEARLY_EQUAL(c.S_1s_LHCb(),  0.504051,    eps);
+            TEST_CHECK_NEARLY_EQUAL(c.S_3_LHCb(),  -0.192853,    eps);
+            TEST_CHECK_NEARLY_EQUAL(c.S_4_LHCb(),  -0.294457,    eps);
+            TEST_CHECK_NEARLY_EQUAL(c.S_8_LHCb(),   0.00765349,  eps);
+            TEST_CHECK_NEARLY_EQUAL(c.S_9_LHCb(),   0.00719335,  eps);
 
         }
 } b_to_kstar_charmonium_GvDV2020_test;
@@ -120,12 +120,12 @@ class BToKstarCharmoniumGRvDV2021Test :
 
             TEST_CHECK_NEARLY_EQUAL(c.branching_ratio(),  890412., 1.);
 
-            TEST_CHECK_NEARLY_EQUAL(c.S_1c_LHCb(),  0.263661, eps);
-            TEST_CHECK_NEARLY_EQUAL(c.S_1s_LHCb(),  0.552254, eps);
-            TEST_CHECK_NEARLY_EQUAL(c.S_3_LHCb(),  -0.309413, eps);
-            TEST_CHECK_NEARLY_EQUAL(c.S_4_LHCb(),   0.298785, eps);
-            TEST_CHECK_NEARLY_EQUAL(c.S_8_LHCb(),  -0.014683, eps);
-            TEST_CHECK_NEARLY_EQUAL(c.S_9_LHCb(),   0.020114, eps);
+            TEST_CHECK_NEARLY_EQUAL(c.S_1c_LHCb(),  0.432031,   eps);
+            TEST_CHECK_NEARLY_EQUAL(c.S_1s_LHCb(),  0.425977,   eps);
+            TEST_CHECK_NEARLY_EQUAL(c.S_3_LHCb(),  -0.238663,   eps);
+            TEST_CHECK_NEARLY_EQUAL(c.S_4_LHCb(),  -0.335904,   eps);
+            TEST_CHECK_NEARLY_EQUAL(c.S_8_LHCb(),   0.0165076,  eps);
+            TEST_CHECK_NEARLY_EQUAL(c.S_9_LHCb(),   0.0155151,  eps);
 
         }
 } b_to_kstar_charmonium_GRvDV2021_test;
