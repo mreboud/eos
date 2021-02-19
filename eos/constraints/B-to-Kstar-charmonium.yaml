@@ -23,24 +23,24 @@ B^0->K^*0psi2S::BR@PDG2020:
     sigma-stat: {hi: 0., lo: 0.}
     sigma-sys: {hi: 4.e-5, lo: 4.e-5}
     dof: 1
-# B->K^*Jpsi::BR@PDG2020:
-#     type: Gaussian
-#     observable: B->K^*charmonium::branching_ratio
-#     kinematics: {}
-#     options: {q: u, psi: "J/psi"}
-#     mean: 1.43e-3
-#     sigma-stat: {hi: 0., lo: 0.}
-#     sigma-sys: {hi: 8.e-5, lo: 8.e-5}
-#     dof: 1
-# B->K^*psi2S::BR@PDG2020:
-#     type: Gaussian
-#     observable: B->K^*charmonium::branching_ratio
-#     kinematics: {}
-#     options: {q: u, psi: "psi(2S)"}
-#     mean: 6.7e-4
-#     sigma-stat: {hi: 0., lo: 0.}
-#     sigma-sys: {hi: 1.4e-4, lo: 1.4e-4}
-#     dof: 1
+B->K^*Jpsi::BR@PDG2020:
+    type: Gaussian
+    observable: B->K^*charmonium::branching_ratio
+    kinematics: {}
+    options: {q: u, psi: "J/psi"}
+    mean: 1.43e-3
+    sigma-stat: {hi: 0., lo: 0.}
+    sigma-sys: {hi: 8.e-5, lo: 8.e-5}
+    dof: 1
+B->K^*psi2S::BR@PDG2020:
+    type: Gaussian
+    observable: B->K^*charmonium::branching_ratio
+    kinematics: {}
+    options: {q: u, psi: "psi(2S)"}
+    mean: 6.7e-4
+    sigma-stat: {hi: 0., lo: 0.}
+    sigma-sys: {hi: 1.4e-4, lo: 1.4e-4}
+    dof: 1
 # }}}
 
 
