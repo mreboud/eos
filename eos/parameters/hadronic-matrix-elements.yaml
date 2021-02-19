@@ -3282,9 +3282,9 @@ groups:
           max:     +2.56
           comments: 'Renormalization scale for the charm quark mass.'
       'b->sccbar::t_0' :
-          central: +10.0
-          min:     +10.0
-          max:     +10.0
+          central: +9.0
+          min:     +9.0
+          max:     +9.0
       'b->sccbar::t_s' :
           central: -17.4724
           min:     -17.4724
