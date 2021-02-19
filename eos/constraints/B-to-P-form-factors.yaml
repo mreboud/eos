@@ -865,9 +865,9 @@ B->K::im_H_plus1@GvDV2020:
   observable: "B->K::im_H_plus(q2)"
   kinematics: {q2: -1}
   options: {}
-  mean: -6.5e-7
+  mean: -3.2e-7
   sigma-stat: {hi: 0, lo: 0}
-  sigma-sys: {hi: 2.4e-7, lo: 2.4e-7}
+  sigma-sys: {hi: 0.9e-7, lo: 0.9e-7}
   dof: 1
 # }}}
 

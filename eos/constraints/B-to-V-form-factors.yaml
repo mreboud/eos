@@ -9593,7 +9593,7 @@ B->K^*::re_H_long5@GvDV2020:
   options: {}
   mean: 0.4e-5
   sigma-stat: {hi: 0, lo: 0}
-  sigma-sys: {hi: 2.4e-4, lo: 2.4e-5}
+  sigma-sys: {hi: 2.4e-5, lo: 2.4e-5}
   dof: 1
 B->K^*::im_H_long5@GvDV2020:
   type: Gaussian
