@@ -8,13 +8,13 @@ namespace eos
 {
     BToKstarDilepton::AmplitudeGenerator::AmplitudeGenerator(const Parameters & p, const Options & o) :
         model(Model::make(o.get("model", "SM"), p, o)),
-        form_factors(FormFactorFactory<PToV>::create("B->K^*@" + o.get("form-factors", "KMPW2010"), p)),
+        form_factors(FormFactorFactory<PToV>::create("B->K^*::" + o.get("form-factors", "KMPW2010"), p)),
         mu(p["mu"], *this),
         alpha_e(p["QED::alpha_e(m_b)"], *this),
         g_fermi(p["G_Fermi"], *this),
         tau(p["life_time::B_" + o.get("q", "d")], *this),
         m_B(p["mass::B_" + o.get("q", "d")], *this),
-        m_Kstar(p["mass::K^*_d"], *this),
+        m_Kstar(p["mass::K_d^*"], *this),
         m_l(p["mass::" + o.get("l", "mu")], *this),
         cp_conjugate(destringify<bool>(o.get("cp-conjugate", "false"))),
         lepton_flavour(o.get("l", "mu"))

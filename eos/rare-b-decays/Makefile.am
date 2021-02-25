@@ -5,66 +5,67 @@ AM_CXXFLAGS = @AM_CXXFLAGS@
 
 lib_LTLIBRARIES = libeosrarebdecays.la
 libeosrarebdecays_la_SOURCES = \
-	b-to-k-charmonium.cc b-to-k-charmonium.hh \
-	b-to-kstar-charmonium.cc b-to-kstar-charmonium.hh \
-	b-to-kstar-gamma.cc b-to-kstar-gamma.hh \
-	b-to-kstar-gamma-base.cc b-to-kstar-gamma-base.hh \
-	b-to-kstar-gamma-bcvdv2016.cc b-to-kstar-gamma-bcvdv2016.hh \
-	b-to-kstar-gamma-bfs2004.cc b-to-kstar-gamma-bfs2004.hh \
-	b-to-kstar-ll.cc b-to-kstar-ll.hh \
-	b-to-kstar-ll-base.cc b-to-kstar-ll-base.hh \
-	b-to-kstar-ll-bcvdv2016.cc b-to-kstar-ll-bcvdv2016.hh \
-	b-to-kstar-ll-bfs2004.cc b-to-kstar-ll-bfs2004.hh \
-	b-to-kstar-ll-gp2004.cc b-to-kstar-ll-gp2004.hh \
-	bremsstrahlung.cc bremsstrahlung.hh \
-	charm-loops.cc charm-loops.hh \
-	em-contributions.hh em-contributions.cc \
-	exclusive-b-to-dilepton.cc exclusive-b-to-dilepton.hh \
-	inclusive-b-to-s-dilepton.cc inclusive-b-to-s-dilepton.hh \
-	inclusive-b-to-s-gamma.cc inclusive-b-to-s-gamma.hh \
-	hard-scattering.cc hard-scattering.hh \
-	long-distance.cc long-distance.hh \
-	lambda-b-to-lambda-dilepton.cc lambda-b-to-lambda-dilepton.hh \
-	nonlocal-formfactors.hh nonlocal-formfactors.cc \
-	nonlocal-formfactors-p-to-p.cc \
-	nonlocal-formfactors-p-to-v.cc \
-	observables.cc observables.hh \
-	qcdf-integrals.cc qcdf-integrals.hh \
-	qcdf-integrals-analytical.cc \
-	qcdf-integrals-mixed.cc \
-	qcdf-integrals-numerical.cc
+    b-to-k-charmonium.cc b-to-k-charmonium.hh \
+    b-to-kstar-charmonium.cc b-to-kstar-charmonium.hh \
+    b-to-kstar-gamma.cc b-to-kstar-gamma.hh \
+    b-to-kstar-gamma-base.cc b-to-kstar-gamma-base.hh \
+    b-to-kstar-gamma-bcvdv2016.cc b-to-kstar-gamma-bcvdv2016.hh \
+    b-to-kstar-gamma-bfs2004.cc b-to-kstar-gamma-bfs2004.hh \
+    b-to-kstar-ll.cc b-to-kstar-ll.hh \
+    b-to-kstar-ll-base.cc b-to-kstar-ll-base.hh \
+    b-to-kstar-ll-bcvdv2016.cc b-to-kstar-ll-bcvdv2016.hh \
+    b-to-kstar-ll-gvdv2020.cc b-to-kstar-ll-gvdv2020.hh \
+    b-to-kstar-ll-bfs2004.cc b-to-kstar-ll-bfs2004.hh \
+    b-to-kstar-ll-gp2004.cc b-to-kstar-ll-gp2004.hh \
+    bremsstrahlung.cc bremsstrahlung.hh \
+    charm-loops.cc charm-loops.hh \
+    em-contributions.hh em-contributions.cc \
+    exclusive-b-to-dilepton.cc exclusive-b-to-dilepton.hh \
+    inclusive-b-to-s-dilepton.cc inclusive-b-to-s-dilepton.hh \
+    inclusive-b-to-s-gamma.cc inclusive-b-to-s-gamma.hh \
+    hard-scattering.cc hard-scattering.hh \
+    long-distance.cc long-distance.hh \
+    lambda-b-to-lambda-dilepton.cc lambda-b-to-lambda-dilepton.hh \
+    nonlocal-formfactors.hh nonlocal-formfactors.cc \
+    nonlocal-formfactors-p-to-p.cc \
+    nonlocal-formfactors-p-to-v.cc \
+    observables.cc observables.hh \
+    qcdf-integrals.cc qcdf-integrals.hh \
+    qcdf-integrals-analytical.cc \
+    qcdf-integrals-mixed.cc \
+    qcdf-integrals-numerical.cc
 libeosrarebdecays_la_CXXFLAGS = $(AM_CXXFLAGS) $(GSL_CXXFLAGS)
 libeosrarebdecays_la_LDFLAGS = $(GSL_LDFLAGS)
 libeosrarebdecays_la_LIBADD = \
-	$(top_builddir)/eos/utils/libeosutils.la \
-	$(top_builddir)/eos/form-factors/libeosformfactors.la \
-	-lboost_filesystem -lboost_system \
-	-lgsl -lgslcblas -lm
+    $(top_builddir)/eos/utils/libeosutils.la \
+    $(top_builddir)/eos/form-factors/libeosformfactors.la \
+    -lboost_filesystem -lboost_system \
+    -lgsl -lgslcblas -lm
 
 include_eos_rarebdecaysdir = $(includedir)/eos/rare-b-decays
 include_eos_rarebdecays_HEADERS = \
-	bremsstrahlung.hh \
-	charm-loops.hh \
-	em-contributions.hh \
-	exclusive-b-to-dilepton.hh \
-	hard-scattering.hh \
-	lambda-b-to-lambda-dilepton.hh \
-	long-distance.hh \
-	qcdf-integrals.hh
+    bremsstrahlung.hh \
+    charm-loops.hh \
+    em-contributions.hh \
+    exclusive-b-to-dilepton.hh \
+    hard-scattering.hh \
+    lambda-b-to-lambda-dilepton.hh \
+    long-distance.hh \
+    qcdf-integrals.hh
 
 EXTRA_DIST = \
-	exclusive-b-to-s-dilepton-low-recoil_TEST-btokll.data \
-	exclusive-b-to-s-dilepton-low-recoil_TEST-btokstarll.data \
-	exclusive-b-to-s-gamma_TEST-btokstargamma.data
+    exclusive-b-to-s-dilepton-low-recoil_TEST-btokll.data \
+    exclusive-b-to-s-dilepton-low-recoil_TEST-btokstarll.data \
+    exclusive-b-to-s-gamma_TEST-btokstargamma.data
 
 AM_TESTS_ENVIRONMENT = \
-	export EOS_TESTS_PARAMETERS="$(top_srcdir)/eos/parameters";
+    export EOS_TESTS_PARAMETERS="$(top_srcdir)/eos/parameters";
 
 
-#	exclusive-b-to-dilepton_TEST \
-#	exclusive-b-to-s-dilepton-low-recoil_TEST \
-#	exclusive-b-to-s-dilepton-large-recoil_TEST \
-#	exclusive-b-to-s-gamma_TEST
+#    exclusive-b-to-dilepton_TEST \
+#    exclusive-b-to-s-dilepton-low-recoil_TEST \
+#    exclusive-b-to-s-dilepton-large-recoil_TEST \
+#    exclusive-b-to-s-gamma_TEST
 
 #LONGTESTS
 # --> Add variable in the configure, new tagret longcheck
@@ -72,31 +73,33 @@ AM_TESTS_ENVIRONMENT = \
 # make longcheck
 
 #longcheck-local: $(LONGTESTS)
-#	$(MAKE) check TESTS=$(LONGTESTS)
+#    $(MAKE) check TESTS=$(LONGTESTS)
 
 
 #SHORTTESTS
 TESTS = \
-	bremsstrahlung_TEST \
-	charm-loops_TEST \
-	em-contributions_TEST \
-	inclusive-b-to-s-dilepton_TEST \
-	inclusive-b-to-s-gamma_TEST \
-	hard-scattering_TEST \
-	lambda-b-to-lambda-dilepton_TEST \
-	long-distance_TEST \
-	qcdf-integrals_TEST \
-	nonlocal-formfactors-p-to-p_TEST \
-	nonlocal-formfactors-p-to-v_TEST \
-	b-to-k-charmonium_TEST \
-	b-to-kstar-charmonium_TEST
+    bremsstrahlung_TEST \
+    charm-loops_TEST \
+    em-contributions_TEST \
+    inclusive-b-to-s-dilepton_TEST \
+    inclusive-b-to-s-gamma_TEST \
+    hard-scattering_TEST \
+    lambda-b-to-lambda-dilepton_TEST \
+    long-distance_TEST \
+    qcdf-integrals_TEST \
+    nonlocal-formfactors-p-to-p_TEST \
+    nonlocal-formfactors-p-to-v_TEST \
+    b-to-k-charmonium_TEST \
+    b-to-kstar-charmonium_TEST \
+    b-to-kstar-ll-gvdv2020_TEST
+ #   b-to-kstar-ll-bcvdv2016_TEST
 XFAIL_TESTS = \
-	exclusive-b-to-s-dilepton-large-recoil_TEST # One of the QCDF integrals has a bug in the imaginary part
+    exclusive-b-to-s-dilepton-large-recoil_TEST # One of the QCDF integrals has a bug in the imaginary part
 LDADD = \
-	$(top_builddir)/test/libeostest.a \
-	libeosrarebdecays.la \
-	$(top_builddir)/eos/utils/libeosutils.la \
-	$(top_builddir)/eos/libeos.la
+    $(top_builddir)/test/libeostest.a \
+    libeosrarebdecays.la \
+    $(top_builddir)/eos/utils/libeosutils.la \
+    $(top_builddir)/eos/libeos.la
 
 check_PROGRAMS = $(TESTS)
 bremsstrahlung_TEST_SOURCES = bremsstrahlung_TEST.cc
@@ -132,3 +135,7 @@ nonlocal_formfactors_p_to_v_TEST_SOURCES = nonlocal-formfactors-p-to-v_TEST.cc
 b_to_k_charmonium_TEST_SOURCES = b-to-k-charmonium_TEST.cc
 
 b_to_kstar_charmonium_TEST_SOURCES = b-to-kstar-charmonium_TEST.cc
+
+b_to_kstar_ll_gvdv2020_TEST_SOURCES = b-to-kstar-ll-gvdv2020_TEST.cc
+
+#b_to_kstar_ll_bcvdv2016_TEST_SOURCES = b-to-kstar-ll-bcvdv2016_TEST.cc

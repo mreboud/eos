@@ -23,6 +23,7 @@
 #include <eos/rare-b-decays/b-to-kstar-ll-bfs2004.hh>
 #include <eos/rare-b-decays/b-to-kstar-ll-cffmpsv2015.hh>
 #include <eos/rare-b-decays/b-to-kstar-ll-gp2004.hh>
+#include <eos/rare-b-decays/b-to-kstar-ll-gvdv2020.hh>
 #include <eos/utils/integrate.hh>
 #include <eos/utils/integrate-impl.hh>
 #include <eos/utils/private_implementation_pattern-impl.hh>
@@ -96,6 +97,10 @@ namespace eos
             if ("BCvDV2016" == tag)
             {
                 amplitude_generator.reset(new BToKstarDileptonAmplitudes<tag::BCvDV2016>(p, o));
+            }
+            if ("GvDV2020" == tag)
+            {
+                amplitude_generator.reset(new BToKstarDileptonAmplitudes<tag::GvDV2020>(p, o));
             }
             else if ("BFS2004" == tag)
             {
@@ -951,15 +956,15 @@ namespace eos
     }
 
     double
-    BToKstarDilepton::integrated_s_6c(const double & s_min, const double & s_max) const                    
-    {                                                                                                      
-      Save<bool> cp_conjugate(_imp->amplitude_generator->cp_conjugate, false);                           
-      AngularCoefficients a_c = _imp->integrated_angular_coefficients(s_min, s_max);                     
-      _imp->amplitude_generator->cp_conjugate = true;                                                    
-      AngularCoefficients a_c_bar = _imp->integrated_angular_coefficients(s_min, s_max);                 
-                                                                                                       
+    BToKstarDilepton::integrated_s_6c(const double & s_min, const double & s_max) const
+    {
+      Save<bool> cp_conjugate(_imp->amplitude_generator->cp_conjugate, false);
+      AngularCoefficients a_c = _imp->integrated_angular_coefficients(s_min, s_max);
+      _imp->amplitude_generator->cp_conjugate = true;
+      AngularCoefficients a_c_bar = _imp->integrated_angular_coefficients(s_min, s_max);
+
       return 4.0 / 3.0 * (a_c.j6c + a_c_bar.j6c) / (_imp->decay_width(a_c) + _imp->decay_width(a_c_bar));
-    }                                                                                                      
+    }
 
 
     double

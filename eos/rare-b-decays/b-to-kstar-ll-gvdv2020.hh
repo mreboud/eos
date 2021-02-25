@@ -27,7 +27,7 @@ namespace eos
 
             SwitchOption q;
 
-            SwitchOption formfactor;
+            SwitchOption opt_nonlocal_formfactor;
             NonlocalFormFactorPtr<nff::PToV> nonlocal_formfactor;
 
             BToKstarDileptonAmplitudes(const Parameters & p, const Options & o);

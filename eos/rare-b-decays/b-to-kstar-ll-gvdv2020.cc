@@ -38,8 +38,8 @@ namespace eos
         g_fermi(p["G_Fermi"], *this),
         tau(p["life_time::B_" + o.get("q", "d")], *this),
         q(o, "q", { "d", "u" }, "d"),
-        formfactor(o, "formfactor", { "GvDV2020ModelA", "GvDV2020ModelB", "naive" }, "GvDV2020ModelA"),
-        nonlocal_formfactor(NonlocalFormFactor<nff::PToV>::make(formfactor.value(), p, o))
+        opt_nonlocal_formfactor(o, "nonlocal-formfactor", { "GvDV2020", "GRvDV2021" }, "GvDV2020"),
+        nonlocal_formfactor(NonlocalFormFactor<nff::PToV>::make("B->K^*::" + opt_nonlocal_formfactor.value(), p, o))
     {
     }
 
@@ -84,7 +84,7 @@ namespace eos
                 lambda      = eos::lambda(m_B2, m_V2, s),
                 sqrt_lambda = std::sqrt(lambda);
 
-        // vectorial form factors, cf. [GvDV2020], eq. (C5)
+        // vectorial form factors, cf. [BCvDV2016], eq. (C5)
         const double
                 calF_perp = sqrt(2.0) * sqrt_lambda / (m_B * (m_B + m_V)) * ff_V,
                 calF_para = sqrt(2.0) * (m_B + m_V) / m_B * ff_A1,
@@ -92,7 +92,7 @@ namespace eos
                           / (2.0 * m_V * sqrt_s * pow(m_B + m_V, 2)),
                 calF_time = ff_A0;
 
-        // tensorial form factors, cf. [GvDV2020], eq. (C6)
+        // tensorial form factors, cf. [BCvDV2016], eq. (C6)
         const double
                 calF_T_perp = sqrt(2.0) * sqrt_lambda / m_B2 * ff_T1,
                 calF_T_para = sqrt(2.0) * (m_B2 - m_V2) / m_B2 * ff_T2,
@@ -118,11 +118,11 @@ namespace eos
                 m_b_msbar = model->m_b_msbar(mu()),
                 m_s_msbar = model->m_s_msbar(mu());
 
-        // normalization constant, cf. [GvDV2020], eq. (B11)
+        // normalization constant, cf. [BCvDV2016], eq. (B11)
         const double calN = g_fermi() * alpha_e * abs(model->ckm_tb() * conj(model->ckm_ts()))
                 * sqrt(s * beta_l(s) * sqrt_lambda / (3.0 * 1024 * pow(M_PI, 5) * m_B));
 
-        // vector amplitudes, cf. [GvDV2020], eq. (B7)-(B9)
+        // vector amplitudes, cf. [BCvDV2016], eq. (B7)-(B9)
         result.a_long_right = -calN * (c910_m_r * calF_long + 2.0 * m_B / s * ((m_b_msbar - m_s_msbar) * c7_m * calF_T_long - 16.0 * pow(M_PI, 2) * m_B * calH_long));
         result.a_long_left  = -calN * (c910_m_l * calF_long + 2.0 * m_B / s * ((m_b_msbar - m_s_msbar) * c7_m * calF_T_long - 16.0 * pow(M_PI, 2) * m_B * calH_long));
 
@@ -132,37 +132,8 @@ namespace eos
         result.a_perp_right = +calN * (c910_p_r * calF_perp + 2.0 * m_B / s * ((m_b_msbar + m_s_msbar) * c7_p * calF_T_perp - 16.0 * pow(M_PI, 2) * m_B * calH_perp));
         result.a_perp_left  = +calN * (c910_p_l * calF_perp + 2.0 * m_B / s * ((m_b_msbar + m_s_msbar) * c7_p * calF_T_perp - 16.0 * pow(M_PI, 2) * m_B * calH_perp));
 
-        // scalar amplitude, cf. [GvDV2020], eq. (B10)
+        // scalar amplitude, cf. [BCvDV2016], eq. (B10)
         result.a_time = -calN * 2.0 * (wc.c10() - wc.c10prime()) * calF_time;
-
-#if 0
-        // timelike amplitude
-        amps.a_time = norm_s * sqrt_lambda / sqrt_s
-            * (2.0 * (wc.c10() - wc.c10prime())
-               + s / m_l / (m_b_MSbar + m_s_MSbar) * (wc.cP() - wc.cPprime())
-              ) * ff_A0;
-
-        // scalar amplitude
-        amps.a_scal = -2.0 * norm_s * sqrt_lam * (wc.cS() - wc.cSprime()) / (m_b_MSbar + m_s_MSbar) * ff_A0;
-
-        // tensor amplitudes
-        const double
-            kin_tensor_1 = norm_s / m_Kstar() * ((m_B2 + 3.0 * m_K2 - s) * ff_T2 - lam_s / m2_diff * ff_T3),
-            kin_tensor_2 = 2.0 * norm_s * sqrt_lam / sqrt_s * ff_T1,
-            kin_tensor_3 = 2.0 * norm_s * m2_diff / sqrt_s * ff_T2;
-
-        // correct the sign of C_T5 from [BHvD2012v4] because of inconsistent use of gamma5 <-> Levi-Civita
-        static const double sign = -1;
-
-        amps.a_para_perp = kin_tensor_1 * wc.cT();
-        amps.a_time_long = kin_tensor_1 * sign * wc.cT5();
-
-        amps.a_time_perp = kin_tensor_2 * wc.cT();
-        amps.a_long_perp = kin_tensor_2 * sign * wc.cT5();
-
-        amps.a_time_para = kin_tensor_3 * sign * wc.cT5();
-        amps.a_long_para = kin_tensor_3 * wc.cT();
-#endif
 
         return result;
     }

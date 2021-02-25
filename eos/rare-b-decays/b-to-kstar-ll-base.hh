@@ -72,6 +72,7 @@ namespace eos
          */
         struct ABBBSW2008;
         struct BCvDV2016;
+        struct GvDV2020;
         struct BFS2004;
         struct CFFMPSV2015;
 
