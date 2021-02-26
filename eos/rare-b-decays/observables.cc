@@ -300,7 +300,7 @@ namespace eos
             R"(Observables in $B_q \to P charmonium$ decays)",
             R"(The option "q" selects the spectator quark flavour.)",
             {
-                /// Branching ratio of B -> K psi
+                // Branching ratio of B -> K psi
                 make_observable("B->Kcharmonium::branching_ratio",
                         &BToKCharmonium::branching_ratio)
 
@@ -320,7 +320,7 @@ namespace eos
             R"(Observables in $B_q \to V charmonium$ decays)",
             R"(The option "q" selects the spectator quark flavour.)",
             {
-                /// Angular observables as detected in the decay B -> K^* psi (-> l^+ l^-)
+                // Angular observables as detected in the decay B -> K^* psi (-> l^+ l^-)
                 make_observable("B->K^*charmonium::S_1s_LHCb",
                         &BToKstarCharmonium::S_1s_LHCb),
                 make_observable("B->K^*charmonium::S_1c_LHCb",
@@ -334,7 +334,7 @@ namespace eos
                 make_observable("B->K^*charmonium::S_9_LHCb",
                         &BToKstarCharmonium::S_9_LHCb),
 
-                /// Branching ratio of B -> K^* psi
+                // Branching ratio of B -> K^* psi
                 make_observable("B->K^*charmonium::branching_ratio",
                         &BToKstarCharmonium::branching_ratio)
 
