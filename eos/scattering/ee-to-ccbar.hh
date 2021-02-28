@@ -23,6 +23,7 @@
 #include <eos/utils/private_implementation_pattern.hh>
 #include <eos/utils/stringify.hh>
 #include <eos/utils/kmatrix-impl.hh>
+#include <eos/utils/concrete-cacheable-observable.hh>
 #include <vector>
 
 namespace eos
@@ -320,8 +321,29 @@ namespace eos
         public PrivateImplementationPattern<EEToCCBar>
     {
         public:
+
+            const static unsigned nchannels = 17;
+            const static unsigned nresonances = 5;
+
+
+            struct IntermediateResult :
+                public CacheableObservable::IntermediateResult
+            {
+                std::shared_ptr<KMatrix<nchannels, nresonances>> K;
+                std::array<complex<double>, nchannels> tmatrix_row_0;
+
+                double E;
+                double s;
+            };
+
+
             EEToCCBar(const Parameters & parameters, const Options & options);
             ~EEToCCBar();
+
+            // Observables
+            const IntermediateResult * prepare(const double & E) const;
+
+            // double evaluate(const IntermediateResult *) const;
 
             // psi2S widths
             double psi2S_ee_width() const;
@@ -329,20 +351,25 @@ namespace eos
             double psi2S_total_width() const;
 
             // sigma(ee -> channel)
-            double sigma_eetoee(const double & E) const;
-            double sigma_eetoeff(const double & E) const;
-            double sigma_eetoD0Dbar0(const double & E) const;
-            double sigma_eetoDpDm(const double & E) const;
-            double sigma_eetoD0Dbarst0(const double & E) const;
-            double sigma_eetoDpDstm(const double & E) const;
-            double sigma_eetoDspDsm(const double & E) const;
-            double sigma_eetoDst0Dbarst0(const double & E) const;
-            double sigma_eetoDstpDstm(const double & E) const;
-            double sigma_eetoDspDsstm(const double & E) const;
-            double sigma_eetoDsstpDsstm(const double & E) const;
+            double sigma_eetoee(const IntermediateResult *) const;
+            double sigma_eetoeff(const IntermediateResult *) const;
+            double sigma_eetoD0Dbar0(const IntermediateResult *) const;
+            double sigma_eetoDpDm(const IntermediateResult *) const;
+            double sigma_eetoD0Dbarst0(const IntermediateResult *) const;
+            double sigma_eetoDpDstm(const IntermediateResult *) const;
+            double sigma_eetoDspDsm(const IntermediateResult *) const;
+            double sigma_eetoDst0Dbarst0(const IntermediateResult *) const;
+            double sigma_eetoDstpDstm(const IntermediateResult *) const;
+            double sigma_eetoDspDsstm(const IntermediateResult *) const;
+            double sigma_eetoDsstpDsstm(const IntermediateResult *) const;
 
             // Rc ratio
-            double Rc(const double & E) const;
+            double Rc(const IntermediateResult *) const;
+
+            /*!
+             * References used in the computation of our observables.
+             */
+            static const std::set<ReferenceName> references;
 
     };
 
