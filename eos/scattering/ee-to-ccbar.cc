@@ -208,6 +208,9 @@ namespace eos
 
         std::shared_ptr<KMatrix<nchannels, nresonances>> K;
 
+        using IntermediateResult = EEToCCBar::IntermediateResult;
+        IntermediateResult _intermediate_result;
+
         Implementation(const Parameters & p, const Options & o, ParameterUser & u) :
             hbar(p["hbar"], u),
             alpha_em(p["QED::alpha_e(0)"], u),
@@ -370,49 +373,6 @@ namespace eos
 
             Rconstant(p["ee->ccbar::Rconstant"], u)
         {
-
-            // // Build K Matrix
-            // auto psi2S_res = std::make_shared<charmonium_resonance<nchannels, nresonances>>("psi2S_res", m_psi2S);
-            // auto psi3770_res = std::make_shared<charmonium_resonance<nchannels, nresonances>>("psi3770_res", m_psi3770);
-            // auto psi4040_res = std::make_shared<charmonium_resonance<nchannels, nresonances>>("psi4040_res", m_psi4040);
-
-            // std::vector<std::vector<Parameter>> bkgcst {
-            //     {c_ee_ee,        c_ee_eff,        c_ee_D0Dbar0,        c_ee_DpDm,        c_ee_D0Dbarst0,        c_ee_DpDstm,        c_ee_DspDsm},
-            //     {c_ee_eff,       c_eff_eff,       c_eff_D0Dbar0,       c_eff_DpDm,       c_eff_D0Dbarst0,       c_eff_DpDstm,       c_eff_DspDsm},
-            //     {c_ee_D0Dbar0,   c_eff_D0Dbar0,   c_D0Dbar0_D0Dbar0,   c_D0Dbar0_DpDm,   c_D0Dbar0_D0Dbarst0,   c_D0Dbar0_DpDstm,   c_D0Dbar0_DspDsm},
-            //     {c_ee_DpDm,      c_eff_DpDm,      c_D0Dbar0_DpDm,      c_DpDm_DpDm,      c_DpDm_D0Dbarst0,      c_DpDm_DpDstm,      c_DpDm_DspDsm},
-            //     {c_ee_D0Dbarst0, c_eff_D0Dbarst0, c_D0Dbar0_D0Dbarst0, c_DpDm_D0Dbarst0, c_D0Dbarst0_D0Dbarst0, c_D0Dbarst0_DpDstm, c_D0Dbarst0_DspDsm},
-            //     {c_ee_D0Dbarst0, c_eff_D0Dbarst0, c_D0Dbar0_D0Dbarst0, c_DpDm_D0Dbarst0, c_D0Dbarst0_D0Dbarst0, c_D0Dbarst0_DpDstm, c_D0Dbarst0_DspDsm},
-            //     {c_ee_DpDstm,    c_eff_DpDstm,    c_D0Dbar0_DpDstm,    c_DpDm_DpDstm,    c_D0Dbarst0_DpDstm,    c_DpDstm_DpDstm,    c_DpDstm_DspDsm},
-            //     {c_ee_DpDstm,    c_eff_DpDstm,    c_D0Dbar0_DpDstm,    c_DpDm_DpDstm,    c_D0Dbarst0_DpDstm,    c_DpDstm_DpDstm,    c_DpDstm_DspDsm},
-            //     {c_ee_DspDsm,    c_eff_DspDsm,    c_D0Dbar0_DspDsm,    c_DpDm_DspDsm,    c_D0Dbarst0_DspDsm,    c_DpDstm_DspDsm,    c_DspDsm_DspDsm}
-            // };
-
-            // std::vector<Parameter> ee_g0s         {{g0_psi2S_ee,        g0_psi3770_ee,        g0_psi4040_ee,        }};
-            // std::vector<Parameter> eff_g0s        {{g0_psi2S_eff,       g0_psi3770_eff,       g0_psi4040_eff,       }};
-            // std::vector<Parameter> D0Dbar0_g0s    {{g0_psi2S_D0Dbar0,   g0_psi3770_D0Dbar0,   g0_psi4040_D0Dbar0,   }};
-            // std::vector<Parameter> DpDm_g0s       {{g0_psi2S_DpDm,      g0_psi3770_DpDm,      g0_psi4040_DpDm,      }};
-            // std::vector<Parameter> D0Dbarst0_g0s  {{g0_psi2S_D0Dbarst0, g0_psi3770_D0Dbarst0, g0_psi4040_D0Dbarst0, }};
-            // std::vector<Parameter> DpDstm_g0s     {{g0_psi2S_DpDstm,    g0_psi3770_DpDstm,    g0_psi4040_DpDstm,    }};
-            // std::vector<Parameter> DspDsm_g0s     {{g0_psi2S_DspDsm,    g0_psi3770_DspDsm,    g0_psi4040_DspDsm,    }};
-
-            // auto ee_chan        = std::make_shared<PPchan<nchannels, nresonances>>("ee_chan", m_e, m_e, 3, ee_g0s);
-            // // Massless effective channel
-            // auto eff_chan       = std::make_shared<PPchan<nchannels, nresonances>>("eff_chan", m_e, m_e, 3, eff_g0s);
-            // auto D0Dbar0_chan   = std::make_shared<PPchan<nchannels, nresonances>>("D0Dbar0_chan", m_D0, m_D0, 3, D0Dbar0_g0s);
-            // auto DpDm_chan      = std::make_shared<PPchan<nchannels, nresonances>>("DpDm_chan", m_D, m_D, 3, DpDm_g0s);
-            // auto D0Dbarst0_chan = std::make_shared<VPchan<nchannels, nresonances>>("D0Dbarst0_chan", m_D0, m_Dst0, 3, D0Dbarst0_g0s);
-            // auto DpDstm_chan    = std::make_shared<VPchan<nchannels, nresonances>>("DpDstm_chan", m_D, m_Dst, 3, DpDstm_g0s);
-            // auto DspDsm_chan    = std::make_shared<PPchan<nchannels, nresonances>>("DspDsm_chan", m_Ds, m_Ds, 3, DspDsm_g0s);
-
-            // K = std::shared_ptr<KMatrix<nchannels, nresonances>> (
-            //     new KMatrix<nchannels, nresonances>(
-            //             {ee_chan, eff_chan, D0Dbar0_chan, DpDm_chan, D0Dbarst0_chan, D0Dbarst0_chan, DpDstm_chan, DpDstm_chan, DspDsm_chan},
-            //             {psi2S_res, psi3770_res, psi4040_res},
-            //             bkgcst,
-            //             "KMatrix")
-            //     );
-
             // Build K Matrix IN THE ISOSPIN LIMIT
             auto psi2S_res = std::make_shared<charmonium_resonance<nchannels, nresonances>>("psi2S_res", m_psi2S);
             auto psi3770_res = std::make_shared<charmonium_resonance<nchannels, nresonances>>("psi3770_res", m_psi3770);
@@ -499,6 +459,17 @@ namespace eos
                 );
         }
 
+        const IntermediateResult * prepare(const double & E)
+        {
+            _intermediate_result.tmatrix_row_0 = K->tmatrix_row(0, E*E);
+
+            _intermediate_result.E = E;
+            _intermediate_result.s = E*E;
+
+            return &_intermediate_result;
+        }
+
+
         inline double sigma_eetomumu(const double & E)
         {
             // Conversion factor between GeV^2 and nb
@@ -508,7 +479,7 @@ namespace eos
             return GeVtonb * 4.0 * M_PI * alpha_em*alpha_em / (3.0 * E*E);
         }
 
-        double sigma_eetochannel(const double & E, const unsigned & channel)
+        double sigma_eetochannel(const IntermediateResult * intermediate_result, const unsigned & channel)
         {
             // Conversion factor between GeV^2 and nb
             const double speedoflight = 299792458.; //Exact value
@@ -516,24 +487,24 @@ namespace eos
 
             // Channel properties
             const double Nf = K->_channels[channel]->_N_orbital;
-            const double rhof = real(K->_channels[channel]->rho(E*E));
+            const double rhof = real(K->_channels[channel]->rho(intermediate_result->s));
 
             // Get T-matrix[ee, channel]
-            const complex<double> T1f = K->tmatrix_row(0, E*E)[channel];
+            const complex<double> T1f = intermediate_result->tmatrix_row_0[channel];
 
-            return GeVtonb * 16. * M_PI / (E*E) * Nf * rhof * norm(T1f);
+            return GeVtonb * 16. * M_PI / intermediate_result->s * Nf * rhof * norm(T1f);
         }
 
-        double Rc(const double & E)
+        double Rc(const IntermediateResult * intermediate_result)
         {
             double total_xsec = 0.0;
 
             for (unsigned i = 0; i < nchannels; i++)
             {
-                total_xsec += sigma_eetochannel(E, i);
+                total_xsec += sigma_eetochannel(intermediate_result, i);
             }
 
-            return total_xsec / sigma_eetomumu(E) + Rconstant; //Add constant term 
+            return total_xsec / sigma_eetomumu(intermediate_result->E) + Rconstant; //Add constant term
         }
 
         double psi2S_partial_width(unsigned channel)
@@ -559,6 +530,12 @@ namespace eos
     {
     }
 
+    const EEToCCBar::IntermediateResult *
+    EEToCCBar::prepare(const double & E) const
+    {
+        return _imp->prepare(E);
+    }
+
     double
     EEToCCBar::psi2S_ee_width() const
     {
@@ -578,75 +555,81 @@ namespace eos
     }
 
     double
-    EEToCCBar::sigma_eetoee(const double & E) const
+    EEToCCBar::sigma_eetoee(const EEToCCBar::IntermediateResult * ir) const
     {
-        return _imp->sigma_eetochannel(E, 0);
+        return _imp->sigma_eetochannel(ir, 0);
     }
 
     double
-    EEToCCBar::sigma_eetoeff(const double & E) const
+    EEToCCBar::sigma_eetoeff(const EEToCCBar::IntermediateResult * ir) const
     {
-        return _imp->sigma_eetochannel(E, 1);
+        return _imp->sigma_eetochannel(ir, 1);
     }
 
     double
-    EEToCCBar::sigma_eetoD0Dbar0(const double & E) const
+    EEToCCBar::sigma_eetoD0Dbar0(const EEToCCBar::IntermediateResult * ir) const
     {
-        return _imp->sigma_eetochannel(E, 2);
+        return _imp->sigma_eetochannel(ir, 2);
     }
 
     double
-    EEToCCBar::sigma_eetoDpDm(const double & E) const
+    EEToCCBar::sigma_eetoDpDm(const EEToCCBar::IntermediateResult * ir) const
     {
-        return _imp->sigma_eetochannel(E, 3);
+        return _imp->sigma_eetochannel(ir, 3);
     }
 
     double
-    EEToCCBar::sigma_eetoD0Dbarst0(const double & E) const
+    EEToCCBar::sigma_eetoD0Dbarst0(const EEToCCBar::IntermediateResult * ir) const
     {
-        return _imp->sigma_eetochannel(E, 4) + _imp->sigma_eetochannel(E, 5);
+        return _imp->sigma_eetochannel(ir, 4) + _imp->sigma_eetochannel(ir, 5);
     }
 
     double
-    EEToCCBar::sigma_eetoDpDstm(const double & E) const
+    EEToCCBar::sigma_eetoDpDstm(const EEToCCBar::IntermediateResult * ir) const
     {
-        return _imp->sigma_eetochannel(E, 6) + _imp->sigma_eetochannel(E, 7);
+        return _imp->sigma_eetochannel(ir, 6) + _imp->sigma_eetochannel(ir, 7);
     }
 
     double
-    EEToCCBar::sigma_eetoDspDsm(const double & E) const
+    EEToCCBar::sigma_eetoDspDsm(const EEToCCBar::IntermediateResult * ir) const
     {
-        return _imp->sigma_eetochannel(E, 8);
+        return _imp->sigma_eetochannel(ir, 8);
     }
 
     double
-    EEToCCBar::sigma_eetoDst0Dbarst0(const double & E) const
+    EEToCCBar::sigma_eetoDst0Dbarst0(const EEToCCBar::IntermediateResult * ir) const
     {
-        return _imp->sigma_eetochannel(E, 9);
+        return _imp->sigma_eetochannel(ir, 9);
     }
 
     double
-    EEToCCBar::sigma_eetoDstpDstm(const double & E) const
+    EEToCCBar::sigma_eetoDstpDstm(const EEToCCBar::IntermediateResult * ir) const
     {
-        return _imp->sigma_eetochannel(E, 10);
+        return _imp->sigma_eetochannel(ir, 10);
     }
 
     double
-    EEToCCBar::sigma_eetoDspDsstm(const double & E) const
+    EEToCCBar::sigma_eetoDspDsstm(const EEToCCBar::IntermediateResult * ir) const
     {
-        return _imp->sigma_eetochannel(E, 11);
+        return _imp->sigma_eetochannel(ir, 11);
     }
 
     double
-    EEToCCBar::sigma_eetoDsstpDsstm(const double & E) const
+    EEToCCBar::sigma_eetoDsstpDsstm(const EEToCCBar::IntermediateResult * ir) const
     {
-        return _imp->sigma_eetochannel(E, 12);
+        return _imp->sigma_eetochannel(ir, 12);
     }
 
     double
-    EEToCCBar::Rc(const double & E) const
+    EEToCCBar::Rc(const EEToCCBar::IntermediateResult * ir) const
     {
-        return _imp->Rc(E);
+        return _imp->Rc(ir);
     }
+
+
+    const std::set<ReferenceName>
+    EEToCCBar::references
+    {
+    };
 
 }
