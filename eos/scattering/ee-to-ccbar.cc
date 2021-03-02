@@ -29,12 +29,6 @@
 namespace eos
 {
 
-    // K matrix channels
-    // 0    ee
-    // 1    eff
-    // 2    D0Dbar0
-    // 3    D+D-
-
     template <>
     struct Implementation<EEToCCBar>
     {
@@ -599,25 +593,25 @@ namespace eos
     double
     EEToCCBar::sigma_eetoDst0Dbarst0(const EEToCCBar::IntermediateResult * ir) const
     {
-        return _imp->sigma_eetochannel(ir, 9);
+        return _imp->sigma_eetochannel(ir, 9) + _imp->sigma_eetochannel(ir, 10);
     }
 
     double
     EEToCCBar::sigma_eetoDstpDstm(const EEToCCBar::IntermediateResult * ir) const
     {
-        return _imp->sigma_eetochannel(ir, 10);
+        return _imp->sigma_eetochannel(ir, 11) + _imp->sigma_eetochannel(ir, 12);
     }
 
     double
     EEToCCBar::sigma_eetoDspDsstm(const EEToCCBar::IntermediateResult * ir) const
     {
-        return _imp->sigma_eetochannel(ir, 11);
+        return _imp->sigma_eetochannel(ir, 13) + _imp->sigma_eetochannel(ir, 14);
     }
 
     double
     EEToCCBar::sigma_eetoDsstpDsstm(const EEToCCBar::IntermediateResult * ir) const
     {
-        return _imp->sigma_eetochannel(ir, 12);
+        return _imp->sigma_eetochannel(ir, 15) + _imp->sigma_eetochannel(ir, 16);
     }
 
     double
