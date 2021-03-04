@@ -718,17 +718,29 @@ groups:
           max:     0
           latex:   '$\hat{c}(e^+e^-, D_s^+D_s^-)$'
           comment: ''
-      'ee->ccbar::c(ee,D^*0Dbar^*0)' :
+      'ee->ccbar::c(ee,D^*0Dbar^*0S0)' :
           central: 0
           min:     0
           max:     0
-          latex:   '$\hat{c}(e^+e^-, D^{*0}\bar{D}^{*0})$'
+          latex:   '$\hat{c}(e^+e^-, D^{*0}\bar{D}^{*0}|_{S=0})$'
           comment: ''
-      'ee->ccbar::c(ee,D^*+D^*-)' :
+      'ee->ccbar::c(ee,D^*0Dbar^*0S2)' :
           central: 0
           min:     0
           max:     0
-          latex:   '$\hat{c}(e^+e^-, D^{*+}D^{*-})$'
+          latex:   '$\hat{c}(e^+e^-, D^{*0}\bar{D}^{*0}|_{S=2})$'
+          comment: ''
+      'ee->ccbar::c(ee,D^*+D^*-S0)' :
+          central: 0
+          min:     0
+          max:     0
+          latex:   '$\hat{c}(e^+e^-, D^{*+}D^{*-}|_{S=0})$'
+          comment: ''
+      'ee->ccbar::c(ee,D^*+D^*-S2)' :
+          central: 0
+          min:     0
+          max:     0
+          latex:   '$\hat{c}(e^+e^-, D^{*+}D^{*-}|_{S=2})$'
           comment: ''
       'ee->ccbar::c(ee,D_s^+D_s^*-)' :
           central: 0
@@ -736,11 +748,17 @@ groups:
           max:     0
           latex:   '$\hat{c}(e^+e^-, D_s^+D_s^{*-})$'
           comment: ''
-      'ee->ccbar::c(ee,D_s^*+D_s^*-)' :
+      'ee->ccbar::c(ee,D_s^*+D_s^*-S0)' :
           central: 0
           min:     0
           max:     0
-          latex:   '$\hat{c}(e^+e^-, D_s^{*+}D_s^{*-})$'
+          latex:   '$\hat{c}(e^+e^-, D_s^{*+}D_s^{*-}|_{S=0})$'
+          comment: ''
+      'ee->ccbar::c(ee,D_s^*+D_s^*-S2)' :
+          central: 0
+          min:     0
+          max:     0
+          latex:   '$\hat{c}(e^+e^-, D_s^{*+}D_s^{*-}|_{S=2})$'
           comment: ''
 
       'ee->ccbar::c(eff,eff)' :
@@ -779,17 +797,29 @@ groups:
           max:     0
           latex:   '$\hat{c}(\textrm{eff}, D_s^+D_s^-)$'
           comment: ''
-      'ee->ccbar::c(eff,D^*0Dbar^*0)' :
+      'ee->ccbar::c(eff,D^*0Dbar^*0S0)' :
           central: 0
           min:     0
           max:     0
-          latex:   '$\hat{c}(\textrm{eff}, D^{*0}\bar{D}^{*0})$'
+          latex:   '$\hat{c}(\textrm{eff}, D^{*0}bar{D}^{*0}|_{S=0})$'
           comment: ''
-      'ee->ccbar::c(eff,D^*+D^*-)' :
+      'ee->ccbar::c(eff,D^*0Dbar^*0S2)' :
           central: 0
           min:     0
           max:     0
-          latex:   '$\hat{c}(\textrm{eff}, D^{*+}D^{*-})$'
+          latex:   '$\hat{c}(\textrm{eff}, D^{*0}\bar{D}^{*0}|_{S=2})$'
+          comment: ''
+      'ee->ccbar::c(eff,D^*+D^*-S0)' :
+          central: 0
+          min:     0
+          max:     0
+          latex:   '$\hat{c}(\textrm{eff}, D^{*+}D^{*-}|_{S=0})$'
+          comment: ''
+      'ee->ccbar::c(eff,D^*+D^*-S2)' :
+          central: 0
+          min:     0
+          max:     0
+          latex:   '$\hat{c}(\textrm{eff}, D^{*+}D^{*-}|_{S=2})$'
           comment: ''
       'ee->ccbar::c(eff,D_s^+D_s^*-)' :
           central: 0
@@ -797,11 +827,17 @@ groups:
           max:     0
           latex:   '$\hat{c}(\textrm{eff}, D_s^+D_s^{*-})$'
           comment: ''
-      'ee->ccbar::c(eff,D_s^*+D_s^*-)' :
+      'ee->ccbar::c(eff,D_s^*+D_s^*-S0)' :
           central: 0
           min:     0
           max:     0
-          latex:   '$\hat{c}(\textrm{eff}, D_s^{*+}D_s^{*-})$'
+          latex:   '$\hat{c}(\textrm{eff}, D_s^{*+}D_s^{*-}|_{S=0})$'
+          comment: ''
+      'ee->ccbar::c(eff,D_s^*+D_s^*-S2)' :
+          central: 0
+          min:     0
+          max:     0
+          latex:   '$\hat{c}(\textrm{eff}, D_s^{*+}D_s^{*-}|_{S=2})$'
           comment: ''
 
 
@@ -835,17 +871,29 @@ groups:
           max:     0
           latex:   '$\hat{c}(D^0\bar{D}^0, D_s^+D_s^-)$'
           comment: ''
-      'ee->ccbar::c(D^0Dbar^0,D^*0Dbar^*0)' :
+      'ee->ccbar::c(D^0Dbar^0,D^*0Dbar^*0S0)' :
           central: 0
           min:     0
           max:     0
-          latex:   '$\hat{c}(D^0\bar{D}^0, D^{*0}\bar{D}^{*0})$'
+          latex:   '$\hat{c}(D^0\bar{D}^0, D^{*0}\bar{D}^{*0}|_{S=0})$'
           comment: ''
-      'ee->ccbar::c(D^0Dbar^0,D^*+D^*-)' :
+      'ee->ccbar::c(D^0Dbar^0,D^*0Dbar^*0S2)' :
           central: 0
           min:     0
           max:     0
-          latex:   '$\hat{c}(D^0\bar{D}^0, D^{*+}D^{*-})$'
+          latex:   '$\hat{c}(D^0\bar{D}^0, D^{*0}\bar{D}^{*0}|_{S=2})$'
+          comment: ''
+      'ee->ccbar::c(D^0Dbar^0,D^*+D^*-S0)' :
+          central: 0
+          min:     0
+          max:     0
+          latex:   '$\hat{c}(D^0\bar{D}^0, D^{*+}D^{*-}|_{S=0})$'
+          comment: ''
+      'ee->ccbar::c(D^0Dbar^0,D^*+D^*-S2)' :
+          central: 0
+          min:     0
+          max:     0
+          latex:   '$\hat{c}(D^0\bar{D}^0, D^{*+}D^{*-}|_{S=2})$'
           comment: ''
       'ee->ccbar::c(D^0Dbar^0,D_s^+D_s^*-)' :
           central: 0
@@ -853,11 +901,17 @@ groups:
           max:     0
           latex:   '$\hat{c}(D^0\bar{D}^0, D_s^+D_s^{*-})$'
           comment: ''
-      'ee->ccbar::c(D^0Dbar^0,D_s^*+D_s^*-)' :
+      'ee->ccbar::c(D^0Dbar^0,D_s^*+D_s^*-S0)' :
           central: 0
           min:     0
           max:     0
-          latex:   '$\hat{c}(D^0\bar{D}^0, D_s^{*+}D_s^{*-})$'
+          latex:   '$\hat{c}(D^0\bar{D}^0, D_s^{*+}D_s^{*-}|_{S=0})$'
+          comment: ''
+      'ee->ccbar::c(D^0Dbar^0,D_s^*+D_s^*-S2)' :
+          central: 0
+          min:     0
+          max:     0
+          latex:   '$\hat{c}(D^0\bar{D}^0, D_s^{*+}D_s^{*-}|_{S=2})$'
           comment: ''
 
       'ee->ccbar::c(D^+D^-,D^+D^-)' :
@@ -884,17 +938,29 @@ groups:
           max:     0
           latex:   '$\hat{c}(D^+D^-, D_s^+D_s^-)$'
           comment: ''
-      'ee->ccbar::c(D^+D^-,D^*0Dbar^*0)' :
+      'ee->ccbar::c(D^+D^-,D^*0Dbar^*0S0)' :
           central: 0
           min:     0
           max:     0
-          latex:   '$\hat{c}(D^+D^-, D^{*0}\bar{D}^{*0})$'
+          latex:   '$\hat{c}(D^+D^-, D^{*0}\bar{D}^{*0}|_{S=0})$'
           comment: ''
-      'ee->ccbar::c(D^+D^-,D^*+D^*-)' :
+      'ee->ccbar::c(D^+D^-,D^*0Dbar^*0S2)' :
           central: 0
           min:     0
           max:     0
-          latex:   '$\hat{c}(D^+D^-, D^{*+}D^{*-})$'
+          latex:   '$\hat{c}(D^+D^-, D^{*0}\bar{D}^{*0}|_{S=2})$'
+          comment: ''
+      'ee->ccbar::c(D^+D^-,D^*+D^*-S0)' :
+          central: 0
+          min:     0
+          max:     0
+          latex:   '$\hat{c}(D^+D^-, D^{*+}D^{*-}|_{S=0})$'
+          comment: ''
+      'ee->ccbar::c(D^+D^-,D^*+D^*-S2)' :
+          central: 0
+          min:     0
+          max:     0
+          latex:   '$\hat{c}(D^+D^-, D^{*+}D^{*-}|_{S=2})$'
           comment: ''
       'ee->ccbar::c(D^+D^-,D_s^+D_s^*-)' :
           central: 0
@@ -902,11 +968,17 @@ groups:
           max:     0
           latex:   '$\hat{c}(D^+D^-, D_s^+D_s^{*-})$'
           comment: ''
-      'ee->ccbar::c(D^+D^-,D_s^*+D_s^*-)' :
+      'ee->ccbar::c(D^+D^-,D_s^*+D_s^*-S0)' :
           central: 0
           min:     0
           max:     0
-          latex:   '$\hat{c}(D^+D^-, D_s^{*+}D_s^{*-})$'
+          latex:   '$\hat{c}(D^+D^-, D_s^{*+}D_s^{*-}|_{S=0})$'
+          comment: ''
+      'ee->ccbar::c(D^+D^-,D_s^*+D_s^*-S2)' :
+          central: 0
+          min:     0
+          max:     0
+          latex:   '$\hat{c}(D^+D^-, D_s^{*+}D_s^{*-}|_{S=2})$'
           comment: ''
 
       'ee->ccbar::c(D^0Dbar^*0,D^0Dbar^*0)' :
@@ -927,17 +999,29 @@ groups:
           max:     0
           latex:   '$\hat{c}(D^0\bar{D}^{*0}, D_s^+D_s^-)$'
           comment: ''
-      'ee->ccbar::c(D^0Dbar^*0,D^*0Dbar^*0)' :
+      'ee->ccbar::c(D^0Dbar^*0,D^*0Dbar^*0S0)' :
           central: 0
           min:     0
           max:     0
-          latex:   '$\hat{c}(D^0\bar{D}^{*0}, D^{*0}\bar{D}^{*0})$'
+          latex:   '$\hat{c}(D^0\bar{D}^{*0}, D^{*0}\bar{D}^{*0}|_{S=0})$'
           comment: ''
-      'ee->ccbar::c(D^0Dbar^*0,D^*+D^*-)' :
+      'ee->ccbar::c(D^0Dbar^*0,D^*0Dbar^*0S2)' :
           central: 0
           min:     0
           max:     0
-          latex:   '$\hat{c}(D^0\bar{D}^{*0}, D^{*+}D^{*-})$'
+          latex:   '$\hat{c}(D^0\bar{D}^{*0}, D^{*0}\bar{D}^{*0}|_{S=2})$'
+          comment: ''
+      'ee->ccbar::c(D^0Dbar^*0,D^*+D^*-S0)' :
+          central: 0
+          min:     0
+          max:     0
+          latex:   '$\hat{c}(D^0\bar{D}^{*0}, D^{*+}D^{*-}|_{S=0})$'
+          comment: ''
+      'ee->ccbar::c(D^0Dbar^*0,D^*+D^*-S2)' :
+          central: 0
+          min:     0
+          max:     0
+          latex:   '$\hat{c}(D^0\bar{D}^{*0}, D^{*+}D^{*-}|_{S=2})$'
           comment: ''
       'ee->ccbar::c(D^0Dbar^*0,D_s^+D_s^*-)' :
           central: 0
@@ -945,11 +1029,17 @@ groups:
           max:     0
           latex:   '$\hat{c}(D^0\bar{D}^{*0}, D_s^+D_s^{*-})$'
           comment: ''
-      'ee->ccbar::c(D^0Dbar^*0,D_s^*+D_s^*-)' :
+      'ee->ccbar::c(D^0Dbar^*0,D_s^*+D_s^*-S0)' :
           central: 0
           min:     0
           max:     0
-          latex:   '$\hat{c}(D^0\bar{D}^{*0}, D_s^{*+}D_s^{*-})$'
+          latex:   '$\hat{c}(D^0\bar{D}^{*0}, D_s^{*+}D_s^{*-}|_{S=0})$'
+          comment: ''
+      'ee->ccbar::c(D^0Dbar^*0,D_s^*+D_s^*-S2)' :
+          central: 0
+          min:     0
+          max:     0
+          latex:   '$\hat{c}(D^0\bar{D}^{*0}, D_s^{*+}D_s^{*-}|_{S=2})$'
           comment: ''
 
       'ee->ccbar::c(D^+D^*-,D^+D^*-)' :
@@ -964,17 +1054,29 @@ groups:
           max:     0
           latex:   '$\hat{c}(D^+D^{*-}, D_s^+D_s^-)$'
           comment: ''
-      'ee->ccbar::c(D^+D^*-,D^*0Dbar^*0)' :
+      'ee->ccbar::c(D^+D^*-,D^*0Dbar^*0S0)' :
           central: 0
           min:     0
           max:     0
-          latex:   '$\hat{c}(D^+D^{*-}, D^{*0}\bar{D}^{*0})$'
+          latex:   '$\hat{c}(D^+D^{*-}, D^{*0}\bar{D}^{*0}|_{S=0})$'
           comment: ''
-      'ee->ccbar::c(D^+D^*-,D^*+D^*-)' :
+      'ee->ccbar::c(D^+D^*-,D^*0Dbar^*0S2)' :
           central: 0
           min:     0
           max:     0
-          latex:   '$\hat{c}(D^+D^{*-}, D^{*+}D^{*-})$'
+          latex:   '$\hat{c}(D^+D^{*-}, D^{*0}\bar{D}^{*0}|_{S=2})$'
+          comment: ''
+      'ee->ccbar::c(D^+D^*-,D^*+D^*-S0)' :
+          central: 0
+          min:     0
+          max:     0
+          latex:   '$\hat{c}(D^+D^{*-}, D^{*+}D^{*-}|_{S=0)$'
+          comment: ''
+      'ee->ccbar::c(D^+D^*-,D^*+D^*-S2)' :
+          central: 0
+          min:     0
+          max:     0
+          latex:   '$\hat{c}(D^+D^{*-}, D^{*+}D^{*-}|_{S=2)$'
           comment: ''
       'ee->ccbar::c(D^+D^*-,D_s^+D_s^*-)' :
           central: 0
@@ -982,11 +1084,17 @@ groups:
           max:     0
           latex:   '$\hat{c}(D^+D^{*-}, D_s^+D_s^{*-})$'
           comment: ''
-      'ee->ccbar::c(D^+D^*-,D_s^*+D_s^*-)' :
+      'ee->ccbar::c(D^+D^*-,D_s^*+D_s^*-S0)' :
           central: 0
           min:     0
           max:     0
-          latex:   '$\hat{c}(D^+D^{*-}, D_s^{*+}D_s^{*-})$'
+          latex:   '$\hat{c}(D^+D^{*-}, D_s^{*+}D_s^{*-}|_{S=0))$'
+          comment: ''
+      'ee->ccbar::c(D^+D^*-,D_s^*+D_s^*-S2)' :
+          central: 0
+          min:     0
+          max:     0
+          latex:   '$\hat{c}(D^+D^{*-}, D_s^{*+}D_s^{*-}|_{S=2))$'
           comment: ''
 
       'ee->ccbar::c(D_s^+D_s^-,D_s^+D_s^-)' :
@@ -995,17 +1103,29 @@ groups:
           max:     0
           latex:   '$\hat{c}(D_s^+D_s^-, D_s^+D_s^-)$'
           comment: ''
-      'ee->ccbar::c(D_s^+D_s^-,D^*0Dbar^*0)' :
+      'ee->ccbar::c(D_s^+D_s^-,D^*0Dbar^*0S0)' :
           central: 0
           min:     0
           max:     0
-          latex:   '$\hat{c}(D_s^+D_s^-, D^{*0}\bar{D}^{*0})$'
+          latex:   '$\hat{c}(D_s^+D_s^-, D^{*0}\bar{D}^{*0}|_{S=0})$'
           comment: ''
-      'ee->ccbar::c(D_s^+D_s^-,D^*+D^*-)' :
+      'ee->ccbar::c(D_s^+D_s^-,D^*0Dbar^*0S2)' :
           central: 0
           min:     0
           max:     0
-          latex:   '$\hat{c}(D_s^+D_s^-, D^{*+}D^{*-})$'
+          latex:   '$\hat{c}(D_s^+D_s^-, D^{*0}\bar{D}^{*0}|_{S=2})$'
+          comment: ''
+      'ee->ccbar::c(D_s^+D_s^-,D^*+D^*-S0)' :
+          central: 0
+          min:     0
+          max:     0
+          latex:   '$\hat{c}(D_s^+D_s^-, D^{*+}D^{*-}|_{S=0})$'
+          comment: ''
+      'ee->ccbar::c(D_s^+D_s^-,D^*+D^*-S2)' :
+          central: 0
+          min:     0
+          max:     0
+          latex:   '$\hat{c}(D_s^+D_s^-, D^{*+}D^{*-}|_{S=2})$'
           comment: ''
       'ee->ccbar::c(D_s^+D_s^-,D_s^+D_s^*-)' :
           central: 0
@@ -1013,55 +1133,153 @@ groups:
           max:     0
           latex:   '$\hat{c}(D_s^+D_s^-, D_s^+D_s^{*-})$'
           comment: ''
-      'ee->ccbar::c(D_s^+D_s^-,D_s^*+D_s^*-)' :
+      'ee->ccbar::c(D_s^+D_s^-,D_s^*+D_s^*-S0)' :
           central: 0
           min:     0
           max:     0
-          latex:   '$\hat{c}(D_s^+D_s^-, D_s^{*+}D_s^{*-})$'
+          latex:   '$\hat{c}(D_s^+D_s^-, D_s^{*+}D_s^{*-}|_{S=0})$'
+          comment: ''
+      'ee->ccbar::c(D_s^+D_s^-,D_s^*+D_s^*-S2)' :
+          central: 0
+          min:     0
+          max:     0
+          latex:   '$\hat{c}(D_s^+D_s^-, D_s^{*+}D_s^{*-}|_{S=2})$'
           comment: ''
 
-      'ee->ccbar::c(D^*0Dbar^*0,D^*0Dbar^*0)' :
+      'ee->ccbar::c(D^*0Dbar^*0S0,D^*0Dbar^*0S0)' :
           central: 0
           min:     0
           max:     0
-          latex:   '$\hat{c}(D^{*0}\bar{D}^{*0}, D^{*0}\bar{D}^{*0})$'
+          latex:   '$\hat{c}(D^{*0}\bar{D}^{*0}|_{S=0}, D^{*0}\bar{D}^{*0}|_{S=0})$'
           comment: ''
-      'ee->ccbar::c(D^*0Dbar^*0,D^*+D^*-)' :
+      'ee->ccbar::c(D^*0Dbar^*0S0,D^*0Dbar^*0S2)' :
           central: 0
           min:     0
           max:     0
-          latex:   '$\hat{c}(D^{*0}\bar{D}^{*0}, D^{*+}D^{*-})$'
+          latex:   '$\hat{c}(D^{*0}\bar{D}^{*0}|_{S=0}, D^{*0}\bar{D}^{*0}|_{S=2})$'
           comment: ''
-      'ee->ccbar::c(D^*0Dbar^*0,D_s^+D_s^*-)' :
+      'ee->ccbar::c(D^*0Dbar^*0S0,D^*+D^*-S0)' :
           central: 0
           min:     0
           max:     0
-          latex:   '$\hat{c}(D^{*0}\bar{D}^{*0}, D_s^+D_s^{*-})$'
+          latex:   '$\hat{c}(D^{*0}\bar{D}^{*0}|_{S=0}, D^{*+}D^{*-}|_{S=0})$'
           comment: ''
-      'ee->ccbar::c(D^*0Dbar^*0,D_s^*+D_s^*-)' :
+      'ee->ccbar::c(D^*0Dbar^*0S0,D^*+D^*-S2)' :
           central: 0
           min:     0
           max:     0
-          latex:   '$\hat{c}(D^{*0}\bar{D}^{*0}, D_s^{*+}D_s^{*-})$'
+          latex:   '$\hat{c}(D^{*0}\bar{D}^{*0}|_{S=0}, D^{*+}D^{*-}|_{S=2})$'
+          comment: ''
+      'ee->ccbar::c(D^*0Dbar^*0S0,D_s^+D_s^*-)' :
+          central: 0
+          min:     0
+          max:     0
+          latex:   '$\hat{c}(D^{*0}\bar{D}^{*0}|_{S=0}, D_s^+D_s^{*-})$'
+          comment: ''
+      'ee->ccbar::c(D^*0Dbar^*0S0,D_s^*+D_s^*-S0)' :
+          central: 0
+          min:     0
+          max:     0
+          latex:   '$\hat{c}(D^{*0}\bar{D}^{*0}|_{S=0}, D_s^{*+}D_s^{*-}|_{S=0})$'
+          comment: ''
+      'ee->ccbar::c(D^*0Dbar^*0S0,D_s^*+D_s^*-S2)' :
+          central: 0
+          min:     0
+          max:     0
+          latex:   '$\hat{c}(D^{*0}\bar{D}^{*0}|_{S=0}, D_s^{*+}D_s^{*-}|_{S=2})$'
           comment: ''
 
-      'ee->ccbar::c(D^*+D^*-,D^*+D^*-)' :
+      'ee->ccbar::c(D^*0Dbar^*0S2,D^*0Dbar^*0S2)' :
           central: 0
           min:     0
           max:     0
-          latex:   '$\hat{c}(D^{*+}D^{*-}, D^{*+}D^{*-})$'
+          latex:   '$\hat{c}(D^{*0}\bar{D}^{*0}|_{S=2}, D^{*0}\bar{D}^{*0}|_{S=2})$'
           comment: ''
-      'ee->ccbar::c(D^*+D^*-,D_s^+D_s^*-)' :
+      'ee->ccbar::c(D^*0Dbar^*0S2,D^*+D^*-S0)' :
           central: 0
           min:     0
           max:     0
-          latex:   '$\hat{c}(D^{*+}D^{*-}, D_s^+D_s^{*-})$'
+          latex:   '$\hat{c}(D^{*0}\bar{D}^{*0}|_{S=2}, D^{*+}D^{*-}|_{S=0})$'
           comment: ''
-      'ee->ccbar::c(D^*+D^*-,D_s^*+D_s^*-)' :
+      'ee->ccbar::c(D^*0Dbar^*0S2,D^*+D^*-S2)' :
           central: 0
           min:     0
           max:     0
-          latex:   '$\hat{c}(D^{*+}D^{*-}, D_s^{*+}D_s^{*-})$'
+          latex:   '$\hat{c}(D^{*0}\bar{D}^{*0}|_{S=2}, D^{*+}D^{*-}|_{S=2})$'
+          comment: ''
+      'ee->ccbar::c(D^*0Dbar^*0S2,D_s^+D_s^*-)' :
+          central: 0
+          min:     0
+          max:     0
+          latex:   '$\hat{c}(D^{*0}\bar{D}^{*0}|_{S=2}, D_s^+D_s^{*-})$'
+          comment: ''
+      'ee->ccbar::c(D^*0Dbar^*0S2,D_s^*+D_s^*-S0)' :
+          central: 0
+          min:     0
+          max:     0
+          latex:   '$\hat{c}(D^{*0}\bar{D}^{*0}|_{S=2}, D_s^{*+}D_s^{*-}|_{S=0})$'
+          comment: ''
+      'ee->ccbar::c(D^*0Dbar^*0S2,D_s^*+D_s^*-S2)' :
+          central: 0
+          min:     0
+          max:     0
+          latex:   '$\hat{c}(D^{*0}\bar{D}^{*0}|_{S=2}, D_s^{*+}D_s^{*-}|_{S=2})$'
+          comment: ''
+
+      'ee->ccbar::c(D^*+D^*-S0,D^*+D^*-)S0' :
+          central: 0
+          min:     0
+          max:     0
+          latex:   '$\hat{c}(D^{*+}D^{*-}|_{S=0}, D^{*+}D^{*-}|_{S=0})$'
+          comment: ''
+      'ee->ccbar::c(D^*+D^*-S0,D^*+D^*-S2)' :
+          central: 0
+          min:     0
+          max:     0
+          latex:   '$\hat{c}(D^{*+}D^{*-}|_{S=0}, D^{*+}D^{*-}|_{S=2})$'
+          comment: ''
+      'ee->ccbar::c(D^*+D^*-S0,D_s^+D_s^*-)' :
+          central: 0
+          min:     0
+          max:     0
+          latex:   '$\hat{c}(D^{*+}D^{*-}|_{S=0}, D_s^+D_s^{*-})$'
+          comment: ''
+      'ee->ccbar::c(D^*+D^*-S0,D_s^*+D_s^*-S0)' :
+          central: 0
+          min:     0
+          max:     0
+          latex:   '$\hat{c}(D^{*+}D^{*-}|_{S=0}, D_s^{*+}D_s^{*-}|_{S=0})$'
+          comment: ''
+      'ee->ccbar::c(D^*+D^*-S0,D_s^*+D_s^*-S2)' :
+          central: 0
+          min:     0
+          max:     0
+          latex:   '$\hat{c}(D^{*+}D^{*-}|_{S=0}, D_s^{*+}D_s^{*-}|_{S=2})$'
+          comment: ''
+
+      'ee->ccbar::c(D^*+D^*-S2,D^*+D^*-S2)' :
+          central: 0
+          min:     0
+          max:     0
+          latex:   '$\hat{c}(D^{*+}D^{*-}|_{S=2}, D^{*+}D^{*-}|_{S=2})$'
+          comment: ''
+      'ee->ccbar::c(D^*+D^*-S2,D_s^+D_s^*-)' :
+          central: 0
+          min:     0
+          max:     0
+          latex:   '$\hat{c}(D^{*+}D^{*-}|_{S=2}, D_s^+D_s^{*-})$'
+          comment: ''
+      'ee->ccbar::c(D^*+D^*-S2,D_s^*+D_s^*-S0)' :
+          central: 0
+          min:     0
+          max:     0
+          latex:   '$\hat{c}(D^{*+}D^{*-}|_{S=2}, D_s^{*+}D_s^{*-}|_{S=0})$'
+          comment: ''
+      'ee->ccbar::c(D^*+D^*-S2,D_s^*+D_s^*-S2)' :
+          central: 0
+          min:     0
+          max:     0
+          latex:   '$\hat{c}(D^{*+}D^{*-}|_{S=2}, D_s^{*+}D_s^{*-}|_{S=2})$'
           comment: ''
 
       'ee->ccbar::c(D_s^+D_s^*-,D_s^+D_s^*-)' :
@@ -1070,19 +1288,39 @@ groups:
           max:     0
           latex:   '$\hat{c}(D_s^+D_s^{*-}, D_s^+D_s^{*-})$'
           comment: ''
-      'ee->ccbar::c(D_s^+D_s^*-,D_s^*+D_s^*-)' :
+      'ee->ccbar::c(D_s^+D_s^*-,D_s^*+D_s^*-S0)' :
           central: 0
           min:     0
           max:     0
-          latex:   '$\hat{c}(D_s^+D_s^{*-}, D_s^{*+}D_s^{*-})$'
+          latex:   '$\hat{c}(D_s^+D_s^{*-}, D_s^{*+}D_s^{*-}|_{S=0})$'
+          comment: ''
+      'ee->ccbar::c(D_s^+D_s^*-,D_s^*+D_s^*-S2)' :
+          central: 0
+          min:     0
+          max:     0
+          latex:   '$\hat{c}(D_s^+D_s^{*-}, D_s^{*+}D_s^{*-}|_{S=2})$'
           comment: ''
 
-      'ee->ccbar::c(D_s^*+D_s^*-,D_s^*+D_s^*-)' :
+      'ee->ccbar::c(D_s^*+D_s^*-S0,D_s^*+D_s^*-S0)' :
           central: 0
           min:     0
           max:     0
-          latex:   '$\hat{c}(D_s^{*+}D_s^{*-}, D_s^{*+}D_s^{*-})$'
+          latex:   '$\hat{c}(D_s^{*+}D_s^{*-}|_{S=0}, D_s^{*+}D_s^{*-}|_{S=0})$'
           comment: ''
+      'ee->ccbar::c(D_s^*+D_s^*-S0,D_s^*+D_s^*-S2)' :
+          central: 0
+          min:     0
+          max:     0
+          latex:   '$\hat{c}(D_s^{*+}D_s^{*-}|_{S=0}, D_s^{*+}D_s^{*-}|_{S=2})$'
+          comment: ''
+
+      'ee->ccbar::c(D_s^*+D_s^*-S2,D_s^*+D_s^*-S2)' :
+          central: 0
+          min:     0
+          max:     0
+          latex:   '$\hat{c}(D_s^{*+}D_s^{*-}|_{S=2}, D_s^{*+}D_s^{*-}|_{S=2})$'
+          comment: ''
+
 
       # e^+ e^- channel
       'ee->ccbar::g0(psi(2S),ee)' :
@@ -1301,67 +1539,129 @@ groups:
           max:     0
           latex:   '$g^0(\psi(4415),D_s^+D_s^-)$'
           comment: ''
-      # D^{*0} \bar{D}^{*0} channel
-      'ee->ccbar::g0(psi(2S),D^*0Dbar^*0)' :
+      # D^{*0} \bar{D}^{*0} channel - Spin 0
+      'ee->ccbar::g0(psi(2S),D^*0Dbar^*0S0)' :
           central: 0
           min:     0
           max:     0
-          latex:   '$g^0(\psi(2S),D^{*0}\bar{D}^{*0})$'
+          latex:   '$g^0(\psi(2S),D^{*0}\bar{D}^{*0}|_{S=0})$'
           comment: ''
-      'ee->ccbar::g0(psi(3770),D^*0Dbar^*0)' :
+      'ee->ccbar::g0(psi(3770),D^*0Dbar^*0S0)' :
           central: 0
           min:     0
           max:     0
-          latex:   '$g^0(\psi(3770),D^{*0}\bar{D}^{*0})$'
+          latex:   '$g^0(\psi(3770),D^{*0}\bar{D}^{*0}|_{S=0})$'
           comment: ''
-      'ee->ccbar::g0(psi(4040),D^*0Dbar^*0)' :
+      'ee->ccbar::g0(psi(4040),D^*0Dbar^*0S0)' :
           central: 0
           min:     0
           max:     0
-          latex:   '$g^0(\psi(4040),D^{*0}\bar{D}^{*0})$'
+          latex:   '$g^0(\psi(4040),D^{*0}\bar{D}^{*0}|_{S=0})$'
           comment: ''
-      'ee->ccbar::g0(psi(4160),D^*0Dbar^*0)' :
+      'ee->ccbar::g0(psi(4160),D^*0Dbar^*0S0)' :
           central: 0
           min:     0
           max:     0
-          latex:   '$g^0(\psi(4160),D^{*0}\bar{D}^{*0})$'
+          latex:   '$g^0(\psi(4160),D^{*0}\bar{D}^{*0}|_{S=0})$'
           comment: ''
-      'ee->ccbar::g0(psi(4415),D^*0Dbar^*0)' :
+      'ee->ccbar::g0(psi(4415),D^*0Dbar^*0S0)' :
           central: 0
           min:     0
           max:     0
-          latex:   '$g^0(\psi(4415),D^{*0}\bar{D}^{*0})$'
+          latex:   '$g^0(\psi(4415),D^{*0}\bar{D}^{*0}|_{S=0})$'
           comment: ''
-      # D^{*+} D^{*-} channel
-      'ee->ccbar::g0(psi(2S),D^*+D^*-)' :
+      # D^{*0} \bar{D}^{*0} channel - Spin 2
+      'ee->ccbar::g0(psi(2S),D^*0Dbar^*0S2)' :
           central: 0
           min:     0
           max:     0
-          latex:   '$g^0(\psi(2S),D^{*+}D^{*-})$'
+          latex:   '$g^0(\psi(2S),D^{*0}\bar{D}^{*0}|_{S=2})$'
           comment: ''
-      'ee->ccbar::g0(psi(3770),D^*+D^*-)' :
+      'ee->ccbar::g0(psi(3770),D^*0Dbar^*0S2)' :
           central: 0
           min:     0
           max:     0
-          latex:   '$g^0(\psi(3770),D^{*+}D^{*-})$'
+          latex:   '$g^0(\psi(3770),D^{*0}\bar{D}^{*0}|_{S=2})$'
           comment: ''
-      'ee->ccbar::g0(psi(4040),D^*+D^*-)' :
+      'ee->ccbar::g0(psi(4040),D^*0Dbar^*0S2)' :
           central: 0
           min:     0
           max:     0
-          latex:   '$g^0(\psi(4040),D^{*+}D^{*-})$'
+          latex:   '$g^0(\psi(4040),D^{*0}\bar{D}^{*0}|_{S=2})$'
           comment: ''
-      'ee->ccbar::g0(psi(4160),D^*+D^*-)' :
+      'ee->ccbar::g0(psi(4160),D^*0Dbar^*0S2)' :
           central: 0
           min:     0
           max:     0
-          latex:   '$g^0(\psi(4160),D^{*+}D^{*-})$'
+          latex:   '$g^0(\psi(4160),D^{*0}\bar{D}^{*0}|_{S=2})$'
           comment: ''
-      'ee->ccbar::g0(psi(4415),D^*+D^*-)' :
+      'ee->ccbar::g0(psi(4415),D^*0Dbar^*0S2)' :
           central: 0
           min:     0
           max:     0
-          latex:   '$g^0(\psi(4415),D^{*+}D^{*-})$'
+          latex:   '$g^0(\psi(4415),D^{*0}\bar{D}^{*0}|_{S=2})$'
+          comment: ''
+      # D^{*+} D^{*-} channel - Spin 0
+      'ee->ccbar::g0(psi(2S),D^*+D^*-S0)' :
+          central: 0
+          min:     0
+          max:     0
+          latex:   '$g^0(\psi(2S),D^{*+}D^{*-}|_{S=0})$'
+          comment: ''
+      'ee->ccbar::g0(psi(3770),D^*+D^*-S0)' :
+          central: 0
+          min:     0
+          max:     0
+          latex:   '$g^0(\psi(3770),D^{*+}D^{*-}|_{S=0})$'
+          comment: ''
+      'ee->ccbar::g0(psi(4040),D^*+D^*-S0)' :
+          central: 0
+          min:     0
+          max:     0
+          latex:   '$g^0(\psi(4040),D^{*+}D^{*-}|_{S=0})$'
+          comment: ''
+      'ee->ccbar::g0(psi(4160),D^*+D^*-S0)' :
+          central: 0
+          min:     0
+          max:     0
+          latex:   '$g^0(\psi(4160),D^{*+}D^{*-}|_{S=0})$'
+          comment: ''
+      'ee->ccbar::g0(psi(4415),D^*+D^*-S0)' :
+          central: 0
+          min:     0
+          max:     0
+          latex:   '$g^0(\psi(4415),D^{*+}D^{*-}|_{S=0})$'
+          comment: ''
+      # D^{*+} D^{*-} channel - Spin 2
+      'ee->ccbar::g0(psi(2S),D^*+D^*-S2)' :
+          central: 0
+          min:     0
+          max:     0
+          latex:   '$g^0(\psi(2S),D^{*+}D^{*-}|_{S=2})$'
+          comment: ''
+      'ee->ccbar::g0(psi(3770),D^*+D^*-S2)' :
+          central: 0
+          min:     0
+          max:     0
+          latex:   '$g^0(\psi(3770),D^{*+}D^{*-}|_{S=2})$'
+          comment: ''
+      'ee->ccbar::g0(psi(4040),D^*+D^*-S2)' :
+          central: 0
+          min:     0
+          max:     0
+          latex:   '$g^0(\psi(4040),D^{*+}D^{*-}|_{S=2})$'
+          comment: ''
+      'ee->ccbar::g0(psi(4160),D^*+D^*-S2)' :
+          central: 0
+          min:     0
+          max:     0
+          latex:   '$g^0(\psi(4160),D^{*+}D^{*-}|_{S=2})$'
+          comment: ''
+      'ee->ccbar::g0(psi(4415),D^*+D^*-S2)' :
+          central: 0
+          min:     0
+          max:     0
+          latex:   '$g^0(\psi(4415),D^{*+}D^{*-}|_{S=2})$'
           comment: ''
       # D_s^+ D_s^*- channel
       'ee->ccbar::g0(psi(2S),D_s^+D_s^*-)' :
@@ -1394,35 +1694,66 @@ groups:
           max:     0
           latex:   '$g^0(\psi(4415),D_s^+D_s^{*-})$'
           comment: ''
-      # D_s^*+ D_s^*- channel
-      'ee->ccbar::g0(psi(2S),D_s^*+D_s^*-)' :
+      # D_s^*+ D_s^*- channel - Spin 0
+      'ee->ccbar::g0(psi(2S),D_s^*+D_s^*-S0)' :
           central: 0
           min:     0
           max:     0
-          latex:   '$g^0(\psi(2S),D_s^{*+}D_s^{*-})$'
+          latex:   '$g^0(\psi(2S),D_s^{*+}D_s^{*-}|_{S=0})$'
           comment: ''
-      'ee->ccbar::g0(psi(3770),D_s^*+D_s^*-)' :
+      'ee->ccbar::g0(psi(3770),D_s^*+D_s^*-S0)' :
           central: 0
           min:     0
           max:     0
-          latex:   '$g^0(\psi(3770),D_s^{*+}D_s^{*-})$'
+          latex:   '$g^0(\psi(3770),D_s^{*+}D_s^{*-}|_{S=0})$'
           comment: ''
-      'ee->ccbar::g0(psi(4040),D_s^*+D_s^*-)' :
+      'ee->ccbar::g0(psi(4040),D_s^*+D_s^*-S0)' :
           central: 0
           min:     0
           max:     0
-          latex:   '$g^0(\psi(4040),D_s^{*+}D_s^{*-})$'
+          latex:   '$g^0(\psi(4040),D_s^{*+}D_s^{*-}|_{S=0})$'
           comment: ''
-      'ee->ccbar::g0(psi(4160),D_s^*+D_s^*-)' :
+      'ee->ccbar::g0(psi(4160),D_s^*+D_s^*-S0)' :
           central: 0
           min:     0
           max:     0
-          latex:   '$g^0(\psi(4160),D_s^{*+}D_s^{*-})$'
+          latex:   '$g^0(\psi(4160),D_s^{*+}D_s^{*-}|_{S=0})$'
           comment: ''
-      'ee->ccbar::g0(psi(4415),D_s^*+D_s^*-)' :
+      'ee->ccbar::g0(psi(4415),D_s^*+D_s^*-S0)' :
           central: 0
           min:     0
           max:     0
-          latex:   '$g^0(\psi(4415),D_s^{*+}D_s^{*-})$'
+          latex:   '$g^0(\psi(4415),D_s^{*+}D_s^{*-}|_{S=0})$'
+          comment: ''
+      # D_s^*+ D_s^*- channel - Spin 2
+      'ee->ccbar::g0(psi(2S),D_s^*+D_s^*-S2)' :
+          central: 0
+          min:     0
+          max:     0
+          latex:   '$g^0(\psi(2S),D_s^{*+}D_s^{*-}|_{S=2})$'
+          comment: ''
+      'ee->ccbar::g0(psi(3770),D_s^*+D_s^*-S2)' :
+          central: 0
+          min:     0
+          max:     0
+          latex:   '$g^0(\psi(3770),D_s^{*+}D_s^{*-}|_{S=2})$'
+          comment: ''
+      'ee->ccbar::g0(psi(4040),D_s^*+D_s^*-S2)' :
+          central: 0
+          min:     0
+          max:     0
+          latex:   '$g^0(\psi(4040),D_s^{*+}D_s^{*-}|_{S=2})$'
+          comment: ''
+      'ee->ccbar::g0(psi(4160),D_s^*+D_s^*-S2)' :
+          central: 0
+          min:     0
+          max:     0
+          latex:   '$g^0(\psi(4160),D_s^{*+}D_s^{*-}|_{S=2})$'
+          comment: ''
+      'ee->ccbar::g0(psi(4415),D_s^*+D_s^*-S2)' :
+          central: 0
+          min:     0
+          max:     0
+          latex:   '$g^0(\psi(4415),D_s^{*+}D_s^{*-}|_{S=2})$'
           comment: ''
 # }}}
