@@ -68,23 +68,11 @@ namespace eos
         UsedParameter g0_psi4160_D0Dbar0;
         UsedParameter g0_psi4415_D0Dbar0;
 
-        UsedParameter g0_psi2S_DpDm;
-        UsedParameter g0_psi3770_DpDm;
-        UsedParameter g0_psi4040_DpDm;
-        UsedParameter g0_psi4160_DpDm;
-        UsedParameter g0_psi4415_DpDm;
-
         UsedParameter g0_psi2S_D0Dbarst0;
         UsedParameter g0_psi3770_D0Dbarst0;
         UsedParameter g0_psi4040_D0Dbarst0;
         UsedParameter g0_psi4160_D0Dbarst0;
         UsedParameter g0_psi4415_D0Dbarst0;
-
-        UsedParameter g0_psi2S_DpDstm;
-        UsedParameter g0_psi3770_DpDstm;
-        UsedParameter g0_psi4040_DpDstm;
-        UsedParameter g0_psi4160_DpDstm;
-        UsedParameter g0_psi4415_DpDstm;
 
         UsedParameter g0_psi2S_DspDsm;
         UsedParameter g0_psi3770_DspDsm;
@@ -92,17 +80,17 @@ namespace eos
         UsedParameter g0_psi4160_DspDsm;
         UsedParameter g0_psi4415_DspDsm;
 
-        UsedParameter g0_psi2S_Dst0Dbarst0;
-        UsedParameter g0_psi3770_Dst0Dbarst0;
-        UsedParameter g0_psi4040_Dst0Dbarst0;
-        UsedParameter g0_psi4160_Dst0Dbarst0;
-        UsedParameter g0_psi4415_Dst0Dbarst0;
+        UsedParameter g0_psi2S_Dst0Dbarst0S0;
+        UsedParameter g0_psi3770_Dst0Dbarst0S0;
+        UsedParameter g0_psi4040_Dst0Dbarst0S0;
+        UsedParameter g0_psi4160_Dst0Dbarst0S0;
+        UsedParameter g0_psi4415_Dst0Dbarst0S0;
 
-        UsedParameter g0_psi2S_DstpDstm;
-        UsedParameter g0_psi3770_DstpDstm;
-        UsedParameter g0_psi4040_DstpDstm;
-        UsedParameter g0_psi4160_DstpDstm;
-        UsedParameter g0_psi4415_DstpDstm;
+        UsedParameter g0_psi2S_Dst0Dbarst0S2;
+        UsedParameter g0_psi3770_Dst0Dbarst0S2;
+        UsedParameter g0_psi4040_Dst0Dbarst0S2;
+        UsedParameter g0_psi4160_Dst0Dbarst0S2;
+        UsedParameter g0_psi4415_Dst0Dbarst0S2;
 
         UsedParameter g0_psi2S_DspDsstm;
         UsedParameter g0_psi3770_DspDsstm;
@@ -110,94 +98,88 @@ namespace eos
         UsedParameter g0_psi4160_DspDsstm;
         UsedParameter g0_psi4415_DspDsstm;
 
-        UsedParameter g0_psi2S_DsstpDsstm;
-        UsedParameter g0_psi3770_DsstpDsstm;
-        UsedParameter g0_psi4040_DsstpDsstm;
-        UsedParameter g0_psi4160_DsstpDsstm;
-        UsedParameter g0_psi4415_DsstpDsstm;
+        UsedParameter g0_psi2S_DsstpDsstmS0;
+        UsedParameter g0_psi3770_DsstpDsstmS0;
+        UsedParameter g0_psi4040_DsstpDsstmS0;
+        UsedParameter g0_psi4160_DsstpDsstmS0;
+        UsedParameter g0_psi4415_DsstpDsstmS0;
+
+        UsedParameter g0_psi2S_DsstpDsstmS2;
+        UsedParameter g0_psi3770_DsstpDsstmS2;
+        UsedParameter g0_psi4040_DsstpDsstmS2;
+        UsedParameter g0_psi4160_DsstpDsstmS2;
+        UsedParameter g0_psi4415_DsstpDsstmS2;
 
         // Non-cc contribution to the Rc ratio
-        UsedParameter c_ee_ee;
-        UsedParameter c_ee_eff;
-        UsedParameter c_ee_D0Dbar0;
-        UsedParameter c_ee_DpDm;
-        UsedParameter c_ee_D0Dbarst0;
-        UsedParameter c_ee_DpDstm;
-        UsedParameter c_ee_DspDsm;
-        UsedParameter c_ee_Dst0Dbarst0;
-        UsedParameter c_ee_DstpDstm;
-        UsedParameter c_ee_DspDsstm;
-        UsedParameter c_ee_DsstpDsstm;
+        UsedParameter c_00_00;
+        UsedParameter c_00_01;
+        UsedParameter c_00_02;
+        UsedParameter c_00_04;
+        UsedParameter c_00_08;
+        UsedParameter c_00_09;
+        UsedParameter c_00_10;
+        UsedParameter c_00_15;
+        UsedParameter c_00_17;
+        UsedParameter c_00_18;
 
-        UsedParameter c_eff_eff;
-        UsedParameter c_eff_D0Dbar0;
-        UsedParameter c_eff_DpDm;
-        UsedParameter c_eff_D0Dbarst0;
-        UsedParameter c_eff_DpDstm;
-        UsedParameter c_eff_DspDsm;
-        UsedParameter c_eff_Dst0Dbarst0;
-        UsedParameter c_eff_DstpDstm;
-        UsedParameter c_eff_DspDsstm;
-        UsedParameter c_eff_DsstpDsstm;
+        UsedParameter c_01_01;
+        UsedParameter c_01_02;
+        UsedParameter c_01_04;
+        UsedParameter c_01_08;
+        UsedParameter c_01_09;
+        UsedParameter c_01_10;
+        UsedParameter c_01_15;
+        UsedParameter c_01_17;
+        UsedParameter c_01_18;
 
-        UsedParameter c_D0Dbar0_D0Dbar0;
-        UsedParameter c_D0Dbar0_DpDm;
-        UsedParameter c_D0Dbar0_D0Dbarst0;
-        UsedParameter c_D0Dbar0_DpDstm;
-        UsedParameter c_D0Dbar0_DspDsm;
-        UsedParameter c_D0Dbar0_Dst0Dbarst0;
-        UsedParameter c_D0Dbar0_DstpDstm;
-        UsedParameter c_D0Dbar0_DspDsstm;
-        UsedParameter c_D0Dbar0_DsstpDsstm;
+        UsedParameter c_02_02;
+        UsedParameter c_02_04;
+        UsedParameter c_02_08;
+        UsedParameter c_02_09;
+        UsedParameter c_02_10;
+        UsedParameter c_02_15;
+        UsedParameter c_02_17;
+        UsedParameter c_02_18;
 
-        UsedParameter c_DpDm_DpDm;
-        UsedParameter c_DpDm_D0Dbarst0;
-        UsedParameter c_DpDm_DpDstm;
-        UsedParameter c_DpDm_DspDsm;
-        UsedParameter c_DpDm_Dst0Dbarst0;
-        UsedParameter c_DpDm_DstpDstm;
-        UsedParameter c_DpDm_DspDsstm;
-        UsedParameter c_DpDm_DsstpDsstm;
+        UsedParameter c_04_04;
+        UsedParameter c_04_08;
+        UsedParameter c_04_09;
+        UsedParameter c_04_10;
+        UsedParameter c_04_15;
+        UsedParameter c_04_17;
+        UsedParameter c_04_18;
 
-        UsedParameter c_D0Dbarst0_D0Dbarst0;
-        UsedParameter c_D0Dbarst0_DpDstm;
-        UsedParameter c_D0Dbarst0_DspDsm;
-        UsedParameter c_D0Dbarst0_Dst0Dbarst0;
-        UsedParameter c_D0Dbarst0_DstpDstm;
-        UsedParameter c_D0Dbarst0_DspDsstm;
-        UsedParameter c_D0Dbarst0_DsstpDsstm;
+        UsedParameter c_08_08;
+        UsedParameter c_08_09;
+        UsedParameter c_08_10;
+        UsedParameter c_08_15;
+        UsedParameter c_08_17;
+        UsedParameter c_08_18;
 
-        UsedParameter c_DpDstm_DpDstm;
-        UsedParameter c_DpDstm_DspDsm;
-        UsedParameter c_DpDstm_Dst0Dbarst0;
-        UsedParameter c_DpDstm_DstpDstm;
-        UsedParameter c_DpDstm_DspDsstm;
-        UsedParameter c_DpDstm_DsstpDsstm;
+        UsedParameter c_09_09;
+        UsedParameter c_09_10;
+        UsedParameter c_09_15;
+        UsedParameter c_09_17;
+        UsedParameter c_09_18;
 
-        UsedParameter c_DspDsm_DspDsm;
-        UsedParameter c_DspDsm_Dst0Dbarst0;
-        UsedParameter c_DspDsm_DstpDstm;
-        UsedParameter c_DspDsm_DspDsstm;
-        UsedParameter c_DspDsm_DsstpDsstm;
+        UsedParameter c_10_10;
+        UsedParameter c_10_15;
+        UsedParameter c_10_17;
+        UsedParameter c_10_18;
 
-        UsedParameter c_Dst0Dbarst0_Dst0Dbarst0;
-        UsedParameter c_Dst0Dbarst0_DstpDstm;
-        UsedParameter c_Dst0Dbarst0_DspDsstm;
-        UsedParameter c_Dst0Dbarst0_DsstpDsstm;
+        UsedParameter c_15_15;
+        UsedParameter c_15_17;
+        UsedParameter c_15_18;
 
-        UsedParameter c_DstpDstm_DstpDstm;
-        UsedParameter c_DstpDstm_DspDsstm;
-        UsedParameter c_DstpDstm_DsstpDsstm;
+        UsedParameter c_17_17;
+        UsedParameter c_17_18;
 
-        UsedParameter c_DspDsstm_DspDsstm;
-        UsedParameter c_DspDsstm_DsstpDsstm;
-
-        UsedParameter c_DsstpDsstm_DsstpDsstm;
+        UsedParameter c_18_18;
 
         // Constant terms of the K matrix
         UsedParameter Rconstant;
 
-        const static unsigned nchannels = 17;
+        const static unsigned nchannels = 20;
         const static unsigned nresonances = 5;
 
         std::shared_ptr<KMatrix<nchannels, nresonances>> K;
@@ -240,23 +222,11 @@ namespace eos
             g0_psi4160_D0Dbar0(p["ee->ccbar::g0(psi(4160),D^0Dbar^0)"], u),
             g0_psi4415_D0Dbar0(p["ee->ccbar::g0(psi(4415),D^0Dbar^0)"], u),
 
-            g0_psi2S_DpDm(p["ee->ccbar::g0(psi(2S),D^+D^-)"], u),
-            g0_psi3770_DpDm(p["ee->ccbar::g0(psi(3770),D^+D^-)"], u),
-            g0_psi4040_DpDm(p["ee->ccbar::g0(psi(4040),D^+D^-)"], u),
-            g0_psi4160_DpDm(p["ee->ccbar::g0(psi(4160),D^+D^-)"], u),
-            g0_psi4415_DpDm(p["ee->ccbar::g0(psi(4415),D^+D^-)"], u),
-
             g0_psi2S_D0Dbarst0(p["ee->ccbar::g0(psi(2S),D^0Dbar^*0)"], u),
             g0_psi3770_D0Dbarst0(p["ee->ccbar::g0(psi(3770),D^0Dbar^*0)"], u),
             g0_psi4040_D0Dbarst0(p["ee->ccbar::g0(psi(4040),D^0Dbar^*0)"], u),
             g0_psi4160_D0Dbarst0(p["ee->ccbar::g0(psi(4160),D^0Dbar^*0)"], u),
             g0_psi4415_D0Dbarst0(p["ee->ccbar::g0(psi(4415),D^0Dbar^*0)"], u),
-
-            g0_psi2S_DpDstm(p["ee->ccbar::g0(psi(2S),D^+D^*-)"], u),
-            g0_psi3770_DpDstm(p["ee->ccbar::g0(psi(3770),D^+D^*-)"], u),
-            g0_psi4040_DpDstm(p["ee->ccbar::g0(psi(4040),D^+D^*-)"], u),
-            g0_psi4160_DpDstm(p["ee->ccbar::g0(psi(4160),D^+D^*-)"], u),
-            g0_psi4415_DpDstm(p["ee->ccbar::g0(psi(4415),D^+D^*-)"], u),
 
             g0_psi2S_DspDsm(p["ee->ccbar::g0(psi(2S),D_s^+D_s^-)"], u),
             g0_psi3770_DspDsm(p["ee->ccbar::g0(psi(3770),D_s^+D_s^-)"], u),
@@ -264,17 +234,17 @@ namespace eos
             g0_psi4160_DspDsm(p["ee->ccbar::g0(psi(4160),D_s^+D_s^-)"], u),
             g0_psi4415_DspDsm(p["ee->ccbar::g0(psi(4415),D_s^+D_s^-)"], u),
 
-            g0_psi2S_Dst0Dbarst0(p["ee->ccbar::g0(psi(2S),D^*0Dbar^*0)"], u),
-            g0_psi3770_Dst0Dbarst0(p["ee->ccbar::g0(psi(3770),D^*0Dbar^*0)"], u),
-            g0_psi4040_Dst0Dbarst0(p["ee->ccbar::g0(psi(4040),D^*0Dbar^*0)"], u),
-            g0_psi4160_Dst0Dbarst0(p["ee->ccbar::g0(psi(4160),D^*0Dbar^*0)"], u),
-            g0_psi4415_Dst0Dbarst0(p["ee->ccbar::g0(psi(4415),D^*0Dbar^*0)"], u),
+            g0_psi2S_Dst0Dbarst0S0(p["ee->ccbar::g0(psi(2S),D^*0Dbar^*0S0)"], u),
+            g0_psi3770_Dst0Dbarst0S0(p["ee->ccbar::g0(psi(3770),D^*0Dbar^*0S0)"], u),
+            g0_psi4040_Dst0Dbarst0S0(p["ee->ccbar::g0(psi(4040),D^*0Dbar^*0S0)"], u),
+            g0_psi4160_Dst0Dbarst0S0(p["ee->ccbar::g0(psi(4160),D^*0Dbar^*0S0)"], u),
+            g0_psi4415_Dst0Dbarst0S0(p["ee->ccbar::g0(psi(4415),D^*0Dbar^*0S0)"], u),
 
-            g0_psi2S_DstpDstm(p["ee->ccbar::g0(psi(2S),D^*+D^*-)"], u),
-            g0_psi3770_DstpDstm(p["ee->ccbar::g0(psi(3770),D^*+D^*-)"], u),
-            g0_psi4040_DstpDstm(p["ee->ccbar::g0(psi(4040),D^*+D^*-)"], u),
-            g0_psi4160_DstpDstm(p["ee->ccbar::g0(psi(4160),D^*+D^*-)"], u),
-            g0_psi4415_DstpDstm(p["ee->ccbar::g0(psi(4415),D^*+D^*-)"], u),
+            g0_psi2S_Dst0Dbarst0S2(p["ee->ccbar::g0(psi(2S),D^*0Dbar^*0S2)"], u),
+            g0_psi3770_Dst0Dbarst0S2(p["ee->ccbar::g0(psi(3770),D^*0Dbar^*0S2)"], u),
+            g0_psi4040_Dst0Dbarst0S2(p["ee->ccbar::g0(psi(4040),D^*0Dbar^*0S2)"], u),
+            g0_psi4160_Dst0Dbarst0S2(p["ee->ccbar::g0(psi(4160),D^*0Dbar^*0S2)"], u),
+            g0_psi4415_Dst0Dbarst0S2(p["ee->ccbar::g0(psi(4415),D^*0Dbar^*0S2)"], u),
 
             g0_psi2S_DspDsstm(p["ee->ccbar::g0(psi(2S),D_s^+D_s^*-)"], u),
             g0_psi3770_DspDsstm(p["ee->ccbar::g0(psi(3770),D_s^+D_s^*-)"], u),
@@ -282,88 +252,82 @@ namespace eos
             g0_psi4160_DspDsstm(p["ee->ccbar::g0(psi(4160),D_s^+D_s^*-)"], u),
             g0_psi4415_DspDsstm(p["ee->ccbar::g0(psi(4415),D_s^+D_s^*-)"], u),
 
-            g0_psi2S_DsstpDsstm(p["ee->ccbar::g0(psi(2S),D_s^*+D_s^*-)"], u),
-            g0_psi3770_DsstpDsstm(p["ee->ccbar::g0(psi(3770),D_s^*+D_s^*-)"], u),
-            g0_psi4040_DsstpDsstm(p["ee->ccbar::g0(psi(4040),D_s^*+D_s^*-)"], u),
-            g0_psi4160_DsstpDsstm(p["ee->ccbar::g0(psi(4160),D_s^*+D_s^*-)"], u),
-            g0_psi4415_DsstpDsstm(p["ee->ccbar::g0(psi(4415),D_s^*+D_s^*-)"], u),
+            g0_psi2S_DsstpDsstmS0(p["ee->ccbar::g0(psi(2S),D_s^*+D_s^*-S0)"], u),
+            g0_psi3770_DsstpDsstmS0(p["ee->ccbar::g0(psi(3770),D_s^*+D_s^*-S0)"], u),
+            g0_psi4040_DsstpDsstmS0(p["ee->ccbar::g0(psi(4040),D_s^*+D_s^*-S0)"], u),
+            g0_psi4160_DsstpDsstmS0(p["ee->ccbar::g0(psi(4160),D_s^*+D_s^*-S0)"], u),
+            g0_psi4415_DsstpDsstmS0(p["ee->ccbar::g0(psi(4415),D_s^*+D_s^*-S0)"], u),
 
-            c_ee_ee(p["ee->ccbar::c(ee,ee)"], u),
-            c_ee_eff(p["ee->ccbar::c(ee,eff)"], u),
-            c_ee_D0Dbar0(p["ee->ccbar::c(ee,D^0Dbar^0)"], u),
-            c_ee_DpDm(p["ee->ccbar::c(ee,D^+D^-)"], u),
-            c_ee_D0Dbarst0(p["ee->ccbar::c(ee,D^0Dbar^*0)"], u),
-            c_ee_DpDstm(p["ee->ccbar::c(ee,D^+D^*-)"], u),
-            c_ee_DspDsm(p["ee->ccbar::c(ee,D_s^+D_s^-)"], u),
-            c_ee_Dst0Dbarst0(p["ee->ccbar::c(ee,D^*0Dbar^*0)"], u),
-            c_ee_DstpDstm(p["ee->ccbar::c(ee,D^*+D^*-)"], u),
-            c_ee_DspDsstm(p["ee->ccbar::c(ee,D_s^+D_s^*-)"], u),
-            c_ee_DsstpDsstm(p["ee->ccbar::c(ee,D_s^*+D_s^*-)"], u),
+            g0_psi2S_DsstpDsstmS2(p["ee->ccbar::g0(psi(2S),D_s^*+D_s^*-S2)"], u),
+            g0_psi3770_DsstpDsstmS2(p["ee->ccbar::g0(psi(3770),D_s^*+D_s^*-S2)"], u),
+            g0_psi4040_DsstpDsstmS2(p["ee->ccbar::g0(psi(4040),D_s^*+D_s^*-S2)"], u),
+            g0_psi4160_DsstpDsstmS2(p["ee->ccbar::g0(psi(4160),D_s^*+D_s^*-S2)"], u),
+            g0_psi4415_DsstpDsstmS2(p["ee->ccbar::g0(psi(4415),D_s^*+D_s^*-S2)"], u),
 
-            c_eff_eff(p["ee->ccbar::c(eff,eff)"], u),
-            c_eff_D0Dbar0(p["ee->ccbar::c(eff,D^0Dbar^0)"], u),
-            c_eff_DpDm(p["ee->ccbar::c(eff,D^+D^-)"], u),
-            c_eff_D0Dbarst0(p["ee->ccbar::c(eff,D^0Dbar^*0)"], u),
-            c_eff_DpDstm(p["ee->ccbar::c(eff,D^+D^*-)"], u),
-            c_eff_DspDsm(p["ee->ccbar::c(eff,D_s^+D_s^-)"], u),
-            c_eff_Dst0Dbarst0(p["ee->ccbar::c(eff,D^*0Dbar^*0)"], u),
-            c_eff_DstpDstm(p["ee->ccbar::c(eff,D^*+D^*-)"], u),
-            c_eff_DspDsstm(p["ee->ccbar::c(eff,D_s^+D_s^*-)"], u),
-            c_eff_DsstpDsstm(p["ee->ccbar::c(eff,D_s^*+D_s^*-)"], u),
+            c_00_00(p["ee->ccbar::c(ee,ee)"], u),
+            c_00_01(p["ee->ccbar::c(ee,eff)"], u),
+            c_00_02(p["ee->ccbar::c(ee,D^0Dbar^0)"], u),
+            c_00_04(p["ee->ccbar::c(ee,D^0Dbar^*0)"], u),
+            c_00_08(p["ee->ccbar::c(ee,D_s^+D_s^-)"], u),
+            c_00_09(p["ee->ccbar::c(ee,D^*0Dbar^*0S0)"], u),
+            c_00_10(p["ee->ccbar::c(ee,D^*0Dbar^*0S2)"], u),
+            c_00_15(p["ee->ccbar::c(ee,D_s^+D_s^*-)"], u),
+            c_00_17(p["ee->ccbar::c(ee,D_s^*+D_s^*-S0)"], u),
+            c_00_18(p["ee->ccbar::c(ee,D_s^*+D_s^*-S2)"], u),
 
-            c_D0Dbar0_D0Dbar0(p["ee->ccbar::c(D^0Dbar^0,D^0Dbar^0)"], u),
-            c_D0Dbar0_DpDm(p["ee->ccbar::c(D^0Dbar^0,D^+D^-)"], u),
-            c_D0Dbar0_D0Dbarst0(p["ee->ccbar::c(D^0Dbar^0,D^0Dbar^*0)"], u),
-            c_D0Dbar0_DpDstm(p["ee->ccbar::c(D^0Dbar^0,D^+D^*-)"], u),
-            c_D0Dbar0_DspDsm(p["ee->ccbar::c(D^0Dbar^0,D_s^+D_s^-)"], u),
-            c_D0Dbar0_Dst0Dbarst0(p["ee->ccbar::c(D^0Dbar^0,D^*0Dbar^*0)"], u),
-            c_D0Dbar0_DstpDstm(p["ee->ccbar::c(D^0Dbar^0,D^*+D^*-)"], u),
-            c_D0Dbar0_DspDsstm(p["ee->ccbar::c(D^0Dbar^0,D_s^+D_s^*-)"], u),
-            c_D0Dbar0_DsstpDsstm(p["ee->ccbar::c(D^0Dbar^0,D_s^*+D_s^*-)"], u),
+            c_01_01(p["ee->ccbar::c(eff,eff)"], u),
+            c_01_02(p["ee->ccbar::c(eff,D^0Dbar^0)"], u),
+            c_01_04(p["ee->ccbar::c(eff,D^0Dbar^*0)"], u),
+            c_01_08(p["ee->ccbar::c(eff,D_s^+D_s^-)"], u),
+            c_01_09(p["ee->ccbar::c(eff,D^*0Dbar^*0S0)"], u),
+            c_01_10(p["ee->ccbar::c(eff,D^*0Dbar^*0S2)"], u),
+            c_01_15(p["ee->ccbar::c(eff,D_s^+D_s^*-)"], u),
+            c_01_17(p["ee->ccbar::c(eff,D_s^*+D_s^*-S0)"], u),
+            c_01_18(p["ee->ccbar::c(eff,D_s^*+D_s^*-S2)"], u),
 
-            c_DpDm_DpDm(p["ee->ccbar::c(D^+D^-,D^+D^-)"], u),
-            c_DpDm_D0Dbarst0(p["ee->ccbar::c(D^+D^-,D^0Dbar^*0)"], u),
-            c_DpDm_DpDstm(p["ee->ccbar::c(D^+D^-,D^+D^*-)"], u),
-            c_DpDm_DspDsm(p["ee->ccbar::c(D^+D^-,D_s^+D_s^-)"], u),
-            c_DpDm_Dst0Dbarst0(p["ee->ccbar::c(D^+D^-,D^*0Dbar^*0)"], u),
-            c_DpDm_DstpDstm(p["ee->ccbar::c(D^+D^-,D^*+D^*-)"], u),
-            c_DpDm_DspDsstm(p["ee->ccbar::c(D^+D^-,D_s^+D_s^*-)"], u),
-            c_DpDm_DsstpDsstm(p["ee->ccbar::c(D^+D^-,D_s^*+D_s^*-)"], u),
+            c_02_02(p["ee->ccbar::c(D^0Dbar^0,D^0Dbar^0)"], u),
+            c_02_04(p["ee->ccbar::c(D^0Dbar^0,D^0Dbar^*0)"], u),
+            c_02_08(p["ee->ccbar::c(D^0Dbar^0,D_s^+D_s^-)"], u),
+            c_02_09(p["ee->ccbar::c(D^0Dbar^0,D^*0Dbar^*0S0)"], u),
+            c_02_10(p["ee->ccbar::c(D^0Dbar^0,D^*0Dbar^*0S2)"], u),
+            c_02_15(p["ee->ccbar::c(D^0Dbar^0,D_s^+D_s^*-)"], u),
+            c_02_17(p["ee->ccbar::c(D^0Dbar^0,D_s^*+D_s^*-S0)"], u),
+            c_02_18(p["ee->ccbar::c(D^0Dbar^0,D_s^*+D_s^*-S2)"], u),
 
-            c_D0Dbarst0_D0Dbarst0(p["ee->ccbar::c(D^0Dbar^*0,D^0Dbar^*0)"], u),
-            c_D0Dbarst0_DpDstm(p["ee->ccbar::c(D^0Dbar^*0,D^+D^*-)"], u),
-            c_D0Dbarst0_DspDsm(p["ee->ccbar::c(D^0Dbar^*0,D_s^+D_s^-)"], u),
-            c_D0Dbarst0_Dst0Dbarst0(p["ee->ccbar::c(D^0Dbar^*0,D^*0Dbar^*0)"], u),
-            c_D0Dbarst0_DstpDstm(p["ee->ccbar::c(D^0Dbar^*0,D^*+D^*-)"], u),
-            c_D0Dbarst0_DspDsstm(p["ee->ccbar::c(D^0Dbar^*0,D_s^+D_s^*-)"], u),
-            c_D0Dbarst0_DsstpDsstm(p["ee->ccbar::c(D^0Dbar^*0,D_s^*+D_s^*-)"], u),
+            c_04_04(p["ee->ccbar::c(D^0Dbar^*0,D^0Dbar^*0)"], u),
+            c_04_08(p["ee->ccbar::c(D^0Dbar^*0,D_s^+D_s^-)"], u),
+            c_04_09(p["ee->ccbar::c(D^0Dbar^*0,D^*0Dbar^*0S0)"], u),
+            c_04_10(p["ee->ccbar::c(D^0Dbar^*0,D^*0Dbar^*0S2)"], u),
+            c_04_15(p["ee->ccbar::c(D^0Dbar^*0,D_s^+D_s^*-)"], u),
+            c_04_17(p["ee->ccbar::c(D^0Dbar^*0,D_s^*+D_s^*-S0)"], u),
+            c_04_18(p["ee->ccbar::c(D^0Dbar^*0,D_s^*+D_s^*-S2)"], u),
 
-            c_DpDstm_DpDstm(p["ee->ccbar::c(D^+D^*-,D^+D^*-)"], u),
-            c_DpDstm_DspDsm(p["ee->ccbar::c(D^+D^*-,D_s^+D_s^-)"], u),
-            c_DpDstm_Dst0Dbarst0(p["ee->ccbar::c(D^+D^*-,D^*0Dbar^*0)"], u),
-            c_DpDstm_DstpDstm(p["ee->ccbar::c(D^+D^*-,D^*+D^*-)"], u),
-            c_DpDstm_DspDsstm(p["ee->ccbar::c(D^+D^*-,D_s^+D_s^*-)"], u),
-            c_DpDstm_DsstpDsstm(p["ee->ccbar::c(D^+D^*-,D_s^*+D_s^*-)"], u),
+            c_08_08(p["ee->ccbar::c(D_s^+D_s^-,D_s^+D_s^-)"], u),
+            c_08_09(p["ee->ccbar::c(D_s^+D_s^-,D^*0Dbar^*0S0)"], u),
+            c_08_10(p["ee->ccbar::c(D_s^+D_s^-,D^*0Dbar^*0S2)"], u),
+            c_08_15(p["ee->ccbar::c(D_s^+D_s^-,D_s^+D_s^*-)"], u),
+            c_08_17(p["ee->ccbar::c(D_s^+D_s^-,D_s^*+D_s^*-S0)"], u),
+            c_08_18(p["ee->ccbar::c(D_s^+D_s^-,D_s^*+D_s^*-S2)"], u),
 
-            c_DspDsm_DspDsm(p["ee->ccbar::c(D_s^+D_s^-,D_s^+D_s^-)"], u),
-            c_DspDsm_Dst0Dbarst0(p["ee->ccbar::c(D_s^+D_s^-,D^*0Dbar^*0)"], u),
-            c_DspDsm_DstpDstm(p["ee->ccbar::c(D_s^+D_s^-,D^*+D^*-)"], u),
-            c_DspDsm_DspDsstm(p["ee->ccbar::c(D_s^+D_s^-,D_s^+D_s^*-)"], u),
-            c_DspDsm_DsstpDsstm(p["ee->ccbar::c(D_s^+D_s^-,D_s^*+D_s^*-)"], u),
+            c_09_09(p["ee->ccbar::c(D^*0Dbar^*0S0,D^*0Dbar^*0S0)"], u),
+            c_09_10(p["ee->ccbar::c(D^*0Dbar^*0S0,D^*0Dbar^*0S2)"], u),
+            c_09_15(p["ee->ccbar::c(D^*0Dbar^*0S0,D_s^+D_s^*-)"], u),
+            c_09_17(p["ee->ccbar::c(D^*0Dbar^*0S0,D_s^*+D_s^*-S0)"], u),
+            c_09_18(p["ee->ccbar::c(D^*0Dbar^*0S0,D_s^*+D_s^*-S2)"], u),
 
-            c_Dst0Dbarst0_Dst0Dbarst0(p["ee->ccbar::c(D^*0Dbar^*0,D^*0Dbar^*0)"], u),
-            c_Dst0Dbarst0_DstpDstm(p["ee->ccbar::c(D^*0Dbar^*0,D^*+D^*-)"], u),
-            c_Dst0Dbarst0_DspDsstm(p["ee->ccbar::c(D^*0Dbar^*0,D_s^+D_s^*-)"], u),
-            c_Dst0Dbarst0_DsstpDsstm(p["ee->ccbar::c(D^*0Dbar^*0,D_s^*+D_s^*-)"], u),
+            c_10_10(p["ee->ccbar::c(D^*0Dbar^*0S2,D^*0Dbar^*0S2)"], u),
+            c_10_15(p["ee->ccbar::c(D^*0Dbar^*0S2,D_s^+D_s^*-)"], u),
+            c_10_17(p["ee->ccbar::c(D^*0Dbar^*0S2,D_s^*+D_s^*-S0)"], u),
+            c_10_18(p["ee->ccbar::c(D^*0Dbar^*0S2,D_s^*+D_s^*-S2)"], u),
 
-            c_DstpDstm_DstpDstm(p["ee->ccbar::c(D^*+D^*-,D^*+D^*-)"], u),
-            c_DstpDstm_DspDsstm(p["ee->ccbar::c(D^*+D^*-,D_s^+D_s^*-)"], u),
-            c_DstpDstm_DsstpDsstm(p["ee->ccbar::c(D^*+D^*-,D_s^*+D_s^*-)"], u),
+            c_15_15(p["ee->ccbar::c(D_s^+D_s^*-,D_s^+D_s^*-)"], u),
+            c_15_17(p["ee->ccbar::c(D_s^+D_s^*-,D_s^*+D_s^*-S0)"], u),
+            c_15_18(p["ee->ccbar::c(D_s^+D_s^*-,D_s^*+D_s^*-S2)"], u),
 
-            c_DspDsstm_DspDsstm(p["ee->ccbar::c(D_s^+D_s^*-,D_s^+D_s^*-)"], u),
-            c_DspDsstm_DsstpDsstm(p["ee->ccbar::c(D_s^+D_s^*-,D_s^*+D_s^*-)"], u),
+            c_17_17(p["ee->ccbar::c(D_s^*+D_s^*-S0,D_s^*+D_s^*-S0)"], u),
+            c_17_18(p["ee->ccbar::c(D_s^*+D_s^*-S0,D_s^*+D_s^*-S2)"], u),
 
-            c_DsstpDsstm_DsstpDsstm(p["ee->ccbar::c(D_s^*+D_s^*-,D_s^*+D_s^*-)"], u),
+            c_18_18(p["ee->ccbar::c(D_s^*+D_s^*-S2,D_s^*+D_s^*-S2)"], u),
 
             Rconstant(p["ee->ccbar::Rconstant"], u)
         {
@@ -375,52 +339,60 @@ namespace eos
             auto psi4415_res = std::make_shared<charmonium_resonance<nchannels, nresonances>>("psi4415_res", m_psi4415);
 
             std::vector<std::vector<Parameter>> bkgcst {
-                {c_ee_ee,          c_ee_eff,          c_ee_D0Dbar0,          c_ee_D0Dbar0,          c_ee_D0Dbarst0,          c_ee_D0Dbarst0,          c_ee_D0Dbarst0,          c_ee_D0Dbarst0,          c_ee_DspDsm,          c_ee_Dst0Dbarst0,          c_ee_Dst0Dbarst0,          c_ee_Dst0Dbarst0,          c_ee_Dst0Dbarst0,          c_ee_DspDsstm,           c_ee_DspDsstm,           c_ee_DsstpDsstm,          c_ee_DsstpDsstm          },
-                {c_ee_eff,         c_eff_eff,         c_eff_D0Dbar0,         c_eff_D0Dbar0,         c_eff_D0Dbarst0,         c_eff_D0Dbarst0,         c_eff_D0Dbarst0,         c_eff_D0Dbarst0,         c_eff_DspDsm,         c_eff_Dst0Dbarst0,         c_eff_Dst0Dbarst0,         c_eff_Dst0Dbarst0,         c_eff_Dst0Dbarst0,         c_eff_DspDsstm,          c_eff_DspDsstm,          c_eff_DsstpDsstm,         c_eff_DsstpDsstm         },
-                {c_ee_D0Dbar0,     c_eff_D0Dbar0,     c_D0Dbar0_D0Dbar0,     c_D0Dbar0_D0Dbar0,     c_D0Dbar0_D0Dbarst0,     c_D0Dbar0_D0Dbarst0,     c_D0Dbar0_D0Dbarst0,     c_D0Dbar0_D0Dbarst0,     c_D0Dbar0_DspDsm,     c_D0Dbar0_Dst0Dbarst0,     c_D0Dbar0_Dst0Dbarst0,     c_D0Dbar0_Dst0Dbarst0,     c_D0Dbar0_Dst0Dbarst0,     c_D0Dbar0_DspDsstm,      c_D0Dbar0_DspDsstm,      c_D0Dbar0_DsstpDsstm,     c_D0Dbar0_DsstpDsstm     },
-                {c_ee_D0Dbar0,     c_eff_D0Dbar0,     c_D0Dbar0_D0Dbar0,     c_D0Dbar0_D0Dbar0,     c_D0Dbar0_D0Dbarst0,     c_D0Dbar0_D0Dbarst0,     c_D0Dbar0_D0Dbarst0,     c_D0Dbar0_D0Dbarst0,     c_D0Dbar0_DspDsm,     c_D0Dbar0_Dst0Dbarst0,     c_D0Dbar0_Dst0Dbarst0,     c_D0Dbar0_Dst0Dbarst0,     c_D0Dbar0_Dst0Dbarst0,     c_D0Dbar0_DspDsstm,      c_D0Dbar0_DspDsstm,      c_D0Dbar0_DsstpDsstm,     c_D0Dbar0_DsstpDsstm     },
-                {c_ee_D0Dbarst0,   c_eff_D0Dbarst0,   c_D0Dbar0_D0Dbarst0,   c_D0Dbar0_D0Dbarst0,   c_D0Dbarst0_D0Dbarst0,   c_D0Dbarst0_D0Dbarst0,   c_D0Dbarst0_D0Dbarst0,   c_D0Dbarst0_D0Dbarst0,   c_D0Dbarst0_DspDsm,   c_D0Dbarst0_Dst0Dbarst0,   c_D0Dbarst0_Dst0Dbarst0,   c_D0Dbarst0_Dst0Dbarst0,   c_D0Dbarst0_Dst0Dbarst0,   c_D0Dbarst0_DspDsstm,    c_D0Dbarst0_DspDsstm,    c_D0Dbarst0_DsstpDsstm,   c_D0Dbarst0_DsstpDsstm   },
-                {c_ee_D0Dbarst0,   c_eff_D0Dbarst0,   c_D0Dbar0_D0Dbarst0,   c_D0Dbar0_D0Dbarst0,   c_D0Dbarst0_D0Dbarst0,   c_D0Dbarst0_D0Dbarst0,   c_D0Dbarst0_D0Dbarst0,   c_D0Dbarst0_D0Dbarst0,   c_D0Dbarst0_DspDsm,   c_D0Dbarst0_Dst0Dbarst0,   c_D0Dbarst0_Dst0Dbarst0,   c_D0Dbarst0_Dst0Dbarst0,   c_D0Dbarst0_Dst0Dbarst0,   c_D0Dbarst0_DspDsstm,    c_D0Dbarst0_DspDsstm,    c_D0Dbarst0_DsstpDsstm,   c_D0Dbarst0_DsstpDsstm   },
-                {c_ee_D0Dbarst0,   c_eff_D0Dbarst0,   c_D0Dbar0_D0Dbarst0,   c_D0Dbar0_D0Dbarst0,   c_D0Dbarst0_D0Dbarst0,   c_D0Dbarst0_D0Dbarst0,   c_D0Dbarst0_D0Dbarst0,   c_D0Dbarst0_D0Dbarst0,   c_D0Dbarst0_DspDsm,   c_D0Dbarst0_Dst0Dbarst0,   c_D0Dbarst0_Dst0Dbarst0,   c_D0Dbarst0_Dst0Dbarst0,   c_D0Dbarst0_Dst0Dbarst0,   c_D0Dbarst0_DspDsstm,    c_D0Dbarst0_DspDsstm,    c_D0Dbarst0_DsstpDsstm,   c_D0Dbarst0_DsstpDsstm   },
-                {c_ee_D0Dbarst0,   c_eff_D0Dbarst0,   c_D0Dbar0_D0Dbarst0,   c_D0Dbar0_D0Dbarst0,   c_D0Dbarst0_D0Dbarst0,   c_D0Dbarst0_D0Dbarst0,   c_D0Dbarst0_D0Dbarst0,   c_D0Dbarst0_D0Dbarst0,   c_D0Dbarst0_DspDsm,   c_D0Dbarst0_Dst0Dbarst0,   c_D0Dbarst0_Dst0Dbarst0,   c_D0Dbarst0_Dst0Dbarst0,   c_D0Dbarst0_Dst0Dbarst0,   c_D0Dbarst0_DspDsstm,    c_D0Dbarst0_DspDsstm,    c_D0Dbarst0_DsstpDsstm,   c_D0Dbarst0_DsstpDsstm   },
-                {c_ee_DspDsm,      c_eff_DspDsm,      c_D0Dbar0_DspDsm,      c_D0Dbar0_DspDsm,      c_D0Dbarst0_DspDsm,      c_D0Dbarst0_DspDsm,      c_D0Dbarst0_DspDsm,      c_D0Dbarst0_DspDsm,      c_DspDsm_DspDsm,      c_DspDsm_Dst0Dbarst0,      c_DspDsm_Dst0Dbarst0,      c_DspDsm_Dst0Dbarst0,      c_DspDsm_Dst0Dbarst0,      c_DspDsm_DspDsstm,       c_DspDsm_DspDsstm,       c_DspDsm_DsstpDsstm,      c_DspDsm_DsstpDsstm      },
-                {c_ee_Dst0Dbarst0, c_eff_Dst0Dbarst0, c_D0Dbar0_Dst0Dbarst0, c_D0Dbar0_Dst0Dbarst0, c_D0Dbarst0_Dst0Dbarst0, c_D0Dbarst0_Dst0Dbarst0, c_D0Dbarst0_Dst0Dbarst0, c_D0Dbarst0_Dst0Dbarst0, c_DspDsm_Dst0Dbarst0, c_Dst0Dbarst0_Dst0Dbarst0, c_Dst0Dbarst0_Dst0Dbarst0, c_Dst0Dbarst0_Dst0Dbarst0, c_Dst0Dbarst0_Dst0Dbarst0, c_Dst0Dbarst0_DspDsstm,  c_Dst0Dbarst0_DspDsstm,  c_Dst0Dbarst0_DsstpDsstm, c_Dst0Dbarst0_DsstpDsstm },
-                {c_ee_Dst0Dbarst0, c_eff_Dst0Dbarst0, c_D0Dbar0_Dst0Dbarst0, c_D0Dbar0_Dst0Dbarst0, c_D0Dbarst0_Dst0Dbarst0, c_D0Dbarst0_Dst0Dbarst0, c_D0Dbarst0_Dst0Dbarst0, c_D0Dbarst0_Dst0Dbarst0, c_DspDsm_Dst0Dbarst0, c_Dst0Dbarst0_Dst0Dbarst0, c_Dst0Dbarst0_Dst0Dbarst0, c_Dst0Dbarst0_Dst0Dbarst0, c_Dst0Dbarst0_Dst0Dbarst0, c_Dst0Dbarst0_DspDsstm,  c_Dst0Dbarst0_DspDsstm,  c_Dst0Dbarst0_DsstpDsstm, c_Dst0Dbarst0_DsstpDsstm },
-                {c_ee_Dst0Dbarst0, c_eff_Dst0Dbarst0, c_D0Dbar0_Dst0Dbarst0, c_D0Dbar0_Dst0Dbarst0, c_D0Dbarst0_Dst0Dbarst0, c_D0Dbarst0_Dst0Dbarst0, c_D0Dbarst0_Dst0Dbarst0, c_D0Dbarst0_Dst0Dbarst0, c_DspDsm_Dst0Dbarst0, c_Dst0Dbarst0_Dst0Dbarst0, c_Dst0Dbarst0_Dst0Dbarst0, c_Dst0Dbarst0_Dst0Dbarst0, c_Dst0Dbarst0_Dst0Dbarst0, c_Dst0Dbarst0_DspDsstm,  c_Dst0Dbarst0_DspDsstm,  c_Dst0Dbarst0_DsstpDsstm, c_Dst0Dbarst0_DsstpDsstm },
-                {c_ee_Dst0Dbarst0, c_eff_Dst0Dbarst0, c_D0Dbar0_Dst0Dbarst0, c_D0Dbar0_Dst0Dbarst0, c_D0Dbarst0_Dst0Dbarst0, c_D0Dbarst0_Dst0Dbarst0, c_D0Dbarst0_Dst0Dbarst0, c_D0Dbarst0_Dst0Dbarst0, c_DspDsm_Dst0Dbarst0, c_Dst0Dbarst0_Dst0Dbarst0, c_Dst0Dbarst0_Dst0Dbarst0, c_Dst0Dbarst0_Dst0Dbarst0, c_Dst0Dbarst0_Dst0Dbarst0, c_Dst0Dbarst0_DspDsstm,  c_Dst0Dbarst0_DspDsstm,  c_Dst0Dbarst0_DsstpDsstm, c_Dst0Dbarst0_DsstpDsstm },
-                {c_ee_DspDsstm,    c_eff_DspDsstm,    c_D0Dbar0_DspDsstm,    c_D0Dbar0_DspDsstm,    c_D0Dbarst0_DspDsstm,    c_D0Dbarst0_DspDsstm,    c_D0Dbarst0_DspDsstm,    c_D0Dbarst0_DspDsstm,    c_DspDsm_DspDsstm,    c_Dst0Dbarst0_DspDsstm,    c_Dst0Dbarst0_DspDsstm,    c_Dst0Dbarst0_DspDsstm,    c_Dst0Dbarst0_DspDsstm,    c_DspDsstm_DspDsstm,     c_DspDsstm_DspDsstm,     c_DspDsstm_DsstpDsstm,    c_DspDsstm_DsstpDsstm    },
-                {c_ee_DspDsstm,    c_eff_DspDsstm,    c_D0Dbar0_DspDsstm,    c_D0Dbar0_DspDsstm,    c_D0Dbarst0_DspDsstm,    c_D0Dbarst0_DspDsstm,    c_D0Dbarst0_DspDsstm,    c_D0Dbarst0_DspDsstm,    c_DspDsm_DspDsstm,    c_Dst0Dbarst0_DspDsstm,    c_Dst0Dbarst0_DspDsstm,    c_Dst0Dbarst0_DspDsstm,    c_Dst0Dbarst0_DspDsstm,    c_DspDsstm_DspDsstm,     c_DspDsstm_DspDsstm,     c_DspDsstm_DsstpDsstm,    c_DspDsstm_DsstpDsstm    },
-                {c_ee_DsstpDsstm,  c_eff_DsstpDsstm,  c_D0Dbar0_DsstpDsstm,  c_D0Dbar0_DsstpDsstm,  c_D0Dbarst0_DsstpDsstm,  c_D0Dbarst0_DsstpDsstm,  c_D0Dbarst0_DsstpDsstm,  c_D0Dbarst0_DsstpDsstm,  c_DspDsm_DsstpDsstm,  c_Dst0Dbarst0_DsstpDsstm,  c_Dst0Dbarst0_DsstpDsstm,  c_Dst0Dbarst0_DsstpDsstm,  c_Dst0Dbarst0_DsstpDsstm,  c_DsstpDsstm_DsstpDsstm, c_DsstpDsstm_DsstpDsstm, c_DspDsstm_DsstpDsstm,    c_DspDsstm_DsstpDsstm    },
-                {c_ee_DsstpDsstm,  c_eff_DsstpDsstm,  c_D0Dbar0_DsstpDsstm,  c_D0Dbar0_DsstpDsstm,  c_D0Dbarst0_DsstpDsstm,  c_D0Dbarst0_DsstpDsstm,  c_D0Dbarst0_DsstpDsstm,  c_D0Dbarst0_DsstpDsstm,  c_DspDsm_DsstpDsstm,  c_Dst0Dbarst0_DsstpDsstm,  c_Dst0Dbarst0_DsstpDsstm,  c_Dst0Dbarst0_DsstpDsstm,  c_Dst0Dbarst0_DsstpDsstm,  c_DsstpDsstm_DsstpDsstm, c_DsstpDsstm_DsstpDsstm, c_DspDsstm_DsstpDsstm,    c_DspDsstm_DsstpDsstm    },
+                {c_00_00, c_00_01, c_00_02, c_00_02, c_00_04, c_00_04, c_00_04, c_00_04, c_00_08, c_00_09, c_00_10, c_00_10, c_00_10, c_00_10, c_00_10, c_00_15, c_00_15, c_00_17, c_00_18, c_00_18},
+                {c_00_01, c_01_01, c_01_02, c_01_02, c_01_04, c_01_04, c_01_04, c_01_04, c_01_08, c_01_09, c_01_10, c_01_10, c_01_10, c_01_10, c_01_10, c_01_15, c_01_15, c_01_17, c_01_18, c_01_18},
+                {c_00_02, c_01_02, c_02_02, c_02_02, c_02_04, c_02_04, c_02_04, c_02_04, c_02_08, c_02_09, c_02_10, c_02_10, c_02_10, c_02_10, c_02_10, c_02_15, c_02_15, c_02_17, c_02_18, c_02_18},
+                {c_00_02, c_01_02, c_02_02, c_02_02, c_02_04, c_02_04, c_02_04, c_02_04, c_02_08, c_02_09, c_02_10, c_02_10, c_02_10, c_02_10, c_02_10, c_02_15, c_02_15, c_02_17, c_02_18, c_02_18},
+                {c_00_04, c_01_04, c_02_04, c_02_04, c_04_04, c_04_04, c_04_04, c_04_04, c_04_08, c_04_09, c_04_10, c_04_10, c_04_10, c_04_10, c_04_10, c_04_15, c_04_15, c_04_17, c_04_18, c_04_18},
+                {c_00_04, c_01_04, c_02_04, c_02_04, c_04_04, c_04_04, c_04_04, c_04_04, c_04_08, c_04_09, c_04_10, c_04_10, c_04_10, c_04_10, c_04_10, c_04_15, c_04_15, c_04_17, c_04_18, c_04_18},
+                {c_00_04, c_01_04, c_02_04, c_02_04, c_04_04, c_04_04, c_04_04, c_04_04, c_04_08, c_04_09, c_04_10, c_04_10, c_04_10, c_04_10, c_04_10, c_04_15, c_04_15, c_04_17, c_04_18, c_04_18},
+                {c_00_04, c_01_04, c_02_04, c_02_04, c_04_04, c_04_04, c_04_04, c_04_04, c_04_08, c_04_09, c_04_10, c_04_10, c_04_10, c_04_10, c_04_10, c_04_15, c_04_15, c_04_17, c_04_18, c_04_18},
+                {c_00_08, c_01_08, c_02_08, c_02_08, c_04_08, c_04_08, c_04_08, c_04_08, c_08_08, c_08_09, c_08_10, c_08_10, c_08_10, c_08_10, c_08_10, c_08_15, c_08_15, c_08_17, c_08_18, c_08_18},
+                {c_00_09, c_01_09, c_02_09, c_02_09, c_04_09, c_04_09, c_04_09, c_04_09, c_08_09, c_09_09, c_09_10, c_09_10, c_09_10, c_09_10, c_09_10, c_09_15, c_09_15, c_09_17, c_09_18, c_09_18},
+                {c_00_10, c_01_10, c_02_10, c_02_10, c_04_10, c_04_10, c_04_10, c_04_10, c_08_10, c_09_10, c_10_10, c_10_10, c_10_10, c_10_10, c_10_10, c_10_15, c_10_15, c_10_17, c_10_18, c_10_18},
+                {c_00_10, c_01_10, c_02_10, c_02_10, c_04_10, c_04_10, c_04_10, c_04_10, c_08_10, c_09_10, c_10_10, c_10_10, c_10_10, c_10_10, c_10_10, c_10_15, c_10_15, c_10_17, c_10_18, c_10_18},
+                {c_00_10, c_01_10, c_02_10, c_02_10, c_04_10, c_04_10, c_04_10, c_04_10, c_08_10, c_09_10, c_10_10, c_10_10, c_10_10, c_10_10, c_10_10, c_10_15, c_10_15, c_10_17, c_10_18, c_10_18},
+                {c_00_10, c_01_10, c_02_10, c_02_10, c_04_10, c_04_10, c_04_10, c_04_10, c_08_10, c_09_10, c_10_10, c_10_10, c_10_10, c_10_10, c_10_10, c_10_15, c_10_15, c_10_17, c_10_18, c_10_18},
+                {c_00_10, c_01_10, c_02_10, c_02_10, c_04_10, c_04_10, c_04_10, c_04_10, c_08_10, c_09_10, c_10_10, c_10_10, c_10_10, c_10_10, c_10_10, c_10_15, c_10_15, c_10_17, c_10_18, c_10_18},
+                {c_00_15, c_01_15, c_02_15, c_02_15, c_04_15, c_04_15, c_04_15, c_04_15, c_08_15, c_09_15, c_10_15, c_10_15, c_10_15, c_10_15, c_10_15, c_15_15, c_15_15, c_15_17, c_15_18, c_15_18},
+                {c_00_15, c_01_15, c_02_15, c_02_15, c_04_15, c_04_15, c_04_15, c_04_15, c_08_15, c_09_15, c_10_15, c_10_15, c_10_15, c_10_15, c_10_15, c_15_15, c_15_15, c_15_17, c_15_18, c_15_18},
+                {c_00_17, c_01_17, c_02_17, c_02_17, c_04_17, c_04_17, c_04_17, c_04_17, c_08_17, c_09_17, c_10_17, c_10_17, c_10_17, c_10_17, c_10_17, c_15_17, c_15_17, c_17_17, c_17_18, c_17_18},
+                {c_00_18, c_01_18, c_02_18, c_02_18, c_04_18, c_04_18, c_04_18, c_04_18, c_08_18, c_09_18, c_10_18, c_10_18, c_10_18, c_10_18, c_10_18, c_15_18, c_15_18, c_17_18, c_18_18, c_18_18},
+                {c_00_18, c_01_18, c_02_18, c_02_18, c_04_18, c_04_18, c_04_18, c_04_18, c_08_18, c_09_18, c_10_18, c_10_18, c_10_18, c_10_18, c_10_18, c_15_18, c_15_18, c_17_18, c_18_18, c_18_18}
             };
 
-            std::vector<Parameter> ee_g0s          {{g0_psi2S_ee,          g0_psi3770_ee,          g0_psi4040_ee,          g0_psi4160_ee,          g0_psi4415_ee          }};
-            std::vector<Parameter> eff_g0s         {{g0_psi2S_eff,         g0_psi3770_eff,         g0_psi4040_eff,         g0_psi4160_eff,         g0_psi4415_eff         }};
-            std::vector<Parameter> D0Dbar0_g0s     {{g0_psi2S_D0Dbar0,     g0_psi3770_D0Dbar0,     g0_psi4040_D0Dbar0,     g0_psi4160_D0Dbar0,     g0_psi4415_D0Dbar0     }};
-            std::vector<Parameter> D0Dbarst0_g0s   {{g0_psi2S_D0Dbarst0,   g0_psi3770_D0Dbarst0,   g0_psi4040_D0Dbarst0,   g0_psi4160_D0Dbarst0,   g0_psi4415_D0Dbarst0   }};
-            std::vector<Parameter> DspDsm_g0s      {{g0_psi2S_DspDsm,      g0_psi3770_DspDsm,      g0_psi4040_DspDsm,      g0_psi4160_DspDsm,      g0_psi4415_DspDsm      }};
-            std::vector<Parameter> Dst0Dbarst0_g0s {{g0_psi2S_Dst0Dbarst0, g0_psi3770_Dst0Dbarst0, g0_psi4040_Dst0Dbarst0, g0_psi4160_Dst0Dbarst0, g0_psi4415_Dst0Dbarst0 }};
-            std::vector<Parameter> DspDsstm_g0s    {{g0_psi2S_DspDsstm,    g0_psi3770_DspDsstm,    g0_psi4040_DspDsstm,    g0_psi4160_DspDsstm,    g0_psi4415_DspDsstm    }};
-            std::vector<Parameter> DsstpDsstm_g0s  {{g0_psi2S_DsstpDsstm,  g0_psi3770_DsstpDsstm,  g0_psi4040_DsstpDsstm,  g0_psi4160_DsstpDsstm,  g0_psi4415_DsstpDsstm  }};
+            std::vector<Parameter> ee_g0s            {{g0_psi2S_ee,            g0_psi3770_ee,            g0_psi4040_ee,            g0_psi4160_ee,            g0_psi4415_ee            }};
+            std::vector<Parameter> eff_g0s           {{g0_psi2S_eff,           g0_psi3770_eff,           g0_psi4040_eff,           g0_psi4160_eff,           g0_psi4415_eff           }};
+            std::vector<Parameter> D0Dbar0_g0s       {{g0_psi2S_D0Dbar0,       g0_psi3770_D0Dbar0,       g0_psi4040_D0Dbar0,       g0_psi4160_D0Dbar0,       g0_psi4415_D0Dbar0       }};
+            std::vector<Parameter> D0Dbarst0_g0s     {{g0_psi2S_D0Dbarst0,     g0_psi3770_D0Dbarst0,     g0_psi4040_D0Dbarst0,     g0_psi4160_D0Dbarst0,     g0_psi4415_D0Dbarst0     }};
+            std::vector<Parameter> DspDsm_g0s        {{g0_psi2S_DspDsm,        g0_psi3770_DspDsm,        g0_psi4040_DspDsm,        g0_psi4160_DspDsm,        g0_psi4415_DspDsm        }};
+            std::vector<Parameter> Dst0Dbarst0S0_g0s {{g0_psi2S_Dst0Dbarst0S0, g0_psi3770_Dst0Dbarst0S0, g0_psi4040_Dst0Dbarst0S0, g0_psi4160_Dst0Dbarst0S0, g0_psi4415_Dst0Dbarst0S0 }};
+            std::vector<Parameter> Dst0Dbarst0S2_g0s {{g0_psi2S_Dst0Dbarst0S2, g0_psi3770_Dst0Dbarst0S2, g0_psi4040_Dst0Dbarst0S2, g0_psi4160_Dst0Dbarst0S2, g0_psi4415_Dst0Dbarst0S2 }};
+            std::vector<Parameter> DspDsstm_g0s      {{g0_psi2S_DspDsstm,      g0_psi3770_DspDsstm,      g0_psi4040_DspDsstm,      g0_psi4160_DspDsstm,      g0_psi4415_DspDsstm      }};
+            std::vector<Parameter> DsstpDsstmS0_g0s  {{g0_psi2S_DsstpDsstmS0,  g0_psi3770_DsstpDsstmS0,  g0_psi4040_DsstpDsstmS0,  g0_psi4160_DsstpDsstmS0,  g0_psi4415_DsstpDsstmS0  }};
+            std::vector<Parameter> DsstpDsstmS2_g0s  {{g0_psi2S_DsstpDsstmS2,  g0_psi3770_DsstpDsstmS2,  g0_psi4040_DsstpDsstmS2,  g0_psi4160_DsstpDsstmS2,  g0_psi4415_DsstpDsstmS2  }};
 
-            auto ee_chan           = std::make_shared<PPPwavechan<nchannels, nresonances>>("ee_chan",           m_e,    m_e,     3, ee_g0s);
+            auto ee_chan            = std::make_shared<PPPwavechan<nchannels, nresonances>>("ee_chan",            m_e,    m_e,     3, ee_g0s);
             // Massless effective channel
-            auto eff_chan          = std::make_shared<PPPwavechan<nchannels, nresonances>>("eff_chan",          m_e,    m_e,     3, eff_g0s);
-            auto D0Dbar0_chan      = std::make_shared<PPPwavechan<nchannels, nresonances>>("D0Dbar0_chan",      m_D0,   m_D0,    3, D0Dbar0_g0s);
-            auto DpDm_chan         = std::make_shared<PPPwavechan<nchannels, nresonances>>("DpDm_chan",         m_D,    m_D,     3, D0Dbar0_g0s);
-            auto D0Dbarst0_chan    = std::make_shared<VPPwavechan<nchannels, nresonances>>("D0Dbarst0_chan",    m_D0,   m_Dst0,  3, D0Dbarst0_g0s);
-            auto Dst0Dbar0_chan    = std::make_shared<VPPwavechan<nchannels, nresonances>>("Dst0Dbar0_chan",    m_Dst0, m_D0,    3, D0Dbarst0_g0s);
-            auto DpDstm_chan       = std::make_shared<VPPwavechan<nchannels, nresonances>>("DpDstm_chan",       m_D,    m_Dst,   3, D0Dbarst0_g0s);
-            auto DstpDm_chan       = std::make_shared<VPPwavechan<nchannels, nresonances>>("DstpDm_chan",       m_D,    m_Dst,   3, D0Dbarst0_g0s);
-            auto DspDsm_chan       = std::make_shared<PPPwavechan<nchannels, nresonances>>("DspDsm_chan",       m_Ds,   m_Ds,    3, DspDsm_g0s);
-            auto Dst0Dbarst0_chan  = std::make_shared<VVPwavechan<nchannels, nresonances>>("Dst0Dbarst0_chan",  m_Dst0, m_Dst0,  3, Dst0Dbarst0_g0s);
-            auto Dst0Dbarst0F_chan = std::make_shared<VVFwavechan<nchannels, nresonances>>("Dst0Dbarst0F_chan", m_Dst0, m_Dst0,  7, Dst0Dbarst0_g0s);
-            auto DstpDstm_chan     = std::make_shared<VVPwavechan<nchannels, nresonances>>("DstpDstm_chan",     m_Dst,  m_Dst,   3, Dst0Dbarst0_g0s);
-            auto DstpDstmF_chan    = std::make_shared<VVFwavechan<nchannels, nresonances>>("DstpDstmF_chan",    m_Dst,  m_Dst,   7, Dst0Dbarst0_g0s);
-            auto DspDsstm_chan     = std::make_shared<VPPwavechan<nchannels, nresonances>>("DspDsstm_chan",     m_Ds,   m_Dsst,  3, DspDsstm_g0s);
-            auto DsstpDsm_chan     = std::make_shared<VPPwavechan<nchannels, nresonances>>("DsstpDsm_chan",     m_Dsst, m_Ds,    3, DspDsstm_g0s);
-            auto DsstpDsstm_chan   = std::make_shared<VVPwavechan<nchannels, nresonances>>("DsstpDsstm_chan",   m_Dsst, m_Dsst,  3, DsstpDsstm_g0s);
-            auto DsstpDsstmF_chan  = std::make_shared<VVFwavechan<nchannels, nresonances>>("DsstpDsstmF_chan",  m_Dsst, m_Dsst,  7, DsstpDsstm_g0s);
+            auto eff_chan           = std::make_shared<PPPwavechan<nchannels, nresonances>>("eff_chan",           m_e,    m_e,     3, eff_g0s);
+            auto D0Dbar0_chan       = std::make_shared<PPPwavechan<nchannels, nresonances>>("D0Dbar0_chan",       m_D0,   m_D0,    3, D0Dbar0_g0s);
+            auto DpDm_chan          = std::make_shared<PPPwavechan<nchannels, nresonances>>("DpDm_chan",          m_D,    m_D,     3, D0Dbar0_g0s);
+            auto D0Dbarst0_chan     = std::make_shared<VPPwavechan<nchannels, nresonances>>("D0Dbarst0_chan",     m_D0,   m_Dst0,  3, D0Dbarst0_g0s);
+            auto Dst0Dbar0_chan     = std::make_shared<VPPwavechan<nchannels, nresonances>>("Dst0Dbar0_chan",     m_Dst0, m_D0,    3, D0Dbarst0_g0s);
+            auto DpDstm_chan        = std::make_shared<VPPwavechan<nchannels, nresonances>>("DpDstm_chan",        m_D,    m_Dst,   3, D0Dbarst0_g0s);
+            auto DstpDm_chan        = std::make_shared<VPPwavechan<nchannels, nresonances>>("DstpDm_chan",        m_D,    m_Dst,   3, D0Dbarst0_g0s);
+            auto DspDsm_chan        = std::make_shared<PPPwavechan<nchannels, nresonances>>("DspDsm_chan",        m_Ds,   m_Ds,    3, DspDsm_g0s);
+            auto Dst0Dbarst0P0_chan = std::make_shared<VVPwavechan<nchannels, nresonances>>("Dst0Dbarst0P0_chan", m_Dst0, m_Dst0,  3, Dst0Dbarst0S0_g0s);
+            auto Dst0Dbarst0P2_chan = std::make_shared<VVPwavechan<nchannels, nresonances>>("Dst0Dbarst0P2_chan", m_Dst0, m_Dst0,  3, Dst0Dbarst0S2_g0s);
+            auto Dst0Dbarst0F2_chan = std::make_shared<VVFwavechan<nchannels, nresonances>>("Dst0Dbarst0F2_chan", m_Dst0, m_Dst0,  7, Dst0Dbarst0S2_g0s);
+            auto DstpDstmP0_chan    = std::make_shared<VVPwavechan<nchannels, nresonances>>("DstpDstmP0_chan",    m_Dst,  m_Dst,   3, Dst0Dbarst0S0_g0s);
+            auto DstpDstmP2_chan    = std::make_shared<VVPwavechan<nchannels, nresonances>>("DstpDstmP2_chan",    m_Dst,  m_Dst,   3, Dst0Dbarst0S2_g0s);
+            auto DstpDstmF2_chan    = std::make_shared<VVFwavechan<nchannels, nresonances>>("DstpDstmF2_chan",    m_Dst,  m_Dst,   7, Dst0Dbarst0S2_g0s);
+            auto DspDsstm_chan      = std::make_shared<VPPwavechan<nchannels, nresonances>>("DspDsstm_chan",      m_Ds,   m_Dsst,  3, DspDsstm_g0s);
+            auto DsstpDsm_chan      = std::make_shared<VPPwavechan<nchannels, nresonances>>("DsstpDsm_chan",      m_Dsst, m_Ds,    3, DspDsstm_g0s);
+            auto DsstpDsstmP0_chan  = std::make_shared<VVPwavechan<nchannels, nresonances>>("DsstpDsstmP0_chan",  m_Dsst, m_Dsst,  3, DsstpDsstmS0_g0s);
+            auto DsstpDsstmP2_chan  = std::make_shared<VVPwavechan<nchannels, nresonances>>("DsstpDsstmP2_chan",  m_Dsst, m_Dsst,  3, DsstpDsstmS2_g0s);
+            auto DsstpDsstmF2_chan  = std::make_shared<VVFwavechan<nchannels, nresonances>>("DsstpDsstmF2_chan",  m_Dsst, m_Dsst,  7, DsstpDsstmS2_g0s);
 
             K = std::shared_ptr<KMatrix<nchannels, nresonances>> (
                 new KMatrix<nchannels, nresonances>(
@@ -433,14 +405,17 @@ namespace eos
                       DpDstm_chan,
                       DstpDm_chan,
                       DspDsm_chan,
-                      Dst0Dbarst0_chan,
-                      Dst0Dbarst0F_chan,
-                      DstpDstm_chan,
-                      DstpDstmF_chan,
+                      Dst0Dbarst0P0_chan,
+                      Dst0Dbarst0P2_chan,
+                      Dst0Dbarst0F2_chan,
+                      DstpDstmP0_chan,
+                      DstpDstmP2_chan,
+                      DstpDstmF2_chan,
                       DspDsstm_chan,
                       DsstpDsm_chan,
-                      DsstpDsstm_chan,
-                      DsstpDsstmF_chan
+                      DsstpDsstmP0_chan,
+                      DsstpDsstmP2_chan,
+                      DsstpDsstmF2_chan
                     },
                     { psi2S_res,
                       psi3770_res,

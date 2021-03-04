@@ -32,24 +32,27 @@ namespace eos
 
     /*
     Channels follow the following convention
-    #   name          type    Nf      copy
-    0   ee            PP (P)  3       -
-    1   eff           PP (P)  3       -
-    2   D0   D0bar    PP (P)  3       -
-    3   D+   D-       PP (P)  3       2 (isospin)
-    4   D0   D*0bar   VP      3       -
-    5   D*0  D0bar    VP      3       4 (c.c.)
-    6   D+   D*-      VP      3       4 (isospin)
-    7   D*+  D-       VP      3       4 (c.c.)
-    8   Ds   Ds       PP (P)  3       -
-    9   D*0  D*0bar   VV (P)  3       -
-    10  D*0  D*0bar   VV (F)  7       9 (waves)
-    11  D*+  D*-      VV (P)  3       9 (isospin)
-    12  D*+  D*-      VV (F)  7       11 (waves)
-    13  Ds+  Ds*-     VP      3       -
-    14  Ds*+ Ds-      VP      3       13 (c.c.)
-    15  Ds*+ Ds*-     VV (P)  3       -
-    16  Ds*+ Ds*-     VV (F)  7       15 (waves)
+    #   name          type         Nf      copy
+    0   ee            PP (P)       3       -
+    1   eff           PP (P)       3       -
+    2   D0   D0bar    PP (P)       3       -
+    3   D+   D-       PP (P)       3       2 (isospin)
+    4   D0   D*0bar   VP           3       -
+    5   D*0  D0bar    VP           3       4 (c.c.)
+    6   D+   D*-      VP           3       4 (isospin)
+    7   D*+  D-       VP           3       4 (c.c.)
+    8   Ds   Ds       PP (P)       3       -
+    9   D*0  D*0bar   VV (P, S=0)  3       -
+    10  D*0  D*0bar   VV (P, S=2)  3       -
+    11  D*0  D*0bar   VV (F, S=2)  7       10 (waves)
+    12  D*+  D*-      VV (P, S=0)  3       9 (isospin)
+    13  D*+  D*-      VV (P, S=2)  3       10 (isospin)
+    14  D*+  D*-      VV (F, S=2)  7       10 (waves)
+    15  Ds+  Ds*-     VP           3       -
+    16  Ds*+ Ds-      VP           3       15 (c.c.)
+    17  Ds*+ Ds*-     VV (P, S=0)  3       -
+    18  Ds*+ Ds*-     VV (P, S=2)  3       -
+    19  Ds*+ Ds*-     VV (F, S=2)  7       18
     */
 
     // S -> PP channel
@@ -322,7 +325,7 @@ namespace eos
     {
         public:
 
-            const static unsigned nchannels = 17;
+            const static unsigned nchannels = 20;
             const static unsigned nresonances = 5;
 
 
