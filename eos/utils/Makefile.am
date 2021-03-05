@@ -24,6 +24,7 @@ libeosutils_la_SOURCES = \
 	diagnostics.cc diagnostics.hh \
 	exception.cc exception.hh \
 	expression.cc expression.hh \
+	expression-observable.cc expression-observable.hh \
 	expression-parser.hh expression-parser-impl.hh \
 	gsl-cblas-hack.cc \
 	hdf5.cc hdf5.hh hdf5-fwd.hh \
@@ -105,6 +106,7 @@ include_eos_utils_HEADERS = \
 	destringify.hh \
 	exception.hh \
 	expression.hh \
+	expression-observable.hh \
 	expression-parser.hh expression-parser-impl.hh \
 	hdf5.hh hdf5-fwd.hh \
 	indirect-iterator.hh indirect-iterator-fwd.hh \
@@ -155,6 +157,7 @@ TESTS = \
 	cartesian-product_TEST \
 	ckm_scan_model_TEST \
 	derivative_TEST \
+	expression-observable_TEST \
 	expression-parser_TEST \
 	hdf5_TEST \
 	indirect-iterator_TEST \
@@ -203,6 +206,8 @@ ckm_scan_model_TEST_SOURCES = ckm_scan_model_TEST.cc
 derivative_TEST_SOURCES = derivative_TEST.cc
 
 expression_parser_TEST_SOURCES = expression-parser_TEST.cc
+
+expression_observable_TEST_SOURCES = expression-observable_TEST.cc
 
 hdf5_TEST_SOURCES = hdf5_TEST.cc
 hdf5_TEST_CXXFLAGS = $(AM_CXXFLAGS) $(HDF5_CXXFLAGS)
