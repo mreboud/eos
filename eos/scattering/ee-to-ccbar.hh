@@ -108,11 +108,11 @@ namespace eos
 
     // V -> PP channel
     template <unsigned nchannels_, unsigned nresonances_>
-    struct PPPwavechan :
+    struct PP_Pwavechan :
     public KMatrix<nchannels_, nresonances_>::Channel
     {
 
-        PPPwavechan(std::string name, double m1, double m2, unsigned N_orbital, std::vector<Parameter> g0s) :
+        PP_Pwavechan(std::string name, double m1, double m2, unsigned N_orbital, std::vector<Parameter> g0s) :
         KMatrix<nchannels_, nresonances_>::Channel(name, m1, m2, N_orbital, g0s)
         {
         };
@@ -159,11 +159,11 @@ namespace eos
 
     // V -> VP channel
     template <unsigned nchannels_, unsigned nresonances_>
-    struct VPPwavechan :
+    struct VP_Pwavechan :
     public KMatrix<nchannels_, nresonances_>::Channel
     {
 
-        VPPwavechan(std::string name, double m1, double m2, unsigned N_orbital, std::vector<Parameter> g0s) :
+        VP_Pwavechan(std::string name, double m1, double m2, unsigned N_orbital, std::vector<Parameter> g0s) :
         KMatrix<nchannels_, nresonances_>::Channel(name, m1, m2, N_orbital, g0s)
         {
         };
@@ -180,7 +180,7 @@ namespace eos
 
         double beta(const double & s){
             if (s < mp*mp) { return 0.; } //Kinematic threshold
-            else { return sqlk(s)/s; }
+            else { return pow(sqlk(s)/s, 3.); }
         }
 
         complex<double> rho(const double & s) {
@@ -201,7 +201,7 @@ namespace eos
                 // result += mm*(mp*mp-s)*std::log((mm+mp)/(mp-mm));
                 // result += mp*sqlk(s)*std::log((2*s+2*sqlk(s)-mm*mm-mp*mp)/(mp*mp-mm*mm));
                 // result *= i/(mp*pi*s);
-                result += sqlk(s)/s;
+                result += pow(sqlk(s)/s, 3.);
                 return result;
             }
         }
@@ -210,11 +210,11 @@ namespace eos
 
     // V -> VV channel
     template <unsigned nchannels_, unsigned nresonances_>
-    struct VVPwavechan :
+    struct VV_Pwavechan :
     public KMatrix<nchannels_, nresonances_>::Channel
     {
 
-        VVPwavechan(std::string name, double m1, double m2, unsigned N_orbital, std::vector<Parameter> g0s) :
+        VV_Pwavechan(std::string name, double m1, double m2, unsigned N_orbital, std::vector<Parameter> g0s) :
         KMatrix<nchannels_, nresonances_>::Channel(name, m1, m2, N_orbital, g0s)
         {
         };
@@ -260,11 +260,11 @@ namespace eos
 
     // V -> VV channel
     template <unsigned nchannels_, unsigned nresonances_>
-    struct VVFwavechan :
+    struct VV_Fwavechan :
     public KMatrix<nchannels_, nresonances_>::Channel
     {
 
-        VVFwavechan(std::string name, double m1, double m2, unsigned N_orbital, std::vector<Parameter> g0s) :
+        VV_Fwavechan(std::string name, double m1, double m2, unsigned N_orbital, std::vector<Parameter> g0s) :
         KMatrix<nchannels_, nresonances_>::Channel(name, m1, m2, N_orbital, g0s)
         {
         };
@@ -313,7 +313,7 @@ namespace eos
     struct charmonium_resonance :
     public KMatrix<nchannels_, nresonances_>::Resonance
     {
-        charmonium_resonance(std::string name, double m) :
+        charmonium_resonance(std::string name, Parameter m) :
         KMatrix<nchannels_, nresonances_>::Resonance(name, m)
         {
         };
@@ -368,6 +368,9 @@ namespace eos
 
             // Rc ratio
             double Rc(const IntermediateResult *) const;
+
+            // Rudsc constraint
+            double Rudsc_prior(const IntermediateResult *) const;
 
             /*!
              * References used in the computation of our observables.

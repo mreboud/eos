@@ -372,27 +372,27 @@ namespace eos
             std::vector<Parameter> DsstpDsstmS0_g0s  {{g0_psi2S_DsstpDsstmS0,  g0_psi3770_DsstpDsstmS0,  g0_psi4040_DsstpDsstmS0,  g0_psi4160_DsstpDsstmS0,  g0_psi4415_DsstpDsstmS0  }};
             std::vector<Parameter> DsstpDsstmS2_g0s  {{g0_psi2S_DsstpDsstmS2,  g0_psi3770_DsstpDsstmS2,  g0_psi4040_DsstpDsstmS2,  g0_psi4160_DsstpDsstmS2,  g0_psi4415_DsstpDsstmS2  }};
 
-            auto ee_chan            = std::make_shared<PPPwavechan<nchannels, nresonances>>("ee_chan",            m_e,    m_e,     3, ee_g0s);
+            auto ee_chan            = std::make_shared<PP_Pwavechan<nchannels, nresonances>>("ee_chan",            m_e,    m_e,     3, ee_g0s);
             // Massless effective channel
-            auto eff_chan           = std::make_shared<PPPwavechan<nchannels, nresonances>>("eff_chan",           m_e,    m_e,     3, eff_g0s);
-            auto D0Dbar0_chan       = std::make_shared<PPPwavechan<nchannels, nresonances>>("D0Dbar0_chan",       m_D0,   m_D0,    3, D0Dbar0_g0s);
-            auto DpDm_chan          = std::make_shared<PPPwavechan<nchannels, nresonances>>("DpDm_chan",          m_D,    m_D,     3, D0Dbar0_g0s);
-            auto D0Dbarst0_chan     = std::make_shared<VPPwavechan<nchannels, nresonances>>("D0Dbarst0_chan",     m_D0,   m_Dst0,  3, D0Dbarst0_g0s);
-            auto Dst0Dbar0_chan     = std::make_shared<VPPwavechan<nchannels, nresonances>>("Dst0Dbar0_chan",     m_Dst0, m_D0,    3, D0Dbarst0_g0s);
-            auto DpDstm_chan        = std::make_shared<VPPwavechan<nchannels, nresonances>>("DpDstm_chan",        m_D,    m_Dst,   3, D0Dbarst0_g0s);
-            auto DstpDm_chan        = std::make_shared<VPPwavechan<nchannels, nresonances>>("DstpDm_chan",        m_D,    m_Dst,   3, D0Dbarst0_g0s);
-            auto DspDsm_chan        = std::make_shared<PPPwavechan<nchannels, nresonances>>("DspDsm_chan",        m_Ds,   m_Ds,    3, DspDsm_g0s);
-            auto Dst0Dbarst0P0_chan = std::make_shared<VVPwavechan<nchannels, nresonances>>("Dst0Dbarst0P0_chan", m_Dst0, m_Dst0,  3, Dst0Dbarst0S0_g0s);
-            auto Dst0Dbarst0P2_chan = std::make_shared<VVPwavechan<nchannels, nresonances>>("Dst0Dbarst0P2_chan", m_Dst0, m_Dst0,  3, Dst0Dbarst0S2_g0s);
-            auto Dst0Dbarst0F2_chan = std::make_shared<VVFwavechan<nchannels, nresonances>>("Dst0Dbarst0F2_chan", m_Dst0, m_Dst0,  7, Dst0Dbarst0S2_g0s);
-            auto DstpDstmP0_chan    = std::make_shared<VVPwavechan<nchannels, nresonances>>("DstpDstmP0_chan",    m_Dst,  m_Dst,   3, Dst0Dbarst0S0_g0s);
-            auto DstpDstmP2_chan    = std::make_shared<VVPwavechan<nchannels, nresonances>>("DstpDstmP2_chan",    m_Dst,  m_Dst,   3, Dst0Dbarst0S2_g0s);
-            auto DstpDstmF2_chan    = std::make_shared<VVFwavechan<nchannels, nresonances>>("DstpDstmF2_chan",    m_Dst,  m_Dst,   7, Dst0Dbarst0S2_g0s);
-            auto DspDsstm_chan      = std::make_shared<VPPwavechan<nchannels, nresonances>>("DspDsstm_chan",      m_Ds,   m_Dsst,  3, DspDsstm_g0s);
-            auto DsstpDsm_chan      = std::make_shared<VPPwavechan<nchannels, nresonances>>("DsstpDsm_chan",      m_Dsst, m_Ds,    3, DspDsstm_g0s);
-            auto DsstpDsstmP0_chan  = std::make_shared<VVPwavechan<nchannels, nresonances>>("DsstpDsstmP0_chan",  m_Dsst, m_Dsst,  3, DsstpDsstmS0_g0s);
-            auto DsstpDsstmP2_chan  = std::make_shared<VVPwavechan<nchannels, nresonances>>("DsstpDsstmP2_chan",  m_Dsst, m_Dsst,  3, DsstpDsstmS2_g0s);
-            auto DsstpDsstmF2_chan  = std::make_shared<VVFwavechan<nchannels, nresonances>>("DsstpDsstmF2_chan",  m_Dsst, m_Dsst,  7, DsstpDsstmS2_g0s);
+            auto eff_chan           = std::make_shared<PP_Pwavechan<nchannels, nresonances>>("eff_chan",           m_e,    m_e,     3, eff_g0s);
+            auto D0Dbar0_chan       = std::make_shared<PP_Pwavechan<nchannels, nresonances>>("D0Dbar0_chan",       m_D0,   m_D0,    3, D0Dbar0_g0s);
+            auto DpDm_chan          = std::make_shared<PP_Pwavechan<nchannels, nresonances>>("DpDm_chan",          m_D,    m_D,     3, D0Dbar0_g0s);
+            auto D0Dbarst0_chan     = std::make_shared<VP_Pwavechan<nchannels, nresonances>>("D0Dbarst0_chan",     m_D0,   m_Dst0,  3, D0Dbarst0_g0s);
+            auto Dst0Dbar0_chan     = std::make_shared<VP_Pwavechan<nchannels, nresonances>>("Dst0Dbar0_chan",     m_Dst0, m_D0,    3, D0Dbarst0_g0s);
+            auto DpDstm_chan        = std::make_shared<VP_Pwavechan<nchannels, nresonances>>("DpDstm_chan",        m_D,    m_Dst,   3, D0Dbarst0_g0s);
+            auto DstpDm_chan        = std::make_shared<VP_Pwavechan<nchannels, nresonances>>("DstpDm_chan",        m_D,    m_Dst,   3, D0Dbarst0_g0s);
+            auto DspDsm_chan        = std::make_shared<PP_Pwavechan<nchannels, nresonances>>("DspDsm_chan",        m_Ds,   m_Ds,    3, DspDsm_g0s);
+            auto Dst0Dbarst0P0_chan = std::make_shared<VV_Pwavechan<nchannels, nresonances>>("Dst0Dbarst0P0_chan", m_Dst0, m_Dst0,  3, Dst0Dbarst0S0_g0s);
+            auto Dst0Dbarst0P2_chan = std::make_shared<VV_Pwavechan<nchannels, nresonances>>("Dst0Dbarst0P2_chan", m_Dst0, m_Dst0,  3, Dst0Dbarst0S2_g0s);
+            auto Dst0Dbarst0F2_chan = std::make_shared<VV_Fwavechan<nchannels, nresonances>>("Dst0Dbarst0F2_chan", m_Dst0, m_Dst0,  7, Dst0Dbarst0S2_g0s);
+            auto DstpDstmP0_chan    = std::make_shared<VV_Pwavechan<nchannels, nresonances>>("DstpDstmP0_chan",    m_Dst,  m_Dst,   3, Dst0Dbarst0S0_g0s);
+            auto DstpDstmP2_chan    = std::make_shared<VV_Pwavechan<nchannels, nresonances>>("DstpDstmP2_chan",    m_Dst,  m_Dst,   3, Dst0Dbarst0S2_g0s);
+            auto DstpDstmF2_chan    = std::make_shared<VV_Fwavechan<nchannels, nresonances>>("DstpDstmF2_chan",    m_Dst,  m_Dst,   7, Dst0Dbarst0S2_g0s);
+            auto DspDsstm_chan      = std::make_shared<VP_Pwavechan<nchannels, nresonances>>("DspDsstm_chan",      m_Ds,   m_Dsst,  3, DspDsstm_g0s);
+            auto DsstpDsm_chan      = std::make_shared<VP_Pwavechan<nchannels, nresonances>>("DsstpDsm_chan",      m_Dsst, m_Ds,    3, DspDsstm_g0s);
+            auto DsstpDsstmP0_chan  = std::make_shared<VV_Pwavechan<nchannels, nresonances>>("DsstpDsstmP0_chan",  m_Dsst, m_Dsst,  3, DsstpDsstmS0_g0s);
+            auto DsstpDsstmP2_chan  = std::make_shared<VV_Pwavechan<nchannels, nresonances>>("DsstpDsstmP2_chan",  m_Dsst, m_Dsst,  3, DsstpDsstmS2_g0s);
+            auto DsstpDsstmF2_chan  = std::make_shared<VV_Fwavechan<nchannels, nresonances>>("DsstpDsstmF2_chan",  m_Dsst, m_Dsst,  7, DsstpDsstmS2_g0s);
 
             K = std::shared_ptr<KMatrix<nchannels, nresonances>> (
                 new KMatrix<nchannels, nresonances>(
@@ -486,6 +486,26 @@ namespace eos
             return K->width(0);
         }
 
+        // Rudsc constraint
+        double Rudsc_prior(const IntermediateResult * intermediate_result)
+        {
+            const double value = Rc(intermediate_result)/3.6; //th value taken from Topsy-Turvy paper
+
+            if (value < 0.0)
+            {
+                throw InternalError("R ratio was found to be negative!");
+            }
+            else if ((0.0 <= value) && (value < 1.0))
+            {
+                return 0.0;
+            }
+            else
+            {
+                // add an r-fit like penalty
+                static const double sigma = 0.036; // 1% uncertainty, to be discussed
+                return -pow((value - 1.0) / sigma, 2) / 2.0;
+            }
+        }
 
     };
 
@@ -595,6 +615,11 @@ namespace eos
         return _imp->Rc(ir);
     }
 
+    double
+    EEToCCBar::Rudsc_prior(const EEToCCBar::IntermediateResult * ir) const
+    {
+        return _imp->Rudsc_prior(ir);
+    }
 
     const std::set<ReferenceName>
     EEToCCBar::references

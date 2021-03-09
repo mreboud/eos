@@ -109,9 +109,9 @@ namespace eos
 
 
         //Mass of the resonance
-        double _m;
+        Parameter _m;
 
-        Resonance(std::string name, double m) : _name(name), _m(m)
+        Resonance(std::string name, Parameter m) : _name(name), _m(m)
         {
             if (m < 0)
             {
