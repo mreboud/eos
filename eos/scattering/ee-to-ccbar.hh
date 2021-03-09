@@ -313,7 +313,7 @@ namespace eos
     struct charmonium_resonance :
     public KMatrix<nchannels_, nresonances_>::Resonance
     {
-        charmonium_resonance(std::string name, double m) :
+        charmonium_resonance(std::string name, Parameter m) :
         KMatrix<nchannels_, nresonances_>::Resonance(name, m)
         {
         };
@@ -368,6 +368,9 @@ namespace eos
 
             // Rc ratio
             double Rc(const IntermediateResult *) const;
+
+            // Rudsc constraint
+            double Rudsc_prior(const IntermediateResult *) const;
 
             /*!
              * References used in the computation of our observables.

@@ -99,6 +99,11 @@ namespace eos
                         &EEToCCBar::prepare,
                         &EEToCCBar::Rc,
                         std::make_tuple("E")),
+
+                make_cacheable_observable("ee->ccbar::R_udsc_prior(E)", R"($R_{udsc}$ prior)",
+                        &EEToCCBar::prepare,
+                        &EEToCCBar::Rudsc_prior,
+                        std::make_tuple("E")),
             }
         );
 

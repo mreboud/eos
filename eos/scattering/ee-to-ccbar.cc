@@ -486,6 +486,26 @@ namespace eos
             return K->width(0);
         }
 
+        // Rudsc constraint
+        double Rudsc_prior(const IntermediateResult * intermediate_result)
+        {
+            const double value = Rc(intermediate_result)/3.6; //th value taken from Topsy-Turvy paper
+
+            if (value < 0.0)
+            {
+                throw InternalError("R ratio was found to be negative!");
+            }
+            else if ((0.0 <= value) && (value < 1.0))
+            {
+                return 0.0;
+            }
+            else
+            {
+                // add an r-fit like penalty
+                static const double sigma = 0.36; // 10% uncertainty, to be discussed
+                return -pow((value - 1.0) / sigma, 2) / 2.0;
+            }
+        }
 
     };
 
@@ -595,6 +615,11 @@ namespace eos
         return _imp->Rc(ir);
     }
 
+    double
+    EEToCCBar::Rudsc_prior(const EEToCCBar::IntermediateResult * ir) const
+    {
+        return _imp->Rudsc_prior(ir);
+    }
 
     const std::set<ReferenceName>
     EEToCCBar::references
