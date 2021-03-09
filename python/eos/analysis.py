@@ -60,9 +60,9 @@ class Analysis:
     :type manual_constraints: dict, optional
     """
 
-    def __init__(self, priors, likelihood, global_options={}, manual_constraints={}):
+    def __init__(self, priors, likelihood, global_options={}, manual_constraints={}, fixed_parameters={}):
         """Constructor."""
-        self.init_args = { 'priors': priors, 'likelihood': likelihood, 'global_options': global_options, 'manual_constraints': manual_constraints }
+        self.init_args = { 'priors': priors, 'likelihood': likelihood, 'global_options': global_options, 'manual_constraints': manual_constraints, 'fixed_parameters':fixed_parameters }
         self.parameters = eos.Parameters.Defaults()
         self.global_options = eos.Options()
         self.log_likelihood = eos.LogLikelihood(self.parameters)
@@ -70,8 +70,8 @@ class Analysis:
         self.varied_parameters = []
         self.bounds = []
 
-        eos.info('Creating analysis with {nprior} priors, {nconst} EOS-wide constraints, {nopts} global options, and {nmanual} manually-entered constraints'.format(
-            nprior=len(priors), nconst=len(likelihood), nopts=len(global_options), nmanual=len(manual_constraints)))
+        eos.info('Creating analysis with {nprior} priors, {nconst} EOS-wide constraints, {nopts} global options, {nmanual} manually-entered constraints and {nparams} fixed parameters.'.format(
+            nprior=len(priors), nconst=len(likelihood), nopts=len(global_options), nmanual=len(manual_constraints), nparams=len(fixed_parameters)))
         eos.debug('priors:')
         for p in priors:
             eos.debug(' - {name} ({type}) [{min}, {max}]'.format(name=p['parameter'], type=p['type'], min=p['min'], max=p['max']))
@@ -81,10 +81,17 @@ class Analysis:
         eos.debug('manual_constraints:')
         for cn, ce in manual_constraints.items():
             eos.debug(' - {name}'.format(name=cn))
+        eos.debug('fixed_parameters:')
+        for cn, ce in fixed_parameters.items():
+            eos.debug(' - {name}'.format(name=cn))
 
         # collect the global options
         for key, value in global_options.items():
             self.global_options.set(key, value)
+
+        # Set the fixed parameters
+        for param, value in fixed_parameters.items():
+            self.parameters.set(param, value)
 
         # create the priors
         for prior in priors:
@@ -165,46 +172,27 @@ class Analysis:
         if start_point == None:
             start_point = [float(p) for p in self.varied_parameters]
 
-        # default_kwargs = { 'method': 'SLSQP', 'options': { 'ftol': 1.0e-13 } }
-        # if kwargs is None:
-        #     kwargs = default_kwargs
+        default_kwargs = { 'method': 'SLSQP', 'options': { 'ftol': 1.0e-13 } }
+        if kwargs is None:
+            kwargs = default_kwargs
 
-        # res = scipy.optimize.minimize(
-        #     self.negative_log_pdf,
-        #     start_point,
-        #     args=None,
-        #     bounds=self.bounds,
-        #     **kwargs)
-
-        # if not res.success:
-        #     eos.warn('Optimization did not succeed')
-        #     eos.warn('  optimizer'' message reas: {}'.format(res.message))
-        # else:
-        #     eos.info('Optimization goal achieved after {nfev} function evaluations'.format(nfev=res.nfev))
-
-        try:
-            from iminuit import Minuit
-        except ImportError:
-            eos.ImportError('Could not import Minuit. Consider installing iminuit.')
-
-        res = Minuit(
+        res = scipy.optimize.minimize(
             self.negative_log_pdf,
-            start_point)
+            start_point,
+            args=None,
+            bounds=self.bounds,
+            **kwargs)
 
-        res.errordef = Minuit.LIKELIHOOD #Set errordef to 0.5 as recommanded for likelihood fits.
-        res.migrad()
-        res.hesse()
-
-        if not res.valid:
+        if not res.success:
             eos.warn('Optimization did not succeed')
-#            eos.warn('  optimizer'' message reas: {}'.format(res.message))
-#        else:
-#            eos.info('Optimization goal achieved after {nfev} function evaluations'.format(nfev=res.nfev))
+            eos.warn('  optimizer'' message reas: {}'.format(res.message))
+        else:
+            eos.info('Optimization goal achieved after {nfev} function evaluations'.format(nfev=res.nfev))
 
-        for p, v in zip(self.varied_parameters, res.values):
+        for p, v in zip(self.varied_parameters, res.x):
             p.set(v)
 
-        return eos.BestFitPoint(self, res.values)
+        return eos.BestFitPoint(self, res.x)
 
 
     def log_pdf(self, x, *args):
