@@ -100,6 +100,18 @@ namespace eos
                     return 0.0;
                 }
 
+                virtual complex<double> phi_perp(const double & q2) const
+                {
+                    return 0.0;
+                }
+                virtual complex<double> phi_para(const double & q2) const
+                {
+                    return 0.0;
+                }
+                virtual complex<double> phi_long(const double & q2) const
+                {
+                    return 0.0;
+                }
                 virtual complex<double> normalized_moment_V1(const double &) const
                 {
                     return 0.0;
@@ -264,6 +276,27 @@ namespace eos
                     const complex<double> phi4 = pow(s_0 * pow(z+1., 2.) - 16.*z*m_D02, -0.5); //(C10)
 
                     return Nlambda * pow(1.+z, 0.5) * pow(1.-z, a-b+c+d-1.5) * pow(phi1, a) * pow(phi2, 0.5*b) * pow(phi3, c) * pow(phi4, d); //(C5)
+                }
+
+                virtual complex<double> phi_perp(const double & q2) const
+                {
+                    const unsigned phiParam[4] = {3, 1, 3, 0};
+
+                    return phi(q2, phiParam);
+                }
+
+                virtual complex<double> phi_para(const double & q2) const
+                {
+                    const unsigned phiParam[4] = {3, 1, 3, 0};
+
+                    return phi(q2, phiParam);
+                }
+
+                virtual complex<double> phi_long(const double & q2) const
+                {
+                    const unsigned phiParam[4] = {3, 1, 2, 2};
+
+                    return phi(q2, phiParam);
                 }
 
                 // Residue of H at s = m_Jpsi2 computed as the residue wrt z -z_Jpsi divided by dz/ds evaluated at s = m_Jpsi2
@@ -659,6 +692,26 @@ namespace eos
                     return Nlambda * pow(1.+z, 0.5) * pow(1.-z, a-b+c+d-e-1.5) * pow(phi1, a) * pow(phi2, 0.5*b) * pow(phi3, c) * pow(phi4, d) * pow(phi5, e);
                 }
 
+                virtual complex<double> phi_perp(const double & q2) const
+                {
+                    const unsigned phiParam[5] = {5, 1, 3, 0, 2};
+
+                    return phi(q2, phiParam);
+                }
+
+                virtual complex<double> phi_para(const double & q2) const
+                {
+                    const unsigned phiParam[5] = {5, 1, 3, 0, 2};
+
+                    return phi(q2, phiParam);
+                }
+
+                virtual complex<double> phi_long(const double & q2) const
+                {
+                    const unsigned phiParam[5] = {5, 1, 2, 2, 2};
+
+                    return phi(q2, phiParam);
+                }
                 // Residue of H at s = m_Jpsi2 computed as the residue wrt z -z_Jpsi divided by dz/ds evaluated at s = m_Jpsi2
                 inline complex<double> H_residue_jpsi(const unsigned phiParam[5], const complex<double> & alpha_0, const complex<double> & alpha_1,
                                                       const complex<double> & alpha_2) const
@@ -990,6 +1043,20 @@ namespace eos
 
     template <typename Process_>
     double
+    NonlocalFormFactorObservable<Process_, nff::PToV>::re_phi_perp(const double & q2) const
+    {
+        return real(this->_imp->nff->phi_perp(q2));
+    }
+
+    template <typename Process_>
+    double
+    NonlocalFormFactorObservable<Process_, nff::PToV>::im_phi_perp(const double & q2) const
+    {
+        return imag(this->_imp->nff->phi_perp(q2));
+    }
+
+    template <typename Process_>
+    double
     NonlocalFormFactorObservable<Process_, nff::PToV>::re_H_para(const double & q2) const
     {
         return real(this->_imp->nff->H_para(q2));
@@ -1032,6 +1099,20 @@ namespace eos
 
     template <typename Process_>
     double
+    NonlocalFormFactorObservable<Process_, nff::PToV>::re_phi_para(const double & q2) const
+    {
+        return real(this->_imp->nff->phi_para(q2));
+    }
+
+    template <typename Process_>
+    double
+    NonlocalFormFactorObservable<Process_, nff::PToV>::im_phi_para(const double & q2) const
+    {
+        return imag(this->_imp->nff->phi_para(q2));
+    }
+
+    template <typename Process_>
+    double
     NonlocalFormFactorObservable<Process_, nff::PToV>::re_H_long(const double & q2) const
     {
         return real(this->_imp->nff->H_long(q2));
@@ -1070,6 +1151,20 @@ namespace eos
     NonlocalFormFactorObservable<Process_, nff::PToV>::abs_Hhat_long(const double & q2) const
     {
         return abs(this->_imp->nff->Hhat_long(q2));
+    }
+
+    template <typename Process_>
+    double
+    NonlocalFormFactorObservable<Process_, nff::PToV>::re_phi_long(const double & q2) const
+    {
+        return real(this->_imp->nff->phi_long(q2));
+    }
+
+    template <typename Process_>
+    double
+    NonlocalFormFactorObservable<Process_, nff::PToV>::im_phi_long(const double & q2) const
+    {
+        return imag(this->_imp->nff->phi_long(q2));
     }
 
 

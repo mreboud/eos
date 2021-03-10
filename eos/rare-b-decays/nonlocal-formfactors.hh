@@ -190,12 +190,15 @@ namespace eos
 
             virtual complex<double> H_perp(const double & q2) const = 0;
             virtual complex<double> Hhat_perp(const double & q2) const = 0;
+            virtual complex<double> phi_perp(const double & q2) const = 0;
 
             virtual complex<double> H_para(const double & q2) const = 0;
             virtual complex<double> Hhat_para(const double & q2) const = 0;
+            virtual complex<double> phi_para(const double & q2) const = 0;
 
             virtual complex<double> H_long(const double & q2) const = 0;
             virtual complex<double> Hhat_long(const double & q2) const = 0;
+            virtual complex<double> phi_long(const double & q2) const = 0;
 
             ///@}
 
@@ -308,6 +311,13 @@ namespace eos
             double re_Hhat_long(const double & q2) const;
             double im_Hhat_long(const double & q2) const;
             double abs_Hhat_long(const double & q2) const;
+
+            double re_phi_perp(const double & q2) const;
+            double im_phi_perp(const double & q2) const;
+            double re_phi_para(const double & q2) const;
+            double im_phi_para(const double & q2) const;
+            double re_phi_long(const double & q2) const;
+            double im_phi_long(const double & q2) const;
 
             ///@}
 

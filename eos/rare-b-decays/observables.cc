@@ -400,6 +400,12 @@ namespace eos
                 make_observable("B->K^*::abs_Hhat_perp(q2)",
                         &NonlocalFormFactorObservable<nff::BToKstar, nff::PToV>::abs_Hhat_perp,
                         std::make_tuple("q2")),
+                make_observable("B->K^*::re_phi_perp(q2)",
+                        &NonlocalFormFactorObservable<nff::BToKstar, nff::PToV>::re_phi_perp,
+                        std::make_tuple("q2")),
+                make_observable("B->K^*::im_phi_perp(q2)",
+                        &NonlocalFormFactorObservable<nff::BToKstar, nff::PToV>::im_phi_perp,
+                        std::make_tuple("q2")),
 
                 make_observable("B->K^*::re_H_para(q2)",
                         &NonlocalFormFactorObservable<nff::BToKstar, nff::PToV>::re_H_para,
@@ -413,6 +419,12 @@ namespace eos
                 make_observable("B->K^*::abs_Hhat_para(q2)",
                         &NonlocalFormFactorObservable<nff::BToKstar, nff::PToV>::abs_Hhat_para,
                         std::make_tuple("q2")),
+                make_observable("B->K^*::re_phi_para(q2)",
+                        &NonlocalFormFactorObservable<nff::BToKstar, nff::PToV>::re_phi_para,
+                        std::make_tuple("q2")),
+                make_observable("B->K^*::im_phi_para(q2)",
+                        &NonlocalFormFactorObservable<nff::BToKstar, nff::PToV>::im_phi_para,
+                        std::make_tuple("q2")),
 
                 make_observable("B->K^*::re_H_long(q2)",
                         &NonlocalFormFactorObservable<nff::BToKstar, nff::PToV>::re_H_long,
@@ -425,6 +437,12 @@ namespace eos
                         std::make_tuple("q2")),
                 make_observable("B->K^*::abs_Hhat_long(q2)",
                         &NonlocalFormFactorObservable<nff::BToKstar, nff::PToV>::abs_Hhat_long,
+                        std::make_tuple("q2")),
+                make_observable("B->K^*::re_phi_long(q2)",
+                        &NonlocalFormFactorObservable<nff::BToKstar, nff::PToV>::re_phi_long,
+                        std::make_tuple("q2")),
+                make_observable("B->K^*::im_phi_long(q2)",
+                        &NonlocalFormFactorObservable<nff::BToKstar, nff::PToV>::im_phi_long,
                         std::make_tuple("q2")),
             }
 
