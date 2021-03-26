@@ -35,9 +35,9 @@
 namespace eos
 {
     template <unsigned nchannels_, unsigned nresonances_>
-    KMatrix<nchannels_, nresonances_>::KMatrix(std::initializer_list<std::shared_ptr<KMatrix::Channel>> channels,
-                                               std::initializer_list<std::shared_ptr<KMatrix::Resonance>> resonances,
-                                               std::vector<std::vector<Parameter>> bkgcst,
+    KMatrix<nchannels_, nresonances_>::KMatrix(std::array<std::shared_ptr<KMatrix::Channel>, nchannels_> channels,
+                                               std::array<std::shared_ptr<KMatrix::Resonance>, nresonances_> resonances,
+                                               std::array<std::array<Parameter, nchannels_>, nchannels_> bkgcst,
                                                const std::string & prefix) :
         _channels(channels),
         _resonances(resonances),

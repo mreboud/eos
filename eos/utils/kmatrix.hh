@@ -46,9 +46,9 @@ namespace eos
             struct Channel;
             struct Resonance;
 
-            std::vector<std::shared_ptr<KMatrix::Channel>> _channels;
-            std::vector<std::shared_ptr<KMatrix::Resonance>> _resonances;
-            std::vector<std::vector<Parameter>> _bkgcst;
+            std::array<std::shared_ptr<KMatrix::Channel>, nchannels_> _channels;
+            std::array<std::shared_ptr<KMatrix::Resonance>, nresonances_> _resonances;
+            std::array<std::array<Parameter, nchannels_>, nchannels_> _bkgcst;
 
             const std::string & _prefix;
 
@@ -64,9 +64,9 @@ namespace eos
             gsl_permutation * _perm;
 
             // Constructor
-            KMatrix(std::initializer_list<std::shared_ptr<KMatrix::Channel>> channels,
-                std::initializer_list<std::shared_ptr<KMatrix::Resonance>> resonances,
-                std::vector<std::vector<Parameter>> bkgcst,
+            KMatrix(std::array<std::shared_ptr<KMatrix::Channel>, nchannels_> channels,
+                std::array<std::shared_ptr<KMatrix::Resonance>, nresonances_> resonances,
+                std::array<std::array<Parameter, nchannels_>, nchannels_> bkgcst,
                 const std::string & prefix);
 
             // Destuctor
@@ -97,9 +97,9 @@ namespace eos
 
         unsigned _N_orbital;
 
-        std::vector<Parameter> _g0s;
+        std::array<Parameter, nresonances_> _g0s;
 
-        Channel(std::string name, double m1, double m2, unsigned N_orbital, std::vector<Parameter> g0s) :
+        Channel(std::string name, double m1, double m2, unsigned N_orbital, std::array<Parameter, nresonances_> g0s) :
             _name(name),
             _m1(m1),
             _m2(m2),

@@ -411,6 +411,7 @@ AC_CONFIG_FILES([Makefile
 	eos/models/Makefile
 	eos/parameters/Makefile
 	eos/rare-b-decays/Makefile
+	eos/scattering/Makefile
 	eos/statistics/Makefile
 	eos/utils/Makefile
 	src/Makefile
