@@ -383,6 +383,7 @@ AC_CONFIG_FILES([Makefile
 	eos/rare-b-decays/Makefile
 	eos/statistics/Makefile
 	eos/utils/Makefile
+        eos/scattering/Makefile
 	manual/Makefile
 	manual/appendices/Makefile
 	manual/figures/Makefile
