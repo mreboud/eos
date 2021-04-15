@@ -20,7 +20,6 @@
 #ifndef EOS_GUARD_EOS_UTILS_KMATRIX_HH
 #define EOS_GUARD_EOS_UTILS_KMATRIX_HH 1
 
-
 #include <eos/maths/complex.hh>
 #include <eos/utils/exception.hh>
 #include <eos/utils/parameters.hh>
@@ -36,7 +35,6 @@
 #include <vector>
 
 namespace eos
-
 {
     template <unsigned nchannels_, unsigned nresonances_>
     class KMatrix
@@ -95,15 +93,15 @@ namespace eos
         double _m1;
         double _m2;
 
-        unsigned _N_orbital;
+        unsigned _l_orbital;
 
         std::array<Parameter, nresonances_> _g0s;
 
-        Channel(std::string name, double m1, double m2, unsigned N_orbital, std::array<Parameter, nresonances_> g0s) :
+        Channel(std::string name, double m1, double m2, unsigned l_orbital, std::array<Parameter, nresonances_> g0s) :
             _name(name),
             _m1(m1),
             _m2(m2),
-            _N_orbital(N_orbital),
+            _l_orbital(l_orbital),
             _g0s(g0s)
         {
             if (m1 < 0 || m2 < 0)
@@ -127,14 +125,26 @@ namespace eos
         // Mass of the resonance
         Parameter _m;
 
-        Resonance(std::string name, Parameter m) :
+        // Size of the resonance entering centrifugal barrier factors
+        Parameter _q;
+
+        Resonance(std::string name, Parameter m, Parameter q) :
             _name(name),
-            _m(m)
+            _m(m),
+            _q(q)
         {
             if (m < 0)
                 throw InternalError("Mass of resonance '" + _name + "' must be positive");
+
+            if (q < 0)
+                throw InternalError("Size of resonance '" + _name + "' must be positive");
         };
     };
+
+    namespace Kmatrix_utils
+    {
+        double BWfactor(const unsigned & l, const double & q, const double & qR);
+    }
 }
 
 #endif

@@ -22,6 +22,7 @@
 
 #include <eos/maths/complex.hh>
 #include <eos/maths/power-of.hh>
+#include <eos/utils/kinematic.hh>
 #include <eos/utils/kmatrix.hh>
 
 #include <gsl/gsl_blas.h>
@@ -34,6 +35,9 @@
 
 namespace eos
 {
+    using std::abs;
+    using std::sqrt;
+
     template <unsigned nchannels_, unsigned nresonances_>
     KMatrix<nchannels_, nresonances_>::KMatrix(std::array<std::shared_ptr<KMatrix::Channel>, nchannels_> channels,
                                                std::array<std::shared_ptr<KMatrix::Resonance>, nresonances_> resonances,
@@ -168,13 +172,28 @@ namespace eos
 
                 for (size_t a = 0 ; a < nresonances_ ; ++a)
                 {
-                    const double mres = resonances[a]->_m;
+                    const double mres_2 = power_of<2>((double)resonances[a]->_m);
+                    const double qres = resonances[a]->_q;
+
+                    const double mi1_2 = power_of<2>((double)channels[i]->_m1);
+                    const double mi2_2 = power_of<2>((double)channels[i]->_m2);
+                    const double mj1_2 = power_of<2>((double)channels[j]->_m1);
+                    const double mj2_2 = power_of<2>((double)channels[j]->_m2);
+
+                    const unsigned li = channels[i]->_l_orbital;
+                    const unsigned lj = channels[j]->_l_orbital;
 
                     Parameter g0rci = channels[i]->_g0s[a];
                     Parameter g0rcj = channels[j]->_g0s[a];
 
-                    entry += g0rci * g0rcj / (mres * mres - s);
+                    // Centrifugal barrier factors
+                    const double BFi = Kmatrix_utils::BWfactor(li, 0.5 * sqrt(abs(eos::lambda(s, mi1_2, mi2_2) / s)), qres) /
+                            Kmatrix_utils::BWfactor(li, 0.5 * sqrt(abs(eos::lambda(mres_2, mi1_2, mi2_2) / mres_2)), qres);
 
+                    const double BFj = Kmatrix_utils::BWfactor(lj, 0.5 * sqrt(abs(eos::lambda(s, mj1_2, mj2_2) / s)), qres) /
+                            Kmatrix_utils::BWfactor(lj, 0.5 * sqrt(abs(eos::lambda(mres_2, mj1_2, mj2_2) / mres_2)), qres);
+
+                    entry += g0rci * g0rcj * BFi * BFj / (mres_2 - s);
                 }
 
                 gsl_matrix_complex_set(_Khat, i, j, gsl_complex_rect(entry.real(), entry.imag()));
@@ -246,4 +265,5 @@ namespace eos
         return result;
     }
 }
+
 #endif

@@ -32,8 +32,8 @@ using namespace eos;
 struct PPchan11 :
     public KMatrix<1,1>::Channel
 {
-    PPchan11(std::string name, double m1, double m2, unsigned N_orbital, const Parameters & p) :
-        Channel(name, m1, m2, N_orbital, {{ p["test::g0_1"] }})
+    PPchan11(std::string name, double m1, double m2, unsigned l_orbital, const Parameters & p) :
+        Channel(name, m1, m2, l_orbital, {{ p["test::g0_1"] }})
     {
     };
 
@@ -91,8 +91,8 @@ struct PPchan11 :
 struct res11 :
     public KMatrix<1,1>::Resonance
 {
-    res11(std::string name, Parameter m) :
-        Resonance(name, m)
+    res11(std::string name, Parameter m, Parameter q) :
+        Resonance(name, m, q)
     {
     };
 };
@@ -110,8 +110,8 @@ struct PPchan12 :
     public KMatrix<1,2>::Channel
 {
 
-    PPchan12(std::string name, double m1, double m2, unsigned N_orbital, const Parameters & p) :
-        Channel(name, m1, m2, N_orbital, {{ p["test::g0_1"], p["test::g0_2"] }})
+    PPchan12(std::string name, double m1, double m2, unsigned l_orbital, const Parameters & p) :
+        Channel(name, m1, m2, l_orbital, {{ p["test::g0_1"], p["test::g0_2"] }})
     {
     };
 
@@ -168,8 +168,8 @@ struct PPchan12 :
 struct res12 :
     public KMatrix<1,2>::Resonance
 {
-    res12(std::string name, Parameter m) :
-        Resonance(name, m)
+    res12(std::string name, Parameter m, Parameter q) :
+        Resonance(name, m, q)
     {
     };
 };
@@ -198,20 +198,34 @@ class KMatrixTest :
             p.declare("test::g0_1", 1.0);
             p.declare("test::c_1", 0.0);
             p.declare("test::m_1", 15.0);
+            p.declare("test::q_1", 1e-5);
 
 
             // One channel, one resonnance:
             // In the limit where the resonance mass is much larger
             // than the channel masses, one recover a simple Breit-Wigner distribution
             {
-                auto res = std::make_shared<res11>("res", p["test::m_1"]);
-                auto chan = std::make_shared<PPchan11>("chan", 0.7, 0.8, 3, p);
+                auto res = std::make_shared<res11>("res", p["test::m_1"], p["test::q_1"]);
+                auto chan = std::make_shared<PPchan11>("chan", 0.7, 0.8, 1, p);
 
                 KMatrix<1,1> simplest_kmatrix({chan}, {res}, {{p["test::c_1"]}}, "simplest_kmatrix");
 
+                TEST_CHECK_EQUAL(res->_m, 15.0);
+                TEST_CHECK_EQUAL(res->_q, 1.e-5);
+
+                const double BWfactoratmres = Kmatrix_utils::BWfactor(chan->_l_orbital,
+                        0.5 * std::sqrt(std::abs(eos::lambda(power_of<2>((double)res->_m), power_of<2>((double)chan->_m1), power_of<2>((double)chan->_m2)) / power_of<2>((double)res->_m))),
+                        res->_q
+                    );
+                const double BWfactorat300  = Kmatrix_utils::BWfactor(chan->_l_orbital,
+                        0.5 * std::sqrt(std::abs(eos::lambda(300., power_of<2>((double)chan->_m1), power_of<2>((double)chan->_m2)) / 300.)),
+                        res->_q
+                    );
+
+                TEST_CHECK_NEARLY_EQUAL(BWfactorat300/BWfactoratmres, 1., eps);
+
                 // Check |T-Matrix|^2 against Breit-Wigner
                 // The mass of the BW gets correction from the channels loop
-
                 double m = res->_m;
                 double M = std::sqrt(m*m + chan->rho(m*m).imag());
 
@@ -237,13 +251,14 @@ class KMatrixTest :
 
             p.declare("test::g0_2", 2.2);
             p.declare("test::m_2", 2.0);
+            p.declare("test::q_2", 1.e-5);
 
             // One channel, two resonances
             {
-                auto res1 = std::make_shared<res12>("res1", p["test::m_1"]);
-                auto res2 = std::make_shared<res12>("res2", p["test::m_2"]);
+                auto res1 = std::make_shared<res12>("res1", p["test::m_1"], p["test::q_1"]);
+                auto res2 = std::make_shared<res12>("res2", p["test::m_2"], p["test::q_2"]);
 
-                auto chan_12 = std::make_shared<PPchan12>("chan_12", 0.7, 0.8, 3, p);
+                auto chan_12 = std::make_shared<PPchan12>("chan_12", 0.7, 0.8, 1, p);
 
                 // Test beta and rho for a PP channel
                 TEST_CHECK_NEARLY_EQUAL(chan_12->beta(9.0),          0.865544,  eps);
