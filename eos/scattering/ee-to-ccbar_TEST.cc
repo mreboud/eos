@@ -59,8 +59,8 @@ public:
         p["ee->ccbar::c(D^+D^-,D^+D^-)"] = 0.0;
 
         // Build K Matrix
-        auto psi2S_res = std::make_shared<charmonium_resonance<3, 2>>("psi2S_res", p["mass::psi(2S)"]);
-        auto psi3770_res = std::make_shared<charmonium_resonance<3, 2>>("psi3770_res", p["mass::psi(3770)"]);
+        auto psi2S_res = std::make_shared<charmonium_resonance<3, 2>>("psi2S_res", p["mass::psi(2S)"], p["size::psi(2S)"]);
+        auto psi3770_res = std::make_shared<charmonium_resonance<3, 2>>("psi3770_res", p["mass::psi(3770)"], p["size::psi(3770)"]);
 
         std::array<std::array<Parameter, 3>, 3> bkgcst {
             p["ee->ccbar::c(ee,ee)"],        p["ee->ccbar::c(ee,D^0Dbar^0)"],        p["ee->ccbar::c(ee,D^+D^-)"],

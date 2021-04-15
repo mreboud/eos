@@ -22,7 +22,7 @@
 #include <eos/utils/parameters.hh>
 #include <eos/utils/private_implementation_pattern.hh>
 #include <eos/utils/stringify.hh>
-#include <eos/utils/kmatrix-impl.hh>
+#include <eos/utils/kmatrix.hh>
 #include <eos/utils/concrete-cacheable-observable.hh>
 
 #include <vector>
@@ -61,8 +61,8 @@ namespace eos
     public KMatrix<nchannels_, nresonances_>::Channel
     {
 
-        SPPchan(std::string name, double m1, double m2, unsigned N_orbital, std::array<Parameter, nresonances_> g0s) :
-            KMatrix<nchannels_, nresonances_>::Channel(name, m1, m2, N_orbital, g0s)
+        SPPchan(std::string name, double m1, double m2, unsigned l_orbital, std::array<Parameter, nresonances_> g0s) :
+            KMatrix<nchannels_, nresonances_>::Channel(name, m1, m2, l_orbital, g0s)
         {
         };
 
@@ -112,8 +112,8 @@ namespace eos
     public KMatrix<nchannels_, nresonances_>::Channel
     {
 
-        PP_Pwavechan(std::string name, double m1, double m2, unsigned N_orbital, std::array<Parameter, nresonances_> g0s) :
-            KMatrix<nchannels_, nresonances_>::Channel(name, m1, m2, N_orbital, g0s)
+        PP_Pwavechan(std::string name, double m1, double m2, unsigned l_orbital, std::array<Parameter, nresonances_> g0s) :
+            KMatrix<nchannels_, nresonances_>::Channel(name, m1, m2, l_orbital, g0s)
         {
         };
 
@@ -163,8 +163,8 @@ namespace eos
     public KMatrix<nchannels_, nresonances_>::Channel
     {
 
-        VP_Pwavechan(std::string name, double m1, double m2, unsigned N_orbital, std::array<Parameter, nresonances_> g0s) :
-            KMatrix<nchannels_, nresonances_>::Channel(name, m1, m2, N_orbital, g0s)
+        VP_Pwavechan(std::string name, double m1, double m2, unsigned l_orbital, std::array<Parameter, nresonances_> g0s) :
+            KMatrix<nchannels_, nresonances_>::Channel(name, m1, m2, l_orbital, g0s)
         {
         };
 
@@ -214,8 +214,8 @@ namespace eos
     public KMatrix<nchannels_, nresonances_>::Channel
     {
 
-        VV_Pwavechan(std::string name, double m1, double m2, unsigned N_orbital, std::array<Parameter, nresonances_> g0s) :
-            KMatrix<nchannels_, nresonances_>::Channel(name, m1, m2, N_orbital, g0s)
+        VV_Pwavechan(std::string name, double m1, double m2, unsigned l_orbital, std::array<Parameter, nresonances_> g0s) :
+            KMatrix<nchannels_, nresonances_>::Channel(name, m1, m2, l_orbital, g0s)
         {
         };
 
@@ -264,8 +264,8 @@ namespace eos
     public KMatrix<nchannels_, nresonances_>::Channel
     {
 
-        VV_Fwavechan(std::string name, double m1, double m2, unsigned N_orbital, std::array<Parameter, nresonances_> g0s) :
-            KMatrix<nchannels_, nresonances_>::Channel(name, m1, m2, N_orbital, g0s)
+        VV_Fwavechan(std::string name, double m1, double m2, unsigned l_orbital, std::array<Parameter, nresonances_> g0s) :
+            KMatrix<nchannels_, nresonances_>::Channel(name, m1, m2, l_orbital, g0s)
         {
         };
 
@@ -313,8 +313,8 @@ namespace eos
     struct charmonium_resonance :
     public KMatrix<nchannels_, nresonances_>::Resonance
     {
-        charmonium_resonance(std::string name, Parameter m) :
-        KMatrix<nchannels_, nresonances_>::Resonance(name, m)
+        charmonium_resonance(std::string name, Parameter m, Parameter q) :
+        KMatrix<nchannels_, nresonances_>::Resonance(name, m, q)
         {
         };
     };
@@ -325,8 +325,8 @@ namespace eos
     {
         public:
 
-            const static long unsigned nchannels = 9;
-            const static long unsigned nresonances = 3;
+            const static long unsigned nchannels = 20;
+            const static long unsigned nresonances = 5;
 
             struct IntermediateResult :
                 public CacheableObservable::IntermediateResult
