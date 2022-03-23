@@ -34,25 +34,29 @@ namespace eos
     Channels follow the following convention
     #   name          type         Nf      copy
     0   ee            PP (P)       3       -
-    1   eff           PP (P)       3       -
-    2   D0   D0bar    PP (P)       3       -
-    3   D+   D-       PP (P)       3       2 (isospin)
-    4   D0   D*0bar   VP           3       -
-    5   D*0  D0bar    VP           3       4 (c.c.)
-    6   D+   D*-      VP           3       4 (isospin)
-    7   D*+  D-       VP           3       4 (c.c.)
-    8   Ds   Ds       PP (P)       3       -
-    9   D*0  D*0bar   VV (P, S=0)  3       -
-    10  D*0  D*0bar   VV (P, S=2)  3       -
-    11  D*0  D*0bar   VV (F, S=2)  7       10 (waves)
-    12  D*+  D*-      VV (P, S=0)  3       9 (isospin)
-    13  D*+  D*-      VV (P, S=2)  3       10 (isospin)
-    14  D*+  D*-      VV (F, S=2)  7       10 (waves)
-    15  Ds+  Ds*-     VP           3       -
-    16  Ds*+ Ds-      VP           3       15 (c.c.)
-    17  Ds*+ Ds*-     VV (P, S=0)  3       -
-    18  Ds*+ Ds*-     VV (P, S=2)  3       -
-    19  Ds*+ Ds*-     VV (F, S=2)  7       18 (waves)
+    1   eff(2S)       PP (P)       3       -
+    2   eff(3770)     PP (P)       3       -
+    3   eff(4040)     PP (P)       3       -
+    4   eff(4160)     PP (P)       3       -
+    5   eff(4415)     PP (P)       3       -
+    6   D0   D0bar    PP (P)       3       -
+    7   D+   D-       PP (P)       3       6 (isospin)
+    8   D0   D*0bar   VP           3       -
+    9   D*0  D0bar    VP           3       8 (c.c.)
+    10  D+   D*-      VP           3       8 (isospin)
+    11  D*+  D-       VP           3       8 (c.c.)
+    12  Ds   Ds       PP (P)       3       -
+    13  D*0  D*0bar   VV (P, S=0)  3       -
+    14  D*0  D*0bar   VV (P, S=2)  3       -
+    15  D*0  D*0bar   VV (F, S=2)  7       14 (waves)
+    16  D*+  D*-      VV (P, S=0)  3       13 (isospin)
+    17  D*+  D*-      VV (P, S=2)  3       14 (isospin)
+    18  D*+  D*-      VV (F, S=2)  7       14 (waves)
+    19  Ds+  Ds*-     VP           3       -
+    20  Ds*+ Ds-      VP           3       19 (c.c.)
+    21  Ds*+ Ds*-     VV (P, S=0)  3       -
+    22  Ds*+ Ds*-     VV (P, S=2)  3       -
+    23  Ds*+ Ds*-     VV (F, S=2)  7       22 (waves)
     */
 
     // Effective channel
@@ -325,7 +329,7 @@ namespace eos
     {
         public:
 
-            const static long unsigned nchannels = 20;
+            const static long unsigned nchannels = 24;
             const static long unsigned nresonances = 5;
 
             struct IntermediateResult :
@@ -350,6 +354,9 @@ namespace eos
             double psi2S_ee_width() const;
             double psi2S_eff_width() const;
             double psi2S_total_width() const;
+            double psi3770_D0Dbar0_width() const;
+            double psi3770_DpDm_width() const;
+            double psi3770_eff_width() const;
             double psi3770_total_width() const;
             double psi4040_total_width() const;
             double psi4160_total_width() const;

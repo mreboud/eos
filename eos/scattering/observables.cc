@@ -42,6 +42,19 @@ namespace eos
                 make_observable("psi(2S)::total_width", R"($\Gamma_{\psi(2S)}$)",
                         Unit::GeV(),
                         &EEToCCBar::psi2S_total_width),
+ 
+                make_observable("psi(3770)->D^0Dbar^0::decay_width", R"($\Gamma(\psi(3770) \to D^0\bar{D}^0)$)",
+                        Unit::GeV(),
+                        &EEToCCBar::psi3770_D0Dbar0_width),
+
+                make_observable("psi(3770)->D^+D^-::decay_width", R"($\Gamma(\psi(3770) \to D^+\D^-)$)",
+                        Unit::GeV(),
+                        &EEToCCBar::psi3770_DpDm_width),
+
+                make_observable("psi(3770)->eff::decay_width", R"($\Gamma(\psi(3770) \to \textrm{eff})$)",
+                        Unit::GeV(),
+                        &EEToCCBar::psi3770_eff_width),
+
 
                 make_observable("psi(3770)::total_width", R"($\Gamma_{\psi(3770)}$)",
                         Unit::GeV(),

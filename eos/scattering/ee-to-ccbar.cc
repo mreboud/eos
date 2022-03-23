@@ -55,18 +55,20 @@ namespace eos
 
         static const inline std::vector<std::string> channel_names =
         {
-            "e^+e^-", "eff", "D^0Dbar^0", "D^+D^-", "D^0Dbar^*0", "D^*0Dbar^0",
-            "D^+D^*-", "D^*+D^-", "D_s^+D_s^-", "D^*0Dbar^*0P0", "D^*0Dbar^*0P2", "D^*0Dbar^*0F2", "D^*+D^*-P0",
-            "D^*+D^*-P2", "D^*+D^*-F2", "D_s^+D_s^*-", "D_s^*+D_s^-", "D_s^*+D_s^*-P0", "D_s^*+D_s^*-P2",
-            "D_s^*+D_s^*-F2"
+            "e^+e^-", "eff(2S)", "D^0Dbar^0", "D^+D^-",
+            "eff(3770)", "D^0Dbar^*0", "D^*0Dbar^0", "D^+D^*-", "D^*+D^-", "D_s^+D_s^-",
+            "D^*0Dbar^*0P0", "D^*0Dbar^*0P2", "D^*0Dbar^*0F2", "D^*+D^*-P0", "D^*+D^*-P2", "D^*+D^*-F2",
+            "eff(4040)", "D_s^+D_s^*-", "D_s^*+D_s^-",
+            "eff(4160)", "D_s^*+D_s^*-P0", "D_s^*+D_s^*-P2", "D_s^*+D_s^*-F2", "eff(4415)"
         };
 
         enum Channels
         {
-            ee = 0, eff, D0Dbar0, DpDm, D0Dbarst0, Dst0Dbar0,
-            DpDstm, DstpDm, DspDsm, Dst0Dbarst0P0, Dst0Dbarst0P2, Dst0Dbarst0F2, DstpDstmP0,
-            DstpDstmP2, DstpDstmF2, DspDsstm, DsstpDsm, DsstpDsstmP0, DsstpDsstmP2,
-            DsstpDsstmF2
+            ee = 0, eff2S, D0Dbar0, DpDm,
+            eff3770, D0Dbarst0, Dst0Dbar0, DpDstm, DstpDm, DspDsm,
+            Dst0Dbarst0P0, Dst0Dbarst0P2, Dst0Dbarst0F2, DstpDstmP0, DstpDstmP2, DstpDstmF2,
+            eff4040, DspDsstm, DsstpDsm,
+            eff4160, DsstpDsstmP0, DsstpDsstmP2, DsstpDsstmF2, eff4415
         };
 
         // Charmonium masses and effective sizes
@@ -265,7 +267,11 @@ namespace eos
                 switch (Channels(i))
                 {
                     case ee:
-                    case eff:
+                    case eff2S:
+                    case eff3770:
+                    case eff4040:
+                    case eff4160:
+                    case eff4415:
                         channel_array[i] = std::make_shared<EffChannel<EEToCCBar::nchannels, EEToCCBar::nresonances>>(channel_names[i], m_e, m_e, _get_g0_column(_filter_channel_index(Channels(i)), std::make_index_sequence<EEToCCBar::nresonances>()));
                         break;
                     case D0Dbar0:
@@ -419,7 +425,7 @@ namespace eos
     double
     EEToCCBar::psi2S_eff_width() const
     {
-        return _imp->res_partial_width(Resonances::psi2S, Channels::eff);
+        return _imp->res_partial_width(Resonances::psi2S, Channels::eff2S);
     }
 
     double
@@ -452,6 +458,23 @@ namespace eos
         return _imp->res_total_width(Resonances::psi4415);
     }
 
+    double
+    EEToCCBar::psi3770_D0Dbar0_width() const
+    {
+        return _imp->res_partial_width(Resonances::psi3770, Channels::D0Dbar0);
+    }
+
+    double
+    EEToCCBar::psi3770_DpDm_width() const
+    {
+        return _imp->res_partial_width(Resonances::psi3770, Channels::DpDm);
+    }
+
+    double
+    EEToCCBar::psi3770_eff_width() const
+    {
+        return _imp->res_partial_width(Resonances::psi3770, Channels::eff3770);
+    }
 
     double
     EEToCCBar::sigma_eetoee(const EEToCCBar::IntermediateResult * ir) const
@@ -462,7 +485,13 @@ namespace eos
     double
     EEToCCBar::sigma_eetoeff(const EEToCCBar::IntermediateResult * ir) const
     {
-        return _imp->exclusive_norm * _imp->sigma_eetochannel(ir, Channels::eff);
+        return _imp->exclusive_norm * (
+              _imp->sigma_eetochannel(ir, Channels::eff2S)
+            + _imp->sigma_eetochannel(ir, Channels::eff3770)
+            + _imp->sigma_eetochannel(ir, Channels::eff4040)
+            + _imp->sigma_eetochannel(ir, Channels::eff4160)
+            + _imp->sigma_eetochannel(ir, Channels::eff4415)
+            );
     }
 
     double
