@@ -34,11 +34,11 @@ namespace eos
     struct Implementation<EEToCCBar>
     {
         /* Channels and resonances
-        Up to DD*       4  channels 2 resonances
-        Up to D*D*      9  channels 3 resonances
-        Up to 4.8 GeV   20 channels 5 resonances
+        Up to DD*       8  channels 2 resonances
+        Up to D*D*      14 channels 3 resonances
+        Up to 4.8 GeV   24 channels 5 resonances
          */
-        const static long unsigned nchannels = 20;
+        const static long unsigned nchannels = 24;
         const static long unsigned nresonances = 5;
 
         UsedParameter hbar;
@@ -105,29 +105,29 @@ namespace eos
         {
             switch (channel_index)
             {
-                case 3: // D+D-
-                    return 2; // D0Dbar0
+                case 7: // D+D-
+                    return 6; // D0Dbar0
 
-                case 5: // D*0D0bar
-                case 6: // D+D*-
-                case 7: // D*+D-
-                    return 4; // D0D*0bar
+                case 9: // D*0D0bar
+                case 10: // D+D*-
+                case 11: // D*+D-
+                    return 8; // D0D*0bar
 
-                case 11: // D*0D*0bar S=2 F wave
-                    return 10; // D*0D*0bar S=2 P wave
+                case 15: // D*0D*0bar S=2 F wave
+                    return 14; // D*0D*0bar S=2 P wave
 
-                case 12: // D*+D*- S=0
-                    return 9; // D*0D*0bar S=0
+                case 16: // D*+D*- S=0
+                    return 13; // D*0D*0bar S=0
 
-                case 13: // D*+D*- S=2 P wave
-                case 14: // D*+D*- S=2 F wave
-                    return 10; // D*0D*0bar S=2
+                case 17: // D*+D*- S=2 P wave
+                case 18: // D*+D*- S=2 F wave
+                    return 14; // D*0D*0bar S=2
 
-                case 16: // Ds*+Ds-
-                    return 15; // Ds+Ds*-
+                case 20: // Ds*+Ds-
+                    return 19; // Ds+Ds*-
 
-                case 19: // Ds*+Ds*- S=2 F wave
-                    return 18; // Ds+Ds*- S=2 P wave
+                case 23: // Ds*+Ds*- S=2 F wave
+                    return 22; // Ds+Ds*- S=2 P wave
 
                 default:
                     return channel_index;
@@ -250,49 +250,53 @@ namespace eos
                 switch (i)
                 {
                     case 0: // ee channel
-                    case 1: // eff channel
+                    case 1: // eff channels
+                    case 2:
+                    case 3:
+                    case 4:
+                    case 5:
                         channel_array[i] = std::make_shared<PP_Pwavechan<nchannels, nresonances>>(channel_names[i] + "_chan", m_e, m_e, 1, _get_g0_column(_filter_channel_index(i), std::make_index_sequence<nresonances>()));
                         break;
-                    case 2:
+                    case 6:
                         channel_array[i] = std::make_shared<PP_Pwavechan<nchannels, nresonances>>(channel_names[i] + "_chan", m_D0, m_D0, 1, _get_g0_column(_filter_channel_index(i), std::make_index_sequence<nresonances>()));
                         break;
-                    case 3:
+                    case 7:
                         channel_array[i] = std::make_shared<PP_Pwavechan<nchannels, nresonances>>(channel_names[i] + "_chan", m_D, m_D, 1, _get_g0_column(_filter_channel_index(i), std::make_index_sequence<nresonances>()));
                         break;
-                    case 4:
-                    case 5: //D0Dbarst0
+                    case 8:
+                    case 9: //D0Dbarst0
                         channel_array[i] = std::make_shared<VP_Pwavechan<nchannels, nresonances>>(channel_names[i] + "_chan", m_D0, m_Dst0, 1, _get_g0_column(_filter_channel_index(i), std::make_index_sequence<nresonances>()));
                         break;
-                    case 6:
-                    case 7: //DpDstm
+                    case 10:
+                    case 11: //DpDstm
                         channel_array[i] = std::make_shared<VP_Pwavechan<nchannels, nresonances>>(channel_names[i] + "_chan", m_D, m_Dst, 1, _get_g0_column(_filter_channel_index(i), std::make_index_sequence<nresonances>()));
                         break;
-                    case 8:
+                    case 12:
                         channel_array[i] = std::make_shared<PP_Pwavechan<nchannels, nresonances>>(channel_names[i] + "_chan", m_Ds, m_Ds, 1, _get_g0_column(_filter_channel_index(i), std::make_index_sequence<nresonances>()));
                         break;
-                    case 9:
-                    case 10:
+                    case 13:
+                    case 14:
                         channel_array[i] = std::make_shared<VV_Pwavechan<nchannels, nresonances>>(channel_names[i] + "_chan", m_Dst0, m_Dst0, 1, _get_g0_column(_filter_channel_index(i), std::make_index_sequence<nresonances>()));
                         break;
-                    case 11:
+                    case 15:
                         channel_array[i] = std::make_shared<VV_Fwavechan<nchannels, nresonances>>(channel_names[i] + "_chan", m_Dst0, m_Dst0, 3, _get_g0_column(_filter_channel_index(i), std::make_index_sequence<nresonances>()));
                         break;
-                    case 12:
-                    case 13:
+                    case 16:
+                    case 17:
                         channel_array[i] = std::make_shared<VV_Pwavechan<nchannels, nresonances>>(channel_names[i] + "_chan", m_Dst, m_Dst, 1, _get_g0_column(_filter_channel_index(i), std::make_index_sequence<nresonances>()));
                         break;
-                    case 14:
+                    case 18:
                         channel_array[i] = std::make_shared<VV_Fwavechan<nchannels, nresonances>>(channel_names[i] + "_chan", m_Dst, m_Dst, 3, _get_g0_column(_filter_channel_index(i), std::make_index_sequence<nresonances>()));
                         break;
-                    case 15:
-                    case 16:
+                    case 19:
+                    case 20:
                         channel_array[i] = std::make_shared<VP_Pwavechan<nchannels, nresonances>>(channel_names[i] + "_chan", m_Ds, m_Dsst, 1, _get_g0_column(_filter_channel_index(i), std::make_index_sequence<nresonances>()));
                         break;
-                    case 17:
-                    case 18:
+                    case 21:
+                    case 22:
                         channel_array[i] = std::make_shared<VV_Pwavechan<nchannels, nresonances>>(channel_names[i] + "_chan", m_Dsst, m_Dsst, 1, _get_g0_column(_filter_channel_index(i), std::make_index_sequence<nresonances>()));
                         break;
-                    case 19:
+                    case 23:
                         channel_array[i] = std::make_shared<VV_Fwavechan<nchannels, nresonances>>(channel_names[i] + "_chan", m_Dsst, m_Dsst, 3, _get_g0_column(_filter_channel_index(i), std::make_index_sequence<nresonances>()));
                         break;
 
@@ -375,7 +379,7 @@ namespace eos
         {
             double total_xsec = 0.0;
 
-            for (unsigned i = 2; i < nchannels; i++)
+            for (unsigned i = 6; i < nchannels; i++)
             {
                 total_xsec += sigma_eetochannel(intermediate_result, i);
             }
@@ -430,10 +434,10 @@ namespace eos
     Implementation<EEToCCBar>::resonance_names = { "psi(2S)", "psi(3770)", "psi(4040)", "psi(4160)", "psi(4415)" };
 
     const std::vector<std::string>
-    Implementation<EEToCCBar>::channel_names = { "ee", "eff", "D^0Dbar^0", "D^+D^-", "D^0Dbar^*0", "D^*0Dbar^0",
-            "D^+D^*-", "D^*+D^-", "D_s^+D_s^-", "D^*0Dbar^*0P0", "D^*0Dbar^*0P2", "D^*0Dbar^*0F2", "D^*+D^*-P0",
-            "D^*+D^*-P2", "D^*+D^*-F2", "D_s^+D_s^*-", "D_s^*+D_s^-", "D_s^*+D_s^*-P0", "D_s^*+D_s^*-P2",
-            "D_s^*+D_s^*-F2" };
+    Implementation<EEToCCBar>::channel_names = { "ee", "eff(2S)", "eff(3770)", "eff(4040)", "eff(4160)", "eff(4415)",
+            "D^0Dbar^0", "D^+D^-", "D^0Dbar^*0", "D^*0Dbar^0", "D^+D^*-", "D^*+D^-", "D_s^+D_s^-", "D^*0Dbar^*0P0",
+            "D^*0Dbar^*0P2", "D^*0Dbar^*0F2", "D^*+D^*-P0", "D^*+D^*-P2", "D^*+D^*-F2", "D_s^+D_s^*-", "D_s^*+D_s^-",
+            "D_s^*+D_s^*-P0", "D_s^*+D_s^*-P2", "D_s^*+D_s^*-F2" };
 
 
     EEToCCBar::EEToCCBar(const Parameters & parameters, const Options & options) :
@@ -508,61 +512,62 @@ namespace eos
     double
     EEToCCBar::sigma_eetoeff(const EEToCCBar::IntermediateResult * ir) const
     {
-        return _imp->exclusive_norm * _imp->sigma_eetochannel(ir, 1);
+        return _imp->exclusive_norm * (_imp->sigma_eetochannel(ir, 1) + _imp->sigma_eetochannel(ir, 2)
+        + _imp->sigma_eetochannel(ir, 3) + _imp->sigma_eetochannel(ir, 4) + _imp->sigma_eetochannel(ir, 5));
     }
 
     double
     EEToCCBar::sigma_eetoD0Dbar0(const EEToCCBar::IntermediateResult * ir) const
     {
-        return _imp->exclusive_norm * _imp->sigma_eetochannel(ir, 2);
+        return _imp->exclusive_norm * _imp->sigma_eetochannel(ir, 6);
     }
 
     double
     EEToCCBar::sigma_eetoDpDm(const EEToCCBar::IntermediateResult * ir) const
     {
-        return _imp->exclusive_norm * _imp->sigma_eetochannel(ir, 3);
+        return _imp->exclusive_norm * _imp->sigma_eetochannel(ir, 7);
     }
 
     double
     EEToCCBar::sigma_eetoD0Dbarst0(const EEToCCBar::IntermediateResult * ir) const
     {
-        return _imp->exclusive_norm * (_imp->sigma_eetochannel(ir, 4) + _imp->sigma_eetochannel(ir, 5));
+        return _imp->exclusive_norm * (_imp->sigma_eetochannel(ir, 8) + _imp->sigma_eetochannel(ir, 9));
     }
 
     double
     EEToCCBar::sigma_eetoDpDstm(const EEToCCBar::IntermediateResult * ir) const
     {
-        return _imp->exclusive_norm * (_imp->sigma_eetochannel(ir, 6) + _imp->sigma_eetochannel(ir, 7));
+        return _imp->exclusive_norm * (_imp->sigma_eetochannel(ir, 10) + _imp->sigma_eetochannel(ir, 11));
     }
 
     double
     EEToCCBar::sigma_eetoDspDsm(const EEToCCBar::IntermediateResult * ir) const
     {
-        return _imp->exclusive_norm * _imp->sigma_eetochannel(ir, 8);
+        return _imp->exclusive_norm * _imp->sigma_eetochannel(ir, 12);
     }
 
     double
     EEToCCBar::sigma_eetoDst0Dbarst0(const EEToCCBar::IntermediateResult * ir) const
     {
-        return _imp->exclusive_norm * (_imp->sigma_eetochannel(ir, 9) + _imp->sigma_eetochannel(ir, 10) + _imp->sigma_eetochannel(ir, 11));
+        return _imp->exclusive_norm * (_imp->sigma_eetochannel(ir, 13) + _imp->sigma_eetochannel(ir, 14) + _imp->sigma_eetochannel(ir, 15));
     }
 
     double
     EEToCCBar::sigma_eetoDstpDstm(const EEToCCBar::IntermediateResult * ir) const
     {
-        return _imp->exclusive_norm * (_imp->sigma_eetochannel(ir, 12) + _imp->sigma_eetochannel(ir, 13) + _imp->sigma_eetochannel(ir, 14));
+        return _imp->exclusive_norm * (_imp->sigma_eetochannel(ir, 16) + _imp->sigma_eetochannel(ir, 17) + _imp->sigma_eetochannel(ir, 18));
     }
 
     double
     EEToCCBar::sigma_eetoDspDsstm(const EEToCCBar::IntermediateResult * ir) const
     {
-        return _imp->exclusive_norm * (_imp->sigma_eetochannel(ir, 15) + _imp->sigma_eetochannel(ir, 16));
+        return _imp->exclusive_norm * (_imp->sigma_eetochannel(ir, 19) + _imp->sigma_eetochannel(ir, 20));
     }
 
     double
     EEToCCBar::sigma_eetoDsstpDsstm(const EEToCCBar::IntermediateResult * ir) const
     {
-        return _imp->exclusive_norm * (_imp->sigma_eetochannel(ir, 17) + _imp->sigma_eetochannel(ir, 18) + _imp->sigma_eetochannel(ir, 19));
+        return _imp->exclusive_norm * (_imp->sigma_eetochannel(ir, 21) + _imp->sigma_eetochannel(ir, 22) + _imp->sigma_eetochannel(ir, 23));
     }
 
     double
