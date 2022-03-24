@@ -126,7 +126,25 @@ namespace eos
                         &EEToCCBar::sigma_eetoDstpDstm,
                         std::make_tuple("E")),
 
-                make_cacheable_observable("e^+e^-->D_s^*D_s^*-::sigma(E)", R"($\sigma(e^+e^- \to D_s^+ D_s^{*-})$)",
+                make_cacheable_observable("e^+e^-->D_T^*+D_T^*-::sigma(E)", R"($\sigma(e^+e^- \to D^{*+} D^{*-})$)",
+                        Unit::InverseGeV2(),
+                        &EEToCCBar::prepare,
+                        &EEToCCBar::sigma_eetoDstpTDstmT,
+                        std::make_tuple("E")),
+
+                make_cacheable_observable("e^+e^-->D_T^*+D_L^*-::sigma(E)", R"($\sigma(e^+e^- \to D^{*+} D^{*-})$)",
+                        Unit::InverseGeV2(),
+                        &EEToCCBar::prepare,
+                        &EEToCCBar::sigma_eetoDstpTDstmL,
+                        std::make_tuple("E")),
+
+                make_cacheable_observable("e^+e^-->D_L^*+D_L^*-::sigma(E)", R"($\sigma(e^+e^- \to D^{*+} D^{*-})$)",
+                        Unit::InverseGeV2(),
+                        &EEToCCBar::prepare,
+                        &EEToCCBar::sigma_eetoDstpLDstmL,
+                        std::make_tuple("E")),
+
+                make_cacheable_observable("e^+e^-->D_s^+D_s^*-::sigma(E)", R"($\sigma(e^+e^- \to D_s^+ D_s^{*-})$)",
                         Unit::InverseGeV2(),
                         &EEToCCBar::prepare,
                         &EEToCCBar::sigma_eetoDspDsstm,

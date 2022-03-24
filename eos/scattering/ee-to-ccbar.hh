@@ -372,6 +372,9 @@ namespace eos
             double sigma_eetoDspDsm(const IntermediateResult *) const;
             double sigma_eetoDst0Dbarst0(const IntermediateResult *) const;
             double sigma_eetoDstpDstm(const IntermediateResult *) const;
+            double sigma_eetoDstpTDstmT(const IntermediateResult *) const;
+            double sigma_eetoDstpTDstmL(const IntermediateResult *) const;
+            double sigma_eetoDstpLDstmL(const IntermediateResult *) const;
             double sigma_eetoDspDsstm(const IntermediateResult *) const;
             double sigma_eetoDsstpDsstm(const IntermediateResult *) const;
 
