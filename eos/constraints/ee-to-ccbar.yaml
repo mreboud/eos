@@ -1,3 +1,66 @@
+###############################
+# Ratios of charmonium decays #
+###############################
+#
+# [BaBar:2009B]
+#
+# {{{
+psi(4040)::DD_DD^*_ratio@BaBar:2009B:
+    type: Gaussian
+    observable: psi(4040)::DD_DD^*_ratio
+    kinematics: {}
+    options: {}
+    mean: 0.24
+    sigma-stat: {hi: 0.05, lo: -0.05}
+    sigma-sys: {hi: 0.12, lo: -0.12}
+    dof: 1
+psi(4040)::D^*D^*_DD^*_ratio@BaBar:2009B:
+    type: Gaussian
+    observable: psi(4040)::D^*D^*_DD^*_ratio
+    kinematics: {}
+    options: {}
+    mean: 0.18
+    sigma-stat: {hi: 0.14, lo: -0.14}
+    sigma-sys: {hi: 0.03, lo: -0.03}
+    dof: 1
+psi(4160)::DD_D^*D^*_ratio@BaBar:2009B:
+    type: Gaussian
+    observable: psi(4160)::DD_D^*D^*_ratio
+    kinematics: {}
+    options: {}
+    mean: 0.02
+    sigma-stat: {hi: 0.03, lo: -0.03}
+    sigma-sys: {hi: 0.02, lo: -0.02}
+    dof: 1
+psi(4160)::DD^*_D^*D^*_ratio@BaBar:2009B:
+    type: Gaussian
+    observable: psi(4160)::DD^*_D^*D^*_ratio
+    kinematics: {}
+    options: {}
+    mean: 0.34
+    sigma-stat: {hi: 0.14, lo: -0.14}
+    sigma-sys: {hi: 0.15, lo: -0.15}
+    dof: 1
+psi(4415)::DD_D^*D^*_ratio@BaBar:2009B:
+    type: Gaussian
+    observable: psi(4415)::DD_D^*D^*_ratio
+    kinematics: {}
+    options: {}
+    mean: 0.14
+    sigma-stat: {hi: 0.12, lo: -0.12}
+    sigma-sys: {hi: 0.03, lo: -0.03}
+    dof: 1
+psi(4415)::DD^*_D^*D^*_ratio@BaBar:2009B:
+    type: Gaussian
+    observable: psi(4415)::DD^*_D^*D^*_ratio
+    kinematics: {}
+    options: {}
+    mean: 0.17
+    sigma-stat: {hi: 0.25, lo: -0.25}
+    sigma-sys: {hi: 0.03, lo: -0.03}
+    dof: 1
+# }}}
+
 #####
 # R #
 #####

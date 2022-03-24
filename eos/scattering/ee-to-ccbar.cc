@@ -483,6 +483,87 @@ namespace eos
     }
 
     double
+    EEToCCBar::psi4040_DD_width() const
+    {
+        return _imp->res_partial_width(Resonances::psi4040, Channels::D0Dbar0)
+             + _imp->res_partial_width(Resonances::psi4040, Channels::DpDm);
+    }
+
+    double
+    EEToCCBar::psi4040_DDst_width() const
+    {
+        return _imp->res_partial_width(Resonances::psi4040, Channels::D0Dbarst0)
+             + _imp->res_partial_width(Resonances::psi4040, Channels::Dst0Dbar0)
+             + _imp->res_partial_width(Resonances::psi4040, Channels::DpDstm)
+             + _imp->res_partial_width(Resonances::psi4040, Channels::DstpDm);
+    }
+
+    double
+    EEToCCBar::psi4040_DstDst_width() const
+    {
+        return _imp->res_partial_width(Resonances::psi4040, Channels::Dst0Dbarst0P0)
+             + _imp->res_partial_width(Resonances::psi4040, Channels::Dst0Dbarst0P2)
+             + _imp->res_partial_width(Resonances::psi4040, Channels::Dst0Dbarst0F2)
+             + _imp->res_partial_width(Resonances::psi4040, Channels::DstpDstmP0)
+             + _imp->res_partial_width(Resonances::psi4040, Channels::DstpDstmP2)
+             + _imp->res_partial_width(Resonances::psi4040, Channels::DstpDstmF2);
+    }
+
+    double
+    EEToCCBar::psi4160_DD_width() const
+    {
+        return _imp->res_partial_width(Resonances::psi4160, Channels::D0Dbar0)
+             + _imp->res_partial_width(Resonances::psi4160, Channels::DpDm);
+    }
+
+    double
+    EEToCCBar::psi4160_DDst_width() const
+    {
+        return _imp->res_partial_width(Resonances::psi4160, Channels::D0Dbarst0)
+             + _imp->res_partial_width(Resonances::psi4160, Channels::Dst0Dbar0)
+             + _imp->res_partial_width(Resonances::psi4160, Channels::DpDstm)
+             + _imp->res_partial_width(Resonances::psi4160, Channels::DstpDm);
+    }
+
+    double
+    EEToCCBar::psi4160_DstDst_width() const
+    {
+        return _imp->res_partial_width(Resonances::psi4160, Channels::Dst0Dbarst0P0)
+             + _imp->res_partial_width(Resonances::psi4160, Channels::Dst0Dbarst0P2)
+             + _imp->res_partial_width(Resonances::psi4160, Channels::Dst0Dbarst0F2)
+             + _imp->res_partial_width(Resonances::psi4160, Channels::DstpDstmP0)
+             + _imp->res_partial_width(Resonances::psi4160, Channels::DstpDstmP2)
+             + _imp->res_partial_width(Resonances::psi4160, Channels::DstpDstmF2);
+    }
+
+    double
+    EEToCCBar::psi4415_DD_width() const
+    {
+        return _imp->res_partial_width(Resonances::psi4415, Channels::D0Dbar0)
+             + _imp->res_partial_width(Resonances::psi4415, Channels::DpDm);
+    }
+
+    double
+    EEToCCBar::psi4415_DDst_width() const
+    {
+        return _imp->res_partial_width(Resonances::psi4415, Channels::D0Dbarst0)
+             + _imp->res_partial_width(Resonances::psi4415, Channels::Dst0Dbar0)
+             + _imp->res_partial_width(Resonances::psi4415, Channels::DpDstm)
+             + _imp->res_partial_width(Resonances::psi4415, Channels::DstpDm);
+    }
+
+    double
+    EEToCCBar::psi4415_DstDst_width() const
+    {
+        return _imp->res_partial_width(Resonances::psi4415, Channels::Dst0Dbarst0P0)
+             + _imp->res_partial_width(Resonances::psi4415, Channels::Dst0Dbarst0P2)
+             + _imp->res_partial_width(Resonances::psi4415, Channels::Dst0Dbarst0F2)
+             + _imp->res_partial_width(Resonances::psi4415, Channels::DstpDstmP0)
+             + _imp->res_partial_width(Resonances::psi4415, Channels::DstpDstmP2)
+             + _imp->res_partial_width(Resonances::psi4415, Channels::DstpDstmF2);
+    }
+
+    double
     EEToCCBar::sigma_eetoee(const EEToCCBar::IntermediateResult * ir) const
     {
         return _imp->exclusive_norm * _imp->sigma_eetochannel(ir, Channels::ee);

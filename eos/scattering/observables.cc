@@ -39,6 +39,96 @@ namespace eos
                         Unit::GeV(),
                         &EEToCCBar::psi2S_eff_width),
 
+                make_observable("psi(4040)->DD::decay_width", R"($\Gamma(\psi(4040) \to D\bar{D})$)",
+                        Unit::GeV(),
+                        &EEToCCBar::psi4040_DD_width),
+
+                make_observable("psi(4040)->DD^*::decay_width", R"($\Gamma(\psi(4040) \to D\bar{D}^*)$)",
+                        Unit::GeV(),
+                        &EEToCCBar::psi4040_DDst_width),
+
+                make_observable("psi(4040)->D^*D^*::decay_width", R"($\Gamma(\psi(4040) \to D^*\bar{D}^*)$)",
+                        Unit::GeV(),
+                        &EEToCCBar::psi4040_DstDst_width),
+
+                make_observable("psi(4160)->DD::decay_width", R"($\Gamma(\psi(4160) \to D\bar{D})$)",
+                        Unit::GeV(),
+                        &EEToCCBar::psi4160_DD_width),
+
+                make_observable("psi(4160)->DD^*::decay_width", R"($\Gamma(\psi(4160) \to D\bar{D}^*)$)",
+                        Unit::GeV(),
+                        &EEToCCBar::psi4160_DDst_width),
+
+                make_observable("psi(4160)->D^*D^*::decay_width", R"($\Gamma(\psi(4160) \to D^*\bar{D}^*)$)",
+                        Unit::GeV(),
+                        &EEToCCBar::psi4160_DstDst_width),
+
+                make_observable("psi(4415)->DD::decay_width", R"($\Gamma(\psi(4415) \to D\bar{D})$)",
+                        Unit::GeV(),
+                        &EEToCCBar::psi4415_DD_width),
+
+                make_observable("psi(4415)->DD^*::decay_width", R"($\Gamma(\psi(4415) \to D\bar{D}^*)$)",
+                        Unit::GeV(),
+                        &EEToCCBar::psi4415_DDst_width),
+
+                make_observable("psi(4415)->D^*D^*::decay_width", R"($\Gamma(\psi(4415) \to D^*\bar{D}^*)$)",
+                        Unit::GeV(),
+                        &EEToCCBar::psi4415_DstDst_width),
+
+                make_expression_observable("psi(4040)::DD_DD^*_ratio",
+                        R"(\Gamma(\psi(4040) \to D\bar{D})/\Gamma(\psi(4040) \to D\bar{D}^*))",
+                        Unit::None(),
+                        R"(
+                        <<psi(4040)->DD::decay_width>>
+                        /
+                        <<psi(4040)->DD^*::decay_width>>
+                        )"),
+
+                make_expression_observable("psi(4040)::D^*D^*_DD^*_ratio",
+                        R"(\Gamma(\psi(4040) \to D^*\bar{D}^*)/\Gamma(\psi(4040) \to D\bar{D}^*))",
+                        Unit::None(),
+                        R"(
+                        <<psi(4040)->D^*D^*::decay_width>>
+                        /
+                        <<psi(4040)->DD^*::decay_width>>
+                        )"),
+
+                make_expression_observable("psi(4160)::DD_D^*D^*_ratio",
+                        R"(\Gamma(\psi(4160) \to D\bar{D})/\Gamma(\psi(4160) \to D^*\bar{D}^*))",
+                        Unit::None(),
+                        R"(
+                        <<psi(4160)->DD::decay_width>>
+                        /
+                        <<psi(4160)->D^*D^*::decay_width>>
+                        )"),
+
+                make_expression_observable("psi(4160)::DD^*_D^*D^*_ratio",
+                        R"(\Gamma(\psi(4160) \to D\bar{D}^*)/\Gamma(\psi(4160) \to D^*\bar{D}^*))",
+                        Unit::None(),
+                        R"(
+                        <<psi(4160)->DD^*::decay_width>>
+                        /
+                        <<psi(4160)->D^*D^*::decay_width>>
+                        )"),
+
+                make_expression_observable("psi(4415)::DD_D^*D^*_ratio",
+                        R"(\Gamma(\psi(4415) \to D\bar{D})/\Gamma(\psi(4415) \to D^*\bar{D}^*))",
+                        Unit::None(),
+                        R"(
+                        <<psi(4415)->DD::decay_width>>
+                        /
+                        <<psi(4415)->D^*D^*::decay_width>>
+                        )"),
+
+                make_expression_observable("psi(4415)::DD^*_D^*D^*_ratio",
+                        R"(\Gamma(\psi(4415) \to D\bar{D}^*)/\Gamma(\psi(4415) \to D^*\bar{D}^*))",
+                        Unit::None(),
+                        R"(
+                        <<psi(4415)->DD^*::decay_width>>
+                        /
+                        <<psi(4415)->D^*D^*::decay_width>>
+                        )"),
+
                 make_observable("psi(2S)::total_width", R"($\Gamma_{\psi(2S)}$)",
                         Unit::GeV(),
                         &EEToCCBar::psi2S_total_width),
