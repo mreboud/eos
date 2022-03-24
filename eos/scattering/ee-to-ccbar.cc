@@ -335,7 +335,8 @@ namespace eos
             return GeVtonb * 4.0 * M_PI * alpha_em*alpha_em / (3.0 * E*E);
         }
 
-        double sigma_eetochannel(const IntermediateResult * intermediate_result, const unsigned & channel)
+        // amplitude of ee -> channel
+        complex<double> amplitude_eetochannel(const IntermediateResult * intermediate_result, const unsigned & channel)
         {
             // Conversion factor between GeV^2 and nb
             const double speedoflight = 299792458.; //Exact value
@@ -348,7 +349,12 @@ namespace eos
             // Get T-matrix[ee, channel]
             const complex<double> T1f = intermediate_result->tmatrix_row_0[channel];
 
-            return GeVtonb * 16. * M_PI / intermediate_result->s * Nf * rhof * norm(T1f);
+            return sqrt(GeVtonb * 16. * M_PI / intermediate_result->s * Nf * rhof) * T1f;
+        }
+
+        double sigma_eetochannel(const IntermediateResult * intermediate_result, const unsigned & channel)
+        {
+            return norm(amplitude_eetochannel(intermediate_result, channel));
         }
 
         // Widths
@@ -556,6 +562,33 @@ namespace eos
     EEToCCBar::sigma_eetoDstpDstm(const EEToCCBar::IntermediateResult * ir) const
     {
         return _imp->exclusive_norm * (_imp->sigma_eetochannel(ir, 16) + _imp->sigma_eetochannel(ir, 17) + _imp->sigma_eetochannel(ir, 18));
+    }
+
+    double
+    EEToCCBar::sigma_eetoDstpLDstmL(const EEToCCBar::IntermediateResult * ir) const
+    {
+        return _imp->exclusive_norm * (1.0 / 75.0) * norm(
+                5.0 * _imp->amplitude_eetochannel(ir, 16) - pow(30.0, 0.5) * _imp->amplitude_eetochannel(ir, 18)
+                + 2. * pow(5.0, 0.5) * _imp->amplitude_eetochannel(ir, 17)
+            );
+    }
+
+    double
+    EEToCCBar::sigma_eetoDstpTDstmL(const EEToCCBar::IntermediateResult * ir) const
+    {
+        return _imp->exclusive_norm * (1.0 / 5.0) * norm(
+                pow(2.0, 0.5) * _imp->amplitude_eetochannel(ir, 18)
+                + pow(3.0, 0.5) * _imp->amplitude_eetochannel(ir, 17)
+            );
+    }
+
+    double
+    EEToCCBar::sigma_eetoDstpTDstmT(const EEToCCBar::IntermediateResult * ir) const
+    {
+        return _imp->exclusive_norm * (1.0 / 150.0) * norm(
+                10.0 * _imp->amplitude_eetochannel(ir, 16) + pow(30.0, 0.5) * _imp->amplitude_eetochannel(ir, 18)
+                - 2. * pow(5.0, 0.5) * _imp->amplitude_eetochannel(ir, 17)
+            );
     }
 
     double

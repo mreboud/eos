@@ -113,6 +113,24 @@ namespace eos
                         &EEToCCBar::sigma_eetoDstpDstm,
                         std::make_tuple("E")),
 
+                make_cacheable_observable("ee->ccbar::sigma_eetoDstpTDstmT(E)", R"($\sigma(ee \to D^[*+} D^{*-})$)",
+                        Unit::InverseGeV2(),
+                        &EEToCCBar::prepare,
+                        &EEToCCBar::sigma_eetoDstpTDstmT,
+                        std::make_tuple("E")),
+
+                make_cacheable_observable("ee->ccbar::sigma_eetoDstpTDstmL(E)", R"($\sigma(ee \to D^[*+} D^{*-})$)",
+                        Unit::InverseGeV2(),
+                        &EEToCCBar::prepare,
+                        &EEToCCBar::sigma_eetoDstpTDstmL,
+                        std::make_tuple("E")),
+
+                make_cacheable_observable("ee->ccbar::sigma_eetoDstpLDstmL(E)", R"($\sigma(ee \to D^[*+} D^{*-})$)",
+                        Unit::InverseGeV2(),
+                        &EEToCCBar::prepare,
+                        &EEToCCBar::sigma_eetoDstpLDstmL,
+                        std::make_tuple("E")),
+
                 make_cacheable_observable("ee->ccbar::sigma_eetoDspDsstm(E)", R"($\sigma(ee \to D_s^+ D_s^{*-})$)",
                         Unit::InverseGeV2(),
                         &EEToCCBar::prepare,
