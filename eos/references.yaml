@@ -387,6 +387,14 @@ BaBar:2009A:
   inspire-id: Aubert:2009ak
   title: Measurement of Branching Fractions and CP and Isospin Asymmetries in $B \to  K^*(892)\gamma$
     Decays
+BaBar:2009B:
+  authors: Aubert, Bernard et al.
+  collaboration: BaBar
+  eprint:
+    archive: arXiv
+    id: oai:arXiv.org:0903.1597
+  inspire-id: BaBar:2009elc
+  title: Exclusive Initial-State-Radiation Production of the D anti-D, D* anti-D*, and D* anti-D* Systems
 BaBar:2010A:
   authors: del Amo Sanchez, P. et al.
   collaboration: BaBar

@@ -508,6 +508,65 @@ namespace eos
         return _imp->res_total_width(4);
     }
 
+    double
+    EEToCCBar::psi4040_DD_width() const
+    {
+        return _imp->res_partial_width(2, 6) + _imp->res_partial_width(2, 7);
+    }
+
+    double
+    EEToCCBar::psi4040_DDst_width() const
+    {
+        return _imp->res_partial_width(2, 8)  + _imp->res_partial_width(2, 9)
+             + _imp->res_partial_width(2, 10) + _imp->res_partial_width(2, 11);
+    }
+
+    double
+    EEToCCBar::psi4040_DstDst_width() const
+    {
+        return _imp->res_partial_width(2, 13) + _imp->res_partial_width(2, 14) + _imp->res_partial_width(2, 15)
+             + _imp->res_partial_width(2, 16) + _imp->res_partial_width(2, 17) + _imp->res_partial_width(2, 18);
+    }
+
+    double
+    EEToCCBar::psi4160_DD_width() const
+    {
+        return _imp->res_partial_width(3, 6) + _imp->res_partial_width(3, 7);
+    }
+
+    double
+    EEToCCBar::psi4160_DDst_width() const
+    {
+        return _imp->res_partial_width(3, 8)  + _imp->res_partial_width(3, 9)
+             + _imp->res_partial_width(3, 10) + _imp->res_partial_width(3, 11);
+    }
+
+    double
+    EEToCCBar::psi4160_DstDst_width() const
+    {
+        return _imp->res_partial_width(3, 13) + _imp->res_partial_width(3, 14) + _imp->res_partial_width(3, 15)
+             + _imp->res_partial_width(3, 16) + _imp->res_partial_width(3, 17) + _imp->res_partial_width(3, 18);
+    }
+
+    double
+    EEToCCBar::psi4415_DD_width() const
+    {
+        return _imp->res_partial_width(4, 6) + _imp->res_partial_width(4, 7);
+    }
+
+    double
+    EEToCCBar::psi4415_DDst_width() const
+    {
+        return _imp->res_partial_width(4, 8)  + _imp->res_partial_width(4, 9)
+             + _imp->res_partial_width(4, 10) + _imp->res_partial_width(4, 11);
+    }
+
+    double
+    EEToCCBar::psi4415_DstDst_width() const
+    {
+        return _imp->res_partial_width(4, 13) + _imp->res_partial_width(4, 14) + _imp->res_partial_width(4, 15)
+             + _imp->res_partial_width(4, 16) + _imp->res_partial_width(4, 17) + _imp->res_partial_width(4, 18);
+    }
 
     double
     EEToCCBar::sigma_eetoee(const EEToCCBar::IntermediateResult * ir) const

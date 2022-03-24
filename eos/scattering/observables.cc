@@ -39,6 +39,96 @@ namespace eos
                         Unit::GeV(),
                         &EEToCCBar::psi2S_eff_width),
 
+                make_observable("ee->ccbar::psi4040_DD_width", R"($\Gamma(\psi(4040) \to D\bar{D})$)",
+                        Unit::GeV(),
+                        &EEToCCBar::psi4040_DD_width),
+
+                make_observable("ee->ccbar::psi4040_DDst_width", R"($\Gamma(\psi(4040) \to D\bar{D}^*)$)",
+                        Unit::GeV(),
+                        &EEToCCBar::psi4040_DDst_width),
+
+                make_observable("ee->ccbar::psi4040_DstDst_width", R"($\Gamma(\psi(4040) \to D^*\bar{D}^*)$)",
+                        Unit::GeV(),
+                        &EEToCCBar::psi4040_DstDst_width),
+
+                make_observable("ee->ccbar::psi4160_DD_width", R"($\Gamma(\psi(4160) \to D\bar{D})$)",
+                        Unit::GeV(),
+                        &EEToCCBar::psi4160_DD_width),
+
+                make_observable("ee->ccbar::psi4160_DDst_width", R"($\Gamma(\psi(4160) \to D\bar{D}^*)$)",
+                        Unit::GeV(),
+                        &EEToCCBar::psi4160_DDst_width),
+
+                make_observable("ee->ccbar::psi4160_DstDst_width", R"($\Gamma(\psi(4160) \to D^*\bar{D}^*)$)",
+                        Unit::GeV(),
+                        &EEToCCBar::psi4160_DstDst_width),
+
+                make_observable("ee->ccbar::psi4415_DD_width", R"($\Gamma(\psi(4415) \to D\bar{D})$)",
+                        Unit::GeV(),
+                        &EEToCCBar::psi4415_DD_width),
+
+                make_observable("ee->ccbar::psi4415_DDst_width", R"($\Gamma(\psi(4415) \to D\bar{D}^*)$)",
+                        Unit::GeV(),
+                        &EEToCCBar::psi4415_DDst_width),
+
+                make_observable("ee->ccbar::psi4415_DstDst_width", R"($\Gamma(\psi(4415) \to D^*\bar{D}^*)$)",
+                        Unit::GeV(),
+                        &EEToCCBar::psi4415_DstDst_width),
+
+                make_expression_observable("ee->ccbar::psi4040_DD_DDst_ratio",
+                        R"(\Gamma(\psi(4040) \to D\bar{D})/\Gamma(\psi(4040) \to D\bar{D}^*))",
+                        Unit::None(),
+                        R"(
+                        <<ee->ccbar::psi4040_DD_width>>
+                        /
+                        <<ee->ccbar::psi4040_DDst_width>>
+                        )"),
+
+                make_expression_observable("ee->ccbar::psi4040_DstDst_DDst_ratio",
+                        R"(\Gamma(\psi(4040) \to D^*\bar{D}^*)/\Gamma(\psi(4040) \to D\bar{D}^*))",
+                        Unit::None(),
+                        R"(
+                        <<ee->ccbar::psi4040_DstDst_width>>
+                        /
+                        <<ee->ccbar::psi4040_DDst_width>>
+                        )"),
+
+                make_expression_observable("ee->ccbar::psi4160_DD_DstDst_ratio",
+                        R"(\Gamma(\psi(4160) \to D\bar{D})/\Gamma(\psi(4160) \to D^*\bar{D}^*))",
+                        Unit::None(),
+                        R"(
+                        <<ee->ccbar::psi4160_DD_width>>
+                        /
+                        <<ee->ccbar::psi4160_DstDst_width>>
+                        )"),
+
+                make_expression_observable("ee->ccbar::psi4160_DDst_DstDst_ratio",
+                        R"(\Gamma(\psi(4160) \to D\bar{D}^*)/\Gamma(\psi(4160) \to D^*\bar{D}^*))",
+                        Unit::None(),
+                        R"(
+                        <<ee->ccbar::psi4160_DDst_width>>
+                        /
+                        <<ee->ccbar::psi4160_DstDst_width>>
+                        )"),
+
+                make_expression_observable("ee->ccbar::psi4415_DD_DstDst_ratio",
+                        R"(\Gamma(\psi(4415) \to D\bar{D})/\Gamma(\psi(4415) \to D^*\bar{D}^*))",
+                        Unit::None(),
+                        R"(
+                        <<ee->ccbar::psi4415_DD_width>>
+                        /
+                        <<ee->ccbar::psi4415_DstDst_width>>
+                        )"),
+
+                make_expression_observable("ee->ccbar::psi4415_DDst_DstDst_ratio",
+                        R"(\Gamma(\psi(4415) \to D\bar{D}^*)/\Gamma(\psi(4415) \to D^*\bar{D}^*))",
+                        Unit::None(),
+                        R"(
+                        <<ee->ccbar::psi4415_DDst_width>>
+                        /
+                        <<ee->ccbar::psi4415_DstDst_width>>
+                        )"),
+
                 make_observable("ee->ccbar::psi2S_total_width", R"($\Gamma_{\psi(2S)}$)",
                         Unit::GeV(),
                         &EEToCCBar::psi2S_total_width),

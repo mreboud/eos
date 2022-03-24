@@ -358,6 +358,15 @@ namespace eos
             double psi4040_total_width() const;
             double psi4160_total_width() const;
             double psi4415_total_width() const;
+            double psi4040_DD_width() const;
+            double psi4040_DDst_width() const;
+            double psi4040_DstDst_width() const;
+            double psi4160_DD_width() const;
+            double psi4160_DDst_width() const;
+            double psi4160_DstDst_width() const;
+            double psi4415_DD_width() const;
+            double psi4415_DDst_width() const;
+            double psi4415_DstDst_width() const;
 
             // sigma(ee -> channel)
             double sigma_eetoee(const IntermediateResult *) const;
