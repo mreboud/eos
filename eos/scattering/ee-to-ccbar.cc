@@ -130,21 +130,17 @@ namespace eos
                 case DstpDm:
                     return D0Dbarst0;
 
-                case Dst0Dbarst0F2:
-                    return Dst0Dbarst0P2;
-
                 case DstpDstmP0:
                     return Dst0Dbarst0P0;
 
                 case DstpDstmP2:
-                case DstpDstmF2:
                     return Dst0Dbarst0P2;
+
+                case DstpDstmF2:
+                    return Dst0Dbarst0F2;
 
                 case DsstpDsm:
                     return DspDsstm;
-
-                case DsstpDsstmF2:
-                    return DsstpDsstmP2;
 
                 default:
                     return channel;
