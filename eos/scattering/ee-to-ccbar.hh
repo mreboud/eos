@@ -48,15 +48,15 @@ namespace eos
     12  Ds   Ds       PP (P)       3       -
     13  D*0  D*0bar   VV (P, S=0)  3       -
     14  D*0  D*0bar   VV (P, S=2)  3       -
-    15  D*0  D*0bar   VV (F, S=2)  7       14 (waves)
+    15  D*0  D*0bar   VV (F, S=2)  7       -
     16  D*+  D*-      VV (P, S=0)  3       13 (isospin)
     17  D*+  D*-      VV (P, S=2)  3       14 (isospin)
-    18  D*+  D*-      VV (F, S=2)  7       14 (waves)
+    18  D*+  D*-      VV (F, S=2)  7       15 (isospin)
     19  Ds+  Ds*-     VP           3       -
     20  Ds*+ Ds-      VP           3       19 (c.c.)
     21  Ds*+ Ds*-     VV (P, S=0)  3       -
     22  Ds*+ Ds*-     VV (P, S=2)  3       -
-    23  Ds*+ Ds*-     VV (F, S=2)  7       22 (waves)
+    23  Ds*+ Ds*-     VV (F, S=2)  7       -
     */
 
     // S -> PP channel

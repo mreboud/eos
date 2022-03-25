@@ -113,21 +113,17 @@ namespace eos
                 case 11: // D*+D-
                     return 8; // D0D*0bar
 
-                case 15: // D*0D*0bar S=2 F wave
-                    return 14; // D*0D*0bar S=2 P wave
-
-                case 16: // D*+D*- S=0
-                    return 13; // D*0D*0bar S=0
+                case 16: // D*+D*- S=0 P wave
+                    return 13; // D*0D*0bar S=0 P wave
 
                 case 17: // D*+D*- S=2 P wave
+                    return 14; // D*0D*0bar S=2 P wave
+
                 case 18: // D*+D*- S=2 F wave
-                    return 14; // D*0D*0bar S=2
+                    return 15; // D*0D*0bar S=2 F wave
 
                 case 20: // Ds*+Ds-
                     return 19; // Ds+Ds*-
-
-                case 23: // Ds*+Ds*- S=2 F wave
-                    return 22; // Ds+Ds*- S=2 P wave
 
                 default:
                     return channel_index;
