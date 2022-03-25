@@ -176,6 +176,15 @@ BES:2002A:
     id: oai:arXiv.org:hep-ex/0102003
   inspire-id: BES:2001ckj
   title: Measurements of the cross-section for $e^+ e^- \to$ hadrons at center-of-mass energies from 2 GeV to 5 GeV
+BES:2021A:
+  authors: Ablikim, M. et al.
+  collaboration: BESIII
+  eprint:
+    archive: arXiv
+    id: oai:arXiv.org:2112.06477
+  inspire-id: BESIII:2021yvc
+  title: Cross section measurements of the $e^+e^-\to D^{*+}D^{*-}$ and $e^+e^-\to D^{*+}D^{-}$
+    processes at center-of-mass energies from 4.085 to 4.600 GeV
 BF:2001A:
   authors: Beneke, M. and Feldmann, T.
   eprint:
