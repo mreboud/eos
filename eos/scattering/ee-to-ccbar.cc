@@ -40,6 +40,7 @@ namespace eos
          */
         const static long unsigned nchannels = 24;
         const static long unsigned nresonances = 5;
+        const static long unsigned order = 0;
 
         UsedParameter hbar;
         UsedParameter alpha_em;
@@ -62,7 +63,7 @@ namespace eos
         std::array<std::array<UsedParameter, nchannels>, nresonances> g0;
 
         // Non-cc contribution to the Rc ratio
-        std::array<std::array<UsedParameter, nchannels>, nchannels> bkgcst;
+        std::array<std::array<std::array<UsedParameter, nchannels>, nchannels>, order + 1> bkgpol;
 
         // R_uds
         UsedParameter Rconstant;
@@ -70,7 +71,7 @@ namespace eos
         // Normalization of the exclusive channels
         UsedParameter exclusive_norm;
 
-        std::shared_ptr<KMatrix<nchannels, nresonances>> K;
+        std::shared_ptr<KMatrix<nchannels, nresonances, order>> K;
 
         using IntermediateResult = EEToCCBar::IntermediateResult;
         IntermediateResult _intermediate_result;
@@ -157,7 +158,7 @@ namespace eos
         }
 
         template <typename T, T... column_indices>
-        auto _c_row(const Parameters & p, ParameterUser & u, T row_index, std::integer_sequence<T, column_indices...>)
+        auto _c_row(const Parameters & p, ParameterUser & u, T power, T row_index, std::integer_sequence<T, column_indices...>)
             -> std::array<UsedParameter, sizeof...(column_indices)>
         {
             if (sizeof...(column_indices) > channel_names.size())
@@ -165,13 +166,13 @@ namespace eos
 
             return std::array<UsedParameter, sizeof...(column_indices)>
             {{
-                UsedParameter(p["ee->ccbar::c(" + channel_names[_filter_channel_index(row_index)] + ","
+                UsedParameter(p["ee->ccbar::c_" + std::to_string(power) + "(" + channel_names[_filter_channel_index(row_index)] + ","
                         + channel_names[_filter_channel_index(column_indices)] + ")"], u)...
             }};
         }
 
         template <typename T, T... row_indices, T... column_indices>
-        auto _c_matrix(const Parameters & p, ParameterUser & u, std::integer_sequence<T, row_indices...>, std::integer_sequence<T, column_indices...> column_seq)
+        auto _c_matrix(const Parameters & p, ParameterUser & u, T power, std::integer_sequence<T, row_indices...>, std::integer_sequence<T, column_indices...> column_seq)
             -> std::array<std::array<UsedParameter, sizeof...(column_indices)>, sizeof...(row_indices)>
         {
             if (sizeof...(row_indices) > channel_names.size())
@@ -179,9 +180,23 @@ namespace eos
 
             return std::array<std::array<UsedParameter, sizeof...(column_indices)>, sizeof...(row_indices)>
             {{
-                _c_row(p, u, row_indices, column_seq)...
+                _c_row(p, u, power, row_indices, column_seq)...
             }};
         }
+
+        template <typename T, T... row_indices, T... column_indices, T... power_indices>
+        auto _c_array(const Parameters & p, ParameterUser & u, std::integer_sequence<T, power_indices...>, std::integer_sequence<T, row_indices...> row_seq, std::integer_sequence<T, column_indices...> column_seq)
+            -> std::array<std::array<std::array<UsedParameter, sizeof...(column_indices)>, sizeof...(row_indices)>, sizeof...(power_indices)>
+        {
+            if (sizeof...(power_indices) > order + 1)
+                throw InternalError("The number of background constants matrices is larger than the requested order.");
+
+            return std::array<std::array<std::array<UsedParameter, sizeof...(column_indices)>, sizeof...(row_indices)>, sizeof...(power_indices)>
+            {{
+                _c_matrix(p, u, power_indices, row_seq, column_seq)...
+            }};
+        }
+
 
         template <typename T, T... row_indices>
         auto _get_g0_column(T column_index, std::integer_sequence<T, row_indices...>)
@@ -194,24 +209,35 @@ namespace eos
         }
 
         template <typename T, T... column_indices>
-        auto _get_bkgcst_row(T row_index, std::integer_sequence<T, column_indices...>)
+        auto _get_bkgpol_row(T power, T row_index, std::integer_sequence<T, column_indices...>)
             -> std::array<Parameter, sizeof...(column_indices)>
         {
             return std::array<Parameter, sizeof...(column_indices)>
             {{
-                bkgcst[row_index][column_indices]...
+                bkgpol[power][row_index][column_indices]...
             }};
         }
 
         template <typename T, T... row_indices, T... column_indices>
-        auto _get_bkgcst(std::integer_sequence<T, row_indices...>, std::integer_sequence<T, column_indices...> column_seq)
+        auto _get_bkgpol_matrix(T power, std::integer_sequence<T, row_indices...>, std::integer_sequence<T, column_indices...> column_seq)
             -> std::array<std::array<Parameter, sizeof...(column_indices)>, sizeof...(row_indices)>
         {
             return std::array<std::array<Parameter, sizeof...(column_indices)>, sizeof...(row_indices)>
             {{
-                _get_bkgcst_row(row_indices, column_seq)...
+                _get_bkgpol_row(power, row_indices, column_seq)...
             }};
         }
+
+        template <typename T, T... row_indices, T... column_indices, T... power_indices>
+        auto _get_bkgpol(std::integer_sequence<T, power_indices...>, std::integer_sequence<T, row_indices...> row_seq, std::integer_sequence<T, column_indices...> column_seq)
+            -> std::array<std::array<std::array<Parameter, sizeof...(column_indices)>, sizeof...(row_indices)>, sizeof...(power_indices)>
+        {
+            return std::array<std::array<std::array<Parameter, sizeof...(column_indices)>, sizeof...(row_indices)>, sizeof...(power_indices)>
+            {{
+                _get_bkgpol_matrix(power_indices, row_seq, column_seq)...
+            }};
+        }
+
 
         static const std::vector<OptionSpecification> options;
 
@@ -229,18 +255,18 @@ namespace eos
             m(_resonance_masses(p, u, std::make_index_sequence<nresonances>())),
             q(_resonance_sizes(p, u, std::make_index_sequence<nresonances>())),
             g0(_g0_matrix(p, u, std::make_index_sequence<nresonances>(), std::make_index_sequence<nchannels>())),
-            bkgcst(_c_matrix(p, u, std::make_index_sequence<nchannels>(), std::make_index_sequence<nchannels>())),
+            bkgpol(_c_array(p, u, std::make_index_sequence<order + 1>(), std::make_index_sequence<nchannels>(), std::make_index_sequence<nchannels>())),
 
             Rconstant(p["ee->ccbar::Rconstant"], u),
             exclusive_norm(p["ee->ccbar::exclusive_norm"], u)
         {
-            std::array<std::shared_ptr<KMatrix<nchannels, nresonances>::Resonance>, nresonances> resonance_array;
+            std::array<std::shared_ptr<KMatrix<nchannels, nresonances, order>::Resonance>, nresonances> resonance_array;
             for (unsigned i = 0; i<nresonances; i++)
             {
-                resonance_array[i] = std::make_shared<charmonium_resonance<nchannels, nresonances>>(resonance_names[i] + "_res", m[i], q[i]);
+                resonance_array[i] = std::make_shared<charmonium_resonance<nchannels, nresonances, order>>(resonance_names[i] + "_res", m[i], q[i]);
             }
 
-            std::array<std::shared_ptr<KMatrix<nchannels, nresonances>::Channel>, nchannels> channel_array;
+            std::array<std::shared_ptr<KMatrix<nchannels, nresonances, order>::Channel>, nchannels> channel_array;
             for (unsigned i = 0; i<nchannels; i++)
             {
                 switch (i)
@@ -251,49 +277,49 @@ namespace eos
                     case 3:
                     case 4:
                     case 5:
-                        channel_array[i] = std::make_shared<PP_Pwavechan<nchannels, nresonances>>(channel_names[i] + "_chan", m_e, m_e, 1, _get_g0_column(_filter_channel_index(i), std::make_index_sequence<nresonances>()));
+                        channel_array[i] = std::make_shared<PP_Pwavechan<nchannels, nresonances, order>>(channel_names[i] + "_chan", m_e, m_e, 1, _get_g0_column(_filter_channel_index(i), std::make_index_sequence<nresonances>()));
                         break;
                     case 6:
-                        channel_array[i] = std::make_shared<PP_Pwavechan<nchannels, nresonances>>(channel_names[i] + "_chan", m_D0, m_D0, 1, _get_g0_column(_filter_channel_index(i), std::make_index_sequence<nresonances>()));
+                        channel_array[i] = std::make_shared<PP_Pwavechan<nchannels, nresonances, order>>(channel_names[i] + "_chan", m_D0, m_D0, 1, _get_g0_column(_filter_channel_index(i), std::make_index_sequence<nresonances>()));
                         break;
                     case 7:
-                        channel_array[i] = std::make_shared<PP_Pwavechan<nchannels, nresonances>>(channel_names[i] + "_chan", m_D, m_D, 1, _get_g0_column(_filter_channel_index(i), std::make_index_sequence<nresonances>()));
+                        channel_array[i] = std::make_shared<PP_Pwavechan<nchannels, nresonances, order>>(channel_names[i] + "_chan", m_D, m_D, 1, _get_g0_column(_filter_channel_index(i), std::make_index_sequence<nresonances>()));
                         break;
                     case 8:
                     case 9: //D0Dbarst0
-                        channel_array[i] = std::make_shared<VP_Pwavechan<nchannels, nresonances>>(channel_names[i] + "_chan", m_D0, m_Dst0, 1, _get_g0_column(_filter_channel_index(i), std::make_index_sequence<nresonances>()));
+                        channel_array[i] = std::make_shared<VP_Pwavechan<nchannels, nresonances, order>>(channel_names[i] + "_chan", m_D0, m_Dst0, 1, _get_g0_column(_filter_channel_index(i), std::make_index_sequence<nresonances>()));
                         break;
                     case 10:
                     case 11: //DpDstm
-                        channel_array[i] = std::make_shared<VP_Pwavechan<nchannels, nresonances>>(channel_names[i] + "_chan", m_D, m_Dst, 1, _get_g0_column(_filter_channel_index(i), std::make_index_sequence<nresonances>()));
+                        channel_array[i] = std::make_shared<VP_Pwavechan<nchannels, nresonances, order>>(channel_names[i] + "_chan", m_D, m_Dst, 1, _get_g0_column(_filter_channel_index(i), std::make_index_sequence<nresonances>()));
                         break;
                     case 12:
-                        channel_array[i] = std::make_shared<PP_Pwavechan<nchannels, nresonances>>(channel_names[i] + "_chan", m_Ds, m_Ds, 1, _get_g0_column(_filter_channel_index(i), std::make_index_sequence<nresonances>()));
+                        channel_array[i] = std::make_shared<PP_Pwavechan<nchannels, nresonances, order>>(channel_names[i] + "_chan", m_Ds, m_Ds, 1, _get_g0_column(_filter_channel_index(i), std::make_index_sequence<nresonances>()));
                         break;
                     case 13:
                     case 14:
-                        channel_array[i] = std::make_shared<VV_Pwavechan<nchannels, nresonances>>(channel_names[i] + "_chan", m_Dst0, m_Dst0, 1, _get_g0_column(_filter_channel_index(i), std::make_index_sequence<nresonances>()));
+                        channel_array[i] = std::make_shared<VV_Pwavechan<nchannels, nresonances, order>>(channel_names[i] + "_chan", m_Dst0, m_Dst0, 1, _get_g0_column(_filter_channel_index(i), std::make_index_sequence<nresonances>()));
                         break;
                     case 15:
-                        channel_array[i] = std::make_shared<VV_Fwavechan<nchannels, nresonances>>(channel_names[i] + "_chan", m_Dst0, m_Dst0, 3, _get_g0_column(_filter_channel_index(i), std::make_index_sequence<nresonances>()));
+                        channel_array[i] = std::make_shared<VV_Fwavechan<nchannels, nresonances, order>>(channel_names[i] + "_chan", m_Dst0, m_Dst0, 3, _get_g0_column(_filter_channel_index(i), std::make_index_sequence<nresonances>()));
                         break;
                     case 16:
                     case 17:
-                        channel_array[i] = std::make_shared<VV_Pwavechan<nchannels, nresonances>>(channel_names[i] + "_chan", m_Dst, m_Dst, 1, _get_g0_column(_filter_channel_index(i), std::make_index_sequence<nresonances>()));
+                        channel_array[i] = std::make_shared<VV_Pwavechan<nchannels, nresonances, order>>(channel_names[i] + "_chan", m_Dst, m_Dst, 1, _get_g0_column(_filter_channel_index(i), std::make_index_sequence<nresonances>()));
                         break;
                     case 18:
-                        channel_array[i] = std::make_shared<VV_Fwavechan<nchannels, nresonances>>(channel_names[i] + "_chan", m_Dst, m_Dst, 3, _get_g0_column(_filter_channel_index(i), std::make_index_sequence<nresonances>()));
+                        channel_array[i] = std::make_shared<VV_Fwavechan<nchannels, nresonances, order>>(channel_names[i] + "_chan", m_Dst, m_Dst, 3, _get_g0_column(_filter_channel_index(i), std::make_index_sequence<nresonances>()));
                         break;
                     case 19:
                     case 20:
-                        channel_array[i] = std::make_shared<VP_Pwavechan<nchannels, nresonances>>(channel_names[i] + "_chan", m_Ds, m_Dsst, 1, _get_g0_column(_filter_channel_index(i), std::make_index_sequence<nresonances>()));
+                        channel_array[i] = std::make_shared<VP_Pwavechan<nchannels, nresonances, order>>(channel_names[i] + "_chan", m_Ds, m_Dsst, 1, _get_g0_column(_filter_channel_index(i), std::make_index_sequence<nresonances>()));
                         break;
                     case 21:
                     case 22:
-                        channel_array[i] = std::make_shared<VV_Pwavechan<nchannels, nresonances>>(channel_names[i] + "_chan", m_Dsst, m_Dsst, 1, _get_g0_column(_filter_channel_index(i), std::make_index_sequence<nresonances>()));
+                        channel_array[i] = std::make_shared<VV_Pwavechan<nchannels, nresonances, order>>(channel_names[i] + "_chan", m_Dsst, m_Dsst, 1, _get_g0_column(_filter_channel_index(i), std::make_index_sequence<nresonances>()));
                         break;
                     case 23:
-                        channel_array[i] = std::make_shared<VV_Fwavechan<nchannels, nresonances>>(channel_names[i] + "_chan", m_Dsst, m_Dsst, 3, _get_g0_column(_filter_channel_index(i), std::make_index_sequence<nresonances>()));
+                        channel_array[i] = std::make_shared<VV_Fwavechan<nchannels, nresonances, order>>(channel_names[i] + "_chan", m_Dsst, m_Dsst, 3, _get_g0_column(_filter_channel_index(i), std::make_index_sequence<nresonances>()));
                         break;
 
                     default:
@@ -301,11 +327,11 @@ namespace eos
                 }
             }
 
-            K = std::shared_ptr<KMatrix<nchannels, nresonances>> (
-                new KMatrix<nchannels, nresonances>(
+            K = std::shared_ptr<KMatrix<nchannels, nresonances, order>> (
+                new KMatrix<nchannels, nresonances, order>(
                     channel_array,
                     resonance_array,
-                    _get_bkgcst(std::make_index_sequence<nchannels>(),std::make_index_sequence<nchannels>()),
+                    _get_bkgpol(std::make_index_sequence<order + 1>(), std::make_index_sequence<nchannels>(), std::make_index_sequence<nchannels>()),
                     "KMatrix"
                     )
                 );

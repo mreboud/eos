@@ -60,13 +60,13 @@ namespace eos
     */
 
     // S -> PP channel
-    template <unsigned nchannels_, unsigned nresonances_>
+    template <unsigned nchannels_, unsigned nresonances_, unsigned order_>
     struct SPPchan :
-    public KMatrix<nchannels_, nresonances_>::Channel
+    public KMatrix<nchannels_, nresonances_, order_>::Channel
     {
 
         SPPchan(std::string name, double m1, double m2, unsigned l_orbital, std::array<Parameter, nresonances_> g0s) :
-            KMatrix<nchannels_, nresonances_>::Channel(name, m1, m2, l_orbital, g0s)
+            KMatrix<nchannels_, nresonances_, order_>::Channel(name, m1, m2, l_orbital, g0s)
         {
         };
 
@@ -111,13 +111,13 @@ namespace eos
 
 
     // V -> PP channel
-    template <unsigned nchannels_, unsigned nresonances_>
+    template <unsigned nchannels_, unsigned nresonances_, unsigned order_>
     struct PP_Pwavechan :
-    public KMatrix<nchannels_, nresonances_>::Channel
+    public KMatrix<nchannels_, nresonances_, order_>::Channel
     {
 
         PP_Pwavechan(std::string name, double m1, double m2, unsigned l_orbital, std::array<Parameter, nresonances_> g0s) :
-            KMatrix<nchannels_, nresonances_>::Channel(name, m1, m2, l_orbital, g0s)
+            KMatrix<nchannels_, nresonances_, order_>::Channel(name, m1, m2, l_orbital, g0s)
         {
         };
 
@@ -162,13 +162,13 @@ namespace eos
 
 
     // V -> VP channel
-    template <unsigned nchannels_, unsigned nresonances_>
+    template <unsigned nchannels_, unsigned nresonances_, unsigned order_>
     struct VP_Pwavechan :
-    public KMatrix<nchannels_, nresonances_>::Channel
+    public KMatrix<nchannels_, nresonances_, order_>::Channel
     {
 
         VP_Pwavechan(std::string name, double m1, double m2, unsigned l_orbital, std::array<Parameter, nresonances_> g0s) :
-            KMatrix<nchannels_, nresonances_>::Channel(name, m1, m2, l_orbital, g0s)
+            KMatrix<nchannels_, nresonances_, order_>::Channel(name, m1, m2, l_orbital, g0s)
         {
         };
 
@@ -213,13 +213,13 @@ namespace eos
 
 
     // V -> VV channel
-    template <unsigned nchannels_, unsigned nresonances_>
+    template <unsigned nchannels_, unsigned nresonances_, unsigned order_>
     struct VV_Pwavechan :
-    public KMatrix<nchannels_, nresonances_>::Channel
+    public KMatrix<nchannels_, nresonances_, order_>::Channel
     {
 
         VV_Pwavechan(std::string name, double m1, double m2, unsigned l_orbital, std::array<Parameter, nresonances_> g0s) :
-            KMatrix<nchannels_, nresonances_>::Channel(name, m1, m2, l_orbital, g0s)
+            KMatrix<nchannels_, nresonances_, order_>::Channel(name, m1, m2, l_orbital, g0s)
         {
         };
 
@@ -263,13 +263,13 @@ namespace eos
     };
 
     // V -> VV channel
-    template <unsigned nchannels_, unsigned nresonances_>
+    template <unsigned nchannels_, unsigned nresonances_, unsigned order_>
     struct VV_Fwavechan :
-    public KMatrix<nchannels_, nresonances_>::Channel
+    public KMatrix<nchannels_, nresonances_, order_>::Channel
     {
 
         VV_Fwavechan(std::string name, double m1, double m2, unsigned l_orbital, std::array<Parameter, nresonances_> g0s) :
-            KMatrix<nchannels_, nresonances_>::Channel(name, m1, m2, l_orbital, g0s)
+            KMatrix<nchannels_, nresonances_, order_>::Channel(name, m1, m2, l_orbital, g0s)
         {
         };
 
@@ -313,12 +313,12 @@ namespace eos
     };
 
 
-    template <unsigned nchannels_, unsigned nresonances_>
+    template <unsigned nchannels_, unsigned nresonances_, unsigned order_>
     struct charmonium_resonance :
-    public KMatrix<nchannels_, nresonances_>::Resonance
+    public KMatrix<nchannels_, nresonances_, order_>::Resonance
     {
         charmonium_resonance(std::string name, Parameter m, Parameter q) :
-        KMatrix<nchannels_, nresonances_>::Resonance(name, m, q)
+        KMatrix<nchannels_, nresonances_, order_>::Resonance(name, m, q)
         {
         };
     };
@@ -331,11 +331,12 @@ namespace eos
 
             const static long unsigned nchannels = 24;
             const static long unsigned nresonances = 5;
+            const static long unsigned order = 0;
 
             struct IntermediateResult :
                 public CacheableObservable::IntermediateResult
             {
-                std::shared_ptr<KMatrix<nchannels, nresonances>> K;
+                std::shared_ptr<KMatrix<nchannels, nresonances, order>> K;
                 std::array<complex<double>, nchannels> tmatrix_row_0;
 
                 double E;

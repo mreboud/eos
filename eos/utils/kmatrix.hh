@@ -36,7 +36,7 @@
 
 namespace eos
 {
-    template <unsigned nchannels_, unsigned nresonances_>
+    template <unsigned nchannels_, unsigned nresonances_, unsigned order_>
     class KMatrix
     {
         public:
@@ -46,7 +46,8 @@ namespace eos
 
             std::array<std::shared_ptr<KMatrix::Channel>, nchannels_> _channels;
             std::array<std::shared_ptr<KMatrix::Resonance>, nresonances_> _resonances;
-            std::array<std::array<Parameter, nchannels_>, nchannels_> _bkgcst;
+            // The non-resonant contribution is described with a polynomial of order order_ in the variable s
+            std::array<std::array<std::array<Parameter, nchannels_>, nchannels_>, order_ + 1> _bkgpol;
 
             const std::string & _prefix;
 
@@ -64,7 +65,7 @@ namespace eos
             // Constructor
             KMatrix(std::array<std::shared_ptr<KMatrix::Channel>, nchannels_> channels,
                 std::array<std::shared_ptr<KMatrix::Resonance>, nresonances_> resonances,
-                std::array<std::array<Parameter, nchannels_>, nchannels_> bkgcst,
+                std::array<std::array<std::array<Parameter, nchannels_>, nchannels_>, order_ + 1> bkgpol,
                 const std::string & prefix);
 
             // Destuctor
@@ -85,8 +86,8 @@ namespace eos
     };
 
 
-    template <unsigned nchannels_, unsigned nresonances_>
-    struct KMatrix<nchannels_, nresonances_>::Channel
+    template <unsigned nchannels_, unsigned nresonances_, unsigned order_>
+    struct KMatrix<nchannels_, nresonances_, order_>::Channel
     {
         std::string _name;
         //Masses of the two final state particles
@@ -117,8 +118,8 @@ namespace eos
     };
 
 
-    template <unsigned nchannels_, unsigned nresonances_>
-    struct KMatrix<nchannels_, nresonances_>::Resonance
+    template <unsigned nchannels_, unsigned nresonances_, unsigned order_>
+    struct KMatrix<nchannels_, nresonances_, order_>::Resonance
     {
         std::string _name;
 

@@ -38,14 +38,14 @@ namespace eos
     using std::abs;
     using std::sqrt;
 
-    template <unsigned nchannels_, unsigned nresonances_>
-    KMatrix<nchannels_, nresonances_>::KMatrix(std::array<std::shared_ptr<KMatrix::Channel>, nchannels_> channels,
-                                               std::array<std::shared_ptr<KMatrix::Resonance>, nresonances_> resonances,
-                                               std::array<std::array<Parameter, nchannels_>, nchannels_> bkgcst,
-                                               const std::string & prefix) :
+    template <unsigned nchannels_, unsigned nresonances_, unsigned order_>
+    KMatrix<nchannels_, nresonances_, order_>::KMatrix(std::array<std::shared_ptr<KMatrix::Channel>, nchannels_> channels,
+                                                       std::array<std::shared_ptr<KMatrix::Resonance>, nresonances_> resonances,
+                                                       std::array<std::array<std::array<Parameter, nchannels_>, nchannels_>, order_ + 1> bkgpol,
+                                                       const std::string & prefix) :
         _channels(channels),
         _resonances(resonances),
-        _bkgcst(bkgcst),
+        _bkgpol(bkgpol),
         _prefix(prefix),
         _Khat(gsl_matrix_complex_calloc(nchannels_, nchannels_)),
         _That(gsl_matrix_complex_calloc(nchannels_, nchannels_)),
@@ -56,10 +56,12 @@ namespace eos
         // Perform size checks
         if (channels.size() != nchannels_)
             throw InternalError("The size of the channels array does not match nchannels_.");
-        if (bkgcst.size() != nchannels_)
-            throw InternalError("The size of the array of background constants does not match nchannels_.");
-        if (bkgcst.size() != 0 and bkgcst[0].size() != nchannels_)
-            throw InternalError("The array of background constants is not square.");
+        if (bkgpol.size() != order_ + 1)
+            throw InternalError("The size of the array of background constants does not match order_ + 1.");
+        if (bkgpol.size() != 0 and bkgpol[0].size() != nchannels_)
+            throw InternalError("The array of background constants is not valid");
+        if (bkgpol.size() != 0 and bkgpol[0].size() != 0 and bkgpol[0][0].size() != nchannels_)
+            throw InternalError("The array of background constants is not valid");
         if (resonances.size() != nresonances_)
             throw InternalError("The size of the resonances array does not match nresonances_.");
 
@@ -76,8 +78,8 @@ namespace eos
             throw std::bad_alloc();
     }
 
-    template <unsigned nchannels_, unsigned nresonances_>
-    KMatrix<nchannels_, nresonances_>::~KMatrix()
+    template <unsigned nchannels_, unsigned nresonances_, unsigned order_>
+    KMatrix<nchannels_, nresonances_, order_>::~KMatrix()
     {
         if (_perm)
             gsl_permutation_free(_perm);
@@ -102,9 +104,9 @@ namespace eos
 
 
     // Adapt s to avoid resonances masses
-    template <unsigned nchannels_, unsigned nresonances_>
+    template <unsigned nchannels_, unsigned nresonances_, unsigned order_>
     double
-    KMatrix<nchannels_, nresonances_>::adapt_s(const double s) const
+    KMatrix<nchannels_, nresonances_, order_>::adapt_s(const double s) const
     {
         // Disallowed range around resonance masses
         const double minimal_distance = 1.0e-7;
@@ -138,14 +140,14 @@ namespace eos
 
 
     // Return the row corresponding to the index rowindex of the T matrix defined as T = (1-i*rho*K)^(-1)*K
-    template <unsigned nchannels_, unsigned nresonances_>
+    template <unsigned nchannels_, unsigned nresonances_, unsigned order_>
     std::array<complex<double>, nchannels_>
-    KMatrix<nchannels_, nresonances_>::tmatrix_row(unsigned rowindex, double _s) const
+    KMatrix<nchannels_, nresonances_, order_>::tmatrix_row(unsigned rowindex, double _s) const
     {
         std::array<complex<double>, nchannels_> tmatrixrow;
         const auto & channels = this->_channels;
         const auto & resonances = this->_resonances;
-        const auto & bkgcst = this->_bkgcst;
+        const auto & bkgpol = this->_bkgpol;
         // Adapt s to avoid pole in the K matrix
         const double s = adapt_s(_s);
 
@@ -168,7 +170,13 @@ namespace eos
         {
             for (size_t j = 0 ; j < nchannels_ ; ++j)
             {
-                complex<double> entry = complex<double>(bkgcst[i][j].evaluate(), 0.0);
+                complex<double> entry = 0.;
+
+                // Fast evaluation of the polynomial describing the non-resonant contribution
+                for (size_t k = 0 ; k <= order_ ; ++k)
+                {
+                    entry = 1.0 / s * entry + complex<double>(bkgpol[order_ - k][i][j].evaluate(), 0.0);
+                }
 
                 for (size_t a = 0 ; a < nresonances_ ; ++a)
                 {
@@ -241,9 +249,9 @@ namespace eos
         return tmatrixrow;
     }
 
-    template <unsigned nchannels_, unsigned nresonances_>
+    template <unsigned nchannels_, unsigned nresonances_, unsigned order_>
     double
-    KMatrix<nchannels_, nresonances_>::partial_width(unsigned resonance, unsigned channel) const
+    KMatrix<nchannels_, nresonances_, order_>::partial_width(unsigned resonance, unsigned channel) const
     {
         double mres = this->_resonances[resonance]->_m;
         double rho  = real(this->_channels[channel]->rho(mres*mres));
@@ -251,15 +259,15 @@ namespace eos
         return power_of<2>((double)this->_channels[channel]->_g0s[resonance]) / mres * rho;
     }
 
-    template <unsigned nchannels_, unsigned nresonances_>
+    template <unsigned nchannels_, unsigned nresonances_, unsigned order_>
     double
-    KMatrix<nchannels_, nresonances_>::width(unsigned resonance) const
+    KMatrix<nchannels_, nresonances_, order_>::width(unsigned resonance) const
     {
         double result = 0.0;
 
         for (size_t i = 0; i < nchannels_; i++)
         {
-            result += KMatrix<nchannels_, nresonances_>::partial_width(resonance, i);
+            result += KMatrix<nchannels_, nresonances_, order_>::partial_width(resonance, i);
         }
 
         return result;
