@@ -36,11 +36,12 @@ namespace eos
         /* Channels and resonances
         Up to DD*       8  channels 2 resonances
         Up to D*D*      14 channels 3 resonances
+        Up to Ds*Ds*    21 channels 4 resonances
         Up to 4.8 GeV   24 channels 5 resonances
          */
-        const static long unsigned nchannels = 24;
-        const static long unsigned nresonances = 5;
-        const static long unsigned order = 0;
+        const static long unsigned nchannels = 8;
+        const static long unsigned nresonances = 2;
+        const static long unsigned order = 1;
 
         UsedParameter hbar;
         UsedParameter alpha_em;
@@ -106,22 +107,11 @@ namespace eos
         {
             switch (channel_index)
             {
-                case 7: // D+D-
-                    return 6; // D0Dbar0
-
                 case 9: // D*0D0bar
-                case 10: // D+D*-
-                case 11: // D*+D-
                     return 8; // D0D*0bar
 
-                case 16: // D*+D*- S=0 P wave
-                    return 13; // D*0D*0bar S=0 P wave
-
-                case 17: // D*+D*- S=2 P wave
-                    return 14; // D*0D*0bar S=2 P wave
-
-                case 18: // D*+D*- S=2 F wave
-                    return 15; // D*0D*0bar S=2 F wave
+                case 11: // D*+D-
+                    return 10; // D+D*-
 
                 case 20: // Ds*+Ds-
                     return 19; // Ds+Ds*-

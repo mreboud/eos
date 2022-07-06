@@ -40,18 +40,18 @@ namespace eos
     4   eff(4160)     PP (P)       3       -
     5   eff(4415)     PP (P)       3       -
     6   D0   D0bar    PP (P)       3       -
-    7   D+   D-       PP (P)       3       6 (isospin)
+    7   D+   D-       PP (P)       3       -
     8   D0   D*0bar   VP           3       -
     9   D*0  D0bar    VP           3       8 (c.c.)
-    10  D+   D*-      VP           3       8 (isospin)
+    10  D+   D*-      VP           3       -
     11  D*+  D-       VP           3       8 (c.c.)
     12  Ds   Ds       PP (P)       3       -
     13  D*0  D*0bar   VV (P, S=0)  3       -
     14  D*0  D*0bar   VV (P, S=2)  3       -
     15  D*0  D*0bar   VV (F, S=2)  7       -
-    16  D*+  D*-      VV (P, S=0)  3       13 (isospin)
-    17  D*+  D*-      VV (P, S=2)  3       14 (isospin)
-    18  D*+  D*-      VV (F, S=2)  7       15 (isospin)
+    16  D*+  D*-      VV (P, S=0)  3       -
+    17  D*+  D*-      VV (P, S=2)  3       -
+    18  D*+  D*-      VV (F, S=2)  7       -
     19  Ds+  Ds*-     VP           3       -
     20  Ds*+ Ds-      VP           3       19 (c.c.)
     21  Ds*+ Ds*-     VV (P, S=0)  3       -
@@ -329,9 +329,9 @@ namespace eos
     {
         public:
 
-            const static long unsigned nchannels = 24;
-            const static long unsigned nresonances = 5;
-            const static long unsigned order = 0;
+            const static long unsigned nchannels = 8;
+            const static long unsigned nresonances = 2;
+            const static long unsigned order = 1;
 
             struct IntermediateResult :
                 public CacheableObservable::IntermediateResult
