@@ -39,6 +39,25 @@ namespace eos
                         Unit::GeV(),
                         &EEToCCBar::psi2S_eff_width),
 
+                make_observable("ee->ccbar::psi2S_total_width", R"($\Gamma_{\psi(2S)}$)",
+                        Unit::GeV(),
+                        &EEToCCBar::psi2S_total_width),
+
+                make_observable("ee->ccbar::psi3770_eff_width", R"($\Gamma(\psi(3770) \to \textrm{eff})$)",
+                        Unit::GeV(),
+                        &EEToCCBar::psi3770_eff_width),
+
+                make_observable("ee->ccbar::psi3770_D0Dbar0_width", R"($\Gamma(\psi(3770) \to D^0\bar{D^0})$)",
+                        Unit::GeV(),
+                        &EEToCCBar::psi3770_D0Dbar0_width),
+
+                make_observable("ee->ccbar::psi3770_DpDm_width", R"($\Gamma(\psi(3770) \to D^+D^-)$)",
+                        Unit::GeV(),
+                        &EEToCCBar::psi3770_DpDm_width),
+
+                make_observable("ee->ccbar::psi3770_total_width", R"($\Gamma_{\psi(3770)}$)",
+                        Unit::GeV(),
+                        &EEToCCBar::psi3770_total_width),
                 make_observable("ee->ccbar::psi4040_DD_width", R"($\Gamma(\psi(4040) \to D\bar{D})$)",
                         Unit::GeV(),
                         &EEToCCBar::psi4040_DD_width),
@@ -50,6 +69,10 @@ namespace eos
                 make_observable("ee->ccbar::psi4040_DstDst_width", R"($\Gamma(\psi(4040) \to D^*\bar{D}^*)$)",
                         Unit::GeV(),
                         &EEToCCBar::psi4040_DstDst_width),
+
+                make_observable("ee->ccbar::psi4040_total_width", R"($\Gamma_{\psi(4040)}$)",
+                        Unit::GeV(),
+                        &EEToCCBar::psi4040_total_width),
 
                 make_observable("ee->ccbar::psi4160_DD_width", R"($\Gamma(\psi(4160) \to D\bar{D})$)",
                         Unit::GeV(),
@@ -63,6 +86,10 @@ namespace eos
                         Unit::GeV(),
                         &EEToCCBar::psi4160_DstDst_width),
 
+                make_observable("ee->ccbar::psi4160_total_width", R"($\Gamma_{\psi(4160)}$)",
+                        Unit::GeV(),
+                        &EEToCCBar::psi4160_total_width),
+
                 make_observable("ee->ccbar::psi4415_DD_width", R"($\Gamma(\psi(4415) \to D\bar{D})$)",
                         Unit::GeV(),
                         &EEToCCBar::psi4415_DD_width),
@@ -74,6 +101,10 @@ namespace eos
                 make_observable("ee->ccbar::psi4415_DstDst_width", R"($\Gamma(\psi(4415) \to D^*\bar{D}^*)$)",
                         Unit::GeV(),
                         &EEToCCBar::psi4415_DstDst_width),
+
+                make_observable("ee->ccbar::psi4415_total_width", R"($\Gamma_{\psi(4415)}$)",
+                        Unit::GeV(),
+                        &EEToCCBar::psi4415_total_width),
 
                 make_expression_observable("ee->ccbar::psi4040_DD_DDst_ratio",
                         R"(\Gamma(\psi(4040) \to D\bar{D})/\Gamma(\psi(4040) \to D\bar{D}^*))",
@@ -128,26 +159,6 @@ namespace eos
                         /
                         <<ee->ccbar::psi4415_DstDst_width>>
                         )"),
-
-                make_observable("ee->ccbar::psi2S_total_width", R"($\Gamma_{\psi(2S)}$)",
-                        Unit::GeV(),
-                        &EEToCCBar::psi2S_total_width),
-
-                make_observable("ee->ccbar::psi3770_total_width", R"($\Gamma_{\psi(3770)}$)",
-                        Unit::GeV(),
-                        &EEToCCBar::psi3770_total_width),
-
-                make_observable("ee->ccbar::psi4040_total_width", R"($\Gamma_{\psi(4040)}$)",
-                        Unit::GeV(),
-                        &EEToCCBar::psi4040_total_width),
-
-                make_observable("ee->ccbar::psi4160_total_width", R"($\Gamma_{\psi(4160)}$)",
-                        Unit::GeV(),
-                        &EEToCCBar::psi4160_total_width),
-
-                make_observable("ee->ccbar::psi4415_total_width", R"($\Gamma_{\psi(4415)}$)",
-                        Unit::GeV(),
-                        &EEToCCBar::psi4415_total_width),
 
                 make_cacheable_observable("ee->ccbar::sigma_eetoee(E)", R"($\sigma(ee \to ee)$)",
                         Unit::InverseGeV2(),

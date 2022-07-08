@@ -355,6 +355,9 @@ namespace eos
             double psi2S_ee_width() const;
             double psi2S_eff_width() const;
             double psi2S_total_width() const;
+            double psi3770_eff_width() const;
+            double psi3770_D0Dbar0_width() const;
+            double psi3770_DpDm_width() const;
             double psi3770_total_width() const;
             double psi4040_total_width() const;
             double psi4160_total_width() const;

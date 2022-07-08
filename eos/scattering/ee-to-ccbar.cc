@@ -497,6 +497,24 @@ namespace eos
     }
 
     double
+    EEToCCBar::psi3770_eff_width() const
+    {
+        return _imp->res_partial_width(1, 2);
+    }
+
+    double
+    EEToCCBar::psi3770_D0Dbar0_width() const
+    {
+        return _imp->res_partial_width(1, 6);
+    }
+
+    double
+    EEToCCBar::psi3770_DpDm_width() const
+    {
+        return _imp->res_partial_width(1, 7);
+    }
+
+    double
     EEToCCBar::psi3770_total_width() const
     {
         return _imp->res_total_width(1);
