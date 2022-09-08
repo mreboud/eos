@@ -338,7 +338,7 @@ namespace eos
             const double GeVtonb = 10 * pow( 1.e18 * hbar * speedoflight, 2.0);
 
             // Channel properties
-            const double Nf = K->_channels[Channels(channel)]->_N_orbital;
+            const double Nf = 2 * K->_channels[Channels(channel)]->_l_orbital + 1;
             const double rhof = real(K->_channels[Channels(channel)]->rho(intermediate_result->s));
 
             // Get T-matrix[ee, channel]

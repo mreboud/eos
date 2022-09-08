@@ -62,7 +62,7 @@ namespace eos
     {
 
         EffChannel(std::string name, double m1, double m2, std::array<Parameter, nresonances_> g0s) :
-            KMatrix<nchannels_, nresonances_>::Channel(name, m1, m2, 1, g0s)
+            KMatrix<nchannels_, nresonances_>::Channel(name, m1, m2, 0, g0s)
         {
         };
 
@@ -113,7 +113,7 @@ namespace eos
     {
 
         PWavePPChannel(std::string name, double m1, double m2, std::array<Parameter, nresonances_> g0s) :
-            KMatrix<nchannels_, nresonances_>::Channel(name, m1, m2, 3, g0s)
+            KMatrix<nchannels_, nresonances_>::Channel(name, m1, m2, 1, g0s)
         {
         };
 
@@ -164,7 +164,7 @@ namespace eos
     {
 
         PWaveVPChannel(std::string name, double m1, double m2, std::array<Parameter, nresonances_> g0s) :
-            KMatrix<nchannels_, nresonances_>::Channel(name, m1, m2, 3, g0s)
+            KMatrix<nchannels_, nresonances_>::Channel(name, m1, m2, 1, g0s)
         {
         };
 
@@ -215,7 +215,7 @@ namespace eos
     {
 
         PWaveVVChannel(std::string name, double m1, double m2, std::array<Parameter, nresonances_> g0s) :
-            KMatrix<nchannels_, nresonances_>::Channel(name, m1, m2, 3, g0s)
+            KMatrix<nchannels_, nresonances_>::Channel(name, m1, m2, 1, g0s)
         {
         };
 
@@ -265,7 +265,7 @@ namespace eos
     {
 
         FWaveVVChannel(std::string name, double m1, double m2, std::array<Parameter, nresonances_> g0s) :
-            KMatrix<nchannels_, nresonances_>::Channel(name, m1, m2, 7, g0s)
+            KMatrix<nchannels_, nresonances_>::Channel(name, m1, m2, 2, g0s)
         {
         };
 

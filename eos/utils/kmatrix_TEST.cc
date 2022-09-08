@@ -32,8 +32,8 @@ using namespace eos;
 struct PPchan11 :
     public KMatrix<1,1>::Channel
 {
-    PPchan11(std::string name, double m1, double m2, unsigned N_orbital, const Parameters & p) :
-        Channel(name, m1, m2, N_orbital, {{ p["test::g0_1"] }})
+    PPchan11(std::string name, double m1, double m2, unsigned l_orbital, const Parameters & p) :
+        Channel(name, m1, m2, l_orbital, {{ p["test::g0_1"] }})
     {
     };
 
@@ -110,8 +110,8 @@ struct PPchan12 :
     public KMatrix<1,2>::Channel
 {
 
-    PPchan12(std::string name, double m1, double m2, unsigned N_orbital, const Parameters & p) :
-        Channel(name, m1, m2, N_orbital, {{ p["test::g0_1"], p["test::g0_2"] }})
+    PPchan12(std::string name, double m1, double m2, unsigned l_orbital, const Parameters & p) :
+        Channel(name, m1, m2, l_orbital, {{ p["test::g0_1"], p["test::g0_2"] }})
     {
     };
 
@@ -205,7 +205,7 @@ class KMatrixTest :
             // than the channel masses, one recover a simple Breit-Wigner distribution
             {
                 auto res = std::make_shared<res11>("res", p["test::m_1"]);
-                auto chan = std::make_shared<PPchan11>("chan", 0.7, 0.8, 3, p);
+                auto chan = std::make_shared<PPchan11>("chan", 0.7, 0.8, 1, p);
 
                 KMatrix<1,1> simplest_kmatrix({chan}, {res}, {{p["test::c_1"]}}, "simplest_kmatrix");
 
@@ -243,7 +243,7 @@ class KMatrixTest :
                 auto res1 = std::make_shared<res12>("res1", p["test::m_1"]);
                 auto res2 = std::make_shared<res12>("res2", p["test::m_2"]);
 
-                auto chan_12 = std::make_shared<PPchan12>("chan_12", 0.7, 0.8, 3, p);
+                auto chan_12 = std::make_shared<PPchan12>("chan_12", 0.7, 0.8, 1, p);
 
                 // Test beta and rho for a PP channel
                 TEST_CHECK_NEARLY_EQUAL(chan_12->beta(9.0),          0.865544,  eps);

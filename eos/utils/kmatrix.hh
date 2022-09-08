@@ -95,15 +95,15 @@ namespace eos
         double _m1;
         double _m2;
 
-        unsigned _N_orbital;
+        unsigned _l_orbital;
 
         std::array<Parameter, nresonances_> _g0s;
 
-        Channel(std::string name, double m1, double m2, unsigned N_orbital, std::array<Parameter, nresonances_> g0s) :
+        Channel(std::string name, double m1, double m2, unsigned l_orbital, std::array<Parameter, nresonances_> g0s) :
             _name(name),
             _m1(m1),
             _m2(m2),
-            _N_orbital(N_orbital),
+            _l_orbital(l_orbital),
             _g0s(g0s)
         {
             if (m1 < 0 || m2 < 0)
