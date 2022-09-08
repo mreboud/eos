@@ -17,8 +17,8 @@
 
 #include <eos/scattering/ee-to-ccbar.hh>
 #include <eos/maths/complex.hh>
-#include <eos/utils/kmatrix-impl.hh>
 #include <eos/utils/kinematic.hh>
+#include <eos/utils/kmatrix-impl.hh>
 #include <eos/utils/options.hh>
 #include <eos/utils/parameters.hh>
 #include <eos/utils/private_implementation_pattern-impl.hh>
@@ -69,8 +69,9 @@ namespace eos
             DsstpDsstmF2
         };
 
-        // Charmonium masses
+        // Charmonium masses and effective sizes
         std::array<UsedParameter, EEToCCBar::nresonances> m;
+        std::array<UsedParameter, EEToCCBar::nresonances> q;
 
         // Channel-Resonance couplings
         std::array<std::array<UsedParameter, EEToCCBar::nchannels>, EEToCCBar::nresonances> g0;
@@ -99,6 +100,19 @@ namespace eos
             return std::array<UsedParameter, sizeof...(indices)>
             {{
                 UsedParameter(p["mass::" + resonance_names[indices]], u)...
+            }};
+        }
+
+        template <typename T, T... indices>
+        auto _resonance_sizes(const Parameters & p, ParameterUser & u, std::integer_sequence<T, indices...>)
+            -> std::array<UsedParameter, sizeof...(indices)>
+        {
+            if (sizeof...(indices) > resonance_names.size())
+                throw InternalError("The number of requested resonances is larger than the number of resonance names.");
+
+            return std::array<UsedParameter, sizeof...(indices)>
+            {{
+                UsedParameter(p[resonance_names[indices] + "::q_R"], u)...
             }};
         }
 
@@ -232,6 +246,7 @@ namespace eos
             m_Dsst(p["mass::D_s^*"], u),
 
             m(_resonance_masses(p, u, std::make_index_sequence<EEToCCBar::nresonances>())),
+            q(_resonance_sizes(p, u, std::make_index_sequence<EEToCCBar::nresonances>())),
             g0(_g0_matrix(p, u, std::make_index_sequence<EEToCCBar::nresonances>(), std::make_index_sequence<EEToCCBar::nchannels>())),
             bkgcst(_c_matrix(p, u, std::make_index_sequence<EEToCCBar::nchannels>(), std::make_index_sequence<EEToCCBar::nchannels>())),
 
@@ -241,7 +256,7 @@ namespace eos
             std::array<std::shared_ptr<KMatrix<EEToCCBar::nchannels, EEToCCBar::nresonances>::Resonance>, EEToCCBar::nresonances> resonance_array;
             for (unsigned i = 0; i<EEToCCBar::nresonances; i++)
             {
-                resonance_array[i] = std::make_shared<CharmoniumResonance<EEToCCBar::nchannels, EEToCCBar::nresonances>>(resonance_names[i], m[i]);
+                resonance_array[i] = std::make_shared<CharmoniumResonance<EEToCCBar::nchannels, EEToCCBar::nresonances>>(resonance_names[i], m[i], q[i]);
             }
 
             std::array<std::shared_ptr<KMatrix<EEToCCBar::nchannels, EEToCCBar::nresonances>::Channel>, EEToCCBar::nchannels> channel_array;

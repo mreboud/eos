@@ -22,7 +22,7 @@
 #include <eos/utils/parameters.hh>
 #include <eos/utils/private_implementation_pattern.hh>
 #include <eos/utils/stringify.hh>
-#include <eos/utils/kmatrix-impl.hh>
+#include <eos/utils/kmatrix.hh>
 #include <eos/utils/concrete-cacheable-observable.hh>
 
 #include <vector>
@@ -313,8 +313,8 @@ namespace eos
     struct CharmoniumResonance :
     public KMatrix<nchannels_, nresonances_>::Resonance
     {
-        CharmoniumResonance(std::string name, Parameter m) :
-        KMatrix<nchannels_, nresonances_>::Resonance(name, m)
+        CharmoniumResonance(std::string name, Parameter m, Parameter q) :
+        KMatrix<nchannels_, nresonances_>::Resonance(name, m, q)
         {
         };
     };
@@ -325,8 +325,8 @@ namespace eos
     {
         public:
 
-            const static long unsigned nchannels = 9;
-            const static long unsigned nresonances = 3;
+            const static long unsigned nchannels = 20;
+            const static long unsigned nresonances = 5;
 
             struct IntermediateResult :
                 public CacheableObservable::IntermediateResult
