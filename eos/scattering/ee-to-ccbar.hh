@@ -60,13 +60,13 @@ namespace eos
     */
 
     // Effective channel
-    template <unsigned nchannels_, unsigned nresonances_>
+    template <unsigned nchannels_, unsigned nresonances_, unsigned order_>
     struct EffChannel :
-    public KMatrix<nchannels_, nresonances_>::Channel
+    public KMatrix<nchannels_, nresonances_, order_>::Channel
     {
 
         EffChannel(std::string name, double m1, double m2, std::array<Parameter, nresonances_> g0s) :
-            KMatrix<nchannels_, nresonances_>::Channel(name, m1, m2, 0, g0s)
+            KMatrix<nchannels_, nresonances_, order_>::Channel(name, m1, m2, 0, g0s)
         {
         };
 
@@ -111,13 +111,13 @@ namespace eos
 
 
     // V -> PP channel
-    template <unsigned nchannels_, unsigned nresonances_>
+    template <unsigned nchannels_, unsigned nresonances_, unsigned order_>
     struct PWavePPChannel :
-    public KMatrix<nchannels_, nresonances_>::Channel
+    public KMatrix<nchannels_, nresonances_, order_>::Channel
     {
 
         PWavePPChannel(std::string name, double m1, double m2, std::array<Parameter, nresonances_> g0s) :
-            KMatrix<nchannels_, nresonances_>::Channel(name, m1, m2, 1, g0s)
+            KMatrix<nchannels_, nresonances_, order_>::Channel(name, m1, m2, 1, g0s)
         {
         };
 
@@ -162,13 +162,13 @@ namespace eos
 
 
     // V -> VP channel
-    template <unsigned nchannels_, unsigned nresonances_>
+    template <unsigned nchannels_, unsigned nresonances_, unsigned order_>
     struct PWaveVPChannel :
-    public KMatrix<nchannels_, nresonances_>::Channel
+    public KMatrix<nchannels_, nresonances_, order_>::Channel
     {
 
         PWaveVPChannel(std::string name, double m1, double m2, std::array<Parameter, nresonances_> g0s) :
-            KMatrix<nchannels_, nresonances_>::Channel(name, m1, m2, 1, g0s)
+            KMatrix<nchannels_, nresonances_, order_>::Channel(name, m1, m2, 1, g0s)
         {
         };
 
@@ -213,13 +213,13 @@ namespace eos
 
 
     // V -> VV channel
-    template <unsigned nchannels_, unsigned nresonances_>
+    template <unsigned nchannels_, unsigned nresonances_, unsigned order_>
     struct PWaveVVChannel :
-    public KMatrix<nchannels_, nresonances_>::Channel
+    public KMatrix<nchannels_, nresonances_, order_>::Channel
     {
 
         PWaveVVChannel(std::string name, double m1, double m2, std::array<Parameter, nresonances_> g0s) :
-            KMatrix<nchannels_, nresonances_>::Channel(name, m1, m2, 1, g0s)
+            KMatrix<nchannels_, nresonances_, order_>::Channel(name, m1, m2, 1, g0s)
         {
         };
 
@@ -263,13 +263,13 @@ namespace eos
     };
 
     // V -> VV channel
-    template <unsigned nchannels_, unsigned nresonances_>
+    template <unsigned nchannels_, unsigned nresonances_, unsigned order_>
     struct FWaveVVChannel :
-    public KMatrix<nchannels_, nresonances_>::Channel
+    public KMatrix<nchannels_, nresonances_, order_>::Channel
     {
 
         FWaveVVChannel(std::string name, double m1, double m2, std::array<Parameter, nresonances_> g0s) :
-            KMatrix<nchannels_, nresonances_>::Channel(name, m1, m2, 2, g0s)
+            KMatrix<nchannels_, nresonances_, order_>::Channel(name, m1, m2, 2, g0s)
         {
         };
 
@@ -313,12 +313,12 @@ namespace eos
     };
 
 
-    template <unsigned nchannels_, unsigned nresonances_>
+    template <unsigned nchannels_, unsigned nresonances_, unsigned order_>
     struct CharmoniumResonance :
-    public KMatrix<nchannels_, nresonances_>::Resonance
+    public KMatrix<nchannels_, nresonances_, order_>::Resonance
     {
         CharmoniumResonance(std::string name, Parameter m, Parameter q) :
-        KMatrix<nchannels_, nresonances_>::Resonance(name, m, q)
+        KMatrix<nchannels_, nresonances_, order_>::Resonance(name, m, q)
         {
         };
     };
@@ -329,13 +329,22 @@ namespace eos
     {
         public:
 
-            const static long unsigned nchannels = 24;
-            const static long unsigned nresonances = 5;
+            /* Number of active channels and resonances
+                Up to DD* (3.872 GeV)      5  channels 2 resonances
+                Up to D*D* (4.014 GeV)     10 channels 2 resonances
+                Up to Ds*Ds (4.080 GeV)    17 channels 3 resonances
+                Up to Ds*Ds* (4.224 GeV)   20 channels 4 resonances
+                Up to 4.8 GeV              24 channels 5 resonances
+            */
+            const static long unsigned nchannels = 5;
+            const static long unsigned nresonances = 2;
+
+            const static long unsigned order = 1;
 
             struct IntermediateResult :
                 public CacheableObservable::IntermediateResult
             {
-                std::shared_ptr<KMatrix<nchannels, nresonances>> K;
+                std::shared_ptr<KMatrix<nchannels, nresonances, order>> K;
                 std::array<complex<double>, nchannels> tmatrix_row_0;
 
                 double E;

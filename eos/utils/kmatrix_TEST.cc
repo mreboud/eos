@@ -27,10 +27,10 @@ using namespace test;
 using namespace eos;
 
 ///////////////////////
-/// Simplest K matrix, 1 channel, 1 resonance
+/// Simplest K matrix, 1 channel, 1 resonance, 0th order background
 ///////////////////////
 struct PPchan11 :
-    public KMatrix<1,1>::Channel
+    public KMatrix<1,1,0>::Channel
 {
     PPchan11(std::string name, double m1, double m2, unsigned l_orbital, const Parameters & p) :
         Channel(name, m1, m2, l_orbital, {{ p["test::g0_1"] }})
@@ -89,7 +89,7 @@ struct PPchan11 :
 };
 
 struct res11 :
-    public KMatrix<1,1>::Resonance
+    public KMatrix<1,1,0>::Resonance
 {
     res11(std::string name, Parameter m, Parameter q) :
         Resonance(name, m, q)
@@ -104,10 +104,10 @@ double BreitWigner(double const s, double const M, double const Ga)
 
 
 ///////////////////////
-/// 1 channel, 2 resonances
+/// 1 channel, 2 resonances, 0th order background
 ///////////////////////
 struct PPchan12 :
-    public KMatrix<1,2>::Channel
+    public KMatrix<1,2,0>::Channel
 {
 
     PPchan12(std::string name, double m1, double m2, unsigned l_orbital, const Parameters & p) :
@@ -166,7 +166,7 @@ struct PPchan12 :
 };
 
 struct res12 :
-    public KMatrix<1,2>::Resonance
+    public KMatrix<1,2,0>::Resonance
 {
     res12(std::string name, Parameter m, Parameter q) :
         Resonance(name, m, q)
@@ -208,7 +208,7 @@ class KMatrixTest :
                 auto res = std::make_shared<res11>("res", p["test::m_1"], p["test::q_1"]);
                 auto chan = std::make_shared<PPchan11>("chan", 0.7, 0.8, 1, p);
 
-                KMatrix<1,1> simplest_kmatrix({chan}, {res}, {{p["test::c_1"]}}, "simplest_kmatrix");
+                KMatrix<1,1,0> simplest_kmatrix({chan}, {res}, {{p["test::c_1"]}}, "simplest_kmatrix");
 
                 TEST_CHECK_EQUAL(res->_m, 15.0);
                 TEST_CHECK_EQUAL(res->_q, 1.e-5);
@@ -272,7 +272,7 @@ class KMatrixTest :
                 TEST_CHECK_NEARLY_EQUAL(chan_12->rho(0.001).imag(),  0.635582,  eps);
 
                 // Test KMatrix inversion into TMatrix
-                KMatrix<1,2> kmatrix_12({chan_12}, {res1, res2}, {{p["test::c_1"]}}, "kmatrix_12");
+                KMatrix<1,2,0> kmatrix_12({chan_12}, {res1, res2}, {{p["test::c_1"]}}, "kmatrix_12");
 
                 auto kmatrix_12_ats0 = kmatrix_12.tmatrix_row(0, 9.0);
                 auto kmatrix_12_ats1 = kmatrix_12.tmatrix_row(0, 1.5);

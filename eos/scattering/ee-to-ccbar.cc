@@ -79,7 +79,7 @@ namespace eos
         std::array<std::array<UsedParameter, EEToCCBar::nchannels>, EEToCCBar::nresonances> g0;
 
         // Non-cc contribution to the Rc ratio
-        std::array<std::array<UsedParameter, EEToCCBar::nchannels>, EEToCCBar::nchannels> bkgcst;
+        std::array<std::array<std::array<UsedParameter, EEToCCBar::nchannels>, EEToCCBar::nchannels>, EEToCCBar::order + 1> bkgpol;
 
         // R_uds
         UsedParameter Rconstant;
@@ -87,7 +87,7 @@ namespace eos
         // Normalization of the exclusive channels
         UsedParameter exclusive_norm;
 
-        std::shared_ptr<KMatrix<EEToCCBar::nchannels, EEToCCBar::nresonances>> K;
+        std::shared_ptr<KMatrix<EEToCCBar::nchannels, EEToCCBar::nresonances, EEToCCBar::order>> K;
 
         using IntermediateResult = EEToCCBar::IntermediateResult;
         IntermediateResult _intermediate_result;
@@ -174,7 +174,7 @@ namespace eos
         }
 
         template <typename T, T... column_indices>
-        auto _c_row(const Parameters & p, ParameterUser & u, T row_index, std::integer_sequence<T, column_indices...>)
+        auto _c_row(const Parameters & p, ParameterUser & u, T power, T row_index, std::integer_sequence<T, column_indices...>)
             -> std::array<UsedParameter, sizeof...(column_indices)>
         {
             if (sizeof...(column_indices) > channel_names.size())
@@ -182,13 +182,13 @@ namespace eos
 
             return std::array<UsedParameter, sizeof...(column_indices)>
             {{
-                UsedParameter(p["ee->ccbar::c(" + channel_names[_filter_channel_index(Channels(row_index))] + ","
+                UsedParameter(p["ee->ccbar::c_" + std::to_string(power) + "(" + channel_names[_filter_channel_index(Channels(row_index))] + ","
                         + channel_names[_filter_channel_index(Channels(column_indices))] + ")"], u)...
             }};
         }
 
         template <typename T, T... row_indices, T... column_indices>
-        auto _c_matrix(const Parameters & p, ParameterUser & u, std::integer_sequence<T, row_indices...>, std::integer_sequence<T, column_indices...> column_seq)
+        auto _c_matrix(const Parameters & p, ParameterUser & u, T power, std::integer_sequence<T, row_indices...>, std::integer_sequence<T, column_indices...> column_seq)
             -> std::array<std::array<UsedParameter, sizeof...(column_indices)>, sizeof...(row_indices)>
         {
             if (sizeof...(row_indices) > channel_names.size())
@@ -196,9 +196,23 @@ namespace eos
 
             return std::array<std::array<UsedParameter, sizeof...(column_indices)>, sizeof...(row_indices)>
             {{
-                _c_row(p, u, row_indices, column_seq)...
+                _c_row(p, u, power, row_indices, column_seq)...
             }};
         }
+
+        template <typename T, T... row_indices, T... column_indices, T... power_indices>
+        auto _c_array(const Parameters & p, ParameterUser & u, std::integer_sequence<T, power_indices...>, std::integer_sequence<T, row_indices...> row_seq, std::integer_sequence<T, column_indices...> column_seq)
+            -> std::array<std::array<std::array<UsedParameter, sizeof...(column_indices)>, sizeof...(row_indices)>, sizeof...(power_indices)>
+        {
+            if (sizeof...(power_indices) >EEToCCBar::order + 1)
+                throw InternalError("The number of background constants matrices is larger than the requested order.");
+
+            return std::array<std::array<std::array<UsedParameter, sizeof...(column_indices)>, sizeof...(row_indices)>, sizeof...(power_indices)>
+            {{
+                _c_matrix(p, u, power_indices, row_seq, column_seq)...
+            }};
+        }
+
 
         template <typename T, T... row_indices>
         auto _get_g0_column(T column_index, std::integer_sequence<T, row_indices...>)
@@ -211,24 +225,35 @@ namespace eos
         }
 
         template <typename T, T... column_indices>
-        auto _get_bkgcst_row(T row_index, std::integer_sequence<T, column_indices...>)
+        auto _get_bkgpol_row(T power, T row_index, std::integer_sequence<T, column_indices...>)
             -> std::array<Parameter, sizeof...(column_indices)>
         {
             return std::array<Parameter, sizeof...(column_indices)>
             {{
-                bkgcst[row_index][column_indices]...
+                bkgpol[power][row_index][column_indices]...
             }};
         }
 
         template <typename T, T... row_indices, T... column_indices>
-        auto _get_bkgcst(std::integer_sequence<T, row_indices...>, std::integer_sequence<T, column_indices...> column_seq)
+        auto _get_bkgpol_matrix(T power, std::integer_sequence<T, row_indices...>, std::integer_sequence<T, column_indices...> column_seq)
             -> std::array<std::array<Parameter, sizeof...(column_indices)>, sizeof...(row_indices)>
         {
             return std::array<std::array<Parameter, sizeof...(column_indices)>, sizeof...(row_indices)>
             {{
-                _get_bkgcst_row(row_indices, column_seq)...
+                _get_bkgpol_row(power, row_indices, column_seq)...
             }};
         }
+
+        template <typename T, T... row_indices, T... column_indices, T... power_indices>
+        auto _get_bkgpol(std::integer_sequence<T, power_indices...>, std::integer_sequence<T, row_indices...> row_seq, std::integer_sequence<T, column_indices...> column_seq)
+            -> std::array<std::array<std::array<Parameter, sizeof...(column_indices)>, sizeof...(row_indices)>, sizeof...(power_indices)>
+        {
+            return std::array<std::array<std::array<Parameter, sizeof...(column_indices)>, sizeof...(row_indices)>, sizeof...(power_indices)>
+            {{
+                _get_bkgpol_matrix(power_indices, row_seq, column_seq)...
+            }};
+        }
+
 
         static const std::vector<OptionSpecification> options;
 
@@ -246,18 +271,18 @@ namespace eos
             m(_resonance_masses(p, u, std::make_index_sequence<EEToCCBar::nresonances>())),
             q(_resonance_sizes(p, u, std::make_index_sequence<EEToCCBar::nresonances>())),
             g0(_g0_matrix(p, u, std::make_index_sequence<EEToCCBar::nresonances>(), std::make_index_sequence<EEToCCBar::nchannels>())),
-            bkgcst(_c_matrix(p, u, std::make_index_sequence<EEToCCBar::nchannels>(), std::make_index_sequence<EEToCCBar::nchannels>())),
+            bkgpol(_c_array(p, u, std::make_index_sequence<EEToCCBar::order + 1>(), std::make_index_sequence<EEToCCBar::nchannels>(), std::make_index_sequence<EEToCCBar::nchannels>())),
 
             Rconstant(p["ee->ccbar::Rconstant"], u),
             exclusive_norm(p["ee->ccbar::exclusive_norm"], u)
         {
-            std::array<std::shared_ptr<KMatrix<EEToCCBar::nchannels, EEToCCBar::nresonances>::Resonance>, EEToCCBar::nresonances> resonance_array;
+            std::array<std::shared_ptr<KMatrix<EEToCCBar::nchannels, EEToCCBar::nresonances, EEToCCBar::order>::Resonance>, EEToCCBar::nresonances> resonance_array;
             for (unsigned i = 0; i<EEToCCBar::nresonances; i++)
             {
-                resonance_array[i] = std::make_shared<CharmoniumResonance<EEToCCBar::nchannels, EEToCCBar::nresonances>>(resonance_names[i], m[i], q[i]);
+                resonance_array[i] = std::make_shared<CharmoniumResonance<EEToCCBar::nchannels, EEToCCBar::nresonances, EEToCCBar::order>>(resonance_names[i], m[i], q[i]);
             }
 
-            std::array<std::shared_ptr<KMatrix<EEToCCBar::nchannels, EEToCCBar::nresonances>::Channel>, EEToCCBar::nchannels> channel_array;
+            std::array<std::shared_ptr<KMatrix<EEToCCBar::nchannels, EEToCCBar::nresonances, EEToCCBar::order>::Channel>, EEToCCBar::nchannels> channel_array;
             for (unsigned i = 0; i<EEToCCBar::nchannels; i++)
             {
                 switch (Channels(i))
@@ -268,49 +293,49 @@ namespace eos
                     case eff4040:
                     case eff4160:
                     case eff4415:
-                        channel_array[i] = std::make_shared<EffChannel<EEToCCBar::nchannels, EEToCCBar::nresonances>>(channel_names[i], m_e, m_e, _get_g0_column(_filter_channel_index(Channels(i)), std::make_index_sequence<EEToCCBar::nresonances>()));
+                        channel_array[i] = std::make_shared<EffChannel<EEToCCBar::nchannels, EEToCCBar::nresonances, EEToCCBar::order>>(channel_names[i], m_e, m_e, _get_g0_column(_filter_channel_index(Channels(i)), std::make_index_sequence<EEToCCBar::nresonances>()));
                         break;
                     case D0Dbar0:
-                        channel_array[i] = std::make_shared<PWavePPChannel<EEToCCBar::nchannels, EEToCCBar::nresonances>>(channel_names[i], m_D0, m_D0, _get_g0_column(_filter_channel_index(Channels(i)), std::make_index_sequence<EEToCCBar::nresonances>()));
+                        channel_array[i] = std::make_shared<PWavePPChannel<EEToCCBar::nchannels, EEToCCBar::nresonances, EEToCCBar::order>>(channel_names[i], m_D0, m_D0, _get_g0_column(_filter_channel_index(Channels(i)), std::make_index_sequence<EEToCCBar::nresonances>()));
                         break;
                     case DpDm:
-                        channel_array[i] = std::make_shared<PWavePPChannel<EEToCCBar::nchannels, EEToCCBar::nresonances>>(channel_names[i], m_D, m_D, _get_g0_column(_filter_channel_index(Channels(i)), std::make_index_sequence<EEToCCBar::nresonances>()));
+                        channel_array[i] = std::make_shared<PWavePPChannel<EEToCCBar::nchannels, EEToCCBar::nresonances, EEToCCBar::order>>(channel_names[i], m_D, m_D, _get_g0_column(_filter_channel_index(Channels(i)), std::make_index_sequence<EEToCCBar::nresonances>()));
                         break;
                     case D0Dbarst0:
                     case Dst0Dbar0:
-                        channel_array[i] = std::make_shared<PWaveVPChannel<EEToCCBar::nchannels, EEToCCBar::nresonances>>(channel_names[i], m_D0, m_Dst0, _get_g0_column(_filter_channel_index(Channels(i)), std::make_index_sequence<EEToCCBar::nresonances>()));
+                        channel_array[i] = std::make_shared<PWaveVPChannel<EEToCCBar::nchannels, EEToCCBar::nresonances, EEToCCBar::order>>(channel_names[i], m_D0, m_Dst0, _get_g0_column(_filter_channel_index(Channels(i)), std::make_index_sequence<EEToCCBar::nresonances>()));
                         break;
                     case DpDstm:
                     case DstpDm:
-                        channel_array[i] = std::make_shared<PWaveVPChannel<EEToCCBar::nchannels, EEToCCBar::nresonances>>(channel_names[i], m_D, m_Dst, _get_g0_column(_filter_channel_index(Channels(i)), std::make_index_sequence<EEToCCBar::nresonances>()));
+                        channel_array[i] = std::make_shared<PWaveVPChannel<EEToCCBar::nchannels, EEToCCBar::nresonances, EEToCCBar::order>>(channel_names[i], m_D, m_Dst, _get_g0_column(_filter_channel_index(Channels(i)), std::make_index_sequence<EEToCCBar::nresonances>()));
                         break;
                     case DspDsm:
-                        channel_array[i] = std::make_shared<PWavePPChannel<EEToCCBar::nchannels, EEToCCBar::nresonances>>(channel_names[i], m_Ds, m_Ds, _get_g0_column(_filter_channel_index(Channels(i)), std::make_index_sequence<EEToCCBar::nresonances>()));
+                        channel_array[i] = std::make_shared<PWavePPChannel<EEToCCBar::nchannels, EEToCCBar::nresonances, EEToCCBar::order>>(channel_names[i], m_Ds, m_Ds, _get_g0_column(_filter_channel_index(Channels(i)), std::make_index_sequence<EEToCCBar::nresonances>()));
                         break;
                     case Dst0Dbarst0P0:
                     case Dst0Dbarst0P2:
-                        channel_array[i] = std::make_shared<PWaveVVChannel<EEToCCBar::nchannels, EEToCCBar::nresonances>>(channel_names[i], m_Dst0, m_Dst0, _get_g0_column(_filter_channel_index(Channels(i)), std::make_index_sequence<EEToCCBar::nresonances>()));
+                        channel_array[i] = std::make_shared<PWaveVVChannel<EEToCCBar::nchannels, EEToCCBar::nresonances, EEToCCBar::order>>(channel_names[i], m_Dst0, m_Dst0, _get_g0_column(_filter_channel_index(Channels(i)), std::make_index_sequence<EEToCCBar::nresonances>()));
                         break;
                     case Dst0Dbarst0F2:
-                        channel_array[i] = std::make_shared<FWaveVVChannel<EEToCCBar::nchannels, EEToCCBar::nresonances>>(channel_names[i], m_Dst0, m_Dst0, _get_g0_column(_filter_channel_index(Channels(i)), std::make_index_sequence<EEToCCBar::nresonances>()));
+                        channel_array[i] = std::make_shared<FWaveVVChannel<EEToCCBar::nchannels, EEToCCBar::nresonances, EEToCCBar::order>>(channel_names[i], m_Dst0, m_Dst0, _get_g0_column(_filter_channel_index(Channels(i)), std::make_index_sequence<EEToCCBar::nresonances>()));
                         break;
                     case DstpDstmP0:
                     case DstpDstmP2:
-                        channel_array[i] = std::make_shared<PWaveVVChannel<EEToCCBar::nchannels, EEToCCBar::nresonances>>(channel_names[i], m_Dst, m_Dst, _get_g0_column(_filter_channel_index(Channels(i)), std::make_index_sequence<EEToCCBar::nresonances>()));
+                        channel_array[i] = std::make_shared<PWaveVVChannel<EEToCCBar::nchannels, EEToCCBar::nresonances, EEToCCBar::order>>(channel_names[i], m_Dst, m_Dst, _get_g0_column(_filter_channel_index(Channels(i)), std::make_index_sequence<EEToCCBar::nresonances>()));
                         break;
                     case DstpDstmF2:
-                        channel_array[i] = std::make_shared<FWaveVVChannel<EEToCCBar::nchannels, EEToCCBar::nresonances>>(channel_names[i], m_Dst, m_Dst, _get_g0_column(_filter_channel_index(Channels(i)), std::make_index_sequence<EEToCCBar::nresonances>()));
+                        channel_array[i] = std::make_shared<FWaveVVChannel<EEToCCBar::nchannels, EEToCCBar::nresonances, EEToCCBar::order>>(channel_names[i], m_Dst, m_Dst, _get_g0_column(_filter_channel_index(Channels(i)), std::make_index_sequence<EEToCCBar::nresonances>()));
                         break;
                     case DspDsstm:
                     case DsstpDsm:
-                        channel_array[i] = std::make_shared<PWaveVPChannel<EEToCCBar::nchannels, EEToCCBar::nresonances>>(channel_names[i], m_Ds, m_Dsst, _get_g0_column(_filter_channel_index(Channels(i)), std::make_index_sequence<EEToCCBar::nresonances>()));
+                        channel_array[i] = std::make_shared<PWaveVPChannel<EEToCCBar::nchannels, EEToCCBar::nresonances, EEToCCBar::order>>(channel_names[i], m_Ds, m_Dsst, _get_g0_column(_filter_channel_index(Channels(i)), std::make_index_sequence<EEToCCBar::nresonances>()));
                         break;
                     case DsstpDsstmP0:
                     case DsstpDsstmP2:
-                        channel_array[i] = std::make_shared<PWaveVVChannel<EEToCCBar::nchannels, EEToCCBar::nresonances>>(channel_names[i], m_Dsst, m_Dsst, _get_g0_column(_filter_channel_index(Channels(i)), std::make_index_sequence<EEToCCBar::nresonances>()));
+                        channel_array[i] = std::make_shared<PWaveVVChannel<EEToCCBar::nchannels, EEToCCBar::nresonances, EEToCCBar::order>>(channel_names[i], m_Dsst, m_Dsst, _get_g0_column(_filter_channel_index(Channels(i)), std::make_index_sequence<EEToCCBar::nresonances>()));
                         break;
                     case DsstpDsstmF2:
-                        channel_array[i] = std::make_shared<FWaveVVChannel<EEToCCBar::nchannels, EEToCCBar::nresonances>>(channel_names[i], m_Dsst, m_Dsst, _get_g0_column(_filter_channel_index(Channels(i)), std::make_index_sequence<EEToCCBar::nresonances>()));
+                        channel_array[i] = std::make_shared<FWaveVVChannel<EEToCCBar::nchannels, EEToCCBar::nresonances, EEToCCBar::order>>(channel_names[i], m_Dsst, m_Dsst, _get_g0_column(_filter_channel_index(Channels(i)), std::make_index_sequence<EEToCCBar::nresonances>()));
                         break;
 
                     default:
@@ -318,11 +343,11 @@ namespace eos
                 }
             }
 
-            K = std::shared_ptr<KMatrix<EEToCCBar::nchannels, EEToCCBar::nresonances>> (
-                new KMatrix<EEToCCBar::nchannels, EEToCCBar::nresonances>(
+            K = std::shared_ptr<KMatrix<EEToCCBar::nchannels, EEToCCBar::nresonances, EEToCCBar::order>> (
+                new KMatrix<EEToCCBar::nchannels, EEToCCBar::nresonances, EEToCCBar::order>(
                     channel_array,
                     resonance_array,
-                    _get_bkgcst(std::make_index_sequence<EEToCCBar::nchannels>(),std::make_index_sequence<EEToCCBar::nchannels>()),
+                    _get_bkgpol(std::make_index_sequence<EEToCCBar::order + 1>(), std::make_index_sequence<EEToCCBar::nchannels>(), std::make_index_sequence<EEToCCBar::nchannels>()),
                     "e^+e^-->ccbar"
                     )
                 );
