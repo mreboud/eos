@@ -20,7 +20,6 @@
 #ifndef EOS_GUARD_EOS_UTILS_KMATRIX_HH
 #define EOS_GUARD_EOS_UTILS_KMATRIX_HH 1
 
-
 #include <eos/maths/complex.hh>
 #include <eos/utils/exception.hh>
 #include <eos/utils/parameters.hh>
@@ -36,7 +35,6 @@
 #include <vector>
 
 namespace eos
-
 {
     template <unsigned nchannels_, unsigned nresonances_>
     class KMatrix
@@ -127,14 +125,26 @@ namespace eos
         // Mass of the resonance
         Parameter _m;
 
-        Resonance(std::string name, Parameter m) :
+        // Size of the resonance entering centrifugal barrier factors
+        Parameter _q;
+
+        Resonance(std::string name, Parameter m, Parameter q) :
             _name(name),
-            _m(m)
+            _m(m),
+            _q(q)
         {
             if (m < 0)
                 throw InternalError("Mass of resonance '" + _name + "' must be positive");
+
+            if (q < 0)
+                throw InternalError("Size of resonance '" + _name + "' must be positive");
         };
     };
+
+    namespace kmatrix_utils
+    {
+        double blatt_weisskopf_factor(const unsigned & l, const double & q, const double & qR);
+    }
 }
 
 #endif
