@@ -17,6 +17,7 @@
 
 #include <eos/scattering/ee-to-ccbar.hh>
 #include <eos/maths/complex.hh>
+#include <eos/utils/destringify.hh>
 #include <eos/utils/kinematic.hh>
 #include <eos/utils/kmatrix-impl.hh>
 #include <eos/utils/options.hh>
@@ -42,6 +43,8 @@ namespace eos
         UsedParameter m_Dst;
         UsedParameter m_Ds;
         UsedParameter m_Dsst;
+
+        bool assume_isospin;
 
         static const inline std::vector<std::string> resonance_names =
         {
@@ -120,30 +123,50 @@ namespace eos
 
         long unsigned _filter_channel_index(Channels channel)
         {
-            switch (channel)
+            if (assume_isospin)
             {
-                case DpDm:
-                    return D0Dbar0;
+                switch (channel)
+                {
+                    case DpDm:
+                        return D0Dbar0;
 
-                case Dst0Dbar0:
-                case DpDstm:
-                case DstpDm:
-                    return D0Dbarst0;
+                    case Dst0Dbar0:
+                    case DpDstm:
+                    case DstpDm:
+                        return D0Dbarst0;
 
-                case DstpDstmP0:
-                    return Dst0Dbarst0P0;
+                    case DstpDstmP0:
+                        return Dst0Dbarst0P0;
 
-                case DstpDstmP2:
-                    return Dst0Dbarst0P2;
+                    case DstpDstmP2:
+                        return Dst0Dbarst0P2;
 
-                case DstpDstmF2:
-                    return Dst0Dbarst0F2;
+                    case DstpDstmF2:
+                        return Dst0Dbarst0F2;
 
-                case DsstpDsm:
-                    return DspDsstm;
+                    case DsstpDsm:
+                        return DspDsstm;
 
-                default:
-                    return channel;
+                    default:
+                        return channel;
+                }
+            }
+            else
+            {
+                switch (channel)
+                {
+                    case Dst0Dbar0:
+                        return D0Dbarst0;
+
+                    case DstpDm:
+                        return DpDstm;
+
+                    case DsstpDsm:
+                        return DspDsstm;
+
+                    default:
+                        return channel;
+                }
             }
         }
 
@@ -267,6 +290,8 @@ namespace eos
             m_Dst(p["mass::D_d^*"], u),
             m_Ds(p["mass::D_s"], u),
             m_Dsst(p["mass::D_s^*"], u),
+
+            assume_isospin(destringify<bool>(o.get("assume_isospin", "false"))),
 
             m(_resonance_masses(p, u, std::make_index_sequence<EEToCCBar::nresonances>())),
             q(_resonance_sizes(p, u, std::make_index_sequence<EEToCCBar::nresonances>())),
@@ -432,6 +457,7 @@ namespace eos
     const std::vector<OptionSpecification>
     Implementation<EEToCCBar>::options
     {
+        {"assume_isospin", { "true", "false" }, "false"},
     };
 
     const EEToCCBar::IntermediateResult *

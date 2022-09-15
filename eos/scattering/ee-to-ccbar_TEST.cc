@@ -106,7 +106,10 @@ class eetoccbarTest :
 
             // Test the full K matrix
 
-            Options oo;
+            Options oo
+            {
+                {"assume_isospin", "true"}
+            };
 
             EEToCCBar c(p, oo);
 
