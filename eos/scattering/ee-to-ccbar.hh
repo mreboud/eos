@@ -34,29 +34,30 @@ namespace eos
     Channels follow the following convention
     #   name          type         Nf      copy
     0   ee            PP (P)       3       -
-    1   eff(2S)       PP (P)       3       -
-    2   eff(3770)     PP (P)       3       -
-    3   eff(4040)     PP (P)       3       -
-    4   eff(4160)     PP (P)       3       -
-    5   eff(4415)     PP (P)       3       -
-    6   D0   D0bar    PP (P)       3       -
-    7   D+   D-       PP (P)       3       6 (isospin)
-    8   D0   D*0bar   VP           3       -
-    9   D*0  D0bar    VP           3       8 (c.c.)
-    10  D+   D*-      VP           3       8 (isospin)
-    11  D*+  D-       VP           3       8 (c.c.)
-    12  Ds   Ds       PP (P)       3       -
-    13  D*0  D*0bar   VV (P, S=0)  3       -
-    14  D*0  D*0bar   VV (P, S=2)  3       -
-    15  D*0  D*0bar   VV (F, S=2)  7       -
-    16  D*+  D*-      VV (P, S=0)  3       13 (isospin)
-    17  D*+  D*-      VV (P, S=2)  3       14 (isospin)
-    18  D*+  D*-      VV (F, S=2)  7       15 (isospin)
-    19  Ds+  Ds*-     VP           3       -
-    20  Ds*+ Ds-      VP           3       19 (c.c.)
-    21  Ds*+ Ds*-     VV (P, S=0)  3       -
-    22  Ds*+ Ds*-     VV (P, S=2)  3       -
-    23  Ds*+ Ds*-     VV (F, S=2)  7       -
+    1   effJpsi       PP (P)       3       -
+    2   eff(2S)       PP (P)       3       -
+    3   eff(3770)     PP (P)       3       -
+    4   eff(4040)     PP (P)       3       -
+    5   eff(4160)     PP (P)       3       -
+    6   eff(4415)     PP (P)       3       -
+    7   D0   D0bar    PP (P)       3       -
+    8   D+   D-       PP (P)       3       6 (isospin)
+    9   D0   D*0bar   VP           3       -
+    10  D*0  D0bar    VP           3       8 (c.c.)
+    11  D+   D*-      VP           3       8 (isospin)
+    12  D*+  D-       VP           3       8 (c.c.)
+    13  Ds   Ds       PP (P)       3       -
+    14  D*0  D*0bar   VV (P, S=0)  3       -
+    15  D*0  D*0bar   VV (P, S=2)  3       -
+    16  D*0  D*0bar   VV (F, S=2)  7       -
+    17  D*+  D*-      VV (P, S=0)  3       13 (isospin)
+    18  D*+  D*-      VV (P, S=2)  3       14 (isospin)
+    19  D*+  D*-      VV (F, S=2)  7       15 (isospin)
+    20  Ds+  Ds*-     VP           3       -
+    21  Ds*+ Ds-      VP           3       19 (c.c.)
+    22  Ds*+ Ds*-     VV (P, S=0)  3       -
+    23  Ds*+ Ds*-     VV (P, S=2)  3       -
+    24  Ds*+ Ds*-     VV (F, S=2)  7       -
     */
 
     // Effective channel
@@ -330,14 +331,14 @@ namespace eos
         public:
 
             /* Number of active channels and resonances
-                Up to DD* (3.872 GeV)      5  channels 2 resonances
-                Up to D*D* (4.014 GeV)     10 channels 2 resonances
-                Up to Ds*Ds (4.080 GeV)    17 channels 3 resonances
-                Up to Ds*Ds* (4.224 GeV)   20 channels 4 resonances
-                Up to 4.8 GeV              24 channels 5 resonances
+                Up to DD* (3.872 GeV)      6  channels 3 resonances
+                Up to D*D* (4.014 GeV)     11 channels 3 resonances
+                Up to Ds*Ds (4.080 GeV)    18 channels 4 resonances
+                Up to Ds*Ds* (4.224 GeV)   21 channels 5 resonances
+                Up to 4.8 GeV              25 channels 6 resonances
             */
-            const static long unsigned nchannels = 5;
-            const static long unsigned nresonances = 2;
+            const static long unsigned nchannels = 6;
+            const static long unsigned nresonances = 3;
 
             const static long unsigned order = 1;
 
@@ -359,7 +360,10 @@ namespace eos
 
             // double evaluate(const IntermediateResult *) const;
 
-            // psi2S widths
+            // resonances widths
+            double Jpsi_ee_width() const;
+            double Jpsi_eff_width() const;
+            double Jpsi_total_width() const;
             double psi2S_ee_width() const;
             double psi2S_eff_width() const;
             double psi2S_total_width() const;

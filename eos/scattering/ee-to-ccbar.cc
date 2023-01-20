@@ -48,17 +48,17 @@ namespace eos
 
         static const inline std::vector<std::string> resonance_names =
         {
-            "psi(2S)", "psi(3770)", "psi(4040)", "psi(4160)", "psi(4415)"
+            "J/psi", "psi(2S)", "psi(3770)", "psi(4040)", "psi(4160)", "psi(4415)"
         };
 
         enum Resonances
         {
-            psi2S = 0, psi3770, psi4040, psi4160, psi4415
+            Jpsi = 0, psi2S, psi3770, psi4040, psi4160, psi4415
         };
 
         static const inline std::vector<std::string> channel_names =
         {
-            "e^+e^-", "eff(2S)", "D^0Dbar^0", "D^+D^-",
+            "e^+e^-", "eff(Jpsi)", "eff(2S)", "D^0Dbar^0", "D^+D^-",
             "eff(3770)", "D^0Dbar^*0", "D^*0Dbar^0", "D^+D^*-", "D^*+D^-", "D_s^+D_s^-",
             "D^*0Dbar^*0P0", "D^*0Dbar^*0P2", "D^*0Dbar^*0F2", "D^*+D^*-P0", "D^*+D^*-P2", "D^*+D^*-F2",
             "eff(4040)", "D_s^+D_s^*-", "D_s^*+D_s^-",
@@ -67,7 +67,7 @@ namespace eos
 
         enum Channels
         {
-            ee = 0, eff2S, D0Dbar0, DpDm,
+            ee = 0, effJpsi, eff2S, D0Dbar0, DpDm,
             eff3770, D0Dbarst0, Dst0Dbar0, DpDstm, DstpDm, DspDsm,
             Dst0Dbarst0P0, Dst0Dbarst0P2, Dst0Dbarst0F2, DstpDstmP0, DstpDstmP2, DstpDstmF2,
             eff4040, DspDsstm, DsstpDsm,
@@ -117,7 +117,7 @@ namespace eos
 
             return std::array<UsedParameter, sizeof...(indices)>
             {{
-                UsedParameter(p[resonance_names[indices] + "::q_R"], u)...
+                UsedParameter(p["q_R::" + resonance_names[indices]], u)...
             }};
         }
 
@@ -313,6 +313,7 @@ namespace eos
                 switch (Channels(i))
                 {
                     case ee:
+                    case effJpsi:
                     case eff2S:
                     case eff3770:
                     case eff4040:
@@ -470,6 +471,24 @@ namespace eos
     using Channels = Implementation<eos::EEToCCBar>::Channels;
 
     double
+    EEToCCBar::Jpsi_ee_width() const
+    {
+        return _imp->res_partial_width(Resonances::Jpsi, Channels::ee);
+    }
+
+    double
+    EEToCCBar::Jpsi_eff_width() const
+    {
+        return _imp->res_partial_width(Resonances::Jpsi, Channels::eff2S);
+    }
+
+    double
+    EEToCCBar::Jpsi_total_width() const
+    {
+        return _imp->res_total_width(Resonances::Jpsi);
+    }
+
+    double
     EEToCCBar::psi2S_ee_width() const
     {
         return _imp->res_partial_width(Resonances::psi2S, Channels::ee);
@@ -620,7 +639,8 @@ namespace eos
     EEToCCBar::sigma_eetoeff(const EEToCCBar::IntermediateResult * ir) const
     {
         return _imp->exclusive_norm * (
-              _imp->sigma_eetochannel(ir, Channels::eff2S)
+              _imp->sigma_eetochannel(ir, Channels::effJpsi)
+            + _imp->sigma_eetochannel(ir, Channels::eff2S)
             + _imp->sigma_eetochannel(ir, Channels::eff3770)
             + _imp->sigma_eetochannel(ir, Channels::eff4040)
             + _imp->sigma_eetochannel(ir, Channels::eff4160)

@@ -58,8 +58,8 @@ class eetoccbarTest :
             p["ee->ccbar::c_0(D^+D^-,D^+D^-)"] = 0.0;
 
             // Build K Matrix
-            auto psi2S = std::make_shared<CharmoniumResonance<3, 2, 0>>("psi2S", p["mass::psi(2S)"], p["psi(2S)::q_R"]);
-            auto psi3770 = std::make_shared<CharmoniumResonance<3, 2, 0>>("psi3770", p["mass::psi(3770)"], p["psi(3770)::q_R"]);
+            auto psi2S = std::make_shared<CharmoniumResonance<3, 2, 0>>("psi2S", p["mass::psi(2S)"], p["q_R::psi(2S)"]);
+            auto psi3770 = std::make_shared<CharmoniumResonance<3, 2, 0>>("psi3770", p["mass::psi(3770)"], p["q_R::psi(3770)"]);
 
             std::array<std::array<std::array<Parameter, 3>, 3>, 1> bkgcst {
                 p["ee->ccbar::c_0(e^+e^-,e^+e^-)"],    p["ee->ccbar::c_0(e^+e^-,D^0Dbar^0)"],    p["ee->ccbar::c_0(e^+e^-,D^+D^-)"],

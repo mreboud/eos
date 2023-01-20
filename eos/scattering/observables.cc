@@ -31,6 +31,14 @@ namespace eos
             R"(Observables in $ee \to c\bar{c}$ processes)",
             R"(The options "nchannel" and "nresonance" fix the number of channels and resonances respectively.)",
             {
+                make_observable("Jpsi->e^+e^-::decay_width", R"($\Gamma(J/\psi \to ee)$)",
+                        Unit::GeV(),
+                        &EEToCCBar::Jpsi_ee_width),
+
+                make_observable("Jpsi->eff::decay_width", R"($\Gamma(J/\psi \to \textrm{eff})$)",
+                        Unit::GeV(),
+                        &EEToCCBar::Jpsi_eff_width),
+
                 make_observable("psi(2S)->e^+e^-::decay_width", R"($\Gamma(\psi(2S) \to ee)$)",
                         Unit::GeV(),
                         &EEToCCBar::psi2S_ee_width),
@@ -129,10 +137,14 @@ namespace eos
                         <<psi(4415)->D^*D^*::decay_width>>
                         )"),
 
+                make_observable("Jpsi::total_width", R"($\Gamma_{J/\psi}$)",
+                        Unit::GeV(),
+                        &EEToCCBar::Jpsi_total_width),
+
                 make_observable("psi(2S)::total_width", R"($\Gamma_{\psi(2S)}$)",
                         Unit::GeV(),
                         &EEToCCBar::psi2S_total_width),
- 
+
                 make_observable("psi(3770)->D^0Dbar^0::decay_width", R"($\Gamma(\psi(3770) \to D^0\bar{D}^0)$)",
                         Unit::GeV(),
                         &EEToCCBar::psi3770_D0Dbar0_width),
