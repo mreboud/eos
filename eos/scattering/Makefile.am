@@ -6,6 +6,7 @@ AM_CXXFLAGS = @AM_CXXFLAGS@
 lib_LTLIBRARIES = libeosscattering.la
 libeosscattering_la_SOURCES = \
     ee-to-ccbar.cc ee-to-ccbar.hh \
+    ee-to-ccbar-full.cc ee-to-ccbar-full.hh \
     observables.cc observables.hh
 libeosscattering_la_LIBADD = \
     $(top_builddir)/eos/utils/libeosutils.la \
@@ -14,7 +15,8 @@ libeosscattering_la_LIBADD = \
 
 include_eos_scatteringdir = $(includedir)/eos/scattering
 include_eos_scattering_HEADERS = \
-    ee-to-ccbar.hh
+    ee-to-ccbar.hh \
+    ee-to-ccbar-full.hh
 
 EXTRA_DIST =
 

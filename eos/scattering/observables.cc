@@ -17,6 +17,7 @@
 
 #include <eos/observable-impl.hh>
 #include <eos/scattering/ee-to-ccbar.hh>
+#include <eos/scattering/ee-to-ccbar-full.hh>
 #include <eos/utils/concrete_observable.hh>
 #include <eos/utils/concrete-cacheable-observable.hh>
 
@@ -31,6 +32,8 @@ namespace eos
             R"(Observables in $ee \to c\bar{c}$ processes)",
             R"(The options "nchannel" and "nresonance" fix the number of channels and resonances respectively.)",
             {
+
+                // Simplified Model with all the resonances up to the psi(3770)
                 make_observable("Jpsi->e^+e^-::decay_width", R"($\Gamma(J/\psi \to ee)$)",
                         Unit::GeV(),
                         &EEToCCBar::Jpsi_ee_width),
@@ -47,41 +50,114 @@ namespace eos
                         Unit::GeV(),
                         &EEToCCBar::psi2S_eff_width),
 
+                make_observable("Jpsi::total_width", R"($\Gamma_{J/\psi}$)",
+                        Unit::GeV(),
+                        &EEToCCBar::Jpsi_total_width),
+
+                make_observable("psi(2S)::total_width", R"($\Gamma_{\psi(2S)}$)",
+                        Unit::GeV(),
+                        &EEToCCBar::psi2S_total_width),
+
+                make_observable("psi(3770)->D^0Dbar^0::decay_width", R"($\Gamma(\psi(3770) \to D^0\bar{D}^0)$)",
+                        Unit::GeV(),
+                        &EEToCCBar::psi3770_D0Dbar0_width),
+
+                make_observable("psi(3770)->D^+D^-::decay_width", R"($\Gamma(\psi(3770) \to D^+\D^-)$)",
+                        Unit::GeV(),
+                        &EEToCCBar::psi3770_DpDm_width),
+
+                make_observable("psi(3770)->eff::decay_width", R"($\Gamma(\psi(3770) \to \textrm{eff})$)",
+                        Unit::GeV(),
+                        &EEToCCBar::psi3770_eff_width),
+
+                make_observable("psi(3770)::total_width", R"($\Gamma_{\psi(3770)}$)",
+                        Unit::GeV(),
+                        &EEToCCBar::psi3770_total_width),
+
+
+                make_cacheable_observable("e^+e^-->e^+e^-::sigma(E)", R"($\sigma(e^+e^- \to e^+e^-)|_{s\textrm{-channel}}$)",
+                        Unit::InverseGeV2(),
+                        &EEToCCBar::prepare,
+                        &EEToCCBar::sigma_eetoee,
+                        std::make_tuple("E")),
+
+                make_cacheable_observable("e^+e^-->eff::sigma(E)", R"($\sigma(e^+e^- \to \textrm{eff})$)",
+                        Unit::InverseGeV2(),
+                        &EEToCCBar::prepare,
+                        &EEToCCBar::sigma_eetoeff,
+                        std::make_tuple("E")),
+
+                make_cacheable_observable("e^+e^-->D^0Dbar^0::sigma(E)", R"($\sigma(e^+e^- \to D^0 \bar{D}^0)$)",
+                        Unit::InverseGeV2(),
+                        &EEToCCBar::prepare,
+                        &EEToCCBar::sigma_eetoD0Dbar0,
+                        std::make_tuple("E")),
+
+                make_cacheable_observable("e^+e^-->D^+D^-::sigma(E)", R"($\sigma(e^+e^- \to D^+ D^-)$)",
+                        Unit::InverseGeV2(),
+                        &EEToCCBar::prepare,
+                        &EEToCCBar::sigma_eetoDpDm,
+                        std::make_tuple("E")),
+
+                make_cacheable_observable("e^+e^-->ccbar::R(E)", R"($R$)",
+                        Unit::None(),
+                        &EEToCCBar::prepare,
+                        &EEToCCBar::R,
+                        std::make_tuple("E")),
+
+
+                // Model with all the resonances
+                make_observable("Jpsi->e^+e^-::decay_width", R"($\Gamma(J/\psi \to ee)$)",
+                        Unit::GeV(),
+                        &EEToCCBarFull::Jpsi_ee_width),
+
+                make_observable("Jpsi->eff::decay_width", R"($\Gamma(J/\psi \to \textrm{eff})$)",
+                        Unit::GeV(),
+                        &EEToCCBarFull::Jpsi_eff_width),
+
+                make_observable("psi(2S)->e^+e^-::decay_width", R"($\Gamma(\psi(2S) \to ee)$)",
+                        Unit::GeV(),
+                        &EEToCCBarFull::psi2S_ee_width),
+
+                make_observable("psi(2S)->eff::decay_width", R"($\Gamma(\psi(2S) \to \textrm{eff})$)",
+                        Unit::GeV(),
+                        &EEToCCBarFull::psi2S_eff_width),
+
                 make_observable("psi(4040)->DD::decay_width", R"($\Gamma(\psi(4040) \to D\bar{D})$)",
                         Unit::GeV(),
-                        &EEToCCBar::psi4040_DD_width),
+                        &EEToCCBarFull::psi4040_DD_width),
 
                 make_observable("psi(4040)->DD^*::decay_width", R"($\Gamma(\psi(4040) \to D\bar{D}^*)$)",
                         Unit::GeV(),
-                        &EEToCCBar::psi4040_DDst_width),
+                        &EEToCCBarFull::psi4040_DDst_width),
 
                 make_observable("psi(4040)->D^*D^*::decay_width", R"($\Gamma(\psi(4040) \to D^*\bar{D}^*)$)",
                         Unit::GeV(),
-                        &EEToCCBar::psi4040_DstDst_width),
+                        &EEToCCBarFull::psi4040_DstDst_width),
 
                 make_observable("psi(4160)->DD::decay_width", R"($\Gamma(\psi(4160) \to D\bar{D})$)",
                         Unit::GeV(),
-                        &EEToCCBar::psi4160_DD_width),
+                        &EEToCCBarFull::psi4160_DD_width),
 
                 make_observable("psi(4160)->DD^*::decay_width", R"($\Gamma(\psi(4160) \to D\bar{D}^*)$)",
                         Unit::GeV(),
-                        &EEToCCBar::psi4160_DDst_width),
+                        &EEToCCBarFull::psi4160_DDst_width),
 
                 make_observable("psi(4160)->D^*D^*::decay_width", R"($\Gamma(\psi(4160) \to D^*\bar{D}^*)$)",
                         Unit::GeV(),
-                        &EEToCCBar::psi4160_DstDst_width),
+                        &EEToCCBarFull::psi4160_DstDst_width),
 
                 make_observable("psi(4415)->DD::decay_width", R"($\Gamma(\psi(4415) \to D\bar{D})$)",
                         Unit::GeV(),
-                        &EEToCCBar::psi4415_DD_width),
+                        &EEToCCBarFull::psi4415_DD_width),
 
                 make_observable("psi(4415)->DD^*::decay_width", R"($\Gamma(\psi(4415) \to D\bar{D}^*)$)",
                         Unit::GeV(),
-                        &EEToCCBar::psi4415_DDst_width),
+                        &EEToCCBarFull::psi4415_DDst_width),
 
                 make_observable("psi(4415)->D^*D^*::decay_width", R"($\Gamma(\psi(4415) \to D^*\bar{D}^*)$)",
                         Unit::GeV(),
-                        &EEToCCBar::psi4415_DstDst_width),
+                        &EEToCCBarFull::psi4415_DstDst_width),
 
                 make_expression_observable("psi(4040)::DD_DD^*_ratio",
                         R"(\Gamma(\psi(4040) \to D\bar{D})/\Gamma(\psi(4040) \to D\bar{D}^*))",
@@ -139,129 +215,128 @@ namespace eos
 
                 make_observable("Jpsi::total_width", R"($\Gamma_{J/\psi}$)",
                         Unit::GeV(),
-                        &EEToCCBar::Jpsi_total_width),
+                        &EEToCCBarFull::Jpsi_total_width),
 
                 make_observable("psi(2S)::total_width", R"($\Gamma_{\psi(2S)}$)",
                         Unit::GeV(),
-                        &EEToCCBar::psi2S_total_width),
+                        &EEToCCBarFull::psi2S_total_width),
 
                 make_observable("psi(3770)->D^0Dbar^0::decay_width", R"($\Gamma(\psi(3770) \to D^0\bar{D}^0)$)",
                         Unit::GeV(),
-                        &EEToCCBar::psi3770_D0Dbar0_width),
+                        &EEToCCBarFull::psi3770_D0Dbar0_width),
 
                 make_observable("psi(3770)->D^+D^-::decay_width", R"($\Gamma(\psi(3770) \to D^+\D^-)$)",
                         Unit::GeV(),
-                        &EEToCCBar::psi3770_DpDm_width),
+                        &EEToCCBarFull::psi3770_DpDm_width),
 
                 make_observable("psi(3770)->eff::decay_width", R"($\Gamma(\psi(3770) \to \textrm{eff})$)",
                         Unit::GeV(),
-                        &EEToCCBar::psi3770_eff_width),
-
+                        &EEToCCBarFull::psi3770_eff_width),
 
                 make_observable("psi(3770)::total_width", R"($\Gamma_{\psi(3770)}$)",
                         Unit::GeV(),
-                        &EEToCCBar::psi3770_total_width),
+                        &EEToCCBarFull::psi3770_total_width),
 
                 make_observable("psi(4040)::total_width", R"($\Gamma_{\psi(4040)}$)",
                         Unit::GeV(),
-                        &EEToCCBar::psi4040_total_width),
+                        &EEToCCBarFull::psi4040_total_width),
 
                 make_observable("psi(4160)::total_width", R"($\Gamma_{\psi(4160)}$)",
                         Unit::GeV(),
-                        &EEToCCBar::psi4160_total_width),
+                        &EEToCCBarFull::psi4160_total_width),
 
                 make_observable("psi(4415)::total_width", R"($\Gamma_{\psi(4415)}$)",
                         Unit::GeV(),
-                        &EEToCCBar::psi4415_total_width),
+                        &EEToCCBarFull::psi4415_total_width),
 
                 make_cacheable_observable("e^+e^-->e^+e^-::sigma(E)", R"($\sigma(e^+e^- \to e^+e^-)|_{s\textrm{-channel}}$)",
                         Unit::InverseGeV2(),
-                        &EEToCCBar::prepare,
-                        &EEToCCBar::sigma_eetoee,
+                        &EEToCCBarFull::prepare,
+                        &EEToCCBarFull::sigma_eetoee,
                         std::make_tuple("E")),
 
                 make_cacheable_observable("e^+e^-->eff::sigma(E)", R"($\sigma(e^+e^- \to \textrm{eff})$)",
                         Unit::InverseGeV2(),
-                        &EEToCCBar::prepare,
-                        &EEToCCBar::sigma_eetoeff,
+                        &EEToCCBarFull::prepare,
+                        &EEToCCBarFull::sigma_eetoeff,
                         std::make_tuple("E")),
 
                 make_cacheable_observable("e^+e^-->D^0Dbar^0::sigma(E)", R"($\sigma(e^+e^- \to D^0 \bar{D}^0)$)",
                         Unit::InverseGeV2(),
-                        &EEToCCBar::prepare,
-                        &EEToCCBar::sigma_eetoD0Dbar0,
+                        &EEToCCBarFull::prepare,
+                        &EEToCCBarFull::sigma_eetoD0Dbar0,
                         std::make_tuple("E")),
 
                 make_cacheable_observable("e^+e^-->D^+D^-::sigma(E)", R"($\sigma(e^+e^- \to D^+ D^-)$)",
                         Unit::InverseGeV2(),
-                        &EEToCCBar::prepare,
-                        &EEToCCBar::sigma_eetoDpDm,
+                        &EEToCCBarFull::prepare,
+                        &EEToCCBarFull::sigma_eetoDpDm,
                         std::make_tuple("E")),
 
                 make_cacheable_observable("e^+e^-->D^0Dbar^*0::sigma(E)", R"($\sigma(e^+e^- \to D^0 \bar{D}^{0*})$)",
                         Unit::InverseGeV2(),
-                        &EEToCCBar::prepare,
-                        &EEToCCBar::sigma_eetoD0Dbarst0,
+                        &EEToCCBarFull::prepare,
+                        &EEToCCBarFull::sigma_eetoD0Dbarst0,
                         std::make_tuple("E")),
 
                 make_cacheable_observable("e^+e^-->D^+D^*-::sigma(E)", R"($\sigma(e^+e^- \to D^+ D^{-*})$)",
                         Unit::InverseGeV2(),
-                        &EEToCCBar::prepare,
-                        &EEToCCBar::sigma_eetoDpDstm,
+                        &EEToCCBarFull::prepare,
+                        &EEToCCBarFull::sigma_eetoDpDstm,
                         std::make_tuple("E")),
 
                 make_cacheable_observable("e^+e^-->D_s^+D_s^-::sigma(E)", R"($\sigma(e^+e^- \to D_s^+ D_s^-)$)",
                         Unit::InverseGeV2(),
-                        &EEToCCBar::prepare,
-                        &EEToCCBar::sigma_eetoDspDsm,
+                        &EEToCCBarFull::prepare,
+                        &EEToCCBarFull::sigma_eetoDspDsm,
                         std::make_tuple("E")),
 
                 make_cacheable_observable("e^+e^-->D^*0Dbar^*0::sigma(E)", R"($\sigma(e^+e^- \to D^{*0} \bar{D}^{*-})$)",
                         Unit::InverseGeV2(),
-                        &EEToCCBar::prepare,
-                        &EEToCCBar::sigma_eetoDst0Dbarst0,
+                        &EEToCCBarFull::prepare,
+                        &EEToCCBarFull::sigma_eetoDst0Dbarst0,
                         std::make_tuple("E")),
 
                 make_cacheable_observable("e^+e^-->D^*+D^*-::sigma(E)", R"($\sigma(e^+e^- \to D^[*+} D^{*-})$)",
                         Unit::InverseGeV2(),
-                        &EEToCCBar::prepare,
-                        &EEToCCBar::sigma_eetoDstpDstm,
+                        &EEToCCBarFull::prepare,
+                        &EEToCCBarFull::sigma_eetoDstpDstm,
                         std::make_tuple("E")),
 
                 make_cacheable_observable("e^+e^-->D_T^*+D_T^*-::sigma(E)", R"($\sigma(e^+e^- \to D^{*+} D^{*-})$)",
                         Unit::InverseGeV2(),
-                        &EEToCCBar::prepare,
-                        &EEToCCBar::sigma_eetoDstpTDstmT,
+                        &EEToCCBarFull::prepare,
+                        &EEToCCBarFull::sigma_eetoDstpTDstmT,
                         std::make_tuple("E")),
 
                 make_cacheable_observable("e^+e^-->D_T^*+D_L^*-::sigma(E)", R"($\sigma(e^+e^- \to D^{*+} D^{*-})$)",
                         Unit::InverseGeV2(),
-                        &EEToCCBar::prepare,
-                        &EEToCCBar::sigma_eetoDstpTDstmL,
+                        &EEToCCBarFull::prepare,
+                        &EEToCCBarFull::sigma_eetoDstpTDstmL,
                         std::make_tuple("E")),
 
                 make_cacheable_observable("e^+e^-->D_L^*+D_L^*-::sigma(E)", R"($\sigma(e^+e^- \to D^{*+} D^{*-})$)",
                         Unit::InverseGeV2(),
-                        &EEToCCBar::prepare,
-                        &EEToCCBar::sigma_eetoDstpLDstmL,
+                        &EEToCCBarFull::prepare,
+                        &EEToCCBarFull::sigma_eetoDstpLDstmL,
                         std::make_tuple("E")),
 
                 make_cacheable_observable("e^+e^-->D_s^+D_s^*-::sigma(E)", R"($\sigma(e^+e^- \to D_s^+ D_s^{*-})$)",
                         Unit::InverseGeV2(),
-                        &EEToCCBar::prepare,
-                        &EEToCCBar::sigma_eetoDspDsstm,
+                        &EEToCCBarFull::prepare,
+                        &EEToCCBarFull::sigma_eetoDspDsstm,
                         std::make_tuple("E")),
 
                 make_cacheable_observable("e^+e^-->D_s^*+D_s^*-::sigma(E)", R"($\sigma(e^+e^- \to D_s^{*+} D_s^{*-})$)",
                         Unit::InverseGeV2(),
-                        &EEToCCBar::prepare,
-                        &EEToCCBar::sigma_eetoDsstpDsstm,
+                        &EEToCCBarFull::prepare,
+                        &EEToCCBarFull::sigma_eetoDsstpDsstm,
                         std::make_tuple("E")),
 
                 make_cacheable_observable("e^+e^-->ccbar::R(E)", R"($R$)",
                         Unit::None(),
-                        &EEToCCBar::prepare,
-                        &EEToCCBar::R,
+                        &EEToCCBarFull::prepare,
+                        &EEToCCBarFull::R,
                         std::make_tuple("E")),
             }
         );
