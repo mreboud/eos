@@ -50,6 +50,10 @@ namespace eos
                         Unit::GeV(),
                         &EEToCCBar::psi2S_eff_width),
 
+                make_observable("psi(2S)->Jpsipipi::decay_width", R"($\Gamma(\psi(2S) \to J/\psi\pi\pi)$)",
+                        Unit::GeV(),
+                        &EEToCCBar::psi2S_Jpsipipi_width),
+
                 make_observable("Jpsi::total_width", R"($\Gamma_{J/\psi}$)",
                         Unit::GeV(),
                         &EEToCCBar::Jpsi_total_width),
@@ -69,6 +73,10 @@ namespace eos
                 make_observable("psi(3770)->eff::decay_width", R"($\Gamma(\psi(3770) \to \textrm{eff})$)",
                         Unit::GeV(),
                         &EEToCCBar::psi3770_eff_width),
+
+                make_observable("psi(3770)->Jpsipipi::decay_width", R"($\Gamma(\psi(3770) \to J/\psi\pi\pi)$)",
+                        Unit::GeV(),
+                        &EEToCCBar::psi3770_Jpsipipi_width),
 
                 make_observable("psi(3770)::total_width", R"($\Gamma_{\psi(3770)}$)",
                         Unit::GeV(),
@@ -97,6 +105,12 @@ namespace eos
                         Unit::InverseGeV2(),
                         &EEToCCBar::prepare,
                         &EEToCCBar::sigma_eetoDpDm,
+                        std::make_tuple("E")),
+
+                make_cacheable_observable("e^+e^-->Jpsipipi-::sigma(E)", R"($\sigma(e^+e^- \to J/\psi\pi\pi)$)",
+                        Unit::InverseGeV2(),
+                        &EEToCCBar::prepare,
+                        &EEToCCBar::sigma_eetoJpsipipi,
                         std::make_tuple("E")),
 
                 make_cacheable_observable("e^+e^-->ccbar::R(E)", R"($R$)",

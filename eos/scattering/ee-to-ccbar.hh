@@ -159,7 +159,7 @@ namespace eos
     {
         public:
 
-            const static long unsigned nchannels = 6;
+            const static long unsigned nchannels = 7;
             const static long unsigned nresonances = 3;
 
             const static long unsigned order = 1;
@@ -188,15 +188,18 @@ namespace eos
             double Jpsi_total_width() const;
             double psi2S_ee_width() const;
             double psi2S_eff_width() const;
+            double psi2S_Jpsipipi_width() const;
             double psi2S_total_width() const;
             double psi3770_D0Dbar0_width() const;
             double psi3770_DpDm_width() const;
             double psi3770_eff_width() const;
+            double psi3770_Jpsipipi_width() const;
             double psi3770_total_width() const;
 
             // sigma(ee -> channel)
             double sigma_eetoee(const IntermediateResult *) const;
             double sigma_eetoeff(const IntermediateResult *) const;
+            double sigma_eetoJpsipipi(const IntermediateResult *) const;
             double sigma_eetoD0Dbar0(const IntermediateResult *) const;
             double sigma_eetoDpDm(const IntermediateResult *) const;
 

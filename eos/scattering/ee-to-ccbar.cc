@@ -54,12 +54,12 @@ namespace eos
 
         static const inline std::vector<std::string> channel_names =
         {
-            "e^+e^-", "eff(Jpsi)", "eff(2S)", "D^0Dbar^0", "D^+D^-", "eff(3770)"
+            "e^+e^-", "eff(Jpsi)", "Jpsipipi", "eff(2S)", "D^0Dbar^0", "D^+D^-", "eff(3770)"
         };
 
         enum Channels
         {
-            ee = 0, effJpsi, eff2S, D0Dbar0, DpDm, eff3770
+            ee = 0, effJpsi, Jpsipipi, eff2S, D0Dbar0, DpDm, eff3770
         };
 
         // Charmonium masses and effective sizes
@@ -272,6 +272,11 @@ namespace eos
                 {
                     case ee:
                     case effJpsi:
+                        channel_array[i] = std::make_shared<EffChannel<EEToCCBar::nchannels, EEToCCBar::nresonances, EEToCCBar::order>>(channel_names[i], m_e, m_e, _get_g0_column(_filter_channel_index(Channels(i)), std::make_index_sequence<EEToCCBar::nresonances>()));
+                        break;
+                    case Jpsipipi:
+                        channel_array[i] = std::make_shared<EffChannel<EEToCCBar::nchannels, EEToCCBar::nresonances, EEToCCBar::order>>(channel_names[i], m[0], m_e, _get_g0_column(_filter_channel_index(Channels(i)), std::make_index_sequence<EEToCCBar::nresonances>()));
+                        break;
                     case eff2S:
                     case eff3770:
                         channel_array[i] = std::make_shared<EffChannel<EEToCCBar::nchannels, EEToCCBar::nresonances, EEToCCBar::order>>(channel_names[i], m_e, m_e, _get_g0_column(_filter_channel_index(Channels(i)), std::make_index_sequence<EEToCCBar::nresonances>()));
@@ -420,6 +425,12 @@ namespace eos
     }
 
     double
+    EEToCCBar::psi2S_Jpsipipi_width() const
+    {
+        return _imp->res_partial_width(Resonances::psi2S, Channels::Jpsipipi);
+    }
+
+    double
     EEToCCBar::psi2S_total_width() const
     {
         return _imp->res_total_width(Resonances::psi2S);
@@ -450,6 +461,12 @@ namespace eos
     }
 
     double
+    EEToCCBar::psi3770_Jpsipipi_width() const
+    {
+        return _imp->res_partial_width(Resonances::psi3770, Channels::Jpsipipi);
+    }
+
+    double
     EEToCCBar::sigma_eetoee(const EEToCCBar::IntermediateResult * ir) const
     {
         return _imp->exclusive_norm * _imp->sigma_eetochannel(ir, Channels::ee);
@@ -463,6 +480,12 @@ namespace eos
             + _imp->sigma_eetochannel(ir, Channels::eff2S)
             + _imp->sigma_eetochannel(ir, Channels::eff3770)
             );
+    }
+
+    double
+    EEToCCBar::sigma_eetoJpsipipi(const EEToCCBar::IntermediateResult * ir) const
+    {
+        return _imp->exclusive_norm * _imp->sigma_eetochannel(ir, Channels::Jpsipipi);
     }
 
     double
