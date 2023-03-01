@@ -1240,7 +1240,7 @@ namespace eos
                 gsl_matrix * response = gsl_matrix_calloc(subdim_meas, subdim_meas);
                 gsl_matrix_set_identity(response);
 
-                auto block = LogLikelihoodBlock::MultivariateGaussian(cache, restricted_observables, means, covariance, response, number_of_observations);
+                auto block = LogLikelihoodBlock::MultivariateGaussian(cache, restricted_observables, means, covariance, response, subdim_meas);
 
                 return Constraint(name, std::vector<ObservablePtr>(restricted_observables.begin(), restricted_observables.end()), { block });
             }
