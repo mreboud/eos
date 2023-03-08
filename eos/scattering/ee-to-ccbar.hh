@@ -56,13 +56,15 @@ namespace eos
         const double mm = this->_m1 - this->_m2;
         const double mp = this->_m1 + this->_m2;
         // Square root of the Källen factor, defined with an absolute value
-        double sqlk(const double & s) {
+        double sqlk(const double & s)
+        {
             return std::sqrt(std::abs((s - mp * mp) * (s - mm * mm)));
         }
         const double pi = M_PI;
         const complex<double> i =  complex<double>(0.0, 1.0);
 
-        double beta(const double & s){
+        double beta(const double & s)
+        {
             if (s < mp * mp) { return 0.; } // Kinematic threshold
             else { return pow(sqlk(s)/s, 3.); }
         }
@@ -107,37 +109,55 @@ namespace eos
         const double mm = this->_m1 - this->_m2;
         const double mp = this->_m1 + this->_m2;
         // Square root of the Källen factor, defined with an absolute value
-        double sqlk(const double & s) {
+        double sqlk(const double & s)
+        {
             return std::sqrt(std::abs((s - mp * mp) * (s - mm * mm)));
         }
         const double pi = M_PI;
         const complex<double> i =  complex<double>(0.0, 1.0);
 
-        double beta(const double & s){
+        double beta(const double & s)
+        {
             if (s < mp * mp) { return 0.; } // Kinematic threshold
             else { return pow(sqlk(s)/s, 3.); }
         }
 
+        // complex<double> rho(const double & s) {
+        //     complex<double> result = 0.0;
+        //     if (s < mm * mm)
+        //     {
+        //         return result;
+        //     }
+        //     else if (s < mp * mp)
+        //     {
+        //         return result;
+        //     }
+        //     else
+        //     {
+        //         result += pow(sqlk(s)/s, 3.);
+        //         return result;
+        //     }
+
         complex<double> rho(const double & s) {
+            if (mm != 0)
+            {
+                eos::InternalError("Not implemented");
+            }
             complex<double> result = 0.0;
-            if (s < mm * mm){
-                // result += mm*sqlk(s)*(2*mm*mp*s-(-3*mp * mp*s+mm * mm*(2*mp * mp+s))*std::log((mp+mm)/(mp-mm)));
-                // result += 2*pow(mp,3)*pow(mm * mm-s,2)*std::log((-2*(s+sqlk(s))+mm * mm+mp * mp)/(mp * mp-mm * mm));
-                // result *= i*pow(mp * mp-s,1.5)/(2*pow(mp,3)*pi*s*s*sqrt(mm * mm-s));
-                return result;
+            if (s < 0)
+            {
+                result = std::atanh(sqlk(s) / s) + std::atanh((mp * mp / 2 - s) / sqlk(s));
+                return - 0.5 * i * power_of<3>(sqlk(s)) / pi / s / s * result;
             }
-            else if (s < mp * mp){
-                // result += mm*sqlk(s)*(2*mm*mp*s-(-3*mp * mp*s+mm * mm*(2*mp * mp+s))*std::log((mp+mm)/(mp-mm)));
-                // result += 4*pow(mp,3)*pow(s-mm * mm,2)*std::atan(sqrt((s-mm * mm)/(mp * mp-s)));
-                // result *= i*pow(mp * mp-s,1.5)/(2*pow(mp,3)*pi*s*s*sqrt(s-mm * mm));
-                return result;
+            if (s < mp * mp)
+            {
+                result += std::atan(sqlk(s) / s) + std::atan((s - mp * mp / 2) / sqlk(s));
+                return - 0.5 * i * power_of<3>(sqlk(s)) / pi / s / s * result;
             }
-            else {
-                // result += mm*sqlk(s)*(-2*mm*mp*s+(-3*mp * mp*s+mm * mm*(2*mp * mp+s))*std::log((mp+mm)/(mp-mm)));
-                // result += 2*pow(mp,3)*pow(s-mm * mm,2)*std::log((2*(s+sqlk(s))-mm * mm-mp * mp)/(mp * mp-mm * mm));
-                // result *= i*pow(s-mp * mp,1.5)/(2*pow(mp,3)*pi*s*s*sqrt(s-mm * mm));
-                result += pow(sqlk(s)/s, 3.);
-                return result;
+            else
+            {
+                result += pi / 2 - i * std::atanh(sqlk(s) / s) + i * std::atanh(sqlk(s) / (s - mp * mp / 2));
+                return 0.5 * power_of<3>(sqlk(s)) / pi / s / s * result;
            }
         }
     };
