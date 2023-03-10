@@ -46,7 +46,7 @@ namespace eos
 
             std::array<std::shared_ptr<KMatrix::Channel>, nchannels_> _channels;
             std::array<std::shared_ptr<KMatrix::Resonance>, nresonances_> _resonances;
-            // The non-resonant contribution is described with a polynomial of order order_ in the variable s
+            // The non-resonant contribution is described with a polynomial of order order_ in 1/sqrt(s)
             std::array<std::array<std::array<Parameter, nchannels_>, nchannels_>, order_ + 1> _bkgpol;
 
             const std::string & _prefix;

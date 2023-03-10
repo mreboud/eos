@@ -175,7 +175,7 @@ namespace eos
                 // Fast evaluation of the polynomial describing the non-resonant contribution
                 for (size_t k = 0 ; k <= order_ ; ++k)
                 {
-                    entry = 1.0 / s * entry + complex<double>(bkgpol[order_ - k][i][j].evaluate(), 0.0);
+                    entry = 1.0 / sqrt(s) * entry + complex<double>(bkgpol[order_ - k][i][j].evaluate(), 0.0);
                 }
 
                 for (size_t a = 0 ; a < nresonances_ ; ++a)
