@@ -56,28 +56,34 @@ namespace eos
         const double mm = this->_m1 - this->_m2;
         const double mp = this->_m1 + this->_m2;
         // Square root of the Källen factor, defined with an absolute value
-        double sqlk(const double & s)
+        double sqlk(const complex<double> & s)
         {
             return std::sqrt(std::abs((s - mp * mp) * (s - mm * mm)));
         }
         const double pi = M_PI;
         const complex<double> i =  complex<double>(0.0, 1.0);
 
-        double beta(const double & s)
+        double beta(const complex<double> & s)
         {
-            if (s < mp * mp) { return 0.; } // Kinematic threshold
-            else { return pow(sqlk(s)/s, 3.); }
+            if (real(s) < mp * mp)
+            {
+                return 0.; // Kinematic threshold
+            }
+            else
+            {
+                return pow(sqlk(s) / abs(s), 3.);
+            }
         }
 
-        complex<double> rho(const double & s) {
+        complex<double> rho(const complex<double> & s) {
             complex<double> result = 0.0;
-            if (s < mm * mm){
+            if (real(s) < mm * mm){
                 // result += mm*sqlk(s)*(2*mm*mp*s-(-3*mp * mp*s+mm * mm*(2*mp * mp+s))*std::log((mp+mm)/(mp-mm)));
                 // result += 2*pow(mp,3)*pow(mm * mm-s,2)*std::log((-2*(s+sqlk(s))+mm * mm+mp * mp)/(mp * mp-mm * mm));
                 // result *= i*pow(mp * mp-s,1.5)/(2*pow(mp,3)*pi*s*s*sqrt(mm * mm-s));
                 return result;
             }
-            else if (s < mp * mp){
+            else if (real(s) < mp * mp){
                 // result += mm*sqlk(s)*(2*mm*mp*s-(-3*mp * mp*s+mm * mm*(2*mp * mp+s))*std::log((mp+mm)/(mp-mm)));
                 // result += 4*pow(mp,3)*pow(s-mm * mm,2)*std::atan(sqrt((s-mm * mm)/(mp * mp-s)));
                 // result *= i*pow(mp * mp-s,1.5)/(2*pow(mp,3)*pi*s*s*sqrt(s-mm * mm));
@@ -109,17 +115,23 @@ namespace eos
         const double mm = this->_m1 - this->_m2;
         const double mp = this->_m1 + this->_m2;
         // Square root of the Källen factor, defined with an absolute value
-        double sqlk(const double & s)
+        double sqlk(const complex<double> & s)
         {
             return std::sqrt(std::abs((s - mp * mp) * (s - mm * mm)));
         }
         const double pi = M_PI;
         const complex<double> i =  complex<double>(0.0, 1.0);
 
-        double beta(const double & s)
+        double beta(const complex<double> & s)
         {
-            if (s < mp * mp) { return 0.; } // Kinematic threshold
-            else { return pow(sqlk(s)/s, 3.); }
+            if (real(s) < mp * mp)
+            {
+                return 0.; // Kinematic threshold
+            }
+            else
+            {
+                return pow(sqlk(s) / abs(s), 3.);
+            }
         }
 
         // complex<double> rho(const double & s) {
@@ -138,18 +150,18 @@ namespace eos
         //         return result;
         //     }
 
-        complex<double> rho(const double & s) {
+        complex<double> rho(const complex<double> & s) {
             if (mm != 0)
             {
                 eos::InternalError("Not implemented");
             }
             complex<double> result = 0.0;
-            if (s < 0)
+            if (real(s) < 0)
             {
                 result = std::atanh(sqlk(s) / s) + std::atanh((mp * mp / 2 - s) / sqlk(s));
                 return - 0.5 * i * power_of<3>(sqlk(s)) / pi / s / s * result;
             }
-            if (s < mp * mp)
+            if (real(s) < mp * mp)
             {
                 result += std::atan(sqlk(s) / s) + std::atan((s - mp * mp / 2) / sqlk(s));
                 return - 0.5 * i * power_of<3>(sqlk(s)) / pi / s / s * result;
@@ -190,8 +202,8 @@ namespace eos
                 std::shared_ptr<KMatrix<nchannels, nresonances, order>> K;
                 std::array<complex<double>, nchannels> tmatrix_row_0;
 
-                double E;
-                double s;
+                complex<double> E;
+                complex<double> s;
             };
 
             EEToCCBar(const Parameters & parameters, const Options & options);
@@ -199,6 +211,7 @@ namespace eos
 
             // Observables
             const IntermediateResult * prepare(const double & E) const;
+            const IntermediateResult * prepare_complex(const double & reE, const double & imE) const;
 
             // double evaluate(const IntermediateResult *) const;
 
@@ -215,6 +228,22 @@ namespace eos
             double psi3770_eff_width() const;
             double psi3770_Jpsipipi_width() const;
             double psi3770_total_width() const;
+
+            // Phase space factor
+            double rho_ee(const IntermediateResult *) const;
+            double rho_eff(const IntermediateResult *) const;
+            double rho_D0Dbar0(const IntermediateResult *) const;
+            double rho_DpDm(const IntermediateResult *) const;
+
+            // amplitudes
+            double re_T_eetoee(const IntermediateResult *) const;
+            double im_T_eetoee(const IntermediateResult *) const;
+            double re_T_eetoeff(const IntermediateResult *) const;
+            double im_T_eetoeff(const IntermediateResult *) const;
+            double re_T_eetoDpDm(const IntermediateResult *) const;
+            double im_T_eetoDpDm(const IntermediateResult *) const;
+            double re_T_eetoD0Dbar0(const IntermediateResult *) const;
+            double im_T_eetoD0Dbar0(const IntermediateResult *) const;
 
             // sigma(ee -> channel)
             double sigma_eetoee(const IntermediateResult *) const;

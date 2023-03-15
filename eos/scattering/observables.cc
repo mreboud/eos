@@ -119,6 +119,98 @@ namespace eos
                         &EEToCCBar::R,
                         std::make_tuple("E")),
 
+                // Phase space factor
+                make_cacheable_observable("e^+e^-::re_rho(re(E),im(E))", R"($\mathrm{Re}\rho_{e^+e^-}(E))$)",
+                        Unit::InverseGeV2(),
+                        &EEToCCBar::prepare_complex,
+                        &EEToCCBar::rho_ee,
+                        std::make_tuple("re(E)", "im(E)")),
+
+                make_cacheable_observable("eff::re_rho(re(E),im(E))", R"($\mathrm{Re}\rho_{e^+e^-}(E))$)",
+                        Unit::InverseGeV2(),
+                        &EEToCCBar::prepare_complex,
+                        &EEToCCBar::rho_eff,
+                        std::make_tuple("re(E)", "im(E)")),
+
+                make_cacheable_observable("D^0Dbar^0::re_rho(re(E),im(E))", R"($\mathrm{Re}\rho_{D^0 \bar{D}^0}(E))$)",
+                        Unit::InverseGeV2(),
+                        &EEToCCBar::prepare_complex,
+                        &EEToCCBar::rho_D0Dbar0,
+                        std::make_tuple("re(E)", "im(E)")),
+
+                make_cacheable_observable("D^+D^-::re_rho(re(E),im(E))", R"($\mathrm{Re}\rho_{D^+D^-}(E))$)",
+                        Unit::InverseGeV2(),
+                        &EEToCCBar::prepare_complex,
+                        &EEToCCBar::rho_DpDm,
+                        std::make_tuple("re(E)", "im(E)")),
+
+                // Observables in the complex plane
+                make_cacheable_observable("e^+e^-->e^+e^-::re_T(re(E),im(E))", R"($\mathrm{Re}T(e^+e^- \to e^+e^-)$)",
+                        Unit::InverseGeV2(),
+                        &EEToCCBar::prepare_complex,
+                        &EEToCCBar::re_T_eetoee,
+                        std::make_tuple("re(E)", "im(E)")),
+
+                make_cacheable_observable("e^+e^-->e^+e^-::im_T(re(E),im(E))", R"($\mathrm{Im}T(e^+e^- \to e^+e^-)$)",
+                        Unit::InverseGeV2(),
+                        &EEToCCBar::prepare_complex,
+                        &EEToCCBar::im_T_eetoee,
+                        std::make_tuple("re(E)", "im(E)")),
+
+                make_cacheable_observable("e^+e^-->eff::re_T(re(E),im(E))", R"($\mathrm{Re}T(e^+e^- \to \mathrm{eff})$)",
+                        Unit::InverseGeV2(),
+                        &EEToCCBar::prepare_complex,
+                        &EEToCCBar::re_T_eetoeff,
+                        std::make_tuple("re(E)", "im(E)")),
+
+                make_cacheable_observable("e^+e^-->eff::im_T(re(E),im(E))", R"($\mathrm{Im}T(e^+e^- \to \mathrm{eff})$)",
+                        Unit::InverseGeV2(),
+                        &EEToCCBar::prepare_complex,
+                        &EEToCCBar::im_T_eetoeff,
+                        std::make_tuple("re(E)", "im(E)")),
+
+                make_cacheable_observable("e^+e^-->e^+e^-::sigma(re(E),im(E))", R"($\sigma(e^+e^- \to e^+e^-)$)",
+                        Unit::InverseGeV2(),
+                        &EEToCCBar::prepare_complex,
+                        &EEToCCBar::sigma_eetoee,
+                        std::make_tuple("re(E)", "im(E)")),
+
+                make_cacheable_observable("e^+e^-->D^0Dbar^0::re_T(re(E),im(E))", R"($\mathrm{Re}T(e^+e^- \to D^0 \bar{D}^0)$)",
+                        Unit::InverseGeV2(),
+                        &EEToCCBar::prepare_complex,
+                        &EEToCCBar::re_T_eetoD0Dbar0,
+                        std::make_tuple("re(E)", "im(E)")),
+
+                make_cacheable_observable("e^+e^-->D^0Dbar^0::im_T(re(E),im(E))", R"($\mathrm{Im}T(e^+e^- \to D^0 \bar{D}^0)$)",
+                        Unit::InverseGeV2(),
+                        &EEToCCBar::prepare_complex,
+                        &EEToCCBar::im_T_eetoD0Dbar0,
+                        std::make_tuple("re(E)", "im(E)")),
+
+                make_cacheable_observable("e^+e^-->D^0Dbar^0::sigma(re(E),im(E))", R"($\sigma(e^+e^- \to D^0 \bar{D}^0)$)",
+                        Unit::InverseGeV2(),
+                        &EEToCCBar::prepare_complex,
+                        &EEToCCBar::sigma_eetoD0Dbar0,
+                        std::make_tuple("re(E)", "im(E)")),
+
+                make_cacheable_observable("e^+e^-->D^+D^-::re_T(re(E),im(E))", R"($\mathrm{Re}T(e^+e^- \to D^+ D^-)$)",
+                        Unit::InverseGeV2(),
+                        &EEToCCBar::prepare_complex,
+                        &EEToCCBar::re_T_eetoDpDm,
+                        std::make_tuple("re(E)", "im(E)")),
+
+                make_cacheable_observable("e^+e^-->D^+D^-::im_T(re(E),im(E))", R"($\mathrm{Im}T(e^+e^- \to D^+ D^-)$)",
+                        Unit::InverseGeV2(),
+                        &EEToCCBar::prepare_complex,
+                        &EEToCCBar::im_T_eetoDpDm,
+                        std::make_tuple("re(E)", "im(E)")),
+
+                make_cacheable_observable("e^+e^-->D^+D^-::sigma(re(E),im(E))", R"($\sigma(e^+e^- \to D^+ D^-)$)",
+                        Unit::InverseGeV2(),
+                        &EEToCCBar::prepare_complex,
+                        &EEToCCBar::sigma_eetoDpDm,
+                        std::make_tuple("re(E)", "im(E)")),
+
 
                 // Model with all the resonances
                 make_observable("Jpsi->e^+e^-::decay_width", R"($\Gamma(J/\psi \to ee)$)",

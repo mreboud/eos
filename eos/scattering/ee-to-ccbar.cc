@@ -303,7 +303,7 @@ namespace eos
                 );
         }
 
-        const IntermediateResult * prepare(const double & E)
+        const IntermediateResult * prepare(const complex<double> & E)
         {
             _intermediate_result.tmatrix_row_0 = K->tmatrix_row(0, E*E);
 
@@ -313,6 +313,11 @@ namespace eos
             return &_intermediate_result;
         }
 
+
+        double rho(const IntermediateResult * intermediate_result, const Channels & channel)
+        {
+            return real(K->_channels[Channels(channel)]->rho(intermediate_result->s));
+        }
 
         inline double sigma_eetomumu(const double & E)
         {
@@ -338,6 +343,14 @@ namespace eos
             const complex<double> T1f = intermediate_result->tmatrix_row_0[Channels(channel)];
 
             return sqrt(GeVtonb * 16. * M_PI / intermediate_result->s * Nf * rhof) * T1f;
+        }
+
+        complex<double> T_eetochannel(const IntermediateResult * intermediate_result, const Channels & channel)
+        {
+            // Get T-matrix[ee, channel]
+            const complex<double> T1f = intermediate_result->tmatrix_row_0[Channels(channel)];
+
+            return T1f;
         }
 
         double sigma_eetochannel(const IntermediateResult * intermediate_result, const Channels & channel)
@@ -366,7 +379,7 @@ namespace eos
                 total_xsec += sigma_eetochannel(intermediate_result, Channels(i));
             }
 
-            return total_xsec / sigma_eetomumu(intermediate_result->E) + Rconstant; //Add constant term
+            return total_xsec / sigma_eetomumu(abs(intermediate_result->E)) + Rconstant; // Add constant term
         }
     };
 
@@ -389,6 +402,12 @@ namespace eos
     EEToCCBar::prepare(const double & E) const
     {
         return _imp->prepare(E);
+    }
+
+    const EEToCCBar::IntermediateResult *
+    EEToCCBar::prepare_complex(const double & reE, const double & imE) const
+    {
+        return _imp->prepare(complex<double>(reE, imE));
     }
 
     using Resonances = Implementation<eos::EEToCCBar>::Resonances;
@@ -499,6 +518,79 @@ namespace eos
     {
         return _imp->exclusive_norm * _imp->sigma_eetochannel(ir, Channels::DpDm);
     }
+
+    double
+    EEToCCBar::rho_ee(const EEToCCBar::IntermediateResult * ir) const
+    {
+        return _imp->rho(ir, Channels::ee);
+    }
+
+    double
+    EEToCCBar::rho_eff(const EEToCCBar::IntermediateResult * ir) const
+    {
+        return _imp->rho(ir, Channels::eff3770);
+    }
+
+    double
+    EEToCCBar::rho_D0Dbar0(const EEToCCBar::IntermediateResult * ir) const
+    {
+        return _imp->rho(ir, Channels::D0Dbar0);
+    }
+
+    double
+    EEToCCBar::rho_DpDm(const EEToCCBar::IntermediateResult * ir) const
+    {
+        return _imp->rho(ir, Channels::DpDm);
+    }
+
+    double
+    EEToCCBar::re_T_eetoee(const EEToCCBar::IntermediateResult * ir) const
+    {
+        return real(_imp->T_eetochannel(ir, Channels::ee));
+    }
+
+    double
+    EEToCCBar::im_T_eetoee(const EEToCCBar::IntermediateResult * ir) const
+    {
+        return imag(_imp->T_eetochannel(ir, Channels::ee));
+    }
+
+    double
+    EEToCCBar::re_T_eetoeff(const EEToCCBar::IntermediateResult * ir) const
+    {
+        return real(_imp->T_eetochannel(ir, Channels::eff3770));
+    }
+
+    double
+    EEToCCBar::im_T_eetoeff(const EEToCCBar::IntermediateResult * ir) const
+    {
+        return imag(_imp->T_eetochannel(ir, Channels::eff3770));
+    }
+
+    double
+    EEToCCBar::re_T_eetoDpDm(const EEToCCBar::IntermediateResult * ir) const
+    {
+        return real(_imp->T_eetochannel(ir, Channels::DpDm));
+    }
+
+    double
+    EEToCCBar::im_T_eetoDpDm(const EEToCCBar::IntermediateResult * ir) const
+    {
+        return imag(_imp->T_eetochannel(ir, Channels::DpDm));
+    }
+
+    double
+    EEToCCBar::re_T_eetoD0Dbar0(const EEToCCBar::IntermediateResult * ir) const
+    {
+        return real(_imp->T_eetochannel(ir, Channels::D0Dbar0));
+    }
+
+    double
+    EEToCCBar::im_T_eetoD0Dbar0(const EEToCCBar::IntermediateResult * ir) const
+    {
+        return imag(_imp->T_eetochannel(ir, Channels::D0Dbar0));
+    }
+
 
     double
     EEToCCBar::R(const EEToCCBar::IntermediateResult * ir) const

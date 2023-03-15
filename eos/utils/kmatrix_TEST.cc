@@ -41,23 +41,25 @@ struct PPchan11 :
     double mm = this->_m1 - this->_m2;
     double mp = this->_m1 + this->_m2;
     // sqrt of the Källen factor, defined with an absolute value
-    double sqlk(const double & s)
+    double sqlk(const complex<double> & s)
     {
         return std::sqrt(std::abs((s - mp * mp) * (s - mm * mm)));
     }
     const double pi = M_PI;
     const complex<double> i = complex<double>(0.0, 1.0);
 
-    double beta(const double & s)
+    double beta(const complex<double> & s)
     {
-        if (s < mp * mp)
+        if (real(s) < mp * mp)
             return 0.;
         else
-            return sqlk(s) / s;
+            return sqlk(s) / abs(s);
     }
 
-    complex<double> rho(const double & s)
+    complex<double> rho(const complex<double> & S)
     {
+        double s = real(S);
+
         complex<double> result = 0.0;
         if (s < mm * mm)
         {

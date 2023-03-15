@@ -105,14 +105,14 @@ namespace eos
 
     // Adapt s to avoid resonances masses
     template <unsigned nchannels_, unsigned nresonances_, unsigned order_>
-    double
-    KMatrix<nchannels_, nresonances_, order_>::adapt_s(const double s) const
+    complex<double>
+    KMatrix<nchannels_, nresonances_, order_>::adapt_s(const complex<double> s) const
     {
         // Disallowed range around resonance masses
         const double minimal_distance = 1.0e-7;
         const auto & resonances = this->_resonances;
 
-        double adapted_s = s;
+        complex<double> adapted_s = s;
 
         for (size_t a = 0 ; a < nresonances_ ; ++a)
         {
@@ -128,7 +128,7 @@ namespace eos
 
             if (abs(mres_a * mres_a - s) < minimal_distance) [[unlikely]]
             {
-                if (s > mres_a * mres_a)
+                if (real(s) > mres_a * mres_a)
                     adapted_s = mres_a * mres_a + minimal_distance;
                 else
                     adapted_s = mres_a * mres_a - minimal_distance;
@@ -142,17 +142,17 @@ namespace eos
     // Return the row corresponding to the index rowindex of the T matrix defined as T = (1-i*rho*K)^(-1)*K
     template <unsigned nchannels_, unsigned nresonances_, unsigned order_>
     std::array<complex<double>, nchannels_>
-    KMatrix<nchannels_, nresonances_, order_>::tmatrix_row(unsigned rowindex, double _s) const
+    KMatrix<nchannels_, nresonances_, order_>::tmatrix_row(unsigned rowindex, complex<double> _s) const
     {
         std::array<complex<double>, nchannels_> tmatrixrow;
         const auto & channels = this->_channels;
         const auto & resonances = this->_resonances;
         const auto & bkgpol = this->_bkgpol;
         // Adapt s to avoid pole in the K matrix
-        const double s = adapt_s(_s);
+        const complex<double> s = adapt_s(_s);
 
         ///////////////////
-        //1. Fill tmp1 = rho matrix
+        // 1. Fill tmp1 = rho matrix
         ///////////////////
         gsl_matrix_complex_set_zero(_tmp_1);
         gsl_matrix_complex_set_zero(_tmp_2);
@@ -175,18 +175,19 @@ namespace eos
                 // Fast evaluation of the polynomial describing the non-resonant contribution
                 for (size_t k = 0 ; k <= order_ ; ++k)
                 {
+                    // The square root is evaluated with a branch cut along the negative real axis
                     entry = 1.0 / sqrt(s) * entry + complex<double>(bkgpol[order_ - k][i][j].evaluate(), 0.0);
                 }
 
                 for (size_t a = 0 ; a < nresonances_ ; ++a)
                 {
-                    const double mres_2 = power_of<2>((double)resonances[a]->_m);
+                    const complex<double> mres_2 = power_of<2>((double)resonances[a]->_m);
                     const double qres = resonances[a]->_q;
 
-                    const double mi1_2 = power_of<2>((double)channels[i]->_m1);
-                    const double mi2_2 = power_of<2>((double)channels[i]->_m2);
-                    const double mj1_2 = power_of<2>((double)channels[j]->_m1);
-                    const double mj2_2 = power_of<2>((double)channels[j]->_m2);
+                    const complex<double> mi1_2 = power_of<2>((double)channels[i]->_m1);
+                    const complex<double> mi2_2 = power_of<2>((double)channels[i]->_m2);
+                    const complex<double> mj1_2 = power_of<2>((double)channels[j]->_m1);
+                    const complex<double> mj2_2 = power_of<2>((double)channels[j]->_m2);
 
                     const unsigned li = channels[i]->_l_orbital;
                     const unsigned lj = channels[j]->_l_orbital;

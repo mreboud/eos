@@ -75,26 +75,34 @@ namespace eos
         const double mm = this->_m1 - this->_m2;
         const double mp = this->_m1 + this->_m2;
         // Square root of the Källen factor, defined with an absolute value
-        double sqlk(const double & s) {
+        double sqlk(const complex<double> & s)
+        {
             return std::sqrt(std::abs((s - mp * mp) * (s - mm * mm)));
         }
         const double pi = M_PI;
         const complex<double> i =  complex<double>(0.0, 1.0);
 
-        double beta(const double & s){
-            if (s < mp * mp) { return 0.; } // Kinematic threshold
-            else { return pow(sqlk(s)/s, 3.); }
+        double beta(const complex<double> & s)
+        {
+            if (real(s) < mp * mp) // Kinematic threshold
+            {
+                return 0.;
+            }
+            else
+            {
+                return pow(sqlk(s) / abs(s), 3.);
+            }
         }
 
-        complex<double> rho(const double & s) {
+        complex<double> rho(const complex<double> & s) {
             complex<double> result = 0.0;
-            if (s < mm * mm){
+            if (real(s) < mm * mm){
                 // result += mm*sqlk(s)*(2*mm*mp*s-(-3*mp * mp*s+mm * mm*(2*mp * mp+s))*std::log((mp+mm)/(mp-mm)));
                 // result += 2*pow(mp,3)*pow(mm * mm-s,2)*std::log((-2*(s+sqlk(s))+mm * mm+mp * mp)/(mp * mp-mm * mm));
                 // result *= i*pow(mp * mp-s,1.5)/(2*pow(mp,3)*pi*s*s*sqrt(mm * mm-s));
                 return result;
             }
-            else if (s < mp * mp){
+            else if (real(s) < mp * mp){
                 // result += mm*sqlk(s)*(2*mm*mp*s-(-3*mp * mp*s+mm * mm*(2*mp * mp+s))*std::log((mp+mm)/(mp-mm)));
                 // result += 4*pow(mp,3)*pow(s-mm * mm,2)*std::atan(sqrt((s-mm * mm)/(mp * mp-s)));
                 // result *= i*pow(mp * mp-s,1.5)/(2*pow(mp,3)*pi*s*s*sqrt(s-mm * mm));
@@ -104,7 +112,7 @@ namespace eos
                 // result += mm*sqlk(s)*(-2*mm*mp*s+(-3*mp * mp*s+mm * mm*(2*mp * mp+s))*std::log((mp+mm)/(mp-mm)));
                 // result += 2*pow(mp,3)*pow(s-mm * mm,2)*std::log((2*(s+sqlk(s))-mm * mm-mp * mp)/(mp * mp-mm * mm));
                 // result *= i*pow(s-mp * mp,1.5)/(2*pow(mp,3)*pi*s*s*sqrt(s-mm * mm));
-                result += pow(sqlk(s)/s, 3.);
+                result += pow(sqlk(s) / s, 3.);
                 return result;
            }
         }
@@ -126,26 +134,34 @@ namespace eos
         const double mm = this->_m1 - this->_m2;
         const double mp = this->_m1 + this->_m2;
         // Square root of the Källen factor, defined with an absolute value
-        double sqlk(const double & s) {
+        double sqlk(const complex<double> & s)
+        {
             return std::sqrt(std::abs((s - mp * mp) * (s - mm * mm)));
         }
         const double pi = M_PI;
         const complex<double> i =  complex<double>(0.0, 1.0);
 
-        double beta(const double & s){
-            if (s < mp * mp) { return 0.; } // Kinematic threshold
-            else { return pow(sqlk(s)/s, 3.); }
+        double beta(const complex<double> & s)
+        {
+            if (real(s) < mp * mp) // Kinematic threshold
+            {
+                return 0.;
+            }
+            else
+            {
+                return pow(sqlk(s) / abs(s), 3.);
+            }
         }
 
-        complex<double> rho(const double & s) {
+        complex<double> rho(const complex<double> & s) {
             complex<double> result = 0.0;
-            if (s < mm * mm){
+            if (real(s) < mm * mm){
                 // result += mm*sqlk(s)*(2*mm*mp*s-(-3*mp * mp*s+mm * mm*(2*mp * mp+s))*std::log((mp+mm)/(mp-mm)));
                 // result += 2*pow(mp,3)*pow(mm * mm-s,2)*std::log((-2*(s+sqlk(s))+mm * mm+mp * mp)/(mp * mp-mm * mm));
                 // result *= i*pow(mp * mp-s,1.5)/(2*pow(mp,3)*pi*s*s*sqrt(mm * mm-s));
                 return result;
             }
-            else if (s < mp * mp){
+            else if (real(s) < mp * mp){
                 // result += mm*sqlk(s)*(2*mm*mp*s-(-3*mp * mp*s+mm * mm*(2*mp * mp+s))*std::log((mp+mm)/(mp-mm)));
                 // result += 4*pow(mp,3)*pow(s-mm * mm,2)*std::atan(sqrt((s-mm * mm)/(mp * mp-s)));
                 // result *= i*pow(mp * mp-s,1.5)/(2*pow(mp,3)*pi*s*s*sqrt(s-mm * mm));
@@ -155,7 +171,7 @@ namespace eos
                 // result += mm*sqlk(s)*(-2*mm*mp*s+(-3*mp * mp*s+mm * mm*(2*mp * mp+s))*std::log((mp+mm)/(mp-mm)));
                 // result += 2*pow(mp,3)*pow(s-mm * mm,2)*std::log((2*(s+sqlk(s))-mm * mm-mp * mp)/(mp * mp-mm * mm));
                 // result *= i*pow(s-mp * mp,1.5)/(2*pow(mp,3)*pi*s*s*sqrt(s-mm * mm));
-                result += pow(sqlk(s)/s, 3.);
+                result += pow(sqlk(s) / s, 3.);
                 return result;
            }
         }
@@ -177,26 +193,34 @@ namespace eos
         const double mm = this->_m1 - this->_m2;
         const double mp = this->_m1 + this->_m2;
         // Square root of the Källen factor, defined with an absolute value
-        double sqlk(const double & s) {
+        double sqlk(const complex<double> & s)
+        {
             return std::sqrt(std::abs((s - mp * mp) * (s - mm * mm)));
         }
         const double pi = M_PI;
         const complex<double> i =  complex<double>(0.0, 1.0);
 
-        double beta(const double & s){
-            if (s < mp * mp) { return 0.; } // Kinematic threshold
-            else { return pow(sqlk(s)/s, 3.); }
+        double beta(const complex<double> & s)
+        {
+            if (real(s) < mp * mp) // Kinematic threshold
+            {
+                return 0.;
+            }
+            else
+            {
+                return pow(sqlk(s) / abs(s), 3.);
+            }
         }
 
-        complex<double> rho(const double & s) {
+        complex<double> rho(const complex<double> & s) {
             complex<double> result = 0.0;
-            if (s < mm * mm){
+            if (real(s) < mm * mm){
                 // result += mm*(mp * mp-s)*std::log((mm+mp)/(mp-mm));
                 // result += mp*sqlk(s)*std::log((mm * mm+mp * mp-2*s-2*sqlk(s))/(mp * mp-mm * mm));
                 // result *= i/(mp*pi*s);
                 return result;
             }
-            else if (s < mp * mp){
+            else if (real(s) < mp * mp){
                 // result += mm*(mp * mp-s)*std::log((mm+mp)/(mp-mm));
                 // result += 2*mp*sqlk(s)*std::atan(std::sqrt((s-mm * mm)/(mp * mp-s)));
                 // result *= i/(mp*pi*s);
@@ -206,7 +230,7 @@ namespace eos
                 // result += mm*(mp * mp-s)*std::log((mm+mp)/(mp-mm));
                 // result += mp*sqlk(s)*std::log((2*s+2*sqlk(s)-mm * mm-mp * mp)/(mp * mp-mm * mm));
                 // result *= i/(mp*pi*s);
-                result += pow(sqlk(s)/s, 3.);
+                result += pow(sqlk(s) / s, 3.);
                 return result;
             }
         }
@@ -228,26 +252,34 @@ namespace eos
         const double mm = this->_m1 - this->_m2;
         const double mp = this->_m1 + this->_m2;
         // Square root of the Källen factor, defined with an absolute value
-        double sqlk(const double & s) {
+        double sqlk(const complex<double> & s)
+        {
             return std::sqrt(std::abs((s - mp * mp) * (s - mm * mm)));
         }
         const double pi = M_PI;
         const complex<double> i =  complex<double>(0.0, 1.0);
 
-        double beta(const double & s){
-            if (s < mp * mp) { return 0.; } // Kinematic threshold
-            else { return pow(sqlk(s)/s, 3.); }
+        double beta(const complex<double> & s)
+        {
+            if (real(s) < mp * mp) // Kinematic threshold
+            {
+                return 0.;
+            }
+            else
+            {
+                return pow(sqlk(s) / abs(s), 3.);
+            }
         }
 
-        complex<double> rho(const double & s) {
+        complex<double> rho(const complex<double> & s) {
             complex<double> result = 0.0;
-            if (s < mm * mm){
+            if (real(s) < mm * mm){
                 // result += mm*sqlk(s)*(2*mm*mp*s-(-3*mp * mp*s+mm * mm*(2*mp * mp+s))*std::log((mp+mm)/(mp-mm)));
                 // result += 2*pow(mp,3)*pow(mm * mm-s,2)*std::log((-2*(s+sqlk(s))+mm * mm+mp * mp)/(mp * mp-mm * mm));
                 // result *= i*pow(mp * mp-s,1.5)/(2*pow(mp,3)*pi*s*s*sqrt(mm * mm-s));
                 return result;
             }
-            else if (s < mp * mp){
+            else if (real(s) < mp * mp){
                 // result += mm*sqlk(s)*(2*mm*mp*s-(-3*mp * mp*s+mm * mm*(2*mp * mp+s))*std::log((mp+mm)/(mp-mm)));
                 // result += 4*pow(mp,3)*pow(s-mm * mm,2)*std::atan(sqrt((s-mm * mm)/(mp * mp-s)));
                 // result *= i*pow(mp * mp-s,1.5)/(2*pow(mp,3)*pi*s*s*sqrt(s-mm * mm));
@@ -257,7 +289,7 @@ namespace eos
                 // result += mm*sqlk(s)*(-2*mm*mp*s+(-3*mp * mp*s+mm * mm*(2*mp * mp+s))*std::log((mp+mm)/(mp-mm)));
                 // result += 2*pow(mp,3)*pow(s-mm * mm,2)*std::log((2*(s+sqlk(s))-mm * mm-mp * mp)/(mp * mp-mm * mm));
                 // result *= i*pow(s-mp * mp,1.5)/(2*pow(mp,3)*pi*s*s*sqrt(s-mm * mm));
-                result += pow(sqlk(s)/s, 3.);
+                result += pow(sqlk(s) / s, 3.);
                 return result;
             }
         }
@@ -278,26 +310,34 @@ namespace eos
         const double mm = this->_m1 - this->_m2;
         const double mp = this->_m1 + this->_m2;
         // Square root of the Källen factor, defined with an absolute value
-        double sqlk(const double & s) {
+        double sqlk(const complex<double> & s)
+        {
             return std::sqrt(std::abs((s - mp * mp) * (s - mm * mm)));
         }
         const double pi = M_PI;
         const complex<double> i =  complex<double>(0.0, 1.0);
 
-        double beta(const double & s){
-            if (s < mp * mp) { return 0.; } // Kinematic threshold
-            else { return pow(sqlk(s)/s, 7.); }
+        double beta(const complex<double> & s)
+        {
+            if (real(s) < mp * mp)
+            {
+                return 0.; // Kinematic threshold
+            }
+            else
+            {
+                return pow(sqlk(s) / abs(s), 7.);
+            }
         }
 
-        complex<double> rho(const double & s) {
+        complex<double> rho(const complex<double> & s) {
             complex<double> result = 0.0;
-            if (s < mm * mm){
+            if (real(s) < mm * mm){
                 // result += mm*sqlk(s)*(2*mm*mp*s-(-3*mp * mp*s+mm * mm*(2*mp * mp+s))*std::log((mp+mm)/(mp-mm)));
                 // result += 2*pow(mp,3)*pow(mm * mm-s,2)*std::log((-2*(s+sqlk(s))+mm * mm+mp * mp)/(mp * mp-mm * mm));
                 // result *= i*pow(mp * mp-s,1.5)/(2*pow(mp,3)*pi*s*s*sqrt(mm * mm-s));
                 return result;
             }
-            else if (s < mp * mp){
+            else if (real(s) < mp * mp){
                 // result += mm*sqlk(s)*(2*mm*mp*s-(-3*mp * mp*s+mm * mm*(2*mp * mp+s))*std::log((mp+mm)/(mp-mm)));
                 // result += 4*pow(mp,3)*pow(s-mm * mm,2)*std::atan(sqrt((s-mm * mm)/(mp * mp-s)));
                 // result *= i*pow(mp * mp-s,1.5)/(2*pow(mp,3)*pi*s*s*sqrt(s-mm * mm));
@@ -307,7 +347,7 @@ namespace eos
                 // result += mm*sqlk(s)*(-2*mm*mp*s+(-3*mp * mp*s+mm * mm*(2*mp * mp+s))*std::log((mp+mm)/(mp-mm)));
                 // result += 2*pow(mp,3)*pow(s-mm * mm,2)*std::log((2*(s+sqlk(s))-mm * mm-mp * mp)/(mp * mp-mm * mm));
                 // result *= i*pow(s-mp * mp,1.5)/(2*pow(mp,3)*pi*s*s*sqrt(s-mm * mm));
-                result += pow(sqlk(s)/s, 7.);
+                result += pow(sqlk(s) / s, 7.);
                 return result;
             }
         }

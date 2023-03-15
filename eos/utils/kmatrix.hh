@@ -72,11 +72,11 @@ namespace eos
             ~KMatrix();
 
             // Adapt s to avoid resonnances masses
-            double adapt_s(const double s) const;
+            complex<double> adapt_s(const complex<double> s) const;
 
             // Return rowindex^th row of the T matrix defined as T = (1-i*rho*K)^(-1)*K
             // rowindex corresponds to the initial channel
-            std::array<complex<double>, nchannels_> tmatrix_row(unsigned rowindex, const double s) const;
+            std::array<complex<double>, nchannels_> tmatrix_row(unsigned rowindex, const complex<double> s) const;
 
             // Return the K matrix partial and total widths of a resonance.
             // Note that these widths do not necessarily correspond to the experimental ones.
@@ -111,10 +111,10 @@ namespace eos
 
 
         // Phase space factor
-        virtual double beta(const double & s) = 0;
+        virtual double beta(const complex<double> & s) = 0;
 
         // Analytic continuation of the phase space factor
-        virtual complex<double> rho(const double & s) = 0;
+        virtual complex<double> rho(const complex<double> & s) = 0;
     };
 
 
