@@ -51,6 +51,7 @@ namespace eos
         _That(gsl_matrix_complex_calloc(nchannels_, nchannels_)),
         _tmp_1(gsl_matrix_complex_calloc(nchannels_, nchannels_)),
         _tmp_2(gsl_matrix_complex_calloc(nchannels_, nchannels_)),
+        _tmp_3(gsl_matrix_complex_calloc(nchannels_, nchannels_)),
         _perm(gsl_permutation_calloc(nchannels_))
     {
         // Perform size checks
@@ -74,6 +75,8 @@ namespace eos
             throw std::bad_alloc();
         if (_tmp_2 == nullptr)
             throw std::bad_alloc();
+        if (_tmp_3 == nullptr)
+            throw std::bad_alloc();
         if (_perm == nullptr)
             throw std::bad_alloc();
     }
@@ -92,6 +95,10 @@ namespace eos
         if (_tmp_2)
             gsl_matrix_complex_free(_tmp_2);
         _tmp_2 = nullptr;
+
+        if (_tmp_3)
+            gsl_matrix_complex_free(_tmp_3);
+        _tmp_3 = nullptr;
 
         if (_That)
             gsl_matrix_complex_free(_That);
@@ -156,6 +163,7 @@ namespace eos
         ///////////////////
         gsl_matrix_complex_set_zero(_tmp_1);
         gsl_matrix_complex_set_zero(_tmp_2);
+        gsl_matrix_complex_set_zero(_tmp_3);
 
         for (size_t i = 0 ; i < nchannels_ ; ++i)
         {
@@ -164,7 +172,38 @@ namespace eos
         }
 
         ///////////////////
-        // 2. Fill Khat
+        // 2. Fill tmp2 =  n matrix
+        ///////////////////
+        for (size_t i = 0 ; i < nchannels_ ; ++i)
+        {
+            const unsigned li = channels[i]->_l_orbital;
+
+            // TODO: the BW-Factors should be independent of the resonance, shouldn't they?
+            // If I want to make them dependent on the resonance like before I need to access the information about the
+            // resonances here. That is not intended in the PDG, though.
+
+            //const double qres = resonances[a]->_q;
+            const double qres = 2; //I think the breakup momentum for the blattweisskopf needs to be universal here?
+
+            //const complex<double> mres_2 = power_of<2>((double)resonances[a]->_m);
+            const complex<double> mres_2 = 4;
+
+            const complex<double> mi1_2 = power_of<2>((double)channels[i]->_m1);
+            const complex<double> mi2_2 = power_of<2>((double)channels[i]->_m2);
+
+            const double BFi = kmatrix_utils::blatt_weisskopf_factor(li, 0.5 * sqrt(abs(eos::lambda(s, mi1_2, mi2_2) / s)), qres) /
+                    kmatrix_utils::blatt_weisskopf_factor(li, 0.5 * sqrt(abs(eos::lambda(mres_2, mi1_2, mi2_2) / mres_2)), qres);
+
+            //TODO: I can not put li in the eos power_of Function. What to do here?
+            //const double QFi = power_of<li>(0.5 * sqrt(abs(eos::lambda(mres_2, mi1_2, mi2_2) / mres_2)) / qres);
+            const double QFi = power_of<2>(0.5 * sqrt(abs(eos::lambda(mres_2, mi1_2, mi2_2) / mres_2)) / qres);
+
+            complex<double> nentry = QFi * BFi;
+            gsl_matrix_complex_set(_tmp_2,  i,  i, gsl_complex_rect(nentry.real(), nentry.imag()));
+        }
+
+        ///////////////////
+        // 3. Fill Khat
         ///////////////////
         for (size_t i = 0 ; i < nchannels_ ; ++i)
         {
@@ -182,27 +221,11 @@ namespace eos
                 for (size_t a = 0 ; a < nresonances_ ; ++a)
                 {
                     const complex<double> mres_2 = power_of<2>((double)resonances[a]->_m);
-                    const double qres = resonances[a]->_q;
-
-                    const complex<double> mi1_2 = power_of<2>((double)channels[i]->_m1);
-                    const complex<double> mi2_2 = power_of<2>((double)channels[i]->_m2);
-                    const complex<double> mj1_2 = power_of<2>((double)channels[j]->_m1);
-                    const complex<double> mj2_2 = power_of<2>((double)channels[j]->_m2);
-
-                    const unsigned li = channels[i]->_l_orbital;
-                    const unsigned lj = channels[j]->_l_orbital;
 
                     Parameter g0rci = channels[i]->_g0s[a];
                     Parameter g0rcj = channels[j]->_g0s[a];
 
-                    // Centrifugal barrier factors
-                    const double BFi = kmatrix_utils::blatt_weisskopf_factor(li, 0.5 * sqrt(abs(eos::lambda(s, mi1_2, mi2_2) / s)), qres) /
-                            kmatrix_utils::blatt_weisskopf_factor(li, 0.5 * sqrt(abs(eos::lambda(mres_2, mi1_2, mi2_2) / mres_2)), qres);
-
-                    const double BFj = kmatrix_utils::blatt_weisskopf_factor(lj, 0.5 * sqrt(abs(eos::lambda(s, mj1_2, mj2_2) / s)), qres) /
-                            kmatrix_utils::blatt_weisskopf_factor(lj, 0.5 * sqrt(abs(eos::lambda(mres_2, mj1_2, mj2_2) / mres_2)), qres);
-
-                    entry += g0rci * g0rcj * BFi * BFj / (mres_2 - s);
+                    entry += g0rci * g0rcj / (mres_2 - s);
                 }
 
                 gsl_matrix_complex_set(_Khat, i, j, gsl_complex_rect(entry.real(), entry.imag()));
@@ -210,32 +233,51 @@ namespace eos
         }
 
         ///////////////////
-        // 3. Compute That
+        // 4. Compute That
         ///////////////////
         static const gsl_complex one  = gsl_complex_rect(1.0, 0.0);
         static const gsl_complex minusi  = gsl_complex_rect(0.0, -1.0);
         static const gsl_complex zero = gsl_complex_rect(0.0, 0.0);
 
-        // 3a. Set 1.0 to the diagonal elements of tmp_2
+        // 4a. multiply Khat with -i*rho and assign to tmp_3
+        // -> tmp_3 = -i * Khat * tmp_1; tmp_1=rho
+        // This is the only time I need tmp_1 for the rho matrix
+        gsl_blas_zgemm(CblasNoTrans, CblasNoTrans, minusi, _Khat, _tmp_1, zero, _tmp_3);
+
+        // 4b. Set 1.0 to the diagonal elements of tmp_1
+        // tmp_1 = 1
         for (unsigned i = 0 ; i < nchannels_ ; ++i)
         {
-            gsl_matrix_complex_set(_tmp_2, i, i, one);
+            gsl_matrix_complex_set(_tmp_1, i, i, one);
         }
 
-        // 3b. multiply -i*rho with Khat from the right and add tmp_2
-        // -> tmp_2 = -i * tmp_1 * Khat + one * tmp_2 ; no transpose anywhere
-        gsl_blas_zgemm(CblasNoTrans, CblasNoTrans, minusi, _tmp_1, _Khat, one, _tmp_2);
+        // 4c. multiply tmp_3 with n
+        // -> tmp_2 = -i * Khat * rho * n 
+        gsl_blas_zgemm(CblasNoTrans, CblasNoTrans, one, _tmp_3, _tmp_2, zero, _tmp_3);
 
-        // 3c. invert tmp_2 and assign the result to tmp_1
+        // 4d. multiply tmp_3 with n, add unit matrix and assign to tmp_1
+        // -> tmp_1 = -i * Khat * rho * n^2 + 1 
+        gsl_blas_zgemm(CblasNoTrans, CblasNoTrans, one, _tmp_3, _tmp_2, one, _tmp_1);
+
+        // 4e. invert tmp_1 and assign the result to tmp_3
+        // -> tmp_3 = (tmp_1)^-1
         int signum = 0;
         gsl_permutation_init(_perm);
-        gsl_linalg_complex_LU_decomp(_tmp_2, _perm, &signum);
-        gsl_linalg_complex_LU_invert(_tmp_2, _perm, _tmp_1);
+        gsl_linalg_complex_LU_decomp(_tmp_1, _perm, &signum);
+        gsl_linalg_complex_LU_invert(_tmp_1, _perm, _tmp_3);
 
-        // 3d. calculate That = Khat / (1 - i rho * Khat) + zero * That
-        //                    = Khat * tmp_1 + zero * That
-        gsl_blas_zgemm(CblasNoTrans, CblasNoTrans, one, _Khat, _tmp_1, zero, _That);
+        // 4f. multiply tmp_2 (n-matrix) with tmp_3 and assign to tmp_3
+        // -> tmp_3 = n * tmp_3
+        gsl_blas_zgemm(CblasNoTrans, CblasNoTrans, one, _tmp_2, _tmp_3, zero, _tmp_3);
 
+        // 4g. multiply tmp_3 with Khat and assign to tmp_3
+        // -> tmp_3 = tmp_3 * Khat
+        gsl_blas_zgemm(CblasNoTrans, CblasNoTrans, one, _tmp_3, _Khat, zero, _tmp_3);
+
+        // 4h. multiply tmp_3 with tmp_2 (n-matrix) and assign to That
+        // -> tmp_3 = tmp_3 * n
+        // now the T matrix is That = n * Inverse[ 1- Khat * i * rho *  n * n] * Khat * n
+        gsl_blas_zgemm(CblasNoTrans, CblasNoTrans, one, _tmp_3, _tmp_2, zero, _That);
 
         ///////////////////
         // 4. Extract T matrix row

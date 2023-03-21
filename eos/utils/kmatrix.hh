@@ -60,6 +60,7 @@ namespace eos
             // Two temporary matrices and a permutation are needed to evaluate That
             gsl_matrix_complex * _tmp_1;
             gsl_matrix_complex * _tmp_2;
+            gsl_matrix_complex * _tmp_3;
             gsl_permutation * _perm;
 
             // Constructor
