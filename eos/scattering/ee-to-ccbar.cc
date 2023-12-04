@@ -17,6 +17,7 @@
 
 #include <eos/scattering/ee-to-ccbar.hh>
 #include <eos/maths/complex.hh>
+#include <eos/maths/polylog.hh>
 #include <eos/utils/destringify.hh>
 #include <eos/utils/kinematic.hh>
 #include <eos/utils/kmatrix-impl.hh>
@@ -82,6 +83,10 @@ namespace eos
         UsedParameter exclusive_norm;
 
         std::shared_ptr<KMatrix<EEToCCBar::nchannels, EEToCCBar::nresonances>> K;
+
+        // QED corrections
+        SpecifiedOption opt_qed;
+        std::function<double(const double &)> eta;
 
         using IntermediateResult = EEToCCBar::IntermediateResult;
         IntermediateResult _intermediate_result;
@@ -242,6 +247,8 @@ namespace eos
             q(_channel_effective_momentum(p, u, std::make_index_sequence<EEToCCBar::nchannels>())),
             bkgcst(_c_matrix(p, u, std::make_index_sequence<EEToCCBar::nchannels>(), std::make_index_sequence<EEToCCBar::nchannels>())),
             Rconstant(p["ee->ccbar::Rconstant"], u),
+            opt_qed(o, options, "QED"),
+            eta([this](const double & s) { return 0.0; }),
             exclusive_norm(p["ee->ccbar::exclusive_norm"], u)
         {
             std::array<std::shared_ptr<KMatrix<EEToCCBar::nchannels, EEToCCBar::nresonances>::Resonance>, EEToCCBar::nresonances> resonance_array;
@@ -283,6 +290,27 @@ namespace eos
                     "e^+e^-->ccbar"
                     )
                 );
+
+            if (opt_qed.value() == "true")
+            {
+                eta = [this](const double & s) { return this->_eta_lo(s); };
+            }
+        }
+
+        double _eta_lo(const double & s) const
+        {
+            // hep-ph/0107154 eq. (45)
+            const double beta = sqrt(1.0 - 4.0 * m_Dp * m_Dp / s), beta2 = beta * beta,
+                beta3 = beta2 * beta;
+            const double X = (1.0 - beta) / (1.0 + beta);
+
+            return (1.0 + beta2) / beta * real(
+                4.0 * dilog(X) + 2.0 * dilog(-1.0 * X) + 3.0 * log(X) * log(2.0 / (1.0 + beta))
+                + 2.0 * log(beta) * log(X))
+                - 3.0 * log(4.0 / (1 - beta2)) - 4.0 * log(beta)
+                - 1.0 / beta3 * (5.0 / 4.0 * power_of<2>(1.0 + beta2) - 2.0) * log(X)
+                + 3.0 / 2.0 * (1.0 + beta2) / beta2
+            ;
         }
 
         const IntermediateResult * prepare(const complex<double> & E)
@@ -413,6 +441,7 @@ namespace eos
     Implementation<EEToCCBar>::options
     {
         {"assume_isospin", { "true", "false" }, "false"},
+        {"QED",            { "true", "false" }, "false"},
     };
 
     const EEToCCBar::IntermediateResult *
@@ -515,7 +544,8 @@ namespace eos
     double
     EEToCCBar::sigma_eetoDpDm(const EEToCCBar::IntermediateResult * ir) const
     {
-        return _imp->exclusive_norm * _imp->sigma_eetochannel(ir, Channels::DpDm);
+        const double qed = 1.0 + _imp->alpha_em / M_PI * _imp->eta(real(ir->s));
+        return _imp->exclusive_norm * _imp->sigma_eetochannel(ir, Channels::DpDm) * qed;
     }
 
     double
