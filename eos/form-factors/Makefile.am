@@ -100,7 +100,7 @@ TESTS = \
 	b-lcdas-flvd2022_TEST \
 	hqet-b-to-c_TEST \
 	k-lcdas_TEST \
-	kstar-lcdas_TEST \
+	k-star-lcdas_TEST \
 	lcda_TEST \
 	mesonic_TEST \
 	parametric-abr2022_TEST \
@@ -157,7 +157,7 @@ hqet_b_to_c_TEST_SOURCES = hqet-b-to-c_TEST.cc
 
 k_lcdas_TEST_SOURCES = k-lcdas_TEST.cc
 
-kstar_lcdas_TEST_SOURCES = kstar-lcdas_TEST.cc
+k_star_lcdas_TEST_SOURCES = k-star-lcdas_TEST.cc
 
 lcda_TEST_SOURCES = lcda_TEST.cc
 
