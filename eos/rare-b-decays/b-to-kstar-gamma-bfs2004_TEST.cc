@@ -89,10 +89,10 @@ class BToKstarGammaTest :
                 p["mass::c"] = 1.27;
                 p["mass::B_d"] = 5.27958;
                 p["mass::K_d^*"] = 0.89594;
-                p["K^*::a_1_para@1GeV"] = 0.1;
-                p["K^*::a_1_perp@1GeV"] = 0.1;
-                p["K^*::a_2_para@1GeV"] = 0.1;
-                p["K^*::a_2_perp@1GeV"] = 0.1;
+                p["K^*::a1para@1GeV"] = 0.1;
+                p["K^*::a1perp@1GeV"] = 0.1;
+                p["K^*::a2para@1GeV"] = 0.1;
+                p["K^*::a2perp@1GeV"] = 0.1;
                 p["B::1/lambda_B_p"] = 1.0 / 0.485;
 
                 Options oo
@@ -150,10 +150,10 @@ class BToKstarGammaTest :
                 p["mass::b(MSbar)"] = 4.2;
                 p["mass::B_d"] = 5.27958;
                 p["mass::K_d^*"] = 0.89594;
-                p["K^*::a_1_para@1GeV"] = 0.1;
-                p["K^*::a_1_perp@1GeV"] = 0.1;
-                p["K^*::a_2_para@1GeV"] = 0.1;
-                p["K^*::a_2_perp@1GeV"] = 0.1;
+                p["K^*::a1para@1GeV"] = 0.1;
+                p["K^*::a1perp@1GeV"] = 0.1;
+                p["K^*::a2para@1GeV"] = 0.1;
+                p["K^*::a2perp@1GeV"] = 0.1;
                 p["B::1/lambda_B_p"] = 1.0 / 0.485;
 
                 Options oo
@@ -210,10 +210,10 @@ class BToKstarGammaBobethCompatibilityTest :
             p["decay-constant::B_d"] = 0.1906;
             p["mass::B_d"] = 5.27958;
             p["mass::K_d^*"] = 0.89594;
-            p["K^*::a_1_para@1GeV"] = 0.1;
-            p["K^*::a_1_perp@1GeV"] = 0.1;
-            p["K^*::a_2_para@1GeV"] = 0.1;
-            p["K^*::a_2_perp@1GeV"] = 0.1;
+            p["K^*::a1para@1GeV"] = 0.1;
+            p["K^*::a1perp@1GeV"] = 0.1;
+            p["K^*::a2para@1GeV"] = 0.1;
+            p["K^*::a2perp@1GeV"] = 0.1;
             p["B::1/lambda_B_p"] = 1.0 / 0.485;
 
             Options o

@@ -1023,50 +1023,7 @@ groups:
           latex:    '$(\delta^{K})^2(1\,\mathrm{GeV})$'
           unit:     'GeV^2'
           comments: 'cf. [DKMMO:2008A]'
-      # K^* LCDA parameters
-      'K^*::a_1_para@1GeV' :
-          central: +0.06
-          min:     +0.00
-          max:     +0.10
-          latex:    '$a^{K^*}_{1,\parallel}(1\,\mathrm{GeV})$'
-          unit:     '1'
-          comments: 'cf. [BSZ:2015A], table 1'
-      'K^*::a_2_para@1GeV' :
-          central: +0.16
-          min:     +0.07
-          max:     +0.23
-          latex:    '$a^{K^*}_{2,\parallel}(1\,\mathrm{GeV})$'
-          unit:     '1'
-          comments: 'cf. [BSZ:2015A], table 1'
-      'K^*::f_para' :
-          central: +0.204
-          min:     +0.197
-          max:     +0.211
-          latex:    '$f^{K^*}_{\parallel}(1\,\mathrm{GeV})$'
-          unit:     'GeV'
-          comments: 'cf. [BSZ:2015A], table 1'
-      'K^*::a_1_perp@1GeV' :
-          central: +0.04
-          min:     +0.01
-          max:     +0.07
-          latex:    '$a^{K^*}_{1,\perp}(1\,\mathrm{GeV})$'
-          unit:     '1'
-          comments: 'cf. [BSZ:2015A], table 1'
-      'K^*::a_2_perp@1GeV' :
-          central: +0.10
-          min:     +0.02
-          max:     +0.18
-          latex:    '$a^{K^*}_{2,\perp}(1\,\mathrm{GeV})$'
-          unit:     '1'
-          comments: 'cf. [BSZ:2015A], table 1'
-      'K^*::f_perp@1GeV' :
-          central: +0.159
-          min:     +0.153
-          max:     +0.165
-          latex:    '$f^{K^*}_{\perp}(1\,\mathrm{GeV})$'
-          unit:     'GeV'
-          comments: 'cf. [BSZ:2015A], table 1'
-      # new K^* LCDA parameters
+      # K^* LCDA parameters valid for an anti-K^*, i.e. a K^* with an s quark and an anti-u/d quark
       'K^*::a1para@1GeV' :
           central: +0.06
           min:     +0.00

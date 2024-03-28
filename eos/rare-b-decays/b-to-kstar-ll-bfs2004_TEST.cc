@@ -79,10 +79,10 @@ class BToKstarDileptonBFS2004BobethCompatibilityTest :
             p["b->smumu::Im{c10}"]  = 2.5;
             p["b->smumu::Re{c10'}"] = 4;
             p["b->smumu::Im{c10'}"] = 3.5;
-            p["K^*::a_1_para@1GeV"] = 0.1;
-            p["K^*::a_1_perp@1GeV"] = 0.1;
-            p["K^*::a_2_para@1GeV"] = 0.1;
-            p["K^*::a_2_perp@1GeV"] = 0.1;
+            p["K^*::a1para@1GeV"] = 0.1;
+            p["K^*::a1perp@1GeV"] = 0.1;
+            p["K^*::a2para@1GeV"] = 0.1;
+            p["K^*::a2perp@1GeV"] = 0.1;
             p["B::1/lambda_B_p"] = 1.0 / 0.485;
 
             Options oo
