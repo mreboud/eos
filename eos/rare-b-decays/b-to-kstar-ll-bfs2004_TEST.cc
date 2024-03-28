@@ -80,10 +80,10 @@ class BToKstarDileptonBFS2004BobethCompatibilityTest : public TestCase
                 p["b->smumu::Im{c10}"]        = 2.5;
                 p["b->smumu::Re{c10'}"]       = 4;
                 p["b->smumu::Im{c10'}"]       = 3.5;
-                p["K^*::a_1_para@1GeV"]       = 0.1;
-                p["K^*::a_1_perp@1GeV"]       = 0.1;
-                p["K^*::a_2_para@1GeV"]       = 0.1;
-                p["K^*::a_2_perp@1GeV"]       = 0.1;
+                p["K^*::a1para@1GeV"]         = 0.1;
+                p["K^*::a1perp@1GeV"]         = 0.1;
+                p["K^*::a2para@1GeV"]         = 0.1;
+                p["K^*::a2perp@1GeV"]         = 0.1;
                 p["B::1/lambda_B_p"]          = 1.0 / 0.485;
                 // the KMPW2010 parameters default to zero; use the central values of [KMPW:2010A], Table 4, p. 31
                 p["B->K^*::F^V(0)@KMPW2010"]  = +0.36;
