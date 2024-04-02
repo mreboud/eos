@@ -470,6 +470,14 @@ BaBar:2009A:
   inspire-id: Aubert:2009ak
   title: Measurement of Branching Fractions and CP and Isospin Asymmetries in $B \to  K^*(892)\gamma$
     Decays
+BaBar:2009B:
+  authors: Aubert, Bernard et al.
+  collaboration: BaBar
+  eprint:
+    archive: arXiv
+    id: oai:arXiv.org:0903.1597
+  inspire-id: BaBar:2009elc
+  title: Exclusive Initial-State-Radiation Production of the D anti-D, D* anti-D*, and D* anti-D* Systems
 BaBar:2010A:
   authors: del Amo Sanchez, P. et al.
   collaboration: BaBar
@@ -559,6 +567,14 @@ Belle:2006A:
     id: oai:arXiv.org:hep-ex/0608017
   inspire-id: Ushiroda:2006fi
   title: Time-Dependent CP Asymmetries in $B^0 \to  K^0_S \pi^0 \gamma$ transitions
+Belle:2006B:
+  authors: Abe, K. et al.
+  collaboration: Belle
+  eprint:
+    archive: arXiv
+    id: oai:arXiv.org:hep-ex/0608018
+  inspire-id: Belle:2006hvs
+  title: Measurement of the near-threshold $e^+ e^- \to D^{(*)\pm} D^{(*)\mp}$ cross section using initial-state radiation
 Belle:2008A:
   authors: Schwanda, C. et al.
   collaboration: Belle
