@@ -7,6 +7,7 @@ lib_LTLIBRARIES = libeosscattering.la
 libeosscattering_la_SOURCES = \
     ee-to-ccbar.hh \
     ee-to-ccbar-hkrvd2024.cc ee-to-ccbar-hkrvd2024.hh \
+    ee-to-ccbar-hrvd2024.cc ee-to-ccbar-hrvd2024.hh \
     observables.cc observables.hh
 libeosscattering_la_LIBADD = \
     $(top_builddir)/eos/utils/libeosutils.la \

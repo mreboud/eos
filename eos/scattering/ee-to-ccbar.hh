@@ -191,6 +191,183 @@ namespace eos
     };
 
 
+    // V -> VP channel
+    template <unsigned nchannels_, unsigned nresonances_>
+    struct PWaveVPChannel :
+    public KMatrix<nchannels_, nresonances_>::Channel
+    {
+
+        PWaveVPChannel(std::string name, Parameter m1, Parameter m2, Parameter q0, std::array<Parameter, nresonances_> g0s) :
+            KMatrix<nchannels_, nresonances_>::Channel(name, m1, m2, 1, q0, g0s)
+        {
+        };
+
+        inline double mp() { return this->_m1 + this->_m2; }
+        using KMatrix<nchannels_, nresonances_>::Channel::_q0;
+
+        const double pi = M_PI;
+        const complex<double> i =  complex<double>(0.0, 1.0);
+
+        complex<double> rho(const complex<double> & s)
+        {
+            const double mp = this->mp();
+
+            return (real(s) < mp * mp) ? 0.0 : std::sqrt((s - mp * mp) * s) / 16.0 / pi / s;
+        }
+
+        // Analytic continuation of i * rho * n * n
+        // TODO CHECK
+        complex<double> chew_mandelstam(const complex<double> & S)
+        {
+            const double mp = this->mp();
+            const double q0 = this->_q0();
+            // Adapt s to match Mathematica's behaviour on the branch cut
+            const complex<double> s = S + complex<double>(0.0, 1e-15);
+            const complex<double> delta = mp * mp - 4.0 * q0 * q0;
+
+            // Blatt-Weisskopf factors, cf eq. (50.26)
+            const complex<double> Fsq = power_of<2>(kmatrix_utils::blatt_weisskopf_factor(1, std::sqrt(s - mp * mp) / 2.0 / q0));
+
+            complex<double> leading_term;
+            // Fix the behavior near threshold by Taylor expanding to second order
+            if (std::abs(s - mp * mp) < 1e-7)
+            {
+                leading_term = Fsq * (mp * mp - s) / 16.0 / mp / mp / pi / pi *
+                    (-2.0 * (mp * mp - s) + mp * pi * std::sqrt(mp * mp - s));
+            }
+            else
+            {
+                leading_term  = Fsq * power_of<3>(std::sqrt(mp * mp - s)) *
+                    std::atan(s / std::sqrt(s * (mp * mp - s))) / 8.0 / pi / pi / std::sqrt(s);
+            }
+
+            const complex<double> loop_correction = -power_of<3>(q0) * (mp * mp - s) *
+                    std::atan(std::sqrt(delta) / 2.0 / q0) / pi / pi /
+                    std::sqrt(delta) / (s - delta);
+
+            return (leading_term + loop_correction) / 4.0 / q0 / q0;
+        }
+    };
+
+
+    // V -> VV channel
+    template <unsigned nchannels_, unsigned nresonances_>
+    struct PWaveVVChannel :
+    public KMatrix<nchannels_, nresonances_>::Channel
+    {
+
+        PWaveVVChannel(std::string name, Parameter m1, Parameter m2, Parameter q0, std::array<Parameter, nresonances_> g0s) :
+            KMatrix<nchannels_, nresonances_>::Channel(name, m1, m2, 1, q0, g0s)
+        {
+        };
+
+        inline double mp() { return this->_m1 + this->_m2; }
+        using KMatrix<nchannels_, nresonances_>::Channel::_q0;
+
+        const double pi = M_PI;
+        const complex<double> i =  complex<double>(0.0, 1.0);
+
+        complex<double> rho(const complex<double> & s)
+        {
+            const double mp = this->mp();
+
+            return (real(s) < mp * mp) ? 0.0 : std::sqrt((s - mp * mp) * s) / 16.0 / pi / s;
+        }
+
+        // Analytic continuation of i * rho * n * n
+        // TODO CHANGE
+        complex<double> chew_mandelstam(const complex<double> & S)
+        {
+            const double mp = this->mp();
+            const double q0 = this->_q0();
+            // Adapt s to match Mathematica's behaviour on the branch cut
+            const complex<double> s = S + complex<double>(0.0, 1e-15);
+            const complex<double> delta = mp * mp - 4.0 * q0 * q0;
+
+            // Blatt-Weisskopf factors, cf eq. (50.26)
+            const complex<double> Fsq = power_of<2>(kmatrix_utils::blatt_weisskopf_factor(1, std::sqrt(s - mp * mp) / 2.0 / q0));
+
+            complex<double> leading_term;
+            // Fix the behavior near threshold by Taylor expanding to second order
+            if (std::abs(s - mp * mp) < 1e-7)
+            {
+                leading_term = Fsq * (mp * mp - s) / 16.0 / mp / mp / pi / pi *
+                    (-2.0 * (mp * mp - s) + mp * pi * std::sqrt(mp * mp - s));
+            }
+            else
+            {
+                leading_term  = Fsq * power_of<3>(std::sqrt(mp * mp - s)) *
+                    std::atan(s / std::sqrt(s * (mp * mp - s))) / 8.0 / pi / pi / std::sqrt(s);
+            }
+
+            const complex<double> loop_correction = -power_of<3>(q0) * (mp * mp - s) *
+                    std::atan(std::sqrt(delta) / 2.0 / q0) / pi / pi /
+                    std::sqrt(delta) / (s - delta);
+
+            return (leading_term + loop_correction) / 4.0 / q0 / q0;
+        }
+    };
+
+
+    // V -> VV channel
+    template <unsigned nchannels_, unsigned nresonances_>
+    struct FWaveVVChannel :
+    public KMatrix<nchannels_, nresonances_>::Channel
+    {
+
+        FWaveVVChannel(std::string name, Parameter m1, Parameter m2, Parameter q0, std::array<Parameter, nresonances_> g0s) :
+            KMatrix<nchannels_, nresonances_>::Channel(name, m1, m2, 3, q0, g0s)
+        {
+        };
+
+        inline double mp() { return this->_m1 + this->_m2; }
+        using KMatrix<nchannels_, nresonances_>::Channel::_q0;
+
+        const double pi = M_PI;
+        const complex<double> i =  complex<double>(0.0, 1.0);
+
+        complex<double> rho(const complex<double> & s)
+        {
+            const double mp = this->mp();
+
+            return (real(s) < mp * mp) ? 0.0 : std::sqrt((s - mp * mp) * s) / 16.0 / pi / s;
+        }
+
+        // Analytic continuation of i * rho * n * n
+        // TODO CHANGE
+        complex<double> chew_mandelstam(const complex<double> & S)
+        {
+            const double mp = this->mp();
+            const double q0 = this->_q0();
+            // Adapt s to match Mathematica's behaviour on the branch cut
+            const complex<double> s = S + complex<double>(0.0, 1e-15);
+            const complex<double> delta = mp * mp - 4.0 * q0 * q0;
+
+            // Blatt-Weisskopf factors, cf eq. (50.26)
+            const complex<double> Fsq = power_of<2>(kmatrix_utils::blatt_weisskopf_factor(1, std::sqrt(s - mp * mp) / 2.0 / q0));
+
+            complex<double> leading_term;
+            // Fix the behavior near threshold by Taylor expanding to second order
+            if (std::abs(s - mp * mp) < 1e-7)
+            {
+                leading_term = Fsq * (mp * mp - s) / 16.0 / mp / mp / pi / pi *
+                    (-2.0 * (mp * mp - s) + mp * pi * std::sqrt(mp * mp - s));
+            }
+            else
+            {
+                leading_term  = Fsq * power_of<3>(std::sqrt(mp * mp - s)) *
+                    std::atan(s / std::sqrt(s * (mp * mp - s))) / 8.0 / pi / pi / std::sqrt(s);
+            }
+
+            const complex<double> loop_correction = -power_of<3>(q0) * (mp * mp - s) *
+                    std::atan(std::sqrt(delta) / 2.0 / q0) / pi / pi /
+                    std::sqrt(delta) / (s - delta);
+
+            return (leading_term + loop_correction) / 4.0 / q0 / q0;
+        }
+    };
+
+
     template <unsigned nchannels_, unsigned nresonances_>
     struct CharmoniumResonance :
     public KMatrix<nchannels_, nresonances_>::Resonance
