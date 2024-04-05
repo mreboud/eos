@@ -16,7 +16,7 @@
  */
 
 #include <eos/observable-impl.hh>
-#include <eos/scattering/ee-to-ccbar.hh>
+#include <eos/scattering/ee-to-ccbar-hkrvd2024.hh>
 #include <eos/utils/concrete_observable.hh>
 #include <eos/utils/concrete-cacheable-observable.hh>
 

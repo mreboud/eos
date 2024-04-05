@@ -15,9 +15,10 @@
  * Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
-#include <eos/scattering/ee-to-ccbar.hh>
 #include <eos/maths/complex.hh>
 #include <eos/maths/polylog.hh>
+#include <eos/scattering/ee-to-ccbar-hkrvd2024.hh>
+#include <eos/scattering/ee-to-ccbar.hh>
 #include <eos/utils/destringify.hh>
 #include <eos/utils/kinematic.hh>
 #include <eos/utils/kmatrix-impl.hh>
@@ -31,7 +32,6 @@
 
 namespace eos
 {
-
     template <>
     struct Implementation<EEToCCBar>
     {

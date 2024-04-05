@@ -5,7 +5,8 @@ AM_CXXFLAGS = @AM_CXXFLAGS@
 
 lib_LTLIBRARIES = libeosscattering.la
 libeosscattering_la_SOURCES = \
-    ee-to-ccbar.cc ee-to-ccbar.hh \
+    ee-to-ccbar.hh \
+    ee-to-ccbar-hkrvd2024.cc ee-to-ccbar-hkrvd2024.hh \
     observables.cc observables.hh
 libeosscattering_la_LIBADD = \
     $(top_builddir)/eos/utils/libeosutils.la \
@@ -22,7 +23,7 @@ AM_TESTS_ENVIRONMENT = \
     export EOS_TESTS_PARAMETERS="$(top_srcdir)/eos/parameters";
 
 TESTS = \
-    ee-to-ccbar_TEST
+    ee-to-ccbar-hkrvd2024_TEST
 
 LDADD = \
     $(top_builddir)/test/libeostest.la \
@@ -31,4 +32,4 @@ LDADD = \
     $(top_builddir)/eos/libeos.la
 
 check_PROGRAMS = $(TESTS)
-ee_to_ccbar_TEST_SOURCES = ee-to-ccbar_TEST.cc
+ee_to_ccbar_hkrvd2024_TEST_SOURCES = ee-to-ccbar-hkrvd2024_TEST.cc

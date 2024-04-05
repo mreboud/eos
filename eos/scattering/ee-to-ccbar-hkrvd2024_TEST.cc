@@ -17,6 +17,7 @@
 
 #include <test/test.hh>
 #include <eos/maths/complex.hh>
+#include <eos/scattering/ee-to-ccbar-hkrvd2024.hh>
 #include <eos/scattering/ee-to-ccbar.hh>
 #include <eos/utils/kmatrix-impl.hh>
 
