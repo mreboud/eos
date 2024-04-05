@@ -111,13 +111,7 @@ namespace eos
 
             return std::array<UsedParameter, sizeof...(indices)>
             {{
-                // TODO: The q0 widths can be made channel dependent.
-                // But in order to fit them all with one single parameter, we use a common parameter "ee->ccbar::q_0".
-                // Once EOS provides a way of aliasing parameters, we can use the following line
-                // UsedParameter(p["ee->ccbar::q_0(" + channel_names[indices] + ")"], u)...
-                // Here we use a trick to allow C++ to expand the indices: the void followed by a coma is ignored,
-                // and this line only instentiate an array of `UsedParameter(p["ee->ccbar::q_0"], u)`
-                (static_cast<void>(indices), UsedParameter(p["ee->ccbar::q_0"], u))...
+                UsedParameter(p["ee->ccbar::q_0(" + channel_names[indices] + ")"], u)...
             }};
         }
 
@@ -247,9 +241,9 @@ namespace eos
             q(_channel_effective_momentum(p, u, std::make_index_sequence<EEToCCBar::nchannels>())),
             bkgcst(_c_matrix(p, u, std::make_index_sequence<EEToCCBar::nchannels>(), std::make_index_sequence<EEToCCBar::nchannels>())),
             Rconstant(p["ee->ccbar::Rconstant"], u),
+            exclusive_norm(p["ee->ccbar::exclusive_norm"], u),
             opt_qed(o, options, "QED"),
-            eta([this](const double & s) { return 0.0; }),
-            exclusive_norm(p["ee->ccbar::exclusive_norm"], u)
+            eta([this](const double &) { return 0.0; })
         {
             std::array<std::shared_ptr<KMatrix<EEToCCBar::nchannels, EEToCCBar::nresonances>::Resonance>, EEToCCBar::nresonances> resonance_array;
             for (unsigned i = 0 ; i < EEToCCBar::nresonances ; i++)
