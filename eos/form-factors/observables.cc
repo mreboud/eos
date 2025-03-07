@@ -31,6 +31,7 @@
 #include <eos/form-factors/parametric-bgl1997.hh>
 #include <eos/form-factors/parametric-bfw2010.hh>
 #include <eos/form-factors/parametric-bmrvd2022.hh>
+#include <eos/form-factors/parametric-bhkr2025.hh>
 #include <eos/form-factors/parametric-kkrvd2024.hh>
 #include <eos/form-factors/parametric-kkvdz2022.hh>
 #include <eos/form-factors/parametric-ksvd2025.hh>
@@ -2640,7 +2641,16 @@ namespace eos
                         &KKRvD2024FormFactors<VacuumToPiPi>::r_pi_squared),
 
                 make_observable("0->pipi::Saturation@KKRvD2024", R"(\textrm{Saturation})", Unit::None(),
-                        &KKRvD2024FormFactors<VacuumToPiPi>::saturation)
+                        &KKRvD2024FormFactors<VacuumToPiPi>::saturation),
+
+                make_observable("0->pipi::Re{f_+}(Re{zeta},Im{zeta})", R"(\textrm{Re}(f_+^{0\to \pi\pi}(zeta)))", Unit::None(),
+                        &BHKR2025FormFactors<VacuumToPiPi>::re_f_p_zeta, std::make_tuple("Re{zeta}", "Im{zeta}")),
+
+                make_observable("0->pipi::Im{f_+}(Re{zeta},Im{zeta})", R"(\textrm{Im}(f_+^{0\to \pi\pi}(zeta)))", Unit::None(),
+                        &BHKR2025FormFactors<VacuumToPiPi>::im_f_p_zeta, std::make_tuple("Re{zeta}", "Im{zeta}")),
+
+                make_observable("0->pipi::Abs{f_+}^2(Re{zeta},Im{zeta})", R"(|f_+^{0\to \pi\pi}(zeta)|^2)", Unit::None(),
+                        &BHKR2025FormFactors<VacuumToPiPi>::abs2_f_p_zeta, std::make_tuple("Re{zeta}", "Im{zeta}")),
             }
         };
 

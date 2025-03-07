@@ -851,19 +851,19 @@ class Plotter:
 
             if self.plot_residues:
                 # create parameters
-                self.parameters = eos.Parameters.Defaults()
                 if 'parameters' in item and 'parameters-from-mode' in item:
+                    self.parameters = eos.Parameters.Defaults()
                     eos.warn('    overriding values read from \'parameters-from-mode\' with explicit values in \'parameters\'')
 
                 if 'parameters-from-mode' in item and type(item['parameters-from-mode']) is str:
                     eos.warn('    overriding parameters from mode')
                     mode = eos.Mode(item['parameters-from-mode'])
+                    self.parameters = eos.Parameters.Defaults()
                     for p, v in zip(mode.varied_parameters, mode.mode):
                         self.parameters.set(p['name'], v)
 
-                if 'parameters' in item and type(item['parameters']) is dict:
-                    for key, value in item['parameters'].items():
-                        self.parameters.set(key, value)
+                if 'parameters' in item and type(item['parameters']) is eos.parameter.Parameters:
+                    self.parameters = item['parameters']
 
                 # create options
                 self.options = eos.Options()
