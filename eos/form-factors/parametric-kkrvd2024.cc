@@ -1,6 +1,8 @@
 /* vim: set sw=4 sts=4 et foldmethod=syntax : */
 
 /*
+ * Copyright (c) 2025 Fatemeh Nouri
+ * Copyright (c) 2025 Méril Reboud
  * Copyright (c) 2020-2024 Danny van Dyk
  * Copyright (c) 2024 Matthew J. Kirk
  *
@@ -19,13 +21,13 @@
  */
 
 #include <eos/form-factors/parametric-kkrvd2024.hh>
+#include <eos/maths/integrate.hh>
 #include <eos/maths/power-of.hh>
-#include <eos/utils/parameters.hh>
-#include <eos/utils/options.hh>
 #include <eos/utils/options-impl.hh>
+#include <eos/utils/options.hh>
+#include <eos/utils/parameters.hh>
 #include <eos/utils/qualified-name.hh>
 #include <eos/utils/stringify.hh>
-#include <eos/maths/integrate.hh>
 
 #include <functional>
 #include <numeric>
@@ -33,7 +35,7 @@
 namespace eos
 {
     /* Vacuum -> pi pi */
-    KKRvD2024FormFactors<VacuumToPiPi>::KKRvD2024FormFactors(const Parameters & p, const Options & /*o*/) :
+    KKRvD2024FormFactors<VacuumToPiPi>::KKRvD2024FormFactors(const Parameters & p, const Options & o) :
         _b_fp_I1{{
             UsedParameter(p[_par_name("+", "1", "2")], *this),
             UsedParameter(p[_par_name("+", "1", "3")], *this),
@@ -46,10 +48,25 @@ namespace eos
         }},
         _M_fp_I1(p["0->pipi::M_(+,1)@KKRvD2024"], *this),
         _G_fp_I1(p["0->pipi::Gamma_(+,1)@KKRvD2024"], *this),
+        _c_fp_I0{{
+            UsedParameter(p[_par_name("+", "0", "2")], *this),
+            UsedParameter(p[_par_name("+", "0", "3")], *this),
+            UsedParameter(p[_par_name("+", "0", "4")], *this),
+            UsedParameter(p[_par_name("+", "0", "5")], *this),
+            UsedParameter(p[_par_name("+", "0", "6")], *this),
+            UsedParameter(p[_par_name("+", "0", "7")], *this),
+            UsedParameter(p[_par_name("+", "0", "8")], *this),
+            UsedParameter(p[_par_name("+", "0", "9")], *this)
+        }},
+        _M_fp_I0(p["0->pipi::M_(+,0)@KKRvD2024"], *this),
+        _G_fp_I0(p["0->pipi::Gamma_(+,0)@KKRvD2024"], *this),
+        _opt_I(o, option_specifications, "I"_ok),
         _m_pi(p["mass::pi^+"], *this),
         _t_0(p["0->pipi::t_0@KKRvD2024"], *this),
         _hbar(p["QM::hbar"], *this)
     {
+        _switch_I[0] = (_opt_I.value() && Isospin::zero);
+        _switch_I[1] = (_opt_I.value() && Isospin::one);
     }
 
     KKRvD2024FormFactors<VacuumToPiPi>::~KKRvD2024FormFactors() = default;
@@ -69,6 +86,7 @@ namespace eos
     complex<double>
     KKRvD2024FormFactors<VacuumToPiPi>::dzdq2(const complex<double> & q2) const
     {
+        // dz/dq2 on the first Riemann sheet
         const double t_p = this->_t_p();
         const double t_0 = this->_t_0();
         return -sqrt(t_p - t_0) / (sqrt(t_p - q2) * power_of<2>(sqrt(t_p - q2) + sqrt(t_p - t_0)));
@@ -86,7 +104,7 @@ namespace eos
     complex<double>
     KKRvD2024FormFactors<VacuumToPiPi>::w(const complex<double> & z) const
     {
-        return power_of<2>(1.0 + z) * pow((1.0 - z), 5.0/2.0);
+        return power_of<2>(1.0 + z) * pow((1.0 - z), 5.0 / 2.0);
     }
 
     complex<double>
@@ -100,11 +118,8 @@ namespace eos
         const double Q2      = 1.0;
 
         // cf. [BL:1998A], eq. (5.2), p. 11
-        return 1.0
-            / sqrt(12.0 * M_PI * t_p * chi)
-            * pow(tfactor, 5.0 / 4.0) * pow(sqrt(tfactor) * (1.0 + z) + (1.0 - z), -0.5)
-            * pow(sqrt(1.0 + Q2 / t_p) * (1.0 - z) + sqrt(tfactor) * (1.0 + z), -3.0)
-            / power_of<2>(1.0 - z);
+        return 1.0 / sqrt(12.0 * M_PI * t_p * chi) * pow(tfactor, 5.0 / 4.0) * pow(sqrt(tfactor) * (1.0 + z) + (1.0 - z), -0.5)
+               * pow(sqrt(1.0 + Q2 / t_p) * (1.0 - z) + sqrt(tfactor) * (1.0 + z), -3.0) / power_of<2>(1.0 - z);
     }
 
     complex<double>
@@ -118,18 +133,20 @@ namespace eos
         const double Q2factor = 1.0 + Q2 / t_p;
 
         return +1.0 * pow(tfactor, 5.0 / 4.0)
-                    * (-11 * sqrt(Q2factor) * power_of<2>(z - 1.0) - tfactor * (1.0 + z) * (11.0 * z - 3.0) + sqrt(tfactor) * (z - 1.0) * (-1.0 + 9.0 * sqrt(Q2factor) + 11.0 * (1 + sqrt(Q2factor)) * z ))
-                    / (4 * sqrt(3 * M_PI * t_p * chi) * power_of<3>(z - 1.0) * power_of<4>(sqrt(Q2factor) * (z - 1.0) - sqrt(tfactor) * (1.0 + z)) * pow(1.0 - z + sqrt(tfactor) * (1.0 + z), 3.0/2.0));
+               * (-11 * sqrt(Q2factor) * power_of<2>(z - 1.0) - tfactor * (1.0 + z) * (11.0 * z - 3.0)
+                  + sqrt(tfactor) * (z - 1.0) * (-1.0 + 9.0 * sqrt(Q2factor) + 11.0 * (1 + sqrt(Q2factor)) * z))
+               / (4 * sqrt(3 * M_PI * t_p * chi) * power_of<3>(z - 1.0) * power_of<4>(sqrt(Q2factor) * (z - 1.0) - sqrt(tfactor) * (1.0 + z))
+                  * pow(1.0 - z + sqrt(tfactor) * (1.0 + z), 3.0 / 2.0));
     }
 
     complex<double>
     KKRvD2024FormFactors<VacuumToPiPi>::series_m(const complex<double> & z, const std::array<double, 10u> & c) const
     {
         std::array<complex<double>, 10> zvalues;
-        complex<double> current_zv = 1.0;
-        for (complex<double> & zv: zvalues)
+        complex<double>                 current_zv = 1.0;
+        for (complex<double> & zv : zvalues)
         {
-            zv = current_zv;
+            zv          = current_zv;
             current_zv *= z;
         }
 
@@ -147,17 +164,17 @@ namespace eos
 
         const complex<double> x_z0      = 1.0 / (phitilde_z0 * std::norm(z0 - zr));
         const complex<double> x_m1      = 1.0 / (phitilde_m1 * std::norm(1.0 + zr));
-        const complex<double> xprime_m1 = (2.0 * (1 + std::real(zr)) * phitilde_m1 - std::norm(1.0 + zr) * phitildeprime_m1 ) / power_of<2>(std::norm(1.0 + zr) * phitilde_m1);
+        const complex<double> xprime_m1 = (2.0 * (1 + std::real(zr)) * phitilde_m1 - std::norm(1.0 + zr) * phitildeprime_m1) / power_of<2>(std::norm(1.0 + zr) * phitilde_m1);
 
         std::array<double, 10> b;
         b[0] = 0.0;
         b[1] = 0.0;
-        std::copy(_b_fp_I1.cbegin(), _b_fp_I1.cend(), b.begin()+2);
+        std::copy(_b_fp_I1.cbegin(), _b_fp_I1.cend(), b.begin() + 2);
 
         complex<double> sum = 0.0;
         for (auto i = 0u; i < b.size(); i++)
         {
-            sum += b[i] * ( (pow(-1, i) * i + pow(z0, i-1)) * x_m1 - (pow(-1, i) + pow(z0, i-1)) * xprime_m1 );
+            sum += b[i] * ((pow(-1, i) * i + pow(z0, i - 1)) * x_m1 - (pow(-1, i) + pow(z0, i - 1)) * xprime_m1);
         };
 
         const double b0 = std::real((x_m1 - xprime_m1 - x_z0 * z0 * sum) / (x_z0 * (x_m1 - (1.0 + z0) * xprime_m1)));
@@ -175,21 +192,68 @@ namespace eos
 
         const complex<double> x_z0      = 1.0 / (phitilde_z0 * std::norm(z0 - zr));
         const complex<double> x_m1      = 1.0 / (phitilde_m1 * std::norm(1.0 + zr));
-        const complex<double> xprime_m1 = (2.0 * (1 + std::real(zr)) * phitilde_m1 - std::norm(1.0 + zr) * phitildeprime_m1 ) / power_of<2>(std::norm(1.0 + zr) * phitilde_m1);
+        const complex<double> xprime_m1 = (2.0 * (1 + std::real(zr)) * phitilde_m1 - std::norm(1.0 + zr) * phitildeprime_m1) / power_of<2>(std::norm(1.0 + zr) * phitilde_m1);
 
         std::array<double, 10> b;
         b[0] = 0.0;
         b[1] = 0.0;
-        std::copy(_b_fp_I1.cbegin(), _b_fp_I1.cend(), b.begin()+2);
+        std::copy(_b_fp_I1.cbegin(), _b_fp_I1.cend(), b.begin() + 2);
 
         complex<double> sum = 0.0;
         for (auto i = 0u; i < b.size(); i++)
         {
-            sum += b[i] * (pow(-1, i) * i * x_m1 + (pow(-1, i+1) + pow(z0, i)) * xprime_m1);
+            sum += b[i] * (pow(-1, i) * i * x_m1 + (pow(-1, i + 1) + pow(z0, i)) * xprime_m1);
         };
 
-        const double b1 = std::real((sum * x_z0 -  xprime_m1) / ( x_z0 * (x_m1 - (1.0 + z0) * xprime_m1)));
+        const double b1 = std::real((sum * x_z0 - xprime_m1) / (x_z0 * (x_m1 - (1.0 + z0) * xprime_m1)));
         return b1;
+    }
+
+    // This function will solve simultaneously for c0 and c1
+    std::array<double, 2>
+    KKRvD2024FormFactors<VacuumToPiPi>::_SolveConstraints(const complex<double> & zr) const
+    {
+        std::array<double, 10> c;
+        c[0] = 0.0;
+        c[1] = 0.0;
+        std::copy(_c_fp_I0.cbegin(), _c_fp_I0.cend(), c.begin() + 2);
+
+        const complex<double> z0 = this->z(0.0);
+
+        // Compute sum: c2 z0^2 + ....
+        complex<double> A0 = 0.0;
+        for (auto i = 0u; i < c.size(); ++i)
+        {
+            A0 -= c[i] * std::pow(z0, int(i));
+        }
+
+        // Denominator and its derivative at z(t+) = -1
+        const complex<double> D  = (-1.0 - zr) * (-1.0 - std::conj(zr));
+        const complex<double> Dp = 2.0 * (-1.0 - std::real(zr)); // D' = 2(z(t+) - Re(zr))
+
+        // Compute sum:  c2 z(t+)^2 + .... and c2 . 2. z(t+) + ...
+        complex<double> B = 0.0;
+        complex<double> C = 0.0;
+        for (auto i = 2u; i < c.size(); ++i)
+        {
+            B += c[i] * std::pow(-1.0, int(i));
+            C += c[i] * i * std::pow(-1.0, int(i - 1));
+        }
+
+        complex<double> A1  = -C * D + B * Dp;
+        complex<double> a00 = 1.0;
+        complex<double> a01 = z0;
+        complex<double> a10 = -Dp;
+        complex<double> a11 = D + Dp;
+
+        complex<double> c0 = (a11 * A0 - a01 * A1) / (a00 * a11 - a01 * a10);
+        complex<double> c1 = (a00 * A1 - a10 * A0) / (a00 * a11 - a01 * a10);
+
+        std::array<double, 2> first_two_c;
+        first_two_c[0] = std::real(c0);
+        first_two_c[1] = std::real(c1);
+
+        return first_two_c;
     }
 
     complex<double>
@@ -206,19 +270,33 @@ namespace eos
         const auto chi      = 0.00683918; // GeV^-2, at Q^2 = 1 GeV^2 using [BL:1998A] Sec VI.A
         const auto phitilde = this->phitilde_p(z, chi);
 
-        // Super-threshold pole location
-        const auto zr = this->_zr(this->_M_fp_I1(), this->_G_fp_I1());
+        // Super-threshold pole location (rho resonance, I=1)
+        const auto zr_I1 = this->_zr(this->_M_fp_I1(), this->_G_fp_I1());
 
         // prepare expansion coefficients
         std::array<double, 10> b;
-        std::copy(_b_fp_I1.cbegin(), _b_fp_I1.cend(), b.begin()+2);
-        // Fix b[0] and b[1] to enforce F(q2=0) = 1 and F'(q2=t+) = 0
-        b[0] = _b0_fp_I1(chi, zr);
-        b[1] = _b1_fp_I1(chi, zr);
+        std::copy(_b_fp_I1.cbegin(), _b_fp_I1.cend(), b.begin() + 2);
+        b[0]                 = _b0_fp_I1(chi, zr_I1);
+        b[1]                 = _b1_fp_I1(chi, zr_I1);
+        const auto series_I1 = this->series_m(z, b);
 
-        const auto series = this->series_m(z, b);
+        const auto f_I1 = series_I1 / (z - zr_I1) / (z - std::conj(zr_I1)) / phitilde;
 
-        return series / (z - zr) / (z - std::conj(zr)) /  phitilde;
+        // Super-threshold pole location (omega resonance, I=0)
+        const auto zr_I0 = this->_zr(this->_M_fp_I0(), this->_G_fp_I0());
+
+        // prepare expansion coefficients
+        std::array<double, 10> c;
+        std::copy(_c_fp_I0.cbegin(), _c_fp_I0.cend(), c.begin() + 2);
+        std::array<double, 2> first_c = _SolveConstraints(zr_I0);
+        c[0]                          = first_c[0];
+        c[1]                          = first_c[1];
+
+        const auto series_I0 = this->series_m(z, c);
+
+        const auto f_I0 = series_I0 / (z - zr_I0) / (z - std::conj(zr_I0));
+
+        return f_I1 * (static_cast<double>(_switch_I[1]) + f_I0 * static_cast<double>(_switch_I[0]));
     }
 
     complex<double>
@@ -266,32 +344,48 @@ namespace eos
     }
 
     double
+    KKRvD2024FormFactors<VacuumToPiPi>::c_0() const
+    {
+        const auto            zr_I0   = this->_zr(this->_M_fp_I0(), this->_G_fp_I0());
+        std::array<double, 2> first_c = _SolveConstraints(zr_I0);
+        return first_c[0];
+    }
+
+    double
+    KKRvD2024FormFactors<VacuumToPiPi>::c_1() const
+    {
+        const auto            zr_I0   = this->_zr(this->_M_fp_I0(), this->_G_fp_I0());
+        std::array<double, 2> first_c = _SolveConstraints(zr_I0);
+        return first_c[1];
+    }
+
+    double
     KKRvD2024FormFactors<VacuumToPiPi>::dFdq2_q2eq0() const
     {
-        const double z0 = std::real(this->z(0.0));
+        const double z0  = std::real(this->z(0.0));
         const double chi = 0.00683918; // GeV^-2, at Q^2 = 1 GeV^2 using [BL:1998A] Sec VI.A
 
         const double phitilde_z0      = std::real(this->phitilde_p(z0, chi));
         const double phitildeprime_z0 = std::real(this->phitildeprime_p(z0, chi));
 
         // Super-threshold pole location
-        const auto zr =  this->_zr(this->_M_fp_I1(), this->_G_fp_I1());
+        const auto zr = this->_zr(this->_M_fp_I1(), this->_G_fp_I1());
 
         // prepare expansion coefficients
         std::array<double, 10> b;
-        std::copy(_b_fp_I1.cbegin(), _b_fp_I1.cend(), b.begin()+2);
+        std::copy(_b_fp_I1.cbegin(), _b_fp_I1.cend(), b.begin() + 2);
         // Fix b[0] and b[1] to enforce F(q2=0) = 1 and F'(q2=t+) = 0
         b[0] = _b0_fp_I1(chi, zr);
         b[1] = _b1_fp_I1(chi, zr);
 
         const double sum1 = std::real(series_m(z0, b));
-        double sum2 = 0.0;
+        double       sum2 = 0.0;
         for (auto i = 0u; i < b.size(); i++)
         {
-            sum2 += b[i] * i * std::pow(z0, i-1);
+            sum2 += b[i] * i * std::pow(z0, i - 1);
         };
 
-        const double xprime_z0 = ( 2.0 * (std::real(zr) - z0) * phitilde_z0 - std::norm(z0 - zr) * phitildeprime_z0 ) / power_of<2>(std::norm(z0 - zr) * phitilde_z0);
+        const double xprime_z0 = (2.0 * (std::real(zr) - z0) * phitilde_z0 - std::norm(z0 - zr) * phitildeprime_z0) / power_of<2>(std::norm(z0 - zr) * phitilde_z0);
 
         const double dFdz_z0 = sum1 * xprime_z0 + sum2 / (phitilde_z0 * std::norm(z0 - zr));
         return dFdz_z0 * std::real(this->dzdq2(0.0));
@@ -303,7 +397,8 @@ namespace eos
         return 6.0 * this->dFdq2_q2eq0() * power_of<2>(this->_hbarc());
     }
 
-    complex<double> KKRvD2024FormFactors<VacuumToPiPi>::residue_rho() const
+    complex<double>
+    KKRvD2024FormFactors<VacuumToPiPi>::residue_rho() const
     {
         // Super-threshold pole location
         const auto zr       = this->_zr(this->_M_fp_I1(), this->_G_fp_I1());
@@ -312,43 +407,49 @@ namespace eos
 
         // prepare expansion coefficients
         std::array<double, 10> b;
-        std::copy(_b_fp_I1.cbegin(), _b_fp_I1.cend(), b.begin()+2);
+        std::copy(_b_fp_I1.cbegin(), _b_fp_I1.cend(), b.begin() + 2);
         // Fix b[0] and b[1] to enforce F(q2=0) = 1 and F'(q2=t+) = 0
         b[0] = _b0_fp_I1(chi, zr);
         b[1] = _b1_fp_I1(chi, zr);
 
         const auto series = this->series_m(zr, b);
 
-        return series / (zr - std::conj(zr)) /  phitilde;
+        return series / (zr - std::conj(zr)) / phitilde;
     }
 
-    double KKRvD2024FormFactors<VacuumToPiPi>::re_residue_rho() const
+    double
+    KKRvD2024FormFactors<VacuumToPiPi>::re_residue_rho() const
     {
         return std::real(this->residue_rho());
     }
 
-    double KKRvD2024FormFactors<VacuumToPiPi>::im_residue_rho() const
+    double
+    KKRvD2024FormFactors<VacuumToPiPi>::im_residue_rho() const
     {
         return std::imag(this->residue_rho());
     }
 
-    complex<double> KKRvD2024FormFactors<VacuumToPiPi>::residue_rho_q2() const
+    complex<double>
+    KKRvD2024FormFactors<VacuumToPiPi>::residue_rho_q2() const
     {
-        const auto s_rho = power_of<2>(complex<double>(this->_M_fp_I1(), -this->_G_fp_I1()/2));
+        const auto s_rho = power_of<2>(complex<double>(this->_M_fp_I1(), -this->_G_fp_I1() / 2));
         return this->residue_rho() / this->dzdq2_II(s_rho);
     }
 
-    double KKRvD2024FormFactors<VacuumToPiPi>::re_residue_rho_q2() const
+    double
+    KKRvD2024FormFactors<VacuumToPiPi>::re_residue_rho_q2() const
     {
         return std::real(this->residue_rho_q2());
     }
 
-    double KKRvD2024FormFactors<VacuumToPiPi>::im_residue_rho_q2() const
+    double
+    KKRvD2024FormFactors<VacuumToPiPi>::im_residue_rho_q2() const
     {
         return std::imag(this->residue_rho_q2());
     }
 
-    double KKRvD2024FormFactors<VacuumToPiPi>::dispersive_integrand(const double & alpha) const
+    double
+    KKRvD2024FormFactors<VacuumToPiPi>::dispersive_integrand(const double & alpha) const
     {
         const complex<double> z = std::polar(1.0, alpha);
         const complex<double> w = this->w(z);
@@ -356,11 +457,11 @@ namespace eos
         const auto chi = 0.00683918; // GeV^-2, at Q^2 = 1 GeV^2 using [BL:1998A] Sec VI.A
 
         // Super-threshold pole location
-        const auto zr =  this->_zr(this->_M_fp_I1(), this->_G_fp_I1());
+        const auto zr = this->_zr(this->_M_fp_I1(), this->_G_fp_I1());
 
         // prepare expansion coefficients
         std::array<double, 10> b;
-        std::copy(_b_fp_I1.cbegin(), _b_fp_I1.cend(), b.begin()+2);
+        std::copy(_b_fp_I1.cbegin(), _b_fp_I1.cend(), b.begin() + 2);
         // Fix b[0] and b[1] to enforce F(q2=0) = 1 and F'(q2=t+) = 0
         b[0] = _b0_fp_I1(chi, zr);
         b[1] = _b1_fp_I1(chi, zr);
@@ -370,21 +471,17 @@ namespace eos
         return std::norm(w * series / (z - zr) / (z - std::conj(zr)));
     }
 
-    double KKRvD2024FormFactors<VacuumToPiPi>::saturation() const
+    double
+    KKRvD2024FormFactors<VacuumToPiPi>::saturation() const
     {
-        std::function<double (const double &)> f = [this](const double & alpha) -> double { return this->dispersive_integrand(alpha); };
+        std::function<double(const double &)> f = [this](const double & alpha) -> double { return this->dispersive_integrand(alpha); };
         return integrate<GSL::QAGS>(f, -M_PI, M_PI) / (2.0 * M_PI);
     }
 
-    const std::set<ReferenceName>
-    KKRvD2024FormFactors<VacuumToPiPi>::references
-    {
-        "BL:1998A"_rn
-    };
+    const std::set<ReferenceName> KKRvD2024FormFactors<VacuumToPiPi>::references{ "BL:1998A"_rn };
 
-    const std::vector<OptionSpecification>
-    KKRvD2024FormFactors<VacuumToPiPi>::option_specifications
-    {
+    const std::vector<OptionSpecification> KKRvD2024FormFactors<VacuumToPiPi>::option_specifications{
+        { "I"_ok, { "0|1" }, "0|1" }
     };
 
     std::vector<OptionSpecification>::const_iterator
@@ -400,4 +497,4 @@ namespace eos
     }
 
     template class KKRvD2024FormFactors<VacuumToPiPi>;
-}
+} // namespace eos

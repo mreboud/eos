@@ -40,9 +40,8 @@ class ParametricKKRvD2024Test :
         {
             static const double eps = 1e-7;
 
-            // t0 = -1
+            // Isospin 1 contribution
             {
-
                 Parameters p = Parameters::Defaults();
                 p["mass::pi^+"]                    =  0.13957;
                 p["0->pipi::t_0@KKRvD2024"]         = -1.0;
@@ -57,16 +56,21 @@ class ParametricKKRvD2024Test :
                 p["0->pipi::M_(+,1)@KKRvD2024"]     =  0.760895;
                 p["0->pipi::Gamma_(+,1)@KKRvD2024"] =  0.146155;
 
+                Options o
+                {
+                    {"I"_ok, "1"}
+                };
+
                 /* 0->PP factory */
                 {
-                    std::shared_ptr<FormFactors<VacuumToPP>> ff = FormFactorFactory<VacuumToPP>::create("0->pipi::KKRvD2024", p, Options{ });
+                    std::shared_ptr<FormFactors<VacuumToPP>> ff = FormFactorFactory<VacuumToPP>::create("0->pipi::KKRvD2024", p, o);
 
                     TEST_CHECK(nullptr != ff);
                 }
 
                 /* f_+ at timelike q2 > 0.0 */
                 {
-                    KKRvD2024FormFactors<VacuumToPiPi> ff(p, Options{ });
+                    KKRvD2024FormFactors<VacuumToPiPi> ff(p, o);
 
                     const auto chi = 0.00683918; // GeV^-2, at Q^2 = 1 GeV^2 using [BL:1998A] Sec VI.A
 
@@ -104,6 +108,43 @@ class ParametricKKRvD2024Test :
                     TEST_CHECK_NEARLY_EQUAL(ff.im_residue_rho_q2(),                0.135266983,   eps);
 
                     TEST_CHECK_NEARLY_EQUAL(ff.saturation(),                       0.444609294,   eps);
+                }
+            }
+
+            // Isospin 0 contribution
+            {
+                Parameters p = Parameters::Defaults();
+                p["mass::pi^+"]                     =  0.13957;
+                p["0->pipi::t_0@KKRvD2024"]         = -1.0;
+                p["0->pipi::b_(+,0)^2@KKRvD2024"]   =  0.2;
+                p["0->pipi::b_(+,0)^3@KKRvD2024"]   = -0.1;
+                p["0->pipi::M_(+,0)@KKRvD2024"]     =  0.8;
+                p["0->pipi::Gamma_(+,0)@KKRvD2024"] =  0.01;
+                p["0->pipi::b_(+,1)^2@KKRvD2024"]   = -0.3;
+                p["0->pipi::b_(+,1)^3@KKRvD2024"]   =  0.4;
+                p["0->pipi::M_(+,1)@KKRvD2024"]     =  0.7;
+                p["0->pipi::Gamma_(+,1)@KKRvD2024"] =  0.1;
+
+                Options o
+                {
+                    {"I"_ok, "0"}
+                };
+
+                /* f_+ at timelike q2 > 0.0 */
+                {
+                    KKRvD2024FormFactors<VacuumToPiPi> ff(p, o);
+
+                    TEST_CHECK_RELATIVE_ERROR(ff.c_0(),                              0.3986045852,  eps);
+                    TEST_CHECK_RELATIVE_ERROR(ff.c_1(),                              0.8402082340,  eps);
+                    TEST_CHECK_RELATIVE_ERROR(ff.b_0(),                             -0.9003666912,  eps);
+                    TEST_CHECK_RELATIVE_ERROR(ff.b_1(),                             -2.0378632633,  eps);
+
+                    TEST_CHECK_NEARLY_EQUAL(real(ff.f_p( 0.0)),                      0.0,           eps);
+                    TEST_CHECK_NEARLY_EQUAL(imag(ff.f_p( 0.0)),                      0.0,           eps);
+                    TEST_CHECK_RELATIVE_ERROR(real(ff.f_p(+0.1)),                   -0.879546947,   eps);
+                    TEST_CHECK_RELATIVE_ERROR(imag(ff.f_p(+0.1)),                   -0.070251856,   eps);
+                    TEST_CHECK_RELATIVE_ERROR(real(ff.f_p(+0.5)),                    386.6327444,   eps);
+                    TEST_CHECK_RELATIVE_ERROR(imag(ff.f_p(+0.5)),                   -133.0018531,   eps);
                 }
             }
         }
