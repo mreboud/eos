@@ -376,7 +376,7 @@ namespace eos
                 (1.0 - 3.0 * a1perp(mu) + 6.0 * a2perp(mu)) * log(u))) / (2.0 * fpara * M_V);
         }
         // definition of chiral even parameters appearing in three-particle twist 4 LCDAs, [BBL:2007A], eq. 3.22 (renormalon model)
-        inline double psi0para(const double & mu) const
+        inline double psi0para(const double &) const
         {
             return 0.0;
         }
@@ -412,7 +412,7 @@ namespace eos
         {
             return -7.0 / 9.0 * zeta4para(mu);
         }
-        inline double theta0para(const double & mu) const
+        inline double theta0para(const double &) const
         {
             return 0.0;
         }
@@ -499,11 +499,11 @@ namespace eos
         }
 
         // definition of chiral odd G violating parameters appearing in three-particle twist 4 LCDAs, [BBL:2007A], eq. 4.20 (renormalon model)
-        inline double phi0perp(const double & mu) const
+        inline double phi0perp(const double &) const
         {
             return 0.0;
         }
-        inline double phi0perptilde(const double & mu) const
+        inline double phi0perptilde(const double &) const
         {
             return 0.0;
         }
@@ -515,11 +515,11 @@ namespace eos
         {
             return -21.0 / 20.0 * zeta4perp(mu) * a1perp(mu);
         }
-        inline double theta0perp(const double & mu) const
+        inline double theta0perp(const double &) const
         {
             return 0.0;
         }
-        inline double theta0perptilde(const double & mu) const
+        inline double theta0perptilde(const double &) const
         {
             return 0.0;
         }
@@ -1375,7 +1375,7 @@ namespace eos
                 (1.0 - 3.0 * a1perp(mu) + 6.0 * a2perp(mu)) * log(u))) / (2.0 * fpara * M_V);
         }
         // definition of chiral even parameters appearing in three-particle twist 4 LCDAs, [BBL:2007A], eq. 3.22 (renormalon model)
-        inline double psi0para(const double & mu) const
+        inline double psi0para(const double &) const
         {
             return 0.0;
         }
@@ -1411,7 +1411,7 @@ namespace eos
         {
             return -7.0 / 9.0 * zeta4para(mu);
         }
-        inline double theta0para(const double & mu) const
+        inline double theta0para(const double &) const
         {
             return 0.0;
         }
@@ -1498,11 +1498,11 @@ namespace eos
         }
 
         // definition of chiral odd G violating parameters appearing in three-particle twist 4 LCDAs, [BBL:2007A], eq. 4.20 (renormalon model)
-        inline double phi0perp(const double & mu) const
+        inline double phi0perp(const double &) const
         {
             return 0.0;
         }
-        inline double phi0perptilde(const double & mu) const
+        inline double phi0perptilde(const double &) const
         {
             return 0.0;
         }
@@ -1514,11 +1514,11 @@ namespace eos
         {
             return -21.0 / 20.0 * zeta4perp(mu) * a1perp(mu);
         }
-        inline double theta0perp(const double & mu) const
+        inline double theta0perp(const double &) const
         {
             return 0.0;
         }
-        inline double theta0perptilde(const double & mu) const
+        inline double theta0perptilde(const double &) const
         {
             return 0.0;
         }
