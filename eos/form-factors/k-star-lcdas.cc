@@ -381,7 +381,7 @@ namespace eos
             {
                 // clang-format off
                 return 6.0 * (1.0 - u) * u * (1.0 + 3.0 * (a1perp(mu) / 3.0 + (5.0 * kappa3perp(mu)) / 3.0) * (-1.0 + 2.0 * u) +
-                    (a2perp(mu) / 6.0 + (5.0 * omega3perp(mu)) / 18.0) * (-1.5 + (15.0 * std::pow(-1.0 + 2.0 * u, 2)) / 2.0) -
+                    (a2perp(mu) / 6.0 + (5.0 * omega3perp(mu)) / 18.0) * (-1.5 + (15.0 * power_of<2>(-1.0 + 2.0 * u)) / 2.0) -
                     (lambda3perp(mu) * ((-15.0 * (-1.0 + 2.0 * u)) / 2.0 + (35.0 * std::pow(-1.0 + 2.0 * u, 3.0)) / 2.0)) / 20.0) -
                     (3.0 * fpara * (model->m_s_msbar(mu) - model->m_ud_msbar(mu) / 2.0) * ((1.0 - u) * u * (9.0 * a1para(mu) + 10.0 * a2para(mu) * (-1.0 + 2.0 * u)) +
                     (1.0 + 3.0 * a1para(mu) + 6.0 * a2para(mu)) * (1.0 - u) * log(1.0 - u) - (1.0 - 3.0 * a1para(mu) + 6.0 * a2para(mu)) * u * log(u))) / (fperp(mu) * M_V) +
@@ -393,10 +393,10 @@ namespace eos
             inline double
             phi3para(const double & u, const double & mu) const
             {
-                return 3.0 * std::pow(-1.0 + 2.0 * u, 2) + (3.0 * a1perp(mu) * (-1.0 + 2.0 * u) * (-1.0 + 3.0 * std::pow(-1.0 + 2.0 * u, 2))) / 2.0
-                       + ((15.0 * kappa3perp(mu)) / 2.0 - (3.0 * lambda3perp(mu)) / 4.0) * (-1.0 + 2.0 * u) * (-3.0 + 5.0 * std::pow(-1.0 + 2.0 * u, 2))
-                       + (3.0 * a2perp(mu) * std::pow(-1.0 + 2.0 * u, 2) * (-3.0 + 5.0 * std::pow(-1.0 + 2.0 * u, 2))) / 2.0
-                       + (5.0 * omega3perp(mu) * (3.0 - 30.0 * std::pow(-1.0 + 2.0 * u, 2) + 35.0 * std::pow(-1.0 + 2.0 * u, 4))) / 8.0
+                return 3.0 * power_of<2>(-1.0 + 2.0 * u) + (3.0 * a1perp(mu) * (-1.0 + 2.0 * u) * (-1.0 + 3.0 * power_of<2>(-1.0 + 2.0 * u))) / 2.0
+                       + ((15.0 * kappa3perp(mu)) / 2.0 - (3.0 * lambda3perp(mu)) / 4.0) * (-1.0 + 2.0 * u) * (-3.0 + 5.0 * power_of<2>(-1.0 + 2.0 * u))
+                       + (3.0 * a2perp(mu) * power_of<2>(-1.0 + 2.0 * u) * (-3.0 + 5.0 * power_of<2>(-1.0 + 2.0 * u))) / 2.0
+                       + (5.0 * omega3perp(mu) * (3.0 - 30.0 * power_of<2>(-1.0 + 2.0 * u) + 35.0 * power_of<4>(-1.0 + 2.0 * u))) / 8.0
                        - (3.0 * fpara * (model->m_s_msbar(mu) - model->m_ud_msbar(mu) / 2.0) * (-1.0 + 2.0 * u)
                           * (2.0 + 9.0 * a1para(mu) * (-1.0 + 2.0 * u) + 2.0 * a2para(mu) * (11.0 - 30.0 * (1.0 - u) * u) + (1.0 + 3.0 * a1para(mu) + 6.0 * a2para(mu)) * log(1 - u)
                              + (1.0 - 3.0 * a1para(mu) + 6.0 * a2para(mu)) * log(u)))
@@ -413,8 +413,8 @@ namespace eos
             {
                 // clang-format off
                 return 6.0 * (1.0 - u) * u * (1.0 + 3.0 * (a1para(mu) / 3.0 + (20.0 * kappa3para(mu)) / 9.0) * (-1.0 + 2.0 * u) +
-                    (-0.125 * lambda3para(mu) + lambda3paratilde(mu) / 4.0) * ((-15.0 * (-1.0 + 2.0 * u)) / 2.0 + (35.0 * std::pow(-1.0 + 2.0 * u, 3)) / 2.0) +
-                    (-1.5 + (15.0 * std::pow(-1.0 + 2.0 * u, 2)) / 2.0) * (a2para(mu) / 6.0 + (5.0 * omega3para(mu)) / 12.0 - (5.0 * omega3paratilde(mu)) / 24.0 +
+                    (-0.125 * lambda3para(mu) + lambda3paratilde(mu) / 4.0) * ((-15.0 * (-1.0 + 2.0 * u)) / 2.0 + (35.0 * power_of<3>(-1.0 + 2.0 * u)) / 2.0) +
+                    (-1.5 + (15.0 * power_of<2>(-1.0 + 2.0 * u)) / 2.0) * (a2para(mu) / 6.0 + (5.0 * omega3para(mu)) / 12.0 - (5.0 * omega3paratilde(mu)) / 24.0 +
                     (10.0 * zeta3para(mu)) / 9.0)) -
                     (6.0 * fperp(mu) * (model->m_s_msbar(mu) - model->m_ud_msbar(mu) / 2.0) * ((1.0 - u) * u * (9.0 * a1perp(mu) + 10.0 * a2perp(mu) * (-1.0 + 2.0 * u)) +
                     (1.0 + 3.0 * a1perp(mu) + 6.0 * a2perp(mu)) * (1.0 - u) * log(1.0 - u) - (1.0 - 3.0 * a1perp(mu) + 6.0 * a2perp(mu)) * u * log(u))) / (fpara * M_V) +
@@ -428,10 +428,10 @@ namespace eos
             phi3perp(const double & u, const double & mu) const
             {
                 // clang-format off
-                return (3.0 * a1para(mu) * std::pow(-1.0 + 2.0 * u, 3)) / 2.0 + (3.0 * (1.0 + std::pow(-1.0 + 2.0 * u, 2))) / 4.0 +
-                    (5.0 * kappa3para(mu) - (15.0 * lambda3para(mu)) / 16.0 + (15.0 * lambda3paratilde(mu)) / 8.0) * (-1.0 + 2.0 * u) * (-3.0 + 5.0 * std::pow(-1.0 + 2.0 * u, 2)) +
-                    ((9.0 * a2para(mu)) / 112.0 + (15.0 * omega3para(mu)) / 32.0 - (15.0 * omega3paratilde(mu)) / 64.0) * (3.0 - 30.0 * std::pow(-1.0 + 2.0 * u, 2) +
-                    35.0 * std::pow(-1.0 + 2.0 * u, 4)) + (-1.0 + 3.0 * std::pow(-1.0 + 2.0 * u, 2)) * ((3.0 * a2para(mu)) / 7.0 + 5.0 * zeta3para(mu)) -
+                return (3.0 * a1para(mu) * power_of<3>(-1.0 + 2.0 * u)) / 2.0 + (3.0 * (1.0 + power_of<2>(-1.0 + 2.0 * u))) / 4.0 +
+                    (5.0 * kappa3para(mu) - (15.0 * lambda3para(mu)) / 16.0 + (15.0 * lambda3paratilde(mu)) / 8.0) * (-1.0 + 2.0 * u) * (-3.0 + 5.0 * power_of<2>(-1.0 + 2.0 * u)) +
+                    ((9.0 * a2para(mu)) / 112.0 + (15.0 * omega3para(mu)) / 32.0 - (15.0 * omega3paratilde(mu)) / 64.0) * (3.0 - 30.0 * power_of<2>(-1.0 + 2.0 * u) +
+                    35.0 * power_of<4>(-1.0 + 2.0 * u)) + (-1.0 + 3.0 * power_of<2>(-1.0 + 2.0 * u)) * ((3.0 * a2para(mu)) / 7.0 + 5.0 * zeta3para(mu)) -
                     (3.0 * fperp(mu) * (model->m_s_msbar(mu) - model->m_ud_msbar(mu) / 2.0) * (2.0 * (-1.0 + 2.0 * u) +
                     2.0 * a2perp(mu) * (-1.0 + 2.0 * u) * (11.0 - 20.0 * (1.0 - u) * u) + 9.0 * a1perp(mu) * (1.0 - 2.0 * (1.0 - u) * u) +
                     (1.0 + 3.0 * a1perp(mu) + 6.0 * a2perp(mu)) * log(1 - u) - (1.0 - 3.0 * a1perp(mu) + 6.0 * a2perp(mu)) * log(u))) / (2.0 * fpara * M_V) +
@@ -1547,7 +1547,7 @@ namespace eos
             {
                 // clang-format off
                 return 6.0 * (1.0 - u) * u* (1.0 + 3.0 * (a1perp(mu) / 3.0 + (5.0 * kappa3perp(mu)) / 3.0) * (-1.0 + 2.0 * u) +
-                (a2perp(mu) / 6.0 + (5.0 * omega3perp(mu)) / 18.0) * (-1.5 + (15.0 * std::pow(-1.0 + 2.0 * u, 2)) / 2.0) -
+                (a2perp(mu) / 6.0 + (5.0 * omega3perp(mu)) / 18.0) * (-1.5 + (15.0 * power_of<2>(-1.0 + 2.0 * u)) / 2.0) -
                 (lambda3perp(mu) * ((-15.0 * (-1.0 + 2.0 * u)) / 2.0 + (35.0 * std::pow(-1.0 + 2.0 * u, 3.0)) / 2.0)) / 20.0) -
                 (3.0 * fpara * (-1.0) * (model->m_s_msbar(mu) - model->m_ud_msbar(mu) / 2.0) * ((1.0 - u) * u * (9.0 * a1para(mu) + 10.0 * a2para(mu) * (-1.0 + 2.0 * u)) +
                 (1.0 + 3.0 * a1para(mu) + 6.0 * a2para(mu)) * (1.0 - u) * log(1.0 - u) - (1.0 - 3.0 * a1para(mu) + 6.0 * a2para(mu)) * u * log(u))) / (fperp(mu) * M_V) +
@@ -1559,10 +1559,10 @@ namespace eos
             inline double
             phi3para(const double & u, const double & mu) const
             {
-                return 3.0 * std::pow(-1.0 + 2.0 * u, 2) + (3.0 * a1perp(mu) * (-1.0 + 2.0 * u) * (-1.0 + 3.0 * std::pow(-1.0 + 2.0 * u, 2))) / 2.0
-                       + ((15.0 * kappa3perp(mu)) / 2.0 - (3.0 * lambda3perp(mu)) / 4.0) * (-1.0 + 2.0 * u) * (-3.0 + 5.0 * std::pow(-1.0 + 2.0 * u, 2))
-                       + (3.0 * a2perp(mu) * std::pow(-1.0 + 2.0 * u, 2) * (-3.0 + 5.0 * std::pow(-1.0 + 2.0 * u, 2))) / 2.0
-                       + (5.0 * omega3perp(mu) * (3.0 - 30.0 * std::pow(-1.0 + 2.0 * u, 2) + 35.0 * std::pow(-1.0 + 2.0 * u, 4))) / 8.0
+                return 3.0 * power_of<2>(-1.0 + 2.0 * u) + (3.0 * a1perp(mu) * (-1.0 + 2.0 * u) * (-1.0 + 3.0 * power_of<2>(-1.0 + 2.0 * u))) / 2.0
+                       + ((15.0 * kappa3perp(mu)) / 2.0 - (3.0 * lambda3perp(mu)) / 4.0) * (-1.0 + 2.0 * u) * (-3.0 + 5.0 * power_of<2>(-1.0 + 2.0 * u))
+                       + (3.0 * a2perp(mu) * power_of<2>(-1.0 + 2.0 * u) * (-3.0 + 5.0 * power_of<2>(-1.0 + 2.0 * u))) / 2.0
+                       + (5.0 * omega3perp(mu) * (3.0 - 30.0 * power_of<2>(-1.0 + 2.0 * u) + 35.0 * power_of<4>(-1.0 + 2.0 * u))) / 8.0
                        - (3.0 * fpara * (-1.0) * (model->m_s_msbar(mu) - model->m_ud_msbar(mu) / 2.0) * (-1.0 + 2.0 * u)
                           * (2.0 + 9.0 * a1para(mu) * (-1.0 + 2.0 * u) + 2.0 * a2para(mu) * (11.0 - 30.0 * (1.0 - u) * u) + (1.0 + 3.0 * a1para(mu) + 6.0 * a2para(mu)) * log(1 - u)
                              + (1.0 - 3.0 * a1para(mu) + 6.0 * a2para(mu)) * log(u)))
@@ -1579,8 +1579,8 @@ namespace eos
             {
                 // clang-format off
                 return 6.0 * (1.0 - u) * u * (1.0 + 3.0 * (a1para(mu) / 3.0 + (20.0 * kappa3para(mu)) / 9.0) * (-1.0 + 2.0 * u) +
-                    (-0.125 * lambda3para(mu) + lambda3paratilde(mu) / 4.0) * ((-15.0 * (-1.0 + 2.0 * u)) / 2.0 + (35.0 * std::pow(-1.0 + 2.0 * u, 3)) / 2.0) +
-                    (-1.5 + (15.0 * std::pow(-1.0 + 2.0 * u, 2)) / 2.0) * (a2para(mu) / 6.0 + (5.0 * omega3para(mu)) / 12.0 - (5.0 * omega3paratilde(mu)) / 24.0 +
+                    (-0.125 * lambda3para(mu) + lambda3paratilde(mu) / 4.0) * ((-15.0 * (-1.0 + 2.0 * u)) / 2.0 + (35.0 * power_of<3>(-1.0 + 2.0 * u)) / 2.0) +
+                    (-1.5 + (15.0 * power_of<2>(-1.0 + 2.0 * u)) / 2.0) * (a2para(mu) / 6.0 + (5.0 * omega3para(mu)) / 12.0 - (5.0 * omega3paratilde(mu)) / 24.0 +
                     (10.0 * zeta3para(mu)) / 9.0)) -
                     (6.0 * fperp(mu) * (-1.0) * (model->m_s_msbar(mu) - model->m_ud_msbar(mu) / 2.0) * ((1.0 - u) * u * (9.0 * a1perp(mu) + 10.0 * a2perp(mu) * (-1.0 + 2.0 * u)) +
                     (1.0 + 3.0 * a1perp(mu) + 6.0 * a2perp(mu)) * (1.0 - u) * log(1.0 - u) - (1.0 - 3.0 * a1perp(mu) + 6.0 * a2perp(mu)) * u * log(u))) / (fpara * M_V) +
@@ -1594,10 +1594,10 @@ namespace eos
             phi3perp(const double & u, const double & mu) const
             {
                 // clang-format off
-                return (3.0 * a1para(mu) * std::pow(-1.0 + 2.0 * u, 3)) / 2.0 + (3.0 * (1.0 + std::pow(-1.0 + 2.0 * u, 2))) / 4.0 +
-                    (5.0 * kappa3para(mu) - (15.0 * lambda3para(mu)) / 16.0 + (15.0 * lambda3paratilde(mu)) / 8.0) * (-1.0 + 2.0 * u) * (-3.0 + 5.0 * std::pow(-1.0 + 2.0 * u, 2)) +
-                    ((9.0 * a2para(mu)) / 112.0 + (15.0 * omega3para(mu)) / 32.0 - (15.0 * omega3paratilde(mu)) / 64.0) * (3.0 - 30.0 * std::pow(-1.0 + 2.0 * u, 2) +
-                    35.0 * std::pow(-1.0 + 2.0 * u, 4)) + (-1.0 + 3.0 * std::pow(-1.0 + 2.0 * u, 2)) * ((3.0 * a2para(mu)) / 7.0 + 5.0 * zeta3para(mu)) -
+                return (3.0 * a1para(mu) * power_of<3>(-1.0 + 2.0 * u)) / 2.0 + (3.0 * (1.0 + power_of<2>(-1.0 + 2.0 * u))) / 4.0 +
+                    (5.0 * kappa3para(mu) - (15.0 * lambda3para(mu)) / 16.0 + (15.0 * lambda3paratilde(mu)) / 8.0) * (-1.0 + 2.0 * u) * (-3.0 + 5.0 * power_of<2>(-1.0 + 2.0 * u)) +
+                    ((9.0 * a2para(mu)) / 112.0 + (15.0 * omega3para(mu)) / 32.0 - (15.0 * omega3paratilde(mu)) / 64.0) * (3.0 - 30.0 * power_of<2>(-1.0 + 2.0 * u) +
+                    35.0 * power_of<4>(-1.0 + 2.0 * u)) + (-1.0 + 3.0 * power_of<2>(-1.0 + 2.0 * u)) * ((3.0 * a2para(mu)) / 7.0 + 5.0 * zeta3para(mu)) -
                     (3.0 * fperp(mu) * (-1.0) * (model->m_s_msbar(mu) - model->m_ud_msbar(mu) / 2.0) * (2.0 * (-1.0 + 2.0 * u) +
                     2.0 * a2perp(mu) * (-1.0 + 2.0 * u) * (11.0 - 20.0 * (1.0 - u) * u) + 9.0 * a1perp(mu) * (1.0 - 2.0 * (1.0 - u) * u) +
                     (1.0 + 3.0 * a1perp(mu) + 6.0 * a2perp(mu)) * log(1 - u) - (1.0 - 3.0 * a1perp(mu) + 6.0 * a2perp(mu)) * log(u))) / (2.0 * fpara * M_V) +
