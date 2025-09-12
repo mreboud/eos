@@ -322,6 +322,7 @@ namespace eos
         static constexpr double chi_1p_a  = 1.13e-2 / (4.2 * 4.2);
         static constexpr double chi_1m_t  = 0.803e-2 / (4.2 * 4.2);
         static constexpr double chi_1p_t5 = 0.748e-2 / (4.2 * 4.2);
+        static constexpr const char * lcsr_V = "Kstarbar";
     };
 
     struct BToOmega {
@@ -348,6 +349,7 @@ namespace eos
         static constexpr double mR2_0m = 5.279 * 5.279;
         static constexpr double mR2_1m = 5.325 * 5.325;
         static constexpr double mR2_1p = 5.724 * 5.724;
+        static constexpr const char * lcsr_V = "rho";
     };
 
     struct BsToPhi {
@@ -389,6 +391,7 @@ namespace eos
         static constexpr double mR2_0m = 5.279 * 5.279;
         static constexpr double mR2_1m = 5.325 * 5.325;
         static constexpr double mR2_1p = 5.723 * 5.723;
+        static constexpr const char * lcsr_V = "Kstar";
     };
 
     /* P -> PP Processes */

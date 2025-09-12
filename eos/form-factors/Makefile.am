@@ -17,6 +17,7 @@ libeosformfactors_la_SOURCES = \
 	analytic-bs-to-kstar-lcsr.cc analytic-bs-to-dsstar-lcsr.cc analytic-bs-to-phi-lcsr.cc \
 	analytic-b-to-rho-lcsr.cc analytic-b-to-kstar-lcsr.cc analytic-b-to-dstar-lcsr.cc \
 	analytic-p-to-gamma-qcdf.cc analytic-p-to-gamma-qcdf-impl.hh analytic-p-to-gamma-qcdf.hh \
+	analytic-p-to-vec-lcsr.cc analytic-p-to-vec-lcsr.hh analytic-p-to-vec-lcsr-impl.hh \
 	baryonic.cc baryonic.hh \
 	baryonic-processes.hh \
 	form-factor-adapter.hh \
@@ -63,31 +64,52 @@ libeosformfactors_la_LIBADD = \
 	-lgslcblas \
 	-lgsl
 
-include_eos_rarebdecaysdir = $(includedir)/eos/form-factors
-include_eos_rarebdecays_HEADERS = \
-	analytic-b-to-pi-pi.hh \
+include_eos_formfactorsdir = $(includedir)/eos/form-factors
+include_eos_formfactors_HEADERS = \
 	analytic-b-to-psd-dkmmo2008.hh \
+	analytic-b-to-pi-pi.hh \
+	analytic-b-to-p-lcsr.hh \
+	analytic-b-to-v-lcsr.hh \
+	analytic-p-to-gamma-qcdf.hh \
+	analytic-p-to-vec-lcsr.hh \
+	baryonic.hh \
+	baryonic-processes.hh \
 	form-factor-adapter.hh \
 	form-factors.hh \
+	form-factors-fwd.hh \
 	heavy-meson-lcdas.hh \
 	heavy-meson-lcdas-exponential.hh \
 	heavy-meson-lcdas-flvd2022.hh \
+	hqet-b-to-c.hh \
+	k-lcdas.hh \
+	k-star-lcdas.hh \
+	lcda.hh \
+	mesonic.hh \
+	mesonic-processes.hh \
 	observables.hh \
 	parametric-abr2022.hh \
 	parametric-bbgorvd2018.hh \
 	parametric-bcl2008.hh \
-	parametric-bfw2010.hh \
 	parametric-bfvd2014.hh \
+	parametric-bfw2010.hh \
 	parametric-bgl1997.hh \
 	parametric-bgjvd2019.hh \
+	parametric-bmrvd2022.hh \
 	parametric-bsz2015.hh \
 	parametric-dkmr2017.hh \
 	parametric-dm2016.hh \
 	parametric-fvdv2018.hh \
 	parametric-hkvt2025.hh \
 	parametric-kkrvd2024.hh \
+	parametric-kkvdz2022.hh \
 	parametric-kmpw2010.hh \
-	pi-lcdas.hh
+	parametric-ksvd2025.hh \
+	pi-lcdas.hh \
+	psd-lcdas.hh \
+	rho-lcdas.hh \
+	unitarity-bounds.hh \
+	vec-lcdas.hh \
+	zero-recoil-sum-rule.hh
 
 AM_TESTS_ENVIRONMENT = \
 	export EOS_TESTS_PARAMETERS="$(top_srcdir)/eos/parameters";
@@ -99,6 +121,7 @@ TESTS = \
 	analytic-b-to-pi-pi_TEST \
 	analytic-b-to-p-lcsr_TEST \
 	analytic-b-to-v-lcsr_TEST \
+	analytic-p-to-vec-lcsr_TEST \
 	baryonic_TEST \
 	heavy-meson-lcdas_TEST \
 	heavy-meson-lcdas-exponential_TEST \
@@ -152,6 +175,8 @@ analytic_b_to_pi_pi_TEST_CXXFLAGS = $(AM_CXXFLAGS) $(GSL_CXXFLAGS)
 analytic_b_to_p_lcsr_TEST_SOURCES = analytic-b-to-p-lcsr_TEST.cc
 
 analytic_b_to_v_lcsr_TEST_SOURCES = analytic-b-to-v-lcsr_TEST.cc
+
+analytic_p_to_vec_lcsr_TEST_SOURCES = analytic-p-to-vec-lcsr_TEST.cc
 
 baryonic_TEST_SOURCES = baryonic_TEST.cc
 

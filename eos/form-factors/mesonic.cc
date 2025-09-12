@@ -27,6 +27,7 @@
 #include <eos/form-factors/analytic-b-to-p-lcsr.hh>
 #include <eos/form-factors/analytic-b-to-v-lcsr.hh>
 #include <eos/form-factors/analytic-p-to-gamma-qcdf.hh>
+#include <eos/form-factors/analytic-p-to-vec-lcsr.hh>
 #include <eos/form-factors/form-factors.hh>
 #include <eos/form-factors/parametric-bcl2008.hh>
 #include <eos/form-factors/parametric-bfw2010.hh>
@@ -78,7 +79,10 @@ namespace eos
         { "B->rho::B-LCSR",       &AnalyticFormFactorBToVLCSR<BToRho>::make           },
         { "B_s->K^*::B-LCSR",     &AnalyticFormFactorBToVLCSR<BsToKstar>::make        },
         { "B_s->phi::B-LCSR",     &AnalyticFormFactorBToVLCSR<BsToPhi>::make          },
-        { "B_s->D_s^*::B-LCSR",   &AnalyticFormFactorBToVLCSR<BsToDsstar>::make       }
+        { "B_s->D_s^*::B-LCSR",   &AnalyticFormFactorBToVLCSR<BsToDsstar>::make       },
+        { "B->K^*::V-LCSR",       &AnalyticFormFactorPToVLCSR<BToKstar>::make         },
+        { "B->rho::V-LCSR",       &AnalyticFormFactorPToVLCSR<BToRho>::make           },
+        { "B_s->K^*::V-LCSR",     &AnalyticFormFactorPToVLCSR<BsToKstar>::make        }
     };
 
     complex<double>

@@ -3144,8 +3144,37 @@ groups:
           max:     0.3
           latex:    '$\mu^{B \to \rho \mathrm{(B-LCSR)}}$'
           unit:     '1'
+      'B->rho::s_0^%1%,%2%@rho-LCSR' :
+          central:  0.0
+          min:      0.0
+          max:      1.0
+          unit:     'GeV^2'
+          latex:
+            template: '$s_{0,%1%,%2%}^{B \to \rho \mathrm{(rho-LCSR)}}$'
+            map:
+              'A1'    :  'A_1'
+              'A2'    :  'A_2'
+              'A30'   :  'A_{30}'
+              'T1'    :  'T_1'
+              'T23A'  :  'T_{23A}'
+              'T23B'  :  'T_{23B}'
+          matrix:
+            - [ 'A1', 'A2', 'A30', 'V', 'T1', 'T23A', 'T23B']
+            - [ 0, 1 ]
+      'B->rho::M^2@rho-LCSR' :
+          central: 1.0
+          min:     0.5
+          max:     1.5
+          latex:    '$(M^2)^{B \to \rho \mathrm{(\rho-LCSR)}}$'
+          unit:     'GeV^2'
+      'B->rho::mu@rho-LCSR' :
+          central: 1.0
+          min:     0.7
+          max:     0.3
+          latex:    '$\mu^{B \to \rho \mathrm{(\rho-LCSR)}}$'
+          unit:     '1'
 
-      # parameters for LCSR calculation of B->K^* hadronic matrix elements, cf. [GKvD2018]
+      # parameters for LCSR calculation of B->K^* hadronic matrix elements, cf. [GKvD:2018A]
       'B->K^*::s_0^A1,0@B-LCSR' :
           central: 1.7
           min:     1.7
@@ -3241,6 +3270,35 @@ groups:
           min:     0.7
           max:     0.3
           latex:    '$\mu^{B \to K^* \mathrm{(B-LCSR)}}$'
+          unit:     '1'
+      'B->K^*::s_0^%1%,%2%@Kstar-LCSR' :
+          central:  0.0
+          min:      0.0
+          max:      1.0
+          unit:     'GeV^2'
+          latex:
+            template: '$s_{0,%1%,%2%}^{B \to K^* \mathrm{(Kstar-LCSR)}}$'
+            map:
+              'A1'    :  'A_1'
+              'A2'    :  'A_2'
+              'A30'   :  'A_{30}'
+              'T1'    :  'T_1'
+              'T23A'  :  'T_{23A}'
+              'T23B'  :  'T_{23B}'
+          matrix:
+            - [ 'A1', 'A2', 'A30', 'V', 'T1', 'T23A', 'T23B']
+            - [ 0, 1 ]
+      'B->K^*::M^2@Kstar-LCSR' :
+          central: 1.0
+          min:     0.5
+          max:     1.5
+          latex:    '$(M^2)^{B \to K^* \mathrm{(Kstar-LCSR)}}$'
+          unit:     'GeV^2'
+      'B->K^*::mu@Kstar-LCSR' :
+          central: 1.0
+          min:     0.7
+          max:     0.3
+          latex:    '$\mu^{B \to K^* \mathrm{(Kstar-LCSR)}}$'
           unit:     '1'
       # parameters for LCSR calculation of B_s->K^* hadronic matrix elements
       'B_s->K^*::s_0^A1,0@B-LCSR' :
