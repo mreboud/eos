@@ -72,6 +72,9 @@ class AntiKStarLCDAsTest : public TestCase
             p["K^*::fpara"]                 = 0.204;
             p["mass::K_u^*"]                = 0.89166;
 
+            p["mass::u(2GeV)"] = 0.0032;
+            p["mass::d(2GeV)"] = 0.0032; // we use m_ud/2 = m_d = m_u = 3.2 MeV
+
             /* Diagnostics */
             {
                 AntiKStarLCDAs                                      kstar(p, Options{});
@@ -90,6 +93,30 @@ class AntiKStarLCDAsTest : public TestCase
             /* Twist 2 */
             {
                 AntiKStarLCDAs kstar(p, Options{});
+
+                std::cout << "a1para " << kstar.a1para(2.2) << std::endl;
+                std::cout << "a2para " << kstar.a2para(2.2) << std::endl;
+                std::cout << "a1perp " << kstar.a1perp(2.2) << std::endl;
+                std::cout << "a2perp " << kstar.a2perp(2.2) << std::endl;
+
+                std::cout << "fperp " << kstar.fperp(2.2) << std::endl;
+
+                std::cout << "lambda3para " << kstar.lambda3para(2.2) << std::endl;
+                std::cout << "lambda3paratilde " << kstar.lambda3paratilde(2.2) << std::endl;
+                std::cout << "lambda3perp " << kstar.lambda3perp(2.2) << std::endl;
+                std::cout << "omega3para " << kstar.omega3para(2.2) << std::endl;
+                std::cout << "omega3paratilde " << kstar.omega3paratilde(2.2) << std::endl;
+                std::cout << "omega3perp " << kstar.omega3perp(2.2) << std::endl;
+                std::cout << "omega4paratilde " << kstar.omega4paratilde(2.2) << std::endl;
+                std::cout << "zeta3para " << kstar.zeta3para(2.2) << std::endl;
+                std::cout << "zeta4para " << kstar.zeta4para(2.2) << std::endl;
+                std::cout << "zeta4perp " << kstar.zeta4perp(2.2) << std::endl;
+                std::cout << "zeta4perptilde " << kstar.zeta4perptilde(2.2) << std::endl;
+                std::cout << "kappa3para " << kstar.kappa3para(2.2) << std::endl;
+                std::cout << "kappa3perp " << kstar.kappa3perp(2.2) << std::endl;
+                std::cout << "kappa4para " << kstar.kappa4para(2.2) << std::endl;
+                std::cout << "kappa4perp " << kstar.kappa4perp(2.2) << std::endl;
+
 
                 // coefficients at mu = 1.0 GeV, and 2.0 GeV
                 TEST_CHECK_NEARLY_EQUAL(kstar.a1para(1.0), 0.03000, eps);

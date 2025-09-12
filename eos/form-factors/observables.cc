@@ -21,6 +21,7 @@
 #include <eos/form-factors/analytic-b-to-pi-pi.hh>
 #include <eos/form-factors/analytic-b-to-psd-dkmmo2008.hh>
 #include <eos/form-factors/analytic-b-to-v-lcsr.hh>
+#include <eos/form-factors/analytic-p-to-vec-lcsr.hh>
 #include <eos/form-factors/form-factor-adapter.hh>
 #include <eos/form-factors/heavy-meson-lcdas-flvd2022.hh>
 #include <eos/form-factors/heavy-meson-lcdas.hh>
@@ -907,6 +908,20 @@ namespace eos
                     make_observable("B->K^*::T_23A[s^1/s^0](q2)", Unit::GeV2(), &AnalyticFormFactorBToVLCSR<BToKstar>::normalized_moment_1_t_23A, std::make_tuple("q2")),
 
                     make_observable("B->K^*::T_23B[s^1/s^0](q2)", Unit::GeV2(), &AnalyticFormFactorBToVLCSR<BToKstar>::normalized_moment_1_t_23B, std::make_tuple("q2")),
+
+                    make_observable("B->K^*::m_B2_A_1(q2)", Unit::GeV2(), &AnalyticFormFactorPToVLCSR<BToKstar>::a_1_dsr, std::make_tuple("q2")),
+
+                    make_observable("B->K^*::m_B2_A_2(q2)", Unit::GeV2(), &AnalyticFormFactorPToVLCSR<BToKstar>::a_2_dsr, std::make_tuple("q2")),
+
+                    make_observable("B->K^*::m_B2_A_30(q2)", Unit::GeV2(), &AnalyticFormFactorPToVLCSR<BToKstar>::a_30_dsr, std::make_tuple("q2")),
+
+                    make_observable("B->K^*::m_B2_V(q2)", Unit::GeV2(), &AnalyticFormFactorPToVLCSR<BToKstar>::v_dsr, std::make_tuple("q2")),
+
+                    make_observable("B->K^*::m_B2_T_1(q2)", Unit::GeV2(), &AnalyticFormFactorPToVLCSR<BToKstar>::t_1_dsr, std::make_tuple("q2")),
+
+                    make_observable("B->K^*::m_B2_T_23A(q2)", Unit::GeV2(), &AnalyticFormFactorPToVLCSR<BToKstar>::t_23A_dsr, std::make_tuple("q2")),
+
+                    make_observable("B->K^*::m_B2_T_23B(q2)", Unit::GeV2(), &AnalyticFormFactorPToVLCSR<BToKstar>::t_23B_dsr, std::make_tuple("q2")),
 
                     make_expression_observable("B->K^*::F_perp_T(q2)/F_perp(q2)",
                                                R"(\mathcal{F}_{\perp,T}(q^2)/\mathcal{F}_\perp(q^2))",
