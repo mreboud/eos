@@ -38,8 +38,8 @@ namespace eos
         _rho(p["Lambda_b->Lambda_c^*::rho@HQET"], *this),
         _delta_3b(p["Lambda_b->Lambda_c^*::delta_3b@HQET"], *this),
         _rho_3b(p["Lambda_b->Lambda_c^*::rho_3b@HQET"], *this),
-        mLb(UsedParameter(p[std::string(Process_::name_1) + "@HME"], *this)),
-        mLcs(UsedParameter(p[std::string(Process_::name_2) + "@HME"], *this))
+        mLb(UsedParameter(p["mass::" + std::string(Process_::name_1) + "@HME"], *this)),
+        mLcs(UsedParameter(p["mass::" + std::string(Process_::name_2) + "@HME"], *this))
     {
         uses(_b_to_c);
     }
@@ -293,8 +293,8 @@ namespace eos
         _rho(p["Lambda_b->Lambda_c^*::rho@HQET"], *this),
         _delta_3b(p["Lambda_b->Lambda_c^*::delta_3b@HQET"], *this),
         _rho_3b(p["Lambda_b->Lambda_c^*::rho_3b@HQET"], *this),
-        mLb(UsedParameter(p[std::string(Process_::name_1) + "@HME"], *this)),
-        mLcs(UsedParameter(p[std::string(Process_::name_2) + "@HME"], *this))
+        mLb(UsedParameter(p["mass::" + std::string(Process_::name_1) + "@HME"], *this)),
+        mLcs(UsedParameter(p["mass::" + std::string(Process_::name_2) + "@HME"], *this))
     {
         uses(_b_to_c);
     }

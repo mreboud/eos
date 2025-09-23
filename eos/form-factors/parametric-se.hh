@@ -58,8 +58,8 @@ namespace eos
             static const std::map<std::tuple<QuarkFlavor, QuarkFlavor>, std::string> resonance_1p_names;
 
             SEFormFactorTraits(const Parameters & p) :
-                m_B(UsedParameter(p[std::string(Process_::name_B) + "@HME"], *this)),
-                m_V(UsedParameter(p[std::string(Process_::name_V) + "@HME"], *this)),
+                m_B(UsedParameter(p["mass::" + std::string(Process_::name_B) + "@HME"], *this)),
+                m_V(UsedParameter(p["mass::" + std::string(Process_::name_V) + "@HME"], *this)),
                 m_R_0m(UsedParameter(p[resonance_0m_names.at(Process_::partonic_transition)], *this)),
                 m_R_1m(UsedParameter(p[resonance_1m_names.at(Process_::partonic_transition)], *this)),
                 m_R_1p(UsedParameter(p[resonance_1p_names.at(Process_::partonic_transition)], *this)),
@@ -225,8 +225,8 @@ namespace eos
             static const std::map<std::tuple<QuarkFlavor, QuarkFlavor>, std::string> resonance_1m_names;
 
             SEFormFactorTraits(const Parameters & p) :
-                m_B(UsedParameter(p[std::string(Process_::name_B) + "@HME"], *this)),
-                m_P(UsedParameter(p[std::string(Process_::name_P) + "@HME"], *this)),
+                m_B(UsedParameter(p["mass::" + std::string(Process_::name_B) + "@HME"], *this)),
+                m_P(UsedParameter(p["mass::" + std::string(Process_::name_P) + "@HME"], *this)),
                 m_R_0p(UsedParameter(p[resonance_0p_names.at(Process_::partonic_transition)], *this)),
                 m_R_1m(UsedParameter(p[resonance_1m_names.at(Process_::partonic_transition)], *this)),
                 tp(UsedParameter(p[std::string(Process_::label) + "::tp@SE"], *this)),
@@ -383,8 +383,8 @@ namespace eos
             static const std::map<std::tuple<QuarkFlavor, QuarkFlavor>, std::string> resonance_1p_names;
 
             SEFormFactorTraits(const Parameters & p) :
-                m_1(UsedParameter(p[std::string(Process_::name_1) + "@HME"], *this)),
-                m_2(UsedParameter(p[std::string(Process_::name_2) + "@HME"], *this)),
+                m_1(UsedParameter(p["mass::" + std::string(Process_::name_1) + "@HME"], *this)),
+                m_2(UsedParameter(p["mass::" + std::string(Process_::name_2) + "@HME"], *this)),
                 m_R_0m(UsedParameter(p[resonance_0m_names.at(Process_::partonic_transition)], *this)),
                 m_R_0p(UsedParameter(p[resonance_0p_names.at(Process_::partonic_transition)], *this)),
                 m_R_1m(UsedParameter(p[resonance_1m_names.at(Process_::partonic_transition)], *this)),
@@ -550,8 +550,8 @@ namespace eos
             UsedParameter tp_v, tp_a, t0;
 
             SEFormFactorTraits(const Parameters & p) :
-                m_1(UsedParameter(p[std::string(Process_::name_1) + "@HME"], *this)),
-                m_2(UsedParameter(p[std::string(Process_::name_2) + "@HME"], *this)),
+                m_1(UsedParameter(p["mass::" + std::string(Process_::name_1) + "@HME"], *this)),
+                m_2(UsedParameter(p["mass::" + std::string(Process_::name_2) + "@HME"], *this)),
                 tp_v(UsedParameter(p[std::string(Process_::label) + "::tp_v@SE"], *this)),
                 tp_a(UsedParameter(p[std::string(Process_::label) + "::tp_a@SE"], *this)),
                 t0(UsedParameter(p[std::string(Process_::label) + "::t0@SE"], *this))

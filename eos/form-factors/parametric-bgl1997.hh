@@ -61,8 +61,8 @@ namespace eos
             IntegerOption n_bound_states_0p;
 
             BGL1997FormFactorTraits(const Parameters & p, const Options & o, const std::vector<OptionSpecification> & options) :
-                m_B(UsedParameter(p[std::string(Process_::name_B) + "@HME"], *this)),
-                m_V(UsedParameter(p[std::string(Process_::name_V) + "@HME"], *this)),
+                m_B(UsedParameter(p["mass::" + std::string(Process_::name_B) + "@HME"], *this)),
+                m_V(UsedParameter(p["mass::" + std::string(Process_::name_V) + "@HME"], *this)),
                 masses_1m{
                     { UsedParameter(p["mass::B_c^*@HME"], *this),
                      UsedParameter(p["mass::B_c^*[1]@HME"], *this),
@@ -187,8 +187,8 @@ namespace eos
             IntegerOption n_bound_states_0p;
 
             BGL1997FormFactorTraits(const Parameters & p, const Options & o, const std::vector<OptionSpecification> & options) :
-                m_B(UsedParameter(p[std::string(Process_::name_B) + "@HME"], *this)),
-                m_P(UsedParameter(p[std::string(Process_::name_P) + "@HME"], *this)),
+                m_B(UsedParameter(p["mass::" + std::string(Process_::name_B) + "@HME"], *this)),
+                m_P(UsedParameter(p["mass::" + std::string(Process_::name_P) + "@HME"], *this)),
                 masses_1m{
                     { UsedParameter(p["mass::B_c^*@HME"], *this),
                      UsedParameter(p["mass::B_c^*[1]@HME"], *this),

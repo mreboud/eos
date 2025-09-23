@@ -31,8 +31,8 @@ namespace eos
     struct LambdaBToLambda
     {
             static const constexpr char *                               label               = "Lambda_b->Lambda";
-            static const constexpr char *                               name_1              = "mass::Lambda_b";
-            static const constexpr char *                               name_2              = "mass::Lambda";
+            static const constexpr char *                               name_1              = "Lambda_b";
+            static const constexpr char *                               name_2              = "Lambda";
             static const constexpr std::tuple<QuarkFlavor, QuarkFlavor> partonic_transition = std::make_tuple(QuarkFlavor::bottom, QuarkFlavor::strange);
             // OPE results for the unitarity bounds
             static constexpr double                                     chi_0m              = 1.57e-2;
@@ -46,16 +46,16 @@ namespace eos
     struct LambdaBToLambdaC
     {
             static const constexpr char *                               label               = "Lambda_b->Lambda_c";
-            static const constexpr char *                               name_1              = "mass::Lambda_b";
-            static const constexpr char *                               name_2              = "mass::Lambda_c";
+            static const constexpr char *                               name_1              = "Lambda_b";
+            static const constexpr char *                               name_2              = "Lambda_c";
             static const constexpr std::tuple<QuarkFlavor, QuarkFlavor> partonic_transition = std::make_tuple(QuarkFlavor::bottom, QuarkFlavor::charm);
     };
 
     struct LambdaCToLambda
     {
             static const constexpr char *                               label               = "Lambda_c->Lambda";
-            static const constexpr char *                               name_1              = "mass::Lambda_c";
-            static const constexpr char *                               name_2              = "mass::Lambda";
+            static const constexpr char *                               name_1              = "Lambda_c";
+            static const constexpr char *                               name_2              = "Lambda";
             static const constexpr std::tuple<QuarkFlavor, QuarkFlavor> partonic_transition = std::make_tuple(QuarkFlavor::charm, QuarkFlavor::strange);
             // initial state mass
             static constexpr double                                     m1                  = 2.28646;
@@ -75,8 +75,8 @@ namespace eos
     struct LambdaCToNeutron
     {
             static const constexpr char *                               label               = "Lambda_c->neutron";
-            static const constexpr char *                               name_1              = "mass::Lambda_c";
-            static const constexpr char *                               name_2              = "mass::neutron";
+            static const constexpr char *                               name_1              = "Lambda_c";
+            static const constexpr char *                               name_2              = "neutron";
             static const constexpr std::tuple<QuarkFlavor, QuarkFlavor> partonic_transition = std::make_tuple(QuarkFlavor::charm, QuarkFlavor::down);
             // initial state mass
             static constexpr double                                     m1                  = 2.28646;
@@ -96,8 +96,8 @@ namespace eos
     struct LambdaCToProton
     {
             static const constexpr char *                               label               = "Lambda_c->proton";
-            static const constexpr char *                               name_1              = "mass::Lambda_c";
-            static const constexpr char *                               name_2              = "mass::proton";
+            static const constexpr char *                               name_1              = "Lambda_c";
+            static const constexpr char *                               name_2              = "proton";
             // rare (FCNC) c -> u transition
             static const constexpr std::tuple<QuarkFlavor, QuarkFlavor> partonic_transition = std::make_tuple(QuarkFlavor::charm, QuarkFlavor::up);
             // initial state mass
@@ -123,8 +123,8 @@ namespace eos
     struct LambdaBToLambdaC2595
     {
             static const constexpr char * label  = "Lambda_b->Lambda_c(2595)";
-            static const constexpr char * name_1 = "mass::Lambda_b";
-            static const constexpr char * name_2 = "mass::Lambda_c(2595)";
+            static const constexpr char * name_1 = "Lambda_b";
+            static const constexpr char * name_2 = "Lambda_c(2595)";
             // first resonances sorted by spin/parity
             // we use the shifts from [DLM:2015A], table VII.
             static constexpr double       mBc    = 6.2751;
@@ -141,8 +141,8 @@ namespace eos
     struct LambdaBToLambdaC2625
     {
             static const constexpr char * label  = "Lambda_b->Lambda_c(2625)";
-            static const constexpr char * name_1 = "mass::Lambda_b";
-            static const constexpr char * name_2 = "mass::Lambda_c(2625)";
+            static const constexpr char * name_1 = "Lambda_b";
+            static const constexpr char * name_2 = "Lambda_c(2625)";
             // first resonances sorted by spin/parity
             // we use the shifts from [DLM:2015A], table VII.
             static constexpr double       mBc    = 6.2751;
@@ -155,8 +155,8 @@ namespace eos
     struct LambdaBToLambda1520
     {
             static const constexpr char * label     = "Lambda_b->Lambda(1520)";
-            static const constexpr char * name_1    = "mass::Lambda_b";
-            static const constexpr char * name_2    = "mass::Lambda(1520)";
+            static const constexpr char * name_1    = "Lambda_b";
+            static const constexpr char * name_2    = "Lambda(1520)";
             // first resonances sorted by spin/parity
             static constexpr double       mR2_0m    = 5.367 * 5.367;
             static constexpr double       mR2_0p    = 5.711 * 5.711;

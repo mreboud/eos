@@ -182,8 +182,8 @@ namespace eos
     template <typename Process_>
     HQETFormFactors<Process_, PToP>::HQETFormFactors(const Parameters & p, const Options & o) :
         HQETFormFactorBase(p, o, Process_::hqe_prefix),
-        _m_B(p[Process_::name_B], *static_cast<ParameterUser *>(this)),
-        _m_P(p[Process_::name_P], *static_cast<ParameterUser *>(this))
+        _m_B(p["mass::" + stringify(Process_::name_B)], *static_cast<ParameterUser *>(this)),
+        _m_P(p["mass::" + stringify(Process_::name_P)], *static_cast<ParameterUser *>(this))
     {
         static const Log::OneTimeMessage message_HQET_FFs_PToP(std::string("HQETFormFactors<") + Process_::label + ",PToP>",
                                                                ll_warning,
@@ -648,8 +648,8 @@ namespace eos
     template <typename Process_>
     HQETFormFactors<Process_, PToV>::HQETFormFactors(const Parameters & p, const Options & o) :
         HQETFormFactorBase(p, o, Process_::hqe_prefix),
-        _m_B(p[Process_::name_B], *static_cast<ParameterUser *>(this)),
-        _m_V(p[Process_::name_V], *static_cast<ParameterUser *>(this))
+        _m_B(p["mass::" + stringify(Process_::name_B)], *static_cast<ParameterUser *>(this)),
+        _m_V(p["mass::" + stringify(Process_::name_V)], *static_cast<ParameterUser *>(this))
     {
         static const Log::OneTimeMessage message_HQET_FFs_PToV(std::string("HQETFormFactors<") + Process_::label + ",PToV>",
                                                                ll_warning,
@@ -1007,8 +1007,8 @@ namespace eos
     template <typename Process_>
     HQETFormFactors<Process_, VToP>::HQETFormFactors(const Parameters & p, const Options & o) :
         HQETFormFactorBase(p, o, Process_::hqe_prefix),
-        _m_Bst(p[Process_::name_Bst], *static_cast<ParameterUser *>(this)),
-        _m_P(p[Process_::name_P], *static_cast<ParameterUser *>(this))
+        _m_Bst(p["mass::" + stringify(Process_::name_Bst)], *static_cast<ParameterUser *>(this)),
+        _m_P(p["mass::" + stringify(Process_::name_P)], *static_cast<ParameterUser *>(this))
     {
         static const Log::OneTimeMessage message_HQET_FFs_VToP(std::string("HQETFormFactors<") + Process_::label + ",VToP>",
                                                                ll_warning,

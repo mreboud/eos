@@ -59,8 +59,8 @@ namespace eos
             static const std::map<std::tuple<QuarkFlavor, QuarkFlavor>, std::string> resonance_1p_names;
 
             SSEFormFactorTraits(const Parameters & p) :
-                m_B(UsedParameter(p[std::string(Process_::name_B) + "@HME"], *this)),
-                m_V(UsedParameter(p[std::string(Process_::name_V) + "@HME"], *this)),
+                m_B(UsedParameter(p["mass::" + std::string(Process_::name_B) + "@HME"], *this)),
+                m_V(UsedParameter(p["mass::" + std::string(Process_::name_V) + "@HME"], *this)),
                 m_R_0m(UsedParameter(p[resonance_0m_names.at(Process_::partonic_transition)], *this)),
                 m_R_1m(UsedParameter(p[resonance_1m_names.at(Process_::partonic_transition)], *this)),
                 m_R_1p(UsedParameter(p[resonance_1p_names.at(Process_::partonic_transition)], *this)),
@@ -206,8 +206,8 @@ namespace eos
             static const std::map<std::tuple<QuarkFlavor, QuarkFlavor>, std::string> resonance_1m_names;
 
             SSEFormFactorTraits(const Parameters & p) :
-                m_B(UsedParameter(p[std::string(Process_::name_B) + "@HME"], *this)),
-                m_P(UsedParameter(p[std::string(Process_::name_P) + "@HME"], *this)),
+                m_B(UsedParameter(p["mass::" + std::string(Process_::name_B) + "@HME"], *this)),
+                m_P(UsedParameter(p["mass::" + std::string(Process_::name_P) + "@HME"], *this)),
                 m_R_0p(UsedParameter(p[resonance_0p_names.at(Process_::partonic_transition)], *this)),
                 m_R_1m(UsedParameter(p[resonance_1m_names.at(Process_::partonic_transition)], *this)),
                 tp(UsedParameter(p[std::string(Process_::label) + "::tp@SSE"], *this))
@@ -311,8 +311,8 @@ namespace eos
             static const std::map<std::tuple<QuarkFlavor, QuarkFlavor>, std::string> resonance_1p_names;
 
             SSEFormFactorTraits(const Parameters & p) :
-                m_1(UsedParameter(p[std::string(Process_::name_1) + "@HME"], *this)),
-                m_2(UsedParameter(p[std::string(Process_::name_2) + "@HME"], *this)),
+                m_1(UsedParameter(p["mass::" + std::string(Process_::name_1) + "@HME"], *this)),
+                m_2(UsedParameter(p["mass::" + std::string(Process_::name_2) + "@HME"], *this)),
                 m_R_0m(UsedParameter(p[resonance_0m_names.at(Process_::partonic_transition)], *this)),
                 m_R_0p(UsedParameter(p[resonance_0p_names.at(Process_::partonic_transition)], *this)),
                 m_R_1m(UsedParameter(p[resonance_1m_names.at(Process_::partonic_transition)], *this)),

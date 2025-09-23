@@ -37,8 +37,8 @@ namespace eos
     {
             using Transition                                                                = PToP;
             static const constexpr char *                               label               = "B->K";
-            static const constexpr char *                               name_B              = "mass::B_d";
-            static const constexpr char *                               name_P              = "mass::K_d";
+            static const constexpr char *                               name_B              = "B_d";
+            static const constexpr char *                               name_P              = "K_d";
             static const constexpr std::tuple<QuarkFlavor, QuarkFlavor> partonic_transition = std::make_tuple(QuarkFlavor::bottom, QuarkFlavor::strange);
             static const constexpr double                               m_B                 = 5.279;
             static const constexpr double                               m_P                 = 0.492;
@@ -59,8 +59,8 @@ namespace eos
     {
             using Transition                                                                     = PToP;
             static const constexpr char *                               label                    = "B->pi";
-            static const constexpr char *                               name_B                   = "mass::B_d";
-            static const constexpr char *                               name_P                   = "mass::pi^0";
+            static const constexpr char *                               name_B                   = "B_d";
+            static const constexpr char *                               name_P                   = "pi^0";
             static const constexpr std::tuple<QuarkFlavor, QuarkFlavor> partonic_transition      = std::make_tuple(QuarkFlavor::bottom, QuarkFlavor::down);
             static const constexpr double                               m_B                      = 5.279;
             static const constexpr double                               m_P                      = 0.135;
@@ -73,8 +73,8 @@ namespace eos
     {
             using Transition                                                                = PToP;
             static const constexpr char *                               label               = "B->eta";
-            static const constexpr char *                               name_B              = "mass::B_u";
-            static const constexpr char *                               name_P              = "mass::eta";
+            static const constexpr char *                               name_B              = "B_u";
+            static const constexpr char *                               name_P              = "eta";
             static const constexpr std::tuple<QuarkFlavor, QuarkFlavor> partonic_transition = std::make_tuple(QuarkFlavor::bottom, QuarkFlavor::up);
             // Isospin-degeneracy factor
             static constexpr double                                     eta                 = 1.0;
@@ -88,8 +88,8 @@ namespace eos
     {
             using Transition                                                                = PToP;
             static const constexpr char *                               label               = "B->eta_prime";
-            static const constexpr char *                               name_B              = "mass::B_u";
-            static const constexpr char *                               name_P              = "mass::eta_prime";
+            static const constexpr char *                               name_B              = "B_u";
+            static const constexpr char *                               name_P              = "eta_prime";
             static const constexpr std::tuple<QuarkFlavor, QuarkFlavor> partonic_transition = std::make_tuple(QuarkFlavor::bottom, QuarkFlavor::up);
             // Isospin-degeneracy factor
             static constexpr double                                     eta                 = 1.0;
@@ -103,8 +103,8 @@ namespace eos
     {
             using Transition                                                                = PToP;
             static const constexpr char *                               label               = "B_s->eta";
-            static const constexpr char *                               name_B              = "mass::B_s";
-            static const constexpr char *                               name_P              = "mass::eta";
+            static const constexpr char *                               name_B              = "B_s";
+            static const constexpr char *                               name_P              = "eta";
             static const constexpr std::tuple<QuarkFlavor, QuarkFlavor> partonic_transition = std::make_tuple(QuarkFlavor::bottom, QuarkFlavor::strange);
             // Isospin-degeneracy factor
             static constexpr double                                     eta                 = 1.0;
@@ -118,8 +118,8 @@ namespace eos
     {
             using Transition                                                                = PToP;
             static const constexpr char *                               label               = "B_s->eta_prime";
-            static const constexpr char *                               name_B              = "mass::B_s";
-            static const constexpr char *                               name_P              = "mass::eta_prime";
+            static const constexpr char *                               name_B              = "B_s";
+            static const constexpr char *                               name_P              = "eta_prime";
             static const constexpr std::tuple<QuarkFlavor, QuarkFlavor> partonic_transition = std::make_tuple(QuarkFlavor::bottom, QuarkFlavor::strange);
             // Isospin-degeneracy factor
             static constexpr double                                     eta                 = 1.0;
@@ -133,8 +133,8 @@ namespace eos
     {
             using Transition                                                                = PToP;
             static const constexpr char *                               label               = "B_s->K";
-            static const constexpr char *                               name_B              = "mass::B_s";
-            static const constexpr char *                               name_P              = "mass::K_d";
+            static const constexpr char *                               name_B              = "B_s";
+            static const constexpr char *                               name_P              = "K_d";
             static const constexpr std::tuple<QuarkFlavor, QuarkFlavor> partonic_transition = std::make_tuple(QuarkFlavor::bottom, QuarkFlavor::up);
             static const constexpr double                               m_B                 = 5.366;
             static const constexpr double                               m_P                 = 0.494;
@@ -153,8 +153,8 @@ namespace eos
     {
             using Transition                                                                     = PToP;
             static const constexpr char *                               label                    = "B->D";
-            static const constexpr char *                               name_B                   = "mass::B_d";
-            static const constexpr char *                               name_P                   = "mass::D_u";
+            static const constexpr char *                               name_B                   = "B_d";
+            static const constexpr char *                               name_P                   = "D_u";
             static const constexpr std::tuple<QuarkFlavor, QuarkFlavor> partonic_transition      = std::make_tuple(QuarkFlavor::bottom, QuarkFlavor::charm);
             static const constexpr double                               m_B                      = 5.279;
             static const constexpr double                               m_P                      = 1.870;
@@ -169,8 +169,8 @@ namespace eos
     {
             using Transition                                                                     = PToP;
             static const constexpr char *                               label                    = "B_s->D_s";
-            static const constexpr char *                               name_B                   = "mass::B_s";
-            static const constexpr char *                               name_P                   = "mass::D_s";
+            static const constexpr char *                               name_B                   = "B_s";
+            static const constexpr char *                               name_P                   = "D_s";
             static const constexpr std::tuple<QuarkFlavor, QuarkFlavor> partonic_transition      = std::make_tuple(QuarkFlavor::bottom, QuarkFlavor::charm);
             static const constexpr double                               m_B                      = 5.366;
             static const constexpr double                               m_P                      = 1.968;
@@ -186,8 +186,8 @@ namespace eos
     {
             using Transition                                                                     = PToP;
             static const constexpr char *                               label                    = "D->pi";
-            static const constexpr char *                               name_B                   = "mass::D_u";
-            static const constexpr char *                               name_P                   = "mass::pi^0";
+            static const constexpr char *                               name_B                   = "D_u";
+            static const constexpr char *                               name_P                   = "pi^0";
             static const constexpr std::tuple<QuarkFlavor, QuarkFlavor> partonic_transition      = std::make_tuple(QuarkFlavor::charm, QuarkFlavor::up);
             static const constexpr double                               m_B                      = 1.867;
             static const constexpr double                               m_P                      = 0.135;
@@ -200,8 +200,8 @@ namespace eos
     {
             using Transition                                                                     = PToP;
             static const constexpr char *                               label                    = "D->K";
-            static const constexpr char *                               name_B                   = "mass::D_u";
-            static const constexpr char *                               name_P                   = "mass::K_u";
+            static const constexpr char *                               name_B                   = "D_u";
+            static const constexpr char *                               name_P                   = "K_u";
             static const constexpr std::tuple<QuarkFlavor, QuarkFlavor> partonic_transition      = std::make_tuple(QuarkFlavor::charm, QuarkFlavor::strange);
             static const constexpr double                               m_B                      = 1.867;
             static const constexpr double                               m_P                      = 0.492;
@@ -223,8 +223,8 @@ namespace eos
     {
             using Transition                                                                     = PToP;
             static const constexpr char *                               label                    = "D_s->K";
-            static const constexpr char *                               name_B                   = "mass::D_s";
-            static const constexpr char *                               name_P                   = "mass::K_u";
+            static const constexpr char *                               name_B                   = "D_s";
+            static const constexpr char *                               name_P                   = "K_u";
             static const constexpr std::tuple<QuarkFlavor, QuarkFlavor> partonic_transition      = std::make_tuple(QuarkFlavor::charm, QuarkFlavor::up);
             static const constexpr double                               m_B                      = 1.968;
             static const constexpr double                               m_P                      = 0.492;
@@ -237,8 +237,8 @@ namespace eos
     {
             using Transition                                                                = PToP;
             static const constexpr char *                               label               = "D->eta";
-            static const constexpr char *                               name_B              = "mass::D_d";
-            static const constexpr char *                               name_P              = "mass::eta";
+            static const constexpr char *                               name_B              = "D_d";
+            static const constexpr char *                               name_P              = "eta";
             static const constexpr std::tuple<QuarkFlavor, QuarkFlavor> partonic_transition = std::make_tuple(QuarkFlavor::charm, QuarkFlavor::down);
             // Isospin-degeneracy factor
             static constexpr double                                     eta                 = 1.0;
@@ -248,8 +248,8 @@ namespace eos
     {
             using Transition                                                                = PToP;
             static const constexpr char *                               label               = "D->eta_prime";
-            static const constexpr char *                               name_B              = "mass::D_d";
-            static const constexpr char *                               name_P              = "mass::eta_prime";
+            static const constexpr char *                               name_B              = "D_d";
+            static const constexpr char *                               name_P              = "eta_prime";
             static const constexpr std::tuple<QuarkFlavor, QuarkFlavor> partonic_transition = std::make_tuple(QuarkFlavor::charm, QuarkFlavor::down);
             // Isospin-degeneracy factor
             static constexpr double                                     eta                 = 1.0;
@@ -259,8 +259,8 @@ namespace eos
     {
             using Transition                                                                = PToP;
             static const constexpr char *                               label               = "D_s->eta";
-            static const constexpr char *                               name_B              = "mass::D_s";
-            static const constexpr char *                               name_P              = "mass::eta";
+            static const constexpr char *                               name_B              = "D_s";
+            static const constexpr char *                               name_P              = "eta";
             static const constexpr std::tuple<QuarkFlavor, QuarkFlavor> partonic_transition = std::make_tuple(QuarkFlavor::charm, QuarkFlavor::strange);
             // Isospin-degeneracy factor
             static constexpr double                                     eta                 = 1.0;
@@ -274,8 +274,8 @@ namespace eos
     {
             using Transition                                                                = PToP;
             static const constexpr char *                               label               = "D_s->eta_prime";
-            static const constexpr char *                               name_B              = "mass::D_s";
-            static const constexpr char *                               name_P              = "mass::eta_prime";
+            static const constexpr char *                               name_B              = "D_s";
+            static const constexpr char *                               name_P              = "eta_prime";
             static const constexpr std::tuple<QuarkFlavor, QuarkFlavor> partonic_transition = std::make_tuple(QuarkFlavor::charm, QuarkFlavor::strange);
             // Isospin-degeneracy factor
             static constexpr double                                     eta                 = 1.0;
@@ -291,8 +291,8 @@ namespace eos
     {
             using Transition                                                                = PToV;
             static const constexpr char *                               label               = "B->D^*";
-            static const constexpr char *                               name_B              = "mass::B_d";
-            static const constexpr char *                               name_V              = "mass::D_u^*";
+            static const constexpr char *                               name_B              = "B_d";
+            static const constexpr char *                               name_V              = "D_u^*";
             static const constexpr std::tuple<QuarkFlavor, QuarkFlavor> partonic_transition = std::make_tuple(QuarkFlavor::bottom, QuarkFlavor::charm);
             static constexpr double                                     m_B                 = 5.279;
             static constexpr double                                     m_V                 = 2.0103;
@@ -307,8 +307,8 @@ namespace eos
     {
             using Transition                                                                = PToV;
             static const constexpr char *                               label               = "B_s->D_s^*";
-            static const constexpr char *                               name_B              = "mass::B_s";
-            static const constexpr char *                               name_V              = "mass::D_s^*";
+            static const constexpr char *                               name_B              = "B_s";
+            static const constexpr char *                               name_V              = "D_s^*";
             static const constexpr std::tuple<QuarkFlavor, QuarkFlavor> partonic_transition = std::make_tuple(QuarkFlavor::bottom, QuarkFlavor::charm);
             static constexpr double                                     m_B                 = 5.366;
             static constexpr double                                     m_V                 = 2.1121;
@@ -323,8 +323,8 @@ namespace eos
     {
             using Transition                                                                = PToV;
             static const constexpr char *                               label               = "B->K^*";
-            static const constexpr char *                               name_B              = "mass::B_d";
-            static const constexpr char *                               name_V              = "mass::K_d^*";
+            static const constexpr char *                               name_B              = "B_d";
+            static const constexpr char *                               name_V              = "K_d^*";
             static const constexpr std::tuple<QuarkFlavor, QuarkFlavor> partonic_transition = std::make_tuple(QuarkFlavor::bottom, QuarkFlavor::strange);
             static constexpr double                                     m_B                 = 5.279;
             static constexpr double                                     m_V                 = 0.896;
@@ -352,8 +352,8 @@ namespace eos
     {
             using Transition                                                                = PToV;
             static const constexpr char *                               label               = "B->omega";
-            static const constexpr char *                               name_B              = "mass::B_d";
-            static const constexpr char *                               name_V              = "mass::omega";
+            static const constexpr char *                               name_B              = "B_d";
+            static const constexpr char *                               name_V              = "omega";
             static const constexpr std::tuple<QuarkFlavor, QuarkFlavor> partonic_transition = std::make_tuple(QuarkFlavor::bottom, QuarkFlavor::down);
             static constexpr double                                     m_B                 = 5.279;
             static constexpr double                                     m_V                 = 0.7827;
@@ -366,8 +366,8 @@ namespace eos
     {
             using Transition                                                                = PToV;
             static const constexpr char *                               label               = "B->rho";
-            static const constexpr char *                               name_B              = "mass::B_d";
-            static const constexpr char *                               name_V              = "mass::rho^0";
+            static const constexpr char *                               name_B              = "B_d";
+            static const constexpr char *                               name_V              = "rho^0";
             static const constexpr std::tuple<QuarkFlavor, QuarkFlavor> partonic_transition = std::make_tuple(QuarkFlavor::bottom, QuarkFlavor::down);
             static constexpr double                                     m_B                 = 5.279;
             static constexpr double                                     m_V                 = 0.7751;
@@ -380,8 +380,8 @@ namespace eos
     {
             using Transition                                                                = PToV;
             static const constexpr char *                               label               = "B_c->J/psi";
-            static const constexpr char *                               name_B              = "mass::B_c";
-            static const constexpr char *                               name_V              = "mass::J/psi";
+            static const constexpr char *                               name_B              = "B_c";
+            static const constexpr char *                               name_V              = "J/psi";
             static const constexpr std::tuple<QuarkFlavor, QuarkFlavor> partonic_transition = std::make_tuple(QuarkFlavor::bottom, QuarkFlavor::charm);
     };
 
@@ -389,8 +389,8 @@ namespace eos
     {
             using Transition                                                                = PToV;
             static const constexpr char *                               label               = "B_s->phi";
-            static const constexpr char *                               name_B              = "mass::B_s";
-            static const constexpr char *                               name_V              = "mass::phi";
+            static const constexpr char *                               name_B              = "B_s";
+            static const constexpr char *                               name_V              = "phi";
             static const constexpr std::tuple<QuarkFlavor, QuarkFlavor> partonic_transition = std::make_tuple(QuarkFlavor::bottom, QuarkFlavor::strange);
             static constexpr double                                     m_B                 = 5.366;
             static constexpr double                                     m_V                 = 1.020;
@@ -418,8 +418,8 @@ namespace eos
     {
             using Transition                                                                = PToV;
             static const constexpr char *                               label               = "B_s->K^*";
-            static const constexpr char *                               name_B              = "mass::B_s";
-            static const constexpr char *                               name_V              = "mass::K_d^*";
+            static const constexpr char *                               name_B              = "B_s";
+            static const constexpr char *                               name_V              = "K_d^*";
             static const constexpr std::tuple<QuarkFlavor, QuarkFlavor> partonic_transition = std::make_tuple(QuarkFlavor::bottom, QuarkFlavor::down);
             static constexpr double                                     m_B                 = 5.366;
             static constexpr double                                     m_V                 = 0.896;
@@ -434,9 +434,9 @@ namespace eos
     {
             using Transition                      = PToPP;
             static const constexpr char * label   = "B->pipi";
-            static const constexpr char * name_B  = "mass::B_u";
-            static const constexpr char * name_P1 = "mass::pi^+";
-            static const constexpr char * name_P2 = "mass::pi^+";
+            static const constexpr char * name_B  = "B_u";
+            static const constexpr char * name_P1 = "pi^+";
+            static const constexpr char * name_P2 = "pi^+";
             static constexpr double       m_B     = 5.2795;
             static constexpr double       m_P1    = 0.13957;
             static constexpr double       m_P2    = 0.13957;
@@ -477,8 +477,8 @@ namespace eos
     {
             using Transition                         = VToP;
             static const constexpr char * label      = "B^*->D";
-            static const constexpr char * name_Bst   = "mass::B_d^*";
-            static const constexpr char * name_P     = "mass::D_u";
+            static const constexpr char * name_Bst   = "B_d^*";
+            static const constexpr char * name_P     = "D_u";
             static const constexpr double m_Bc       = 6.2751;
             static const constexpr double mR2_0m     = (m_Bc + 0.000) * (m_Bc + 0.000);
             static const constexpr double mR2_1m     = (m_Bc + 0.056) * (m_Bc + 0.056);
@@ -490,8 +490,8 @@ namespace eos
     {
             using Transition                         = VToP;
             static const constexpr char * label      = "B_s^*->D_s";
-            static const constexpr char * name_Bst   = "mass::B_s^*";
-            static const constexpr char * name_P     = "mass::D_s";
+            static const constexpr char * name_Bst   = "B_s^*";
+            static const constexpr char * name_P     = "D_s";
             static const constexpr double m_B        = 5.324;
             static const constexpr double m_P        = 1.968;
             static const constexpr double m_Bc       = 6.2751;
@@ -507,8 +507,8 @@ namespace eos
     {
             using Transition                         = VToV;
             static const constexpr char * label      = "B^*->D^*";
-            static const constexpr char * name_Bst   = "mass::B_d^*";
-            static const constexpr char * name_V     = "mass::D_u^*";
+            static const constexpr char * name_Bst   = "B_d^*";
+            static const constexpr char * name_V     = "D_u^*";
             static const constexpr double m_V1       = 5.324;
             static const constexpr double m_V2       = 2.010;
             static const constexpr double m_Bc       = 6.2751;
@@ -522,8 +522,8 @@ namespace eos
     {
             using Transition                         = VToV;
             static const constexpr char * label      = "B_s^*->D_s^*";
-            static const constexpr char * name_Bst   = "mass::B_s^*";
-            static const constexpr char * name_P     = "mass::D_s";
+            static const constexpr char * name_Bst   = "B_s^*";
+            static const constexpr char * name_P     = "D_s";
             static const constexpr double m_B        = 5.324;
             static const constexpr double m_V        = 2.010;
             static const constexpr double m_Bc       = 6.2751;
