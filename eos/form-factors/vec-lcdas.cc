@@ -30,6 +30,56 @@ namespace eos
     {
     }
 
+    double
+    VectorLCDAs::Barphi2para(const double &, const double &) const
+    {
+        throw InternalError("Not implemented!");
+        return 0.0;
+    }
+    double
+    VectorLCDAs::Barphi2perp(const double &, const double &) const
+    {
+        throw InternalError("Not implemented!");
+        return 0.0;
+    }
+    double
+    VectorLCDAs::BarBarphi2para(const double &, const double &) const
+    {
+        throw InternalError("Not implemented!");
+        return 0.0;
+    }
+    double
+    VectorLCDAs::BarBarphi2perp(const double &, const double &) const
+    {
+        throw InternalError("Not implemented!");
+        return 0.0;
+    }
+    double
+    VectorLCDAs::phi4paraprime(const double &, const double &) const
+    {
+        throw InternalError("Not implemented!");
+        return 0.0;
+    }
+    double
+    VectorLCDAs::psi4paraprime(const double &, const double &) const
+    {
+        throw InternalError("Not implemented!");
+        return 0.0;
+    }
+    double
+    VectorLCDAs::phi4perpprime(const double &, const double &) const
+    {
+        throw InternalError("Not implemented!");
+        return 0.0;
+    }
+    double
+    VectorLCDAs::psi4perpprime(const double &, const double &) const
+    {
+        throw InternalError("Not implemented!");
+        return 0.0;
+    }
+
+
     std::shared_ptr<VectorLCDAs>
     VectorLCDAs::make(const std::string & name, const Parameters & parameters, const Options & options)
     {

@@ -74,6 +74,12 @@ namespace eos
             /* Twist 2 LCDAs */
             double phi2para(const double & u, const double & mu) const override;
             double phi2perp(const double & u, const double & mu) const override;
+            // Integrals of the above between 0 and u
+            double Barphi2para(const double & u, const double & mu) const override;
+            double Barphi2perp(const double & u, const double & mu) const override;
+            // Integrals of the above between 0 and u
+            double BarBarphi2para(const double & u, const double & mu) const override;
+            double BarBarphi2perp(const double & u, const double & mu) const override;
 
             /* Twist 3 two particle LCDAs */
             virtual double phi3para(const double & u, const double & mu) const override;
@@ -109,10 +115,16 @@ namespace eos
             /* Twist 4 chiral even two particle LCDAs */
             double psi4para(const double & u, const double & mu) const override;
             double phi4para(const double & u, const double & mu) const override;
+            // Derivative of the above with respect to u
+            double psi4paraprime(const double & u, const double & mu) const override;
+            double phi4paraprime(const double & u, const double & mu) const override;
 
             /* Twist 4 chiral odd two particle LCDAs */
             double psi4perp(const double & /*u*/, const double & /*mu*/) const override { return 0.0; }
             double phi4perp(const double & /*u*/, const double & /*mu*/) const override { return 0.0; }
+            // Derivative of the above with respect to u
+            double psi4perpprime(const double & /*u*/, const double & /*mu*/) const override { return 0.0; }
+            double phi4perpprime(const double & /*u*/, const double & /*mu*/) const override { return 0.0; }
 
             /* Twist 5 chiral odd two particle LCDAs */
             double psi5perp(const double & /*u*/, const double & /*mu*/) const override { return 0.0; }
@@ -168,6 +180,10 @@ namespace eos
             /* Twist 2 LCDAs */
             double phi2para(const double & u, const double & mu) const override;
             double phi2perp(const double & u, const double & mu) const override;
+            double Barphi2para(const double & u, const double & mu) const override;
+            double Barphi2perp(const double & u, const double & mu) const override;
+            double BarBarphi2para(const double & u, const double & mu) const override;
+            double BarBarphi2perp(const double & u, const double & mu) const override;
 
             /* Twist 3 two particle LCDAs */
             virtual double phi3para(const double & u, const double & mu) const override;
@@ -203,10 +219,16 @@ namespace eos
             /* Twist 4 chiral even two particle LCDAs */
             double psi4para(const double & u, const double & mu) const override;
             double phi4para(const double & u, const double & mu) const override;
+            // Derivative of the above with respect to u
+            double psi4paraprime(const double & u, const double & mu) const override;
+            double phi4paraprime(const double & u, const double & mu) const override;
 
             /* Twist 4 chiral odd two particle LCDAs */
             double psi4perp(const double & /*u*/, const double & /*mu*/) const override { return 0.0; }
             double phi4perp(const double & /*u*/, const double & /*mu*/) const override { return 0.0; }
+            // Derivative of the above with respect to u
+            double psi4perpprime(const double & /*u*/, const double & /*mu*/) const override { return 0.0; }
+            double phi4perpprime(const double & /*u*/, const double & /*mu*/) const override { return 0.0; }
 
             /* Twist 5 chiral odd two particle LCDAs */
             double psi5perp(const double & /*u*/, const double & /*mu*/) const override { return 0.0; }

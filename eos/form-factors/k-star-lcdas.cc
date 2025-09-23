@@ -612,6 +612,7 @@ namespace eos
                 a2perp(mu) / 2.0 * x * (5.0 * x * x - 3.0) + 5.0 / 2.0 * kappa3perp(mu) * (3.0 * x * x - 1.0) +
                 5.0 / 6.0 * omega3perp(mu) * x * (5.0 * x * x - 3.0) - 1.0 / 16.0 * lambda3perp(mu) * (35.0 * power_of<4>(x) - 30.0 * x * x + 3.0));
         }
+        // The two following functions differ from [BBL:2007A] eq. (3.29) by a few terms that fix the logarithmic divergences
         inline double phi4paraT4(const double & u, const double & mu) const
         {
             static const GegenbauerPolynomial gp_1_5o2(1, 5.0 / 2.0);
@@ -657,6 +658,49 @@ namespace eos
                 (1.0 / 5.0 * a2perp(mu) - 2.0 / 315.0 - 1.0 / 21.0 * omega3perp(mu)) * c3_3 + 2.0 / 135.0 * lambda3perp(mu) * c4_3) +
                 (ms - mud) / M_V * fperp(mu) / fpara * (4.0 / 3.0 * power_of<2>(1.0 - u) * (5.0 * u * u - 23.0 - 54.0 * a1perp(mu) - 108.0 * a2perp(mu)) * log(1.0 - u) -
                 4.0 / 3.0 * u * u * (5.0 * (1.0 - u) * (1.0 - u) - 23.0 + 54.0 * a1perp(mu) - 108.0 * a2perp(mu)) * log(u));
+        }
+        // Derivative of the above with respect to u
+        inline double psi4paraT4prime(const double & u, const double & mu) const
+        {
+            return 60.0 * (2.0 * theta1para(mu) - theta2para(mu)) * (1.0 - 5.0 * u + 5.0 * u * u) - 40.0 * (-1.0 + 2.0 * u) * zeta4para(mu);
+        }
+        inline double psi4paraWWprime(const double & u, const double & mu) const
+        {
+            const double ms  = model->m_s_msbar(mu);
+            const double mud = model->m_ud_msbar(mu) / 2.0;
+
+            return 18.0 / 5.0 * a1para(mu) + 24.0 * kappa4para(mu) - 4.0 / 5.0 * (27.0 * a1para(mu) + 100.0 * kappa3para(mu) + 80.0 * kappa4para(mu)) * (1.0 + 5.0 * (-1.0 + u) * u) +
+                12.0 * fperp(mu) / fpara / M_V * (ms - mud) * (1.0 + 6.0 * a2perp(mu) - 15.0 * kappa3perp(mu) + 5.0 * lambda3perp(mu) + 10.0 * omega3perp(mu) + a1perp(mu) * (-3.0 + 6.0 * u) +
+                5.0 * u * (6.0 * kappa3perp(mu) + 6.0 * a2perp(mu) * (-1.0 + u) + 10.0 * omega3perp(mu) * (-1.0 + u) + lambda3perp(mu) * (-9.0 + 7.0 * (3.0 - 2.0 * u) * u))) -
+                5.0 / 28.0 * (-1.0 + 2.0 * u) * (1.0 + 7.0 * (-1.0 + u) * u) * (108.0 * a2para(mu) + 35.0 * (6.0 * omega3para(mu) + 3.0 * omega3paratilde(mu) - 4.0 * zeta3para(mu))) -
+                2.0 / 7.0 * (-1.0 + 2.0 * u) * (21.0 + 6.0 * a2para(mu) - 280.0 * zeta3para(mu));
+        }
+        inline double phi4paraT4prime(const double & u, const double & mu) const
+        {
+            return 40.0 / 3.0 * (3.0 * (1.0 - u) * (1.0 - u) * (63.0 * omega4paratilde(mu) * u * u + psi2para(mu) * (4.0 + 8.0 * u)) * log(1.0 - u) +
+                u * ((-1.0 + u) * (-12.0 * theta1para(mu) + 15.0 * theta2para(mu) + 60.0 * theta1para(mu) * u - 75.0 * theta2para(mu) * u - 60.0 * theta1para(mu) * u * u +
+                75.0 * theta2para(mu) * u * u - 63.0 * omega4paratilde(mu) * (-1.0 + 2.0 * u) + 6.0 * psi2para(mu) * (-2.0 - 15.0 * u + 15.0 * u * u) -
+                10.0 * zeta4para(mu) + 20.0 * u * zeta4para(mu)) - 3.0 * u * (63.0 * omega4paratilde(mu) * (1.0 - u) * (1.0 - u) + 4.0 * psi2para(mu) * (-3 + 2*u)) * log(u)));
+        }
+        inline double phi4paraWWprime(const double & u, const double & mu) const
+        {
+            const double ms  = model->m_s_msbar(mu);
+            const double mud = model->m_ud_msbar(mu) / 2.0;
+
+            return 1.0 / 6.0 / fpara / M_V * (8.0 * fperp(mu) * (mud * u * (-3.0 * (31.0 + 156.0 * a2perp(mu) - 60.0 * kappa3perp(mu) + 6.0 * lambda3perp(mu) + 20.0 * omega3perp(mu)) +
+                55.0 * u + 18.0 * a1perp(mu) * (-10.0 + 3.0 * u * (-1.0 + 4.0 * u)) + u * (90.0 * (-3.0 * kappa3perp(mu) + lambda3perp(mu) + 2.0 * omega3perp(mu)) +
+                40.0 * u - 5.0 * (4.0 + 63.0 * lambda3perp(mu) + 30.0 * omega3perp(mu)) * u * u + 252.0 * lambda3perp(mu) * power_of<3>(u) + 90.0 * a2perp(mu) * (6.0 + u * (-8.0 + 7.0 * u)))) -
+                ms * (-1.0 + u) * (18.0 - 90.0 * kappa3perp(mu) + 9.0 * lambda3perp(mu) + 30.0 * omega3perp(mu) + 75.0 * u + 18.0 * a1perp(mu) * (-1.0 + 3.0 * u * (-7.0 + 4.0 * u)) +
+                18.0 * a2perp(mu) * (1.0 + 5.0 * u * (11.0 + u * (-13.0 + 7.0 * u))) + u * (270.0 * kappa3perp(mu) - 20.0 * (-1.0 + u) * u - 30.0 * omega3perp(mu) * (9.0 + 5.0 * (-3.0 + u) * u) +
+                9.0 * lambda3perp(mu) * (-17.0 + 7.0 * u * (9.0 + u * (-11.0 + 4.0 * u)))))) + fpara * M_V * (-1.0 + u) * u * (3360.0 * kappa3para(mu) + 120.0 * a1para(mu) * (3.0 + 20.0 * (-1.0 + u) * u) +
+                36.0 * a2para(mu) * (-1.0 + 2.0 * u) * (13.0 + 135.0 * (-1.0 + u) * u) + 9.0 * (-32.0 - 40.0 * lambda3para(mu) + 80.0 * lambda3paratilde(mu) - 110.0 * omega3para(mu) +
+                45.0 * omega3paratilde(mu) + 64.0 * u + 20.0 * zeta3para(mu)) + 5.0 * u * (1760.0 * kappa3para(mu) * (-1.0 + u) + 3.0 * (426.0 * omega3para(mu) - 243.0 * omega3paratilde(mu) -
+                120.0 * lambda3para(mu) * (-1.0 + u) + 240.0 * lambda3paratilde(mu) * (-1.0 + u) + 4.0 * zeta3para(mu) + 7.0 * u * (-3.0 + 2.0 * u) * (42.0 * omega3para(mu) - 27.0 * omega3paratilde(mu) +
+                4.0 * zeta3para(mu))))) + 8.0 * (-1.0 + u) * (6.0 * a1para(mu) * fpara * M_V * (-1.0 + u) * (1.0 + 2.0 * u) + 2.0 * fperp(mu) * (5.0 * ms * (-1.0 + u) * (1.0 + 2.0 * u) +
+                mud * (41.0 + 108.0 * a1perp(mu) + 216 * a2perp(mu) + 5.0 * (1.0 - 2.0 * u) * u)) + 5.0 * fpara * M_V * (-1.0 + u) * (-16.0 * kappa3para(mu) * (1.0 + 2.0 * u) +
+                3.0 * u * u * (6.0 * a2para(mu) - 9.0 * omega3para(mu) + 14.0 * zeta3para(mu)))) * log(1.0 - u) - 8.0 * u * (72.0 * (-1.0 + 3.0 * a1perp(mu) - 6.0 * a2perp(mu)) * fperp(mu) * ms +
+                30.0 * fperp(mu) * (-ms + mud) * u + 20.0 * fperp(mu) * (ms - mud) * u * u + fpara * M_V * u * (80.0 * kappa3para(mu) * (3.0 - 2.0 * u) + 90.0 * a2para(mu) * (-1.0 + u) * (-1.0 + u) +
+                6.0 * a1para(mu) * (-3.0 + 2.0 * u) - 15.0 * (-1 + u) * (-1 + u) * (9.0 * omega3para(mu) - 14.0 * zeta3para(mu)))) * log(u));
         }
     };
 
@@ -844,6 +888,30 @@ namespace eos
     }
 
     double
+    AntiKStarLCDAs::Barphi2para(const double & u, const double & mu) const
+    {
+        const double c0 = 3.0 - 2.0 * u;
+        const double c1 = - 9.0 * power_of<2>(u - 1.0);
+        const double c2 = -18.0 * power_of<2>(u - 1.0) * (2.0 * u - 1.0);
+        const double c3 = -10.0 * power_of<2>(u - 1.0) * (3.0 + 14.0 * u * (u - 1.0));
+        const double c4 = -45.0 * power_of<2>(u - 1.0) * (2.0 * u - 1.0) * (1.0 + 6.0 * u * (u - 1.0));
+
+        return u * u * (c0 + _imp->a1para(mu) * c1 + _imp->a2para(mu) * c2 + _imp->a3para(mu) * c3 + _imp->a4para(mu) * c4);
+    }
+
+    double
+    AntiKStarLCDAs::BarBarphi2para(const double & u, const double & mu) const
+    {
+        const double c0 = - 5.0 * (u - 2.0);
+        const double c1 = - 30.0 + 9.0 * u * (5.0 - 2.0 * u);
+        const double c2 = - 60.0 * power_of<3>(u - 1.0);
+        const double c3 = -100.0 * power_of<3>(u - 1.0) * (2.0 * u - 1.0);
+        const double c4 = - 75.0 * power_of<3>(u - 1.0) * (2.0 + 9.0 * u * (u - 1.0));
+
+        return power_of<3>(u) / 10.0 * (c0 + _imp->a1para(mu) * c1 + _imp->a2para(mu) * c2 + _imp->a3para(mu) * c3 + _imp->a4para(mu) * c4);
+    }
+
+    double
     AntiKStarLCDAs::phi2perp(const double & u, const double & mu) const
     {
          // Gegenbauer polynomials C_n^(3/2)
@@ -859,6 +927,30 @@ namespace eos
         const double c4 = gp_4.evaluate(x);
 
         return 6.0 * u * (1.0 - u) * (1.0 + _imp->a1perp(mu) * c1 + _imp->a2perp(mu) * c2 + _imp->a3perp(mu) * c3 + _imp->a4perp(mu) * c4);
+    }
+
+    double
+    AntiKStarLCDAs::Barphi2perp(const double & u, const double & mu) const
+    {
+        const double c0 = 3.0 - 2.0 * u;
+        const double c1 = - 9.0 * power_of<2>(u - 1.0);
+        const double c2 = -18.0 * power_of<2>(u - 1.0) * (2.0 * u - 1.0);
+        const double c3 = -10.0 * power_of<2>(u - 1.0) * (3.0 + 14.0 * u * (u - 1.0));
+        const double c4 = -45.0 * power_of<2>(u - 1.0) * (2.0 * u - 1.0) * (1.0 + 6.0 * u * (u - 1.0));
+
+        return u * u * (c0 + _imp->a1perp(mu) * c1 + _imp->a2perp(mu) * c2 + _imp->a3perp(mu) * c3 + _imp->a4perp(mu) * c4);
+    }
+
+    double
+    AntiKStarLCDAs::BarBarphi2perp(const double & u, const double & mu) const
+    {
+        const double c0 = - 5.0 * (u - 2.0);
+        const double c1 = - 30.0 + 9.0 * u * (5.0 - 2.0 * u);
+        const double c2 = - 60.0 * power_of<3>(u - 1.0);
+        const double c3 = -100.0 * power_of<3>(u - 1.0) * (2.0 * u - 1.0);
+        const double c4 = - 75.0 * power_of<3>(u - 1.0) * (2.0 + 9.0 * u * (u - 1.0));
+
+        return power_of<3>(u) / 10.0 * (c0 + _imp->a1perp(mu) * c1 + _imp->a2perp(mu) * c2 + _imp->a3perp(mu) * c3 + _imp->a4perp(mu) * c4);
     }
 
     double
@@ -1007,6 +1099,18 @@ namespace eos
     AntiKStarLCDAs::phi4para(const double & u, const double & mu) const
     {
         return _imp->phi4paraT4(u, mu) + _imp->phi4paraWW(u, mu);
+    }
+
+    double
+    AntiKStarLCDAs::psi4paraprime(const double & u, const double & mu) const
+    {
+        return _imp->psi4paraT4prime(u, mu) + _imp->psi4paraWWprime(u, mu);
+    }
+
+    double
+    AntiKStarLCDAs::phi4paraprime(const double & u, const double & mu) const
+    {
+        return _imp->phi4paraT4prime(u, mu) + _imp->phi4paraWWprime(u, mu);
     }
 
     Diagnostics
@@ -1611,6 +1715,7 @@ namespace eos
                 a2perp(mu) / 2.0 * x * (5.0 * x * x - 3.0) + 5.0 / 2.0 * kappa3perp(mu) * (3.0 * x * x - 1.0) +
                 5.0 / 6.0 * omega3perp(mu) * x * (5.0 * x * x - 3.0) - 1.0 / 16.0 * lambda3perp(mu) * (35.0 * power_of<4>(x) - 30.0 * x * x + 3.0));
         }
+        // The two following functions differ from [BBL:2007A] eq. (3.29) by a few terms that fix the logarithmic divergences
         inline double phi4paraT4(const double & u, const double & mu) const
         {
             static const GegenbauerPolynomial gp_1_5o2(1, 5.0 / 2.0);
@@ -1656,6 +1761,49 @@ namespace eos
                 (1.0 / 5.0 * a2perp(mu) - 2.0 / 315.0 - 1.0 / 21.0 * omega3perp(mu)) * c3_3 + 2.0 / 135.0 * lambda3perp(mu) * c4_3) +
                 (-1.0) * (ms - mud) / M_V * fperp(mu) / fpara * (4.0 / 3.0 * power_of<2>(1.0 - u) * (5.0 * u * u - 23.0 - 54.0 * a1perp(mu) - 108.0 * a2perp(mu)) * log(1.0 - u) -
                 4.0 / 3.0 * u * u * (5.0 * (1.0 - u) * (1.0 - u) - 23.0 + 54.0 * a1perp(mu) - 108.0 * a2perp(mu)) * log(u));
+        }
+        // Derivative of the above with respect to u
+        inline double psi4paraT4prime(const double & u, const double & mu) const
+        {
+            return 60.0 * (2.0 * theta1para(mu) - theta2para(mu)) * (1.0 - 5.0 * u + 5.0 * u * u) - 40.0 * (-1.0 + 2.0 * u) * zeta4para(mu);
+        }
+        inline double psi4paraWWprime(const double & u, const double & mu) const
+        {
+            const double ms  = model->m_s_msbar(mu);
+            const double mud = model->m_ud_msbar(mu) / 2.0;
+
+            return 18.0 / 5.0 * a1para(mu) + 24.0 * kappa4para(mu) - 4.0 / 5.0 * (27.0 * a1para(mu) + 100.0 * kappa3para(mu) + 80.0 * kappa4para(mu)) * (1.0 + 5.0 * (-1.0 + u) * u) +
+                12.0 * fperp(mu) / fpara * (-1.0) * (ms - mud) / M_V * (1.0 + 6.0 * a2perp(mu) - 15.0 * kappa3perp(mu) + 5.0 * lambda3perp(mu) + 10.0 * omega3perp(mu) + a1perp(mu) * (-3.0 + 6.0 * u) +
+                5.0 * u * (6.0 * kappa3perp(mu) + 6.0 * a2perp(mu) * (-1.0 + u) + 10.0 * omega3perp(mu) * (-1.0 + u) + lambda3perp(mu) * (-9.0 + 7.0 * (3.0 - 2.0 * u) * u))) -
+                5.0 / 28.0 * (-1.0 + 2.0 * u) * (1.0 + 7.0 * (-1.0 + u) * u) * (108.0 * a2para(mu) + 35.0 * (6.0 * omega3para(mu) + 3.0 * omega3paratilde(mu) - 4.0 * zeta3para(mu))) -
+                2.0 / 7.0 * (-1.0 + 2.0 * u) * (21.0 + 6.0 * a2para(mu) - 280.0 * zeta3para(mu));
+        }
+        inline double phi4paraT4prime(const double & u, const double & mu) const
+        {
+            return 40.0 / 3.0 * (3.0 * (1.0 - u) * (1.0 - u) * (63.0 * omega4paratilde(mu) * u * u + psi2para(mu) * (4.0 + 8.0 * u)) * log(1.0 - u) +
+                u * ((-1.0 + u) * (-12.0 * theta1para(mu) + 15.0 * theta2para(mu) + 60.0 * theta1para(mu) * u - 75.0 * theta2para(mu) * u - 60.0 * theta1para(mu) * u * u +
+                75.0 * theta2para(mu) * u * u - 63.0 * omega4paratilde(mu) * (-1.0 + 2.0 * u) + 6.0 * psi2para(mu) * (-2.0 - 15.0 * u + 15.0 * u * u) -
+                10.0 * zeta4para(mu) + 20.0 * u * zeta4para(mu)) - 3.0 * u * (63.0 * omega4paratilde(mu) * (1.0 - u) * (1.0 - u) + 4.0 * psi2para(mu) * (-3 + 2*u)) * log(u)));
+        }
+        inline double phi4paraWWprime(const double & u, const double & mu) const
+        {
+            const double ms  = model->m_s_msbar(mu);
+            const double mud = model->m_ud_msbar(mu) / 2.0;
+
+            return 1.0 / 6.0 / fpara / M_V * (8.0 * fperp(mu) * (mud * u * (-3.0 * (31.0 + 156.0 * a2perp(mu) - 60.0 * kappa3perp(mu) + 6.0 * lambda3perp(mu) + 20.0 * omega3perp(mu)) +
+                55.0 * u + 18.0 * a1perp(mu) * (-10.0 + 3.0 * u * (-1.0 + 4.0 * u)) + u * (90.0 * (-3.0 * kappa3perp(mu) + lambda3perp(mu) + 2.0 * omega3perp(mu)) +
+                40.0 * u - 5.0 * (4.0 + 63.0 * lambda3perp(mu) + 30.0 * omega3perp(mu)) * u * u + 252.0 * lambda3perp(mu) * power_of<3>(u) + 90.0 * a2perp(mu) * (6.0 + u * (-8.0 + 7.0 * u)))) -
+                ms * (-1.0 + u) * (18.0 - 90.0 * kappa3perp(mu) + 9.0 * lambda3perp(mu) + 30.0 * omega3perp(mu) + 75.0 * u + 18.0 * a1perp(mu) * (-1.0 + 3.0 * u * (-7.0 + 4.0 * u)) +
+                18.0 * a2perp(mu) * (1.0 + 5.0 * u * (11.0 + u * (-13.0 + 7.0 * u))) + u * (270.0 * kappa3perp(mu) - 20.0 * (-1.0 + u) * u - 30.0 * omega3perp(mu) * (9.0 + 5.0 * (-3.0 + u) * u) +
+                9.0 * lambda3perp(mu) * (-17.0 + 7.0 * u * (9.0 + u * (-11.0 + 4.0 * u)))))) + fpara * M_V * (-1.0 + u) * u * (3360.0 * kappa3para(mu) + 120.0 * a1para(mu) * (3.0 + 20.0 * (-1.0 + u) * u) +
+                36.0 * a2para(mu) * (-1.0 + 2.0 * u) * (13.0 + 135.0 * (-1.0 + u) * u) + 9.0 * (-32.0 - 40.0 * lambda3para(mu) + 80.0 * lambda3paratilde(mu) - 110.0 * omega3para(mu) +
+                45.0 * omega3paratilde(mu) + 64.0 * u + 20.0 * zeta3para(mu)) + 5.0 * u * (1760.0 * kappa3para(mu) * (-1.0 + u) + 3.0 * (426.0 * omega3para(mu) - 243.0 * omega3paratilde(mu) -
+                120.0 * lambda3para(mu) * (-1.0 + u) + 240.0 * lambda3paratilde(mu) * (-1.0 + u) + 4.0 * zeta3para(mu) + 7.0 * u * (-3.0 + 2.0 * u) * (42.0 * omega3para(mu) - 27.0 * omega3paratilde(mu) +
+                4.0 * zeta3para(mu))))) + 8.0 * (-1.0 + u) * (6.0 * a1para(mu) * fpara * M_V * (-1.0 + u) * (1.0 + 2.0 * u) + 2.0 * fperp(mu) * (5.0 * ms * (-1.0 + u) * (1.0 + 2.0 * u) +
+                mud * (41.0 + 108.0 * a1perp(mu) + 216 * a2perp(mu) + 5.0 * (1.0 - 2.0 * u) * u)) + 5.0 * fpara * M_V * (-1.0 + u) * (-16.0 * kappa3para(mu) * (1.0 + 2.0 * u) +
+                3.0 * u * u * (6.0 * a2para(mu) - 9.0 * omega3para(mu) + 14.0 * zeta3para(mu)))) * log(1.0 - u) - 8.0 * u * (72.0 * (-1.0 + 3.0 * a1perp(mu) - 6.0 * a2perp(mu)) * fperp(mu) * ms +
+                30.0 * fperp(mu) * (-1.0) * (-ms + mud) * u + 20.0 * fperp(mu) * (-1.0) * (ms - mud) * u * u + fpara * M_V * u * (80.0 * kappa3para(mu) * (3.0 - 2.0 * u) + 90.0 * a2para(mu) * (-1.0 + u) * (-1.0 + u) +
+                6.0 * a1para(mu) * (-3.0 + 2.0 * u) - 15.0 * (-1 + u) * (-1 + u) * (9.0 * omega3para(mu) - 14.0 * zeta3para(mu)))) * log(u));
         }
     };
 
@@ -1843,6 +1991,30 @@ namespace eos
     }
 
     double
+    KStarLCDAs::Barphi2para(const double & u, const double & mu) const
+    {
+        const double c0 = 3.0 - 2.0 * u;
+        const double c1 = - 9.0 * power_of<2>(u - 1.0);
+        const double c2 = -18.0 * power_of<2>(u - 1.0) * (2.0 * u - 1.0);
+        const double c3 = -10.0 * power_of<2>(u - 1.0) * (3.0 + 14.0 * u * (u - 1.0));
+        const double c4 = -45.0 * power_of<2>(u - 1.0) * (2.0 * u - 1.0) * (1.0 + 6.0 * u * (u - 1.0));
+
+        return u * u * (c0 + _imp->a1para(mu) * c1 + _imp->a2para(mu) * c2 + _imp->a3para(mu) * c3 + _imp->a4para(mu) * c4);
+    }
+
+    double
+    KStarLCDAs::BarBarphi2para(const double & u, const double & mu) const
+    {
+        const double c0 = - 5.0 * (u - 2.0);
+        const double c1 = - 30.0 + 9.0 * u * (5.0 - 2.0 * u);
+        const double c2 = - 60.0 * power_of<3>(u - 1.0);
+        const double c3 = -100.0 * power_of<3>(u - 1.0) * (2.0 * u - 1.0);
+        const double c4 = - 75.0 * power_of<3>(u - 1.0) * (2.0 + 9.0 * u * (u - 1.0));
+
+        return power_of<3>(u) / 10.0 * (c0 + _imp->a1para(mu) * c1 + _imp->a2para(mu) * c2 + _imp->a3para(mu) * c3 + _imp->a4para(mu) * c4);
+    }
+
+    double
     KStarLCDAs::phi2perp(const double & u, const double & mu) const
     {
          // Gegenbauer polynomials C_n^(3/2)
@@ -1858,6 +2030,30 @@ namespace eos
         const double c4 = gp_4.evaluate(x);
 
         return 6.0 * u * (1.0 - u) * (1.0 + _imp->a1perp(mu) * c1 + _imp->a2perp(mu) * c2 + _imp->a3perp(mu) * c3 + _imp->a4perp(mu) * c4);
+    }
+
+    double
+    KStarLCDAs::Barphi2perp(const double & u, const double & mu) const
+    {
+        const double c0 = 3.0 - 2.0 * u;
+        const double c1 = - 9.0 * power_of<2>(u - 1.0);
+        const double c2 = -18.0 * power_of<2>(u - 1.0) * (2.0 * u - 1.0);
+        const double c3 = -10.0 * power_of<2>(u - 1.0) * (3.0 + 14.0 * u * (u - 1.0));
+        const double c4 = -45.0 * power_of<2>(u - 1.0) * (2.0 * u - 1.0) * (1.0 + 6.0 * u * (u - 1.0));
+
+        return u * u * (c0 + _imp->a1perp(mu) * c1 + _imp->a2perp(mu) * c2 + _imp->a3perp(mu) * c3 + _imp->a4perp(mu) * c4);
+    }
+
+    double
+    KStarLCDAs::BarBarphi2perp(const double & u, const double & mu) const
+    {
+        const double c0 = - 5.0 * (u - 2.0);
+        const double c1 = - 30.0 + 9.0 * u * (5.0 - 2.0 * u);
+        const double c2 = - 60.0 * power_of<3>(u - 1.0);
+        const double c3 = -100.0 * power_of<3>(u - 1.0) * (2.0 * u - 1.0);
+        const double c4 = - 75.0 * power_of<3>(u - 1.0) * (2.0 + 9.0 * u * (u - 1.0));
+
+        return power_of<3>(u) / 10.0 * (c0 + _imp->a1perp(mu) * c1 + _imp->a2perp(mu) * c2 + _imp->a3perp(mu) * c3 + _imp->a4perp(mu) * c4);
     }
 
     double
@@ -2006,6 +2202,18 @@ namespace eos
     KStarLCDAs::phi4para(const double & u, const double & mu) const
     {
         return _imp->phi4paraT4(u, mu) + _imp->phi4paraWW(u, mu);
+    }
+
+    double
+    KStarLCDAs::psi4paraprime(const double & u, const double & mu) const
+    {
+        return _imp->psi4paraT4prime(u, mu) + _imp->psi4paraWWprime(u, mu);
+    }
+
+    double
+    KStarLCDAs::phi4paraprime(const double & u, const double & mu) const
+    {
+        return _imp->phi4paraT4prime(u, mu) + _imp->phi4paraWWprime(u, mu);
     }
 
     Diagnostics

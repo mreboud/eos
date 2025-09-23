@@ -48,6 +48,10 @@ namespace eos
             /* Twist 2 LCDAs */
             virtual double phi2para(const double & u, const double & mu) const = 0;
             virtual double phi2perp(const double & u, const double & mu) const = 0;
+            virtual double Barphi2para(const double & u, const double & mu) const;
+            virtual double Barphi2perp(const double & u, const double & mu) const;
+            virtual double BarBarphi2para(const double & u, const double & mu) const;
+            virtual double BarBarphi2perp(const double & u, const double & mu) const;
 
             /* Twist 3 parameters */
             virtual double kappa3para(const double & mu) const = 0;
@@ -102,10 +106,16 @@ namespace eos
             /* Twist 4 chiral even two particle LCDAs */
             virtual double psi4para(const double & u, const double & mu) const = 0;
             virtual double phi4para(const double & u, const double & mu) const = 0;
+            // Derivative of the above with respect to u
+            virtual double psi4paraprime(const double & u, const double & mu) const;
+            virtual double phi4paraprime(const double & u, const double & mu) const;
 
             /* Twist 4 chiral odd two particle LCDAs */
             virtual double psi4perp(const double & u, const double & mu) const = 0;
             virtual double phi4perp(const double & u, const double & mu) const = 0;
+            // Derivative of the above with respect to u
+            virtual double psi4perpprime(const double & u, const double & mu) const;
+            virtual double phi4perpprime(const double & u, const double & mu) const;
 
             /* Twist 5 chiral odd two particle LCDAs */
             virtual double psi5perp(const double & u, const double & mu) const = 0;
