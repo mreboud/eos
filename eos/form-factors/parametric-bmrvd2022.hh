@@ -50,8 +50,8 @@ namespace eos
             static const std::map<std::tuple<QuarkFlavor, QuarkFlavor>, std::string> resonance_1p_names;
 
             BMRvD2022FormFactorTraits(const Parameters & p) :
-                m_1(UsedParameter(p[std::string(Process_::name_1) + "@BMRvD2022"], *this)),
-                m_2(UsedParameter(p[std::string(Process_::name_2) + "@BMRvD2022"], *this)),
+                m_1(UsedParameter(p["mass::" + std::string(Process_::name_1) + "@BMRvD2022"], *this)),
+                m_2(UsedParameter(p["mass::" + std::string(Process_::name_2) + "@BMRvD2022"], *this)),
                 m_R_0m(UsedParameter(p[resonance_0m_names.at(Process_::partonic_transition)], *this)),
                 m_R_0p(UsedParameter(p[resonance_0p_names.at(Process_::partonic_transition)], *this)),
                 m_R_1m(UsedParameter(p[resonance_1m_names.at(Process_::partonic_transition)], *this)),

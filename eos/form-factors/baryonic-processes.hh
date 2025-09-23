@@ -30,8 +30,8 @@ namespace eos
 
     struct LambdaBToLambda {
         static constexpr const char * label = "Lambda_b->Lambda";
-        static constexpr const char * name_1 = "mass::Lambda_b";
-        static constexpr const char * name_2 = "mass::Lambda";
+        static constexpr const char * name_1 = "Lambda_b";
+        static constexpr const char * name_2 = "Lambda";
         static constexpr const std::tuple<QuarkFlavor, QuarkFlavor> partonic_transition = std::make_tuple(QuarkFlavor::bottom, QuarkFlavor::strange);
         // initial state mass
         static constexpr double m1 = 5.61951;
@@ -57,8 +57,8 @@ namespace eos
 
     struct LambdaCToLambda {
         static constexpr const char * label = "Lambda_c->Lambda";
-        static constexpr const char * name_1 = "mass::Lambda_c";
-        static constexpr const char * name_2 = "mass::Lambda";
+        static constexpr const char * name_1 = "Lambda_c";
+        static constexpr const char * name_2 = "Lambda";
         static constexpr const std::tuple<QuarkFlavor, QuarkFlavor> partonic_transition = std::make_tuple(QuarkFlavor::charm, QuarkFlavor::strange);
         // initial state mass
         static constexpr double m1 = 2.2865;

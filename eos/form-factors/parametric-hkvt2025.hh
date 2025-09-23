@@ -61,9 +61,9 @@ namespace eos
             static const std::map<std::string, unsigned> charge_map;
 
             HKVT2025FormFactorTraits(const Parameters & p) :
-                m_B(UsedParameter(p[std::string(Process_::name_B) + "@HKvT2025"], *this)),
-                m_P1(UsedParameter(p[std::string(Process_::name_P1) + "@HKvT2025"], *this)),
-                m_P2(UsedParameter(p[std::string(Process_::name_P2) + "@HKvT2025"], *this)),
+                m_B(UsedParameter(p["mass::" + std::string(Process_::name_B) + "@HKvT2025"], *this)),
+                m_P1(UsedParameter(p["mass::" + std::string(Process_::name_P1) + "@HKvT2025"], *this)),
+                m_P2(UsedParameter(p["mass::" + std::string(Process_::name_P2) + "@HKvT2025"], *this)),
                 m_R_0m(UsedParameter(p[resonance_0m_names.at(Process_::partonic_transition)], *this)),
                 m_R_1m(UsedParameter(p[resonance_1m_names.at(Process_::partonic_transition)], *this)),
                 m_R_1p(UsedParameter(p[resonance_1p_names.at(Process_::partonic_transition)], *this)),
