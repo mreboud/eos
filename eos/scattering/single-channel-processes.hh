@@ -31,10 +31,10 @@ namespace eos
 
     struct PiPiToPiPi
     {
-            using Transition                                                   = PPToPP;
-            static const constexpr char *                               label  = "pipi->pipi";
-            static const constexpr char *                               name_P = "mass::pi^+";
-            static const constexpr std::array<IsospinRepresentation, 3> iso    = { IsospinRepresentation::zero, IsospinRepresentation::one, IsospinRepresentation::two };
+            using Transition                                     = PPToPP;
+            static const constexpr char *                 label  = "pipi->pipi";
+            static const constexpr char *                 name_P = "mass::pi^+";
+            static const constexpr std::array<Isospin, 3> iso    = { Isospin::zero, Isospin::one, Isospin::two };
     };
 
 } // namespace eos
