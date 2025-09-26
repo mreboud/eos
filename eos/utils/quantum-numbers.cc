@@ -65,16 +65,6 @@ namespace eos
     }
 
     std::ostream &
-    operator<< (std::ostream & os, IsospinRepresentation ir)
-    {
-        static const std::array<std::string, 5u> names{ "0", "1", "2", "1/2", "3/2" };
-
-        os << names[static_cast<unsigned>(ir)];
-
-        return os;
-    }
-
-    std::ostream &
     operator<< (std::ostream & os, LightMeson qf)
     {
         static const std::array<std::string, 10u> names{ "pi^0", "pi^+", "pi^-", "K_d", "Kbar_d", "K_S", "K_u", "Kbar_u", "eta", "eta_prime" };
