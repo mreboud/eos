@@ -93,6 +93,30 @@ class IsospinTest : public TestCase
         }
 } isospin_test;
 
+class TwistTest : public TestCase
+{
+    public:
+        TwistTest() :
+            TestCase("twist_test")
+        {
+        }
+
+        virtual void
+        run() const
+        {
+            TEST_CHECK_EQUAL_STR("", stringify(Twist::none));
+            TEST_CHECK_EQUAL_STR("2", stringify(Twist::two));
+            TEST_CHECK_EQUAL_STR("3", stringify(Twist::three));
+            TEST_CHECK_EQUAL_STR("4", stringify(Twist::four));
+
+            TEST_CHECK_EQUAL_STR("2|3", stringify(Twist::two | Twist::three));
+            TEST_CHECK_EQUAL_STR("3|4", stringify(Twist::three | Twist::four));
+
+            TEST_CHECK_EQUAL(destringify<Twist>("2|3"), Twist::two | Twist::three);
+            TEST_CHECK_EQUAL(destringify<Twist>("3|4"), Twist::three | Twist::four);
+        }
+} twist_test;
+
 class LightMesonTest : public TestCase
 {
     public:

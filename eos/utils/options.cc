@@ -498,6 +498,37 @@ namespace eos
         return _value;
     }
 
+    TwistOption::TwistOption(const Options & options, const std::vector<OptionSpecification> & specifications, const qnp::OptionKey & key) :
+        SpecifiedOption(options, specifications, key),
+        _twist_value(destringify<Twist>(_value))
+    {
+        if (! std::holds_alternative<std::string>(this->_specification.allowed_values))
+        {
+            throw InternalError("TwistOption with key " + _specification.key.str() + " expects only one allowed value");
+        }
+
+        std::string allowed_value = std::get<std::string>(this->_specification.allowed_values);
+
+        if (((_twist_value ^ destringify<Twist>(allowed_value)) & _twist_value) != Twist::none)
+        {
+            throw InvalidOptionValueError(_specification.key, _value, allowed_value);
+        }
+    }
+
+    TwistOption::~TwistOption() = default;
+
+    Twist
+    TwistOption::value() const
+    {
+        return _twist_value;
+    }
+
+    const std::string &
+    TwistOption::str() const
+    {
+        return _value;
+    }
+
     PartialWaveOption::PartialWaveOption(const Options & options, const std::vector<OptionSpecification> & specifications, const qnp::OptionKey & key) :
         SpecifiedOption(options, specifications, key),
         _partial_wave_value(destringify<PartialWave>(_value))

@@ -250,6 +250,19 @@ namespace eos
             const std::string & str() const;
     };
 
+    class TwistOption : public SpecifiedOption
+    {
+        private:
+            Twist _twist_value;
+
+        public:
+            TwistOption(const Options & options, const std::vector<OptionSpecification> & specifications, const qnp::OptionKey & key = "twist"_ok);
+            ~TwistOption();
+
+            Twist               value() const;
+            const std::string & str() const;
+    };
+
     class PartialWaveOption : public SpecifiedOption
     {
         private:

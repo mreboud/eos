@@ -65,6 +65,25 @@ namespace eos
     }
 
     std::ostream &
+    operator<< (std::ostream & os, Twist i)
+    {
+        static const std::array<std::string, 7u> names{ "0", "1", "2", "3", "4", "5", "6" };
+
+        std::vector<std::string> tmp;
+        for (unsigned shift = 0; shift < 7; ++shift)
+        {
+            if (i && static_cast<Twist>(1 << shift))
+            {
+                tmp.push_back(names[shift]);
+            }
+        }
+
+        os << join(tmp.begin(), tmp.end(), "|");
+
+        return os;
+    }
+
+    std::ostream &
     operator<< (std::ostream & os, LightMeson qf)
     {
         static const std::array<std::string, 10u> names{ "pi^0", "pi^+", "pi^-", "K_d", "Kbar_d", "K_S", "K_u", "Kbar_u", "eta", "eta_prime" };

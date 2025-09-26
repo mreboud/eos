@@ -126,6 +126,52 @@ namespace eos
                 }
         };
 
+        template <> struct DoDestringify<Twist>
+        {
+                static Twist
+                destringify(const std::string & input)
+                {
+                    static const std::map<std::string, Twist> twists{
+                        { "0",  Twist::zero },
+                        { "1",   Twist::one },
+                        { "2",   Twist::two },
+                        { "3", Twist::three },
+                        { "4",  Twist::four },
+                        { "5",  Twist::five },
+                        { "6",   Twist::six }
+                    };
+
+                    Twist result = Twist::none;
+
+                    std::string::size_type i = 0, j = input.find('|');
+                    do
+                    {
+                        const auto value = input.substr(i, j - i);
+
+                        const auto k = twists.find(value);
+                        if (twists.cend() == k)
+                        {
+                            throw DestringifyError(std::string("'") + value + "' is not a valid twist value");
+                        }
+
+                        result |= k->second;
+
+                        if (std::string::npos != j)
+                        {
+                            i = j + 1;
+                            j = input.find('|', i);
+                        }
+                        else
+                        {
+                            i = std::string::npos;
+                        }
+                    }
+                    while (std::string::npos != i);
+
+                    return result;
+                }
+        };
+
         template <> struct DoDestringify<PartialWave>
         {
                 static PartialWave

@@ -35,7 +35,6 @@ namespace eos
         muon     = 1,
         tauon    = 2
     };
-
     std::ostream & operator<< (std::ostream & os, LeptonFlavor lf);
 
     enum class QuarkFlavor : uint8_t
@@ -58,6 +57,7 @@ namespace eos
         threehalves = 1 << 3,
         two         = 1 << 4
     };
+    std::ostream & operator<< (std::ostream & os, Isospin i);
 
     inline Isospin
     operator| (Isospin lhs, Isospin rhs)
@@ -107,7 +107,66 @@ namespace eos
         return (lhs & rhs) != Isospin::none;
     }
 
-    std::ostream & operator<< (std::ostream & os, Isospin i);
+    enum class Twist : uint16_t
+    {
+        none  = 0,
+        zero  = 1 << 0,
+        one   = 1 << 1,
+        two   = 1 << 2,
+        three = 1 << 3,
+        four  = 1 << 4,
+        five  = 1 << 5,
+        six   = 1 << 6
+    };
+    std::ostream & operator<< (std::ostream & os, Twist i);
+
+    inline Twist
+    operator| (Twist lhs, Twist rhs)
+    {
+        using T = std::underlying_type_t<Twist>;
+        return static_cast<Twist>(static_cast<T>(lhs) | static_cast<T>(rhs));
+    }
+
+    inline Twist &
+    operator|= (Twist & lhs, Twist rhs)
+    {
+        lhs = lhs | rhs;
+        return lhs;
+    }
+
+    inline Twist
+    operator& (Twist lhs, Twist rhs)
+    {
+        using T = std::underlying_type_t<Twist>;
+        return static_cast<Twist>(static_cast<T>(lhs) & static_cast<T>(rhs));
+    }
+
+    inline Twist &
+    operator&= (Twist & lhs, Twist rhs)
+    {
+        lhs = lhs & rhs;
+        return lhs;
+    }
+
+    inline Twist
+    operator^ (Twist lhs, Twist rhs)
+    {
+        using T = std::underlying_type_t<Twist>;
+        return static_cast<Twist>(static_cast<T>(lhs) ^ static_cast<T>(rhs));
+    }
+
+    inline Twist &
+    operator^= (Twist & lhs, Twist rhs)
+    {
+        lhs = lhs ^ rhs;
+        return lhs;
+    }
+
+    inline bool
+    operator&& (Twist lhs, Twist rhs)
+    {
+        return (lhs & rhs) != Twist::none;
+    }
 
     enum class LightMeson : uint8_t
     {
@@ -122,7 +181,6 @@ namespace eos
         eta     = 8,
         etap    = 9,
     };
-
     std::ostream & operator<< (std::ostream & os, LightMeson qf);
 
     enum class PartialWave : uint8_t
@@ -133,6 +191,7 @@ namespace eos
         D    = 1 << 2,
         F    = 1 << 3
     };
+    std::ostream & operator<< (std::ostream & os, PartialWave i);
 
     inline PartialWave
     operator| (PartialWave lhs, PartialWave rhs)
@@ -181,8 +240,6 @@ namespace eos
     {
         return (lhs & rhs) != PartialWave::none;
     }
-
-    std::ostream & operator<< (std::ostream & os, PartialWave i);
 
 } // namespace eos
 
