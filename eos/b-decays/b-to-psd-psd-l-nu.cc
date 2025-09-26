@@ -68,7 +68,7 @@ namespace eos
 
             UsedParameter m_P1, m_P2;
 
-            const IsospinRepresentation Ip1, Ip2;
+            const Isospin Ip1, Ip2;
 
             BooleanOption opt_cp_conjugate;
 
@@ -89,7 +89,7 @@ namespace eos
 
             // { U, q, I1, I2, C } -> { process, scattering, m_B, m_P1, m_P2, Ip1, Ip2, c_I1, c_I2 }
             static const std::map<std::tuple<QuarkFlavor, QuarkFlavor, std::string, std::string, std::string>,
-                                  std::tuple<std::string, std::string, std::string, std::string, std::string, IsospinRepresentation, IsospinRepresentation>>
+                                  std::tuple<std::string, std::string, std::string, std::string, std::string, Isospin, Isospin>>
                     process_map;
 
             inline std::string
@@ -182,7 +182,7 @@ namespace eos
                 return std::get<4>(p->second);
             }
 
-            inline IsospinRepresentation
+            inline Isospin
             _isospin_label_1() const
             {
                 const QuarkFlavor U  = opt_U.value();
@@ -200,7 +200,7 @@ namespace eos
                 return std::get<5>(p->second);
             }
 
-            inline IsospinRepresentation
+            inline Isospin
             _isospin_label_2() const
             {
                 const QuarkFlavor U  = opt_U.value();
@@ -324,15 +324,15 @@ namespace eos
     };
 
     const std::map<std::tuple<QuarkFlavor, QuarkFlavor, std::string, std::string, std::string>,
-                   std::tuple<std::string, std::string, std::string, std::string, std::string, IsospinRepresentation, IsospinRepresentation>>
+                   std::tuple<std::string, std::string, std::string, std::string, std::string, Isospin, Isospin>>
             Implementation<BToPPLeptonNeutrino>::Implementation::process_map{
                 // Here we already squared them....
                 {   { QuarkFlavor::up, QuarkFlavor::up, "1", "1", "00" },
-                 { "B->pipi", "pipi->pipi", "B_u", "pi^0", "pi^0", IsospinRepresentation::zero, IsospinRepresentation::one } },
+                 { "B->pipi", "pipi->pipi", "B_u", "pi^0", "pi^0", Isospin::zero, Isospin::one } },
                 {   { QuarkFlavor::up, QuarkFlavor::up, "1", "1", "+-" },
-                 { "B->pipi", "pipi->pipi", "B_u", "pi^+", "pi^+", IsospinRepresentation::zero, IsospinRepresentation::one } },
+                 { "B->pipi", "pipi->pipi", "B_u", "pi^+", "pi^+", Isospin::zero, Isospin::one } },
                 { { QuarkFlavor::down, QuarkFlavor::up, "1", "1", "+0" },
-                 { "B->pipi", "pipi->pipi", "B_d", "pi^+", "pi^0", IsospinRepresentation::zero, IsospinRepresentation::one } },
+                 { "B->pipi", "pipi->pipi", "B_d", "pi^+", "pi^0", Isospin::zero, Isospin::one } },
     };
 
     BToPPLeptonNeutrino::BToPPLeptonNeutrino(const Parameters & p, const Options & o) :
