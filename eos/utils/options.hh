@@ -184,13 +184,13 @@ namespace eos
     class IntegerOption : public SpecifiedOption
     {
         private:
-            double _int_value;
+            int _int_value;
 
         public:
             IntegerOption(const Options & options, const std::vector<OptionSpecification> & specifications, const qnp::OptionKey & key);
             ~IntegerOption();
 
-            double              value() const;
+            int                 value() const;
             const std::string & str() const;
     };
 

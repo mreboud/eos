@@ -332,7 +332,7 @@ namespace eos
 
     IntegerOption::~IntegerOption() = default;
 
-    double
+    int
     IntegerOption::value() const
     {
         return _int_value;
