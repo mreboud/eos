@@ -236,7 +236,7 @@ namespace eos
         return QualifiedName(stringify(PiPiToPiPi::label) + "::" + partial_wave + "_" + par_name + "@GMKPRDEY2011");
     }
 
-    complex<double> GMKPRDEY2011ScatteringAmplitudes::scattering_amplitude(const double & s, const unsigned & l, const IsospinRepresentation & i) const
+    complex<double> GMKPRDEY2011ScatteringAmplitudes::scattering_amplitude(const double & s, const unsigned & l, const Isospin & i) const
     {
         if (s <= 4 * _mPi * _mPi)
         {
@@ -245,17 +245,17 @@ namespace eos
 
         const double rho = std::sqrt(1.0 - 4.0 * _mPi * _mPi / s);
 
-        if ((l == 0) && (i == IsospinRepresentation::zero))
+        if ((l == 0) && (i == Isospin::zero))
         {
             double del = _phase_S0(s);
             return std::exp(complex<double>(0, del)) * std::sin(del) / rho;
         }
-        else if ((l == 1) && (i == IsospinRepresentation::one))
+        else if ((l == 1) && (i == Isospin::one))
         {
             double del = _phase_P1(s);
             return std::exp(complex<double>(0, del)) * std::sin(del) / power_of<3>(rho);
         }
-        else if ((l == 2) && (i == IsospinRepresentation::zero))
+        else if ((l == 2) && (i == Isospin::zero))
         {
             double del = _phase_D0(s);
             return std::exp(complex<double>(0, del)) * std::sin(del) / power_of<5>(rho);
@@ -266,18 +266,18 @@ namespace eos
         }
     }
 
-    complex<double> GMKPRDEY2011ScatteringAmplitudes::omnes_factor(const double & s, const unsigned & l, const IsospinRepresentation & i) const
+    complex<double> GMKPRDEY2011ScatteringAmplitudes::omnes_factor(const double & s, const unsigned & l, const Isospin & i) const
     {
-        if ((l == 0) && (i == IsospinRepresentation::zero))
+        if ((l == 0) && (i == Isospin::zero))
         {
             throw InternalError("Current Omnes factor solution strategy does not allow for phases exceeding 2 Pi! Consider implementing coupled-channel treatment!");
             return 0.0;
         }
-        else if ((l == 1) && (i == IsospinRepresentation::one))
+        else if ((l == 1) && (i == Isospin::one))
         {
             return _omnes_P1(s);
         }
-        else if ((l == 2) && (i == IsospinRepresentation::zero))
+        else if ((l == 2) && (i == Isospin::zero))
         {
             return _omnes_D0(s);
         }
@@ -288,9 +288,9 @@ namespace eos
     }
 
     // Simplified isospin-breaking correction following [CHS:2018A]
-    complex<double> GMKPRDEY2011ScatteringAmplitudes::isospin_breaking(const double & s, const unsigned & l, const IsospinRepresentation & i) const
+    complex<double> GMKPRDEY2011ScatteringAmplitudes::isospin_breaking(const double & s, const unsigned & l, const Isospin & i) const
     {
-        if ( (l == 1) || (i == IsospinRepresentation::one) )
+        if ( (l == 1) || (i == Isospin::one) )
         {
             return 1.0 + s * _kappa / (_mOmega * _mOmega - s - complex<double>(0, _mOmega * _GammaOmega));
         }
@@ -301,16 +301,16 @@ namespace eos
     }
 
     // Note: all our omnes factors go like 1/s for large s. Thus we need to take out a factor of (1 - z)^2 which would cause issues with the integration
-    complex<double> GMKPRDEY2011ScatteringAmplitudes::omnes_outer_function(const double & s, const double & sp, const double & s0, const unsigned & npoints, const unsigned & l, const IsospinRepresentation & i) const
+    complex<double> GMKPRDEY2011ScatteringAmplitudes::omnes_outer_function(const double & s, const double & sp, const double & s0, const unsigned & npoints, const unsigned & l, const Isospin & i) const
     {
         // Point to extract asymptotic behaviour at.
         const double sM = 1000000.0;
 
-        if ((l == 0) && (i == IsospinRepresentation::zero))
+        if ((l == 0) && (i == Isospin::zero))
         {
             throw InternalError("Current Omnes factor solution strategy does not allow for phases exceeding 2 Pi! Consider implementing coupled-channel treatment!");
         }
-        else if ((s < sp) && (s0 < sp) && (l == 1) && (i == IsospinRepresentation::one))
+        else if ((s < sp) && (s0 < sp) && (l == 1) && (i == Isospin::one))
         {
             complex<double> zeval = _calc_z(s, sp, s0);
 
@@ -332,7 +332,7 @@ namespace eos
 
             return power_of<2>(zeval - 1.0) * outer(integrand, zeval, npoints);
         }
-        else if ((s < sp) && (s0 < sp) && (l == 2) && (i == IsospinRepresentation::zero))
+        else if ((s < sp) && (s0 < sp) && (l == 2) && (i == Isospin::zero))
         {
             complex<double> zeval = _calc_z(s, sp, s0);
 

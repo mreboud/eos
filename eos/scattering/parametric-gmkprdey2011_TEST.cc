@@ -105,38 +105,38 @@ class GMKPRDEY2011ScatteringAmplitudesTest :
                 };
                 TEST_CHECK_DIAGNOSTICS(diagnostics, reference);
 
-                TEST_CHECK_NEARLY_EQUAL( amp.scattering_amplitude(0.9 , 0 , IsospinRepresentation::zero).real() , -0.449485 ,  eps);
-                TEST_CHECK_NEARLY_EQUAL( amp.scattering_amplitude(0.9 , 0 , IsospinRepresentation::zero).imag() ,  0.790851 ,  eps);
-                TEST_CHECK_NEARLY_EQUAL( amp.scattering_amplitude(0.9 , 1 , IsospinRepresentation::one).real()  , -0.498251 ,  eps);
-                TEST_CHECK_NEARLY_EQUAL( amp.scattering_amplitude(0.9 , 1 , IsospinRepresentation::one).imag()  ,  0.290285 ,  eps);
-                TEST_CHECK_NEARLY_EQUAL( amp.scattering_amplitude(0.9 , 2 , IsospinRepresentation::zero).real() ,  0.215659 ,  eps);
-                TEST_CHECK_NEARLY_EQUAL( amp.scattering_amplitude(0.9 , 2 , IsospinRepresentation::zero).imag() ,  0.038253 ,  eps);
+                TEST_CHECK_NEARLY_EQUAL( amp.scattering_amplitude(0.9 , 0 , Isospin::zero).real() , -0.449485 ,  eps);
+                TEST_CHECK_NEARLY_EQUAL( amp.scattering_amplitude(0.9 , 0 , Isospin::zero).imag() ,  0.790851 ,  eps);
+                TEST_CHECK_NEARLY_EQUAL( amp.scattering_amplitude(0.9 , 1 , Isospin::one).real()  , -0.498251 ,  eps);
+                TEST_CHECK_NEARLY_EQUAL( amp.scattering_amplitude(0.9 , 1 , Isospin::one).imag()  ,  0.290285 ,  eps);
+                TEST_CHECK_NEARLY_EQUAL( amp.scattering_amplitude(0.9 , 2 , Isospin::zero).real() ,  0.215659 ,  eps);
+                TEST_CHECK_NEARLY_EQUAL( amp.scattering_amplitude(0.9 , 2 , Isospin::zero).imag() ,  0.038253 ,  eps);
 
-                TEST_CHECK_NEARLY_EQUAL( amp.omnes_factor(0.55  , 1 , IsospinRepresentation::one).real()    ,  2.542132 ,  eps);
-                TEST_CHECK_NEARLY_EQUAL( amp.omnes_factor(0.55  , 1 , IsospinRepresentation::one).imag()    ,  5.375608 ,  eps);
-                TEST_CHECK_NEARLY_EQUAL( amp.omnes_factor(0.9   , 1 , IsospinRepresentation::one).real()    , -1.760142 ,  eps);
-                TEST_CHECK_NEARLY_EQUAL( amp.omnes_factor(0.9   , 1 , IsospinRepresentation::one).imag()    ,  1.025474 ,  eps);
-                TEST_CHECK_NEARLY_EQUAL( amp.omnes_factor(9.0   , 1 , IsospinRepresentation::one).real()    , -0.081634 ,  eps);
-                TEST_CHECK_NEARLY_EQUAL( amp.omnes_factor(9.0   , 1 , IsospinRepresentation::one).imag()    ,  0.005939 ,  eps);
-                TEST_CHECK_NEARLY_EQUAL( amp.omnes_factor(100.0 , 1 , IsospinRepresentation::one).real()    , -0.006934 ,  eps);
-                TEST_CHECK_NEARLY_EQUAL( amp.omnes_factor(100.0 , 1 , IsospinRepresentation::one).imag()    ,  0.000104 ,  eps);
+                TEST_CHECK_NEARLY_EQUAL( amp.omnes_factor(0.55  , 1 , Isospin::one).real()    ,  2.542132 ,  eps);
+                TEST_CHECK_NEARLY_EQUAL( amp.omnes_factor(0.55  , 1 , Isospin::one).imag()    ,  5.375608 ,  eps);
+                TEST_CHECK_NEARLY_EQUAL( amp.omnes_factor(0.9   , 1 , Isospin::one).real()    , -1.760142 ,  eps);
+                TEST_CHECK_NEARLY_EQUAL( amp.omnes_factor(0.9   , 1 , Isospin::one).imag()    ,  1.025474 ,  eps);
+                TEST_CHECK_NEARLY_EQUAL( amp.omnes_factor(9.0   , 1 , Isospin::one).real()    , -0.081634 ,  eps);
+                TEST_CHECK_NEARLY_EQUAL( amp.omnes_factor(9.0   , 1 , Isospin::one).imag()    ,  0.005939 ,  eps);
+                TEST_CHECK_NEARLY_EQUAL( amp.omnes_factor(100.0 , 1 , Isospin::one).real()    , -0.006934 ,  eps);
+                TEST_CHECK_NEARLY_EQUAL( amp.omnes_factor(100.0 , 1 , Isospin::one).imag()    ,  0.000104 ,  eps);
 
-                TEST_CHECK_NEARLY_EQUAL( amp.omnes_factor(0.55  , 2 , IsospinRepresentation::zero).real()   ,  1.611722 ,  eps);
-                TEST_CHECK_NEARLY_EQUAL( amp.omnes_factor(0.55  , 2 , IsospinRepresentation::zero).imag()   ,  0.079599 ,  eps);
-                TEST_CHECK_NEARLY_EQUAL( amp.omnes_factor(1.44  , 2 , IsospinRepresentation::zero).real()   ,  4.823093 ,  eps);
-                TEST_CHECK_NEARLY_EQUAL( amp.omnes_factor(1.44  , 2 , IsospinRepresentation::zero).imag()   ,  5.003143 ,  eps);
-                TEST_CHECK_NEARLY_EQUAL( amp.omnes_factor(1.65  , 2 , IsospinRepresentation::zero).real()   , -0.917640 ,  eps);
-                TEST_CHECK_NEARLY_EQUAL( amp.omnes_factor(1.65  , 2 , IsospinRepresentation::zero).imag()   ,  8.643233 ,  eps);
-                TEST_CHECK_NEARLY_EQUAL( amp.omnes_factor(100.0 , 2 , IsospinRepresentation::zero).real()   , -0.016038 ,  eps);
-                TEST_CHECK_NEARLY_EQUAL( amp.omnes_factor(100.0 , 2 , IsospinRepresentation::zero).imag()   ,  0.0      ,  eps);
+                TEST_CHECK_NEARLY_EQUAL( amp.omnes_factor(0.55  , 2 , Isospin::zero).real()   ,  1.611722 ,  eps);
+                TEST_CHECK_NEARLY_EQUAL( amp.omnes_factor(0.55  , 2 , Isospin::zero).imag()   ,  0.079599 ,  eps);
+                TEST_CHECK_NEARLY_EQUAL( amp.omnes_factor(1.44  , 2 , Isospin::zero).real()   ,  4.823093 ,  eps);
+                TEST_CHECK_NEARLY_EQUAL( amp.omnes_factor(1.44  , 2 , Isospin::zero).imag()   ,  5.003143 ,  eps);
+                TEST_CHECK_NEARLY_EQUAL( amp.omnes_factor(1.65  , 2 , Isospin::zero).real()   , -0.917640 ,  eps);
+                TEST_CHECK_NEARLY_EQUAL( amp.omnes_factor(1.65  , 2 , Isospin::zero).imag()   ,  8.643233 ,  eps);
+                TEST_CHECK_NEARLY_EQUAL( amp.omnes_factor(100.0 , 2 , Isospin::zero).real()   , -0.016038 ,  eps);
+                TEST_CHECK_NEARLY_EQUAL( amp.omnes_factor(100.0 , 2 , Isospin::zero).imag()   ,  0.0      ,  eps);
 
                 double sp = 4.0 * 0.496 * 0.496;
-                TEST_CHECK_NEARLY_EQUAL( amp.omnes_outer_function(-100000.0 , sp , 0.0 , 4096 , 1 , IsospinRepresentation::one).real(),  0.0      ,  eps);
-                TEST_CHECK_NEARLY_EQUAL( amp.omnes_outer_function(      0.0 , sp , 0.0 , 4096 , 1 , IsospinRepresentation::one).real(),  0.26187  ,  eps);
+                TEST_CHECK_NEARLY_EQUAL( amp.omnes_outer_function(-100000.0 , sp , 0.0 , 4096 , 1 , Isospin::one).real(),  0.0      ,  eps);
+                TEST_CHECK_NEARLY_EQUAL( amp.omnes_outer_function(      0.0 , sp , 0.0 , 4096 , 1 , Isospin::one).real(),  0.26187  ,  eps);
 
                 p["pipi->pipi::P1_B_0@GMKPRDEY2011"]    = 1.066;
-                TEST_CHECK_NEARLY_EQUAL( amp.scattering_amplitude(0.9 , 1 , IsospinRepresentation::one).real() , -0.495833 ,  eps);
-                TEST_CHECK_NEARLY_EQUAL( amp.scattering_amplitude(0.9 , 1 , IsospinRepresentation::one).imag() ,  0.286062 ,  eps);
+                TEST_CHECK_NEARLY_EQUAL( amp.scattering_amplitude(0.9 , 1 , Isospin::one).real() , -0.495833 ,  eps);
+                TEST_CHECK_NEARLY_EQUAL( amp.scattering_amplitude(0.9 , 1 , Isospin::one).imag() ,  0.286062 ,  eps);
             }
         }
 } pi_pi_to_pi_pi_gmkprdey2011_scattering_amplitudes_test;

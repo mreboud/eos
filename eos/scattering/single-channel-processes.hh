@@ -32,7 +32,7 @@ namespace eos
         using Transition = PPToPP;
         static constexpr const char * label = "pipi->pipi";
         static constexpr const char * name_P = "mass::pi^+";
-        static constexpr const std::array<IsospinRepresentation, 3> iso = { IsospinRepresentation::zero, IsospinRepresentation::one, IsospinRepresentation::two };
+        static constexpr const std::array<Isospin, 3> iso = { Isospin::zero, Isospin::one, Isospin::two };
     };
 
 }
