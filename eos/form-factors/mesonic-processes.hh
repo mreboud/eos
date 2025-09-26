@@ -421,7 +421,7 @@ namespace eos
         // Isospin factors relating amplitudes of definite isospin to physical ones: +-, 00, +0
         static constexpr std::array<std::array<double, 2>, 3> IsoToPhys = {{ { -1.0, 1.0 / std::numbers::sqrt2 }, { 1.0, 0.0 }, { 0.0, 1.0 } }};
         // Possible Isospin-Representation occuring in B -> pi pi l nu
-        static constexpr std::array<IsospinRepresentation, 2> rep = {IsospinRepresentation::zero, IsospinRepresentation::one};
+        static constexpr std::array<Isospin, 2> rep = {Isospin::zero, Isospin::one};
     };
 
     /* P -> gamma Processes */
