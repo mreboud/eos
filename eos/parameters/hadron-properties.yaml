@@ -1168,18 +1168,6 @@ groups:
           max:     -0.01
           latex:    '$\tilde{\zeta}_4^\perp$'
           unit:     '1'
-      'K^*::kappa4para@1GeV' :
-          central: -0.025
-          min:     -0.030
-          max:     -0.020
-          latex:    '$\kappa_4^\parallel$'
-          unit:     '1'
-      'K^*::kappa4perp@1GeV' :
-          central: 0.013
-          min:     0.008
-          max:     0.018
-          latex:    '$\kappa_4^\parallel$'
-          unit:     '1'
       # phi LCDA parameters
       'phi::a_1_para@1GeV' :
           central: +0.00
