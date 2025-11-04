@@ -329,51 +329,163 @@ namespace eos
         // inline functions for two particle twist 3 LCDAs (only includes up to a2perp(para) while the leading twist LCDAs are implemented up to a4perp(para))
         inline double psi3para(const double & u, const double & mu) const
         {
+            const double ms = model->m_s_msbar(mu), mud = model->m_ud_msbar(mu);
+
             return 6.0 * (1.0 - u) * u * (1.0 + 3.0 * (a1perp(mu) / 3.0 + (5.0 * kappa3perp(mu)) / 3.0) * (-1.0 + 2.0 * u) +
                 (a2perp(mu) / 6.0 + (5.0 * omega3perp(mu)) / 18.0) * (-1.5 + (15.0 * power_of<2>(-1.0 + 2.0 * u)) / 2.0) -
                 (lambda3perp(mu) * ((-15.0 * (-1.0 + 2.0 * u)) / 2.0 + (35.0 * power_of<3>(-1.0 + 2.0 * u)) / 2.0)) / 20.0) -
-                (3.0 * fpara * (model->m_s_msbar(mu) - model->m_ud_msbar(mu) / 2.0) * ((1.0 - u) * u * (9.0 * a1para(mu) + 10.0 * a2para(mu) * (-1.0 + 2.0 * u)) +
+                (3.0 * fpara * (ms - mud / 2.0) * ((1.0 - u) * u * (9.0 * a1para(mu) + 10.0 * a2para(mu) * (-1.0 + 2.0 * u)) +
                 (1.0 + 3.0 * a1para(mu) + 6.0 * a2para(mu)) * (1.0 - u) * log(1.0 - u) - (1.0 - 3.0 * a1para(mu) + 6.0 * a2para(mu)) * u * log(u))) / (fperp(mu) * M_V) +
-                (3.0 * fpara * (model->m_s_msbar(mu) + model->m_ud_msbar(mu) / 2.0) * ((1.0 - u) * u * (1.0 + 2.0 * a1para(mu) * (-1.0 + 2.0 * u) + 3.0 * a2para(mu) * (7.0 - 5.0 * (1.0 - u) * u)) +
+                (3.0 * fpara * (ms + mud / 2.0) * ((1.0 - u) * u * (1.0 + 2.0 * a1para(mu) * (-1.0 + 2.0 * u) + 3.0 * a2para(mu) * (7.0 - 5.0 * (1.0 - u) * u)) +
                 (1.0 + 3.0 * a1para(mu) + 6.0 * a2para(mu)) * (1.0 - u) * log(1.0 - u) + (1.0 - 3.0 * a1para(mu) + 6.0 * a2para(mu)) * u * log(u))) / (fperp(mu) * M_V);
         }
         inline double phi3para(const double & u, const double & mu) const
         {
+            const double ms = model->m_s_msbar(mu), mud = model->m_ud_msbar(mu);
+
             return 3.0 * power_of<2>(-1.0 + 2.0 * u) + (3.0 * a1perp(mu) * (-1.0 + 2.0 * u) * (-1.0 + 3.0 * power_of<2>(-1.0 + 2.0 * u))) / 2.0 +
                 ((15.0 * kappa3perp(mu)) / 2.0 - (3.0 * lambda3perp(mu)) / 4.0) * (-1.0 + 2.0 * u) * (-3.0 + 5.0 * power_of<2>(-1.0 + 2.0 * u)) +
                 (3.0 * a2perp(mu) * power_of<2>(-1.0 + 2.0 * u) * (-3.0 + 5.0 * power_of<2>(-1.0 + 2.0 * u))) / 2.0 +
                 (5.0 * omega3perp(mu) * (3.0 - 30.0 * power_of<2>(-1.0 + 2.0 * u) + 35.0 * power_of<4>(-1.0 + 2.0 * u)))/8.0 -
-                (3.0 * fpara * (model->m_s_msbar(mu) - model->m_ud_msbar(mu) / 2.0) * (-1.0 + 2.0 * u) * (2.0 + 9.0 * a1para(mu) * (-1.0 + 2.0 * u) +
+                (3.0 * fpara * (ms - mud / 2.0) * (-1.0 + 2.0 * u) * (2.0 + 9.0 * a1para(mu) * (-1.0 + 2.0 * u) +
                 2.0 * a2para(mu) * (11.0 - 30.0 * (1.0 - u) * u) + (1.0 + 3.0 * a1para(mu) + 6.0 * a2para(mu)) * log(1 - u) +
                 (1.0 - 3.0 * a1para(mu) + 6.0 * a2para(mu)) * log(u))) / (2.0 * fperp(mu) * M_V) +
-                (3.0 * fpara * (model->m_s_msbar(mu) + model->m_ud_msbar(mu) / 2.0) * (1.0 + 8.0 * a1para(mu) * (-1.0 + 2.0 * u) +
+                (3.0 * fpara * (ms + mud / 2.0) * (1.0 + 8.0 * a1para(mu) * (-1.0 + 2.0 * u) +
                 3.0 * a2para(mu) * (7.0 - 30.0 * (1.0 - u) * u) + (1.0 + 3.0 * a1para(mu) + 6.0 * a2para(mu)) * (-1.0 + 2.0 * u) * log(1.0 - u) -
                 (1.0 - 3.0 * a1para(mu) + 6.0 * a2para(mu)) * (-1.0 + 2.0 * u) * log(u))) / (2.0 * fperp(mu) * M_V);
         }
         inline double psi3perp(const double & u, const double & mu) const
         {
+            const double ms = model->m_s_msbar(mu), mud = model->m_ud_msbar(mu);
+
             return 6.0 * (1.0 - u) * u * (1.0 + 3.0 * (a1para(mu) / 3.0 + (20.0 * kappa3para(mu)) / 9.0) * (-1.0 + 2.0 * u) +
                 (-0.125 * lambda3para(mu) + lambda3paratilde(mu) / 4.0) * ((-15.0 * (-1.0 + 2.0 * u)) / 2.0 + (35.0 * power_of<3>(-1.0 + 2.0 * u)) / 2.0) +
                 (-1.5 + (15.0 * power_of<2>(-1.0 + 2.0 * u)) / 2.0) * (a2para(mu) / 6.0 + (5.0 * omega3para(mu)) / 12.0 - (5.0 * omega3paratilde(mu)) / 24.0 +
                 (10.0 * zeta3para(mu)) / 9.0)) -
-                (6.0 * fperp(mu) * (model->m_s_msbar(mu) - model->m_ud_msbar(mu) / 2.0) * ((1.0 - u) * u * (9.0 * a1perp(mu) + 10.0 * a2perp(mu) * (-1.0 + 2.0 * u)) +
+                (6.0 * fperp(mu) * (ms - mud / 2.0) * ((1.0 - u) * u * (9.0 * a1perp(mu) + 10.0 * a2perp(mu) * (-1.0 + 2.0 * u)) +
                 (1.0 + 3.0 * a1perp(mu) + 6.0 * a2perp(mu)) * (1.0 - u) * log(1.0 - u) - (1.0 - 3.0 * a1perp(mu) + 6.0 * a2perp(mu)) * u * log(u))) / (fpara * M_V) +
-                (6.0 * fperp(mu) * (model->m_s_msbar(mu) + model->m_ud_msbar(mu) / 2.0) * ((1.0 - u) * u * (2.0 + 3.0 * a1perp(mu) * (-1.0 + 2.0 * u) +
+                (6.0 * fperp(mu) * (ms + mud / 2.0) * ((1.0 - u) * u * (2.0 + 3.0 * a1perp(mu) * (-1.0 + 2.0 * u) +
                 2.0 * a2perp(mu) * (11.0 - 10.0 * (1.0 - u) * u)) + (1.0 + 3.0 * a1perp(mu) + 6.0 * a2perp(mu)) * (1.0 - u) * log(1.0 - u) +
                 (1.0 - 3.0 * a1perp(mu) + 6.0 * a2perp(mu)) * u * log(u))) / (fpara * M_V);
         }
         inline double phi3perp(const double & u, const double & mu) const
         {
+            const double ms = model->m_s_msbar(mu), mud = model->m_ud_msbar(mu);
+
             return (3.0 * a1para(mu) * power_of<3>(-1.0 + 2.0 * u)) / 2.0 + (3.0 * (1.0 + power_of<2>(-1.0 + 2.0 * u))) / 4.0 +
                 (5.0 * kappa3para(mu) - (15.0 * lambda3para(mu)) / 16.0 + (15.0 * lambda3paratilde(mu)) / 8.0) * (-1.0 + 2.0 * u) * (-3.0 + 5.0 * power_of<2>(-1.0 + 2.0 * u)) +
                 ((9.0 * a2para(mu)) / 112.0 + (15.0 * omega3para(mu)) / 32.0 - (15.0 * omega3paratilde(mu)) / 64.0) * (3.0 - 30.0 * power_of<2>(-1.0 + 2.0 * u) +
                 35.0 * power_of<4>(-1.0 + 2.0 * u)) + (-1.0 + 3.0 * power_of<2>(-1.0 + 2.0 * u)) * ((3.0 * a2para(mu)) / 7.0 + 5.0 * zeta3para(mu)) -
-                (3.0 * fperp(mu) * (model->m_s_msbar(mu) - model->m_ud_msbar(mu) / 2.0) * (2.0 * (-1.0 + 2.0 * u) +
+                (3.0 * fperp(mu) * (ms - mud / 2.0) * (2.0 * (-1.0 + 2.0 * u) +
                 2.0 * a2perp(mu) * (-1.0 + 2.0 * u) * (11.0 - 20.0 * (1.0 - u) * u) + 9.0 * a1perp(mu) * (1.0 - 2.0 * (1.0 - u) * u) +
                 (1.0 + 3.0 * a1perp(mu) + 6.0 * a2perp(mu)) * log(1 - u) - (1.0 - 3.0 * a1perp(mu) + 6.0 * a2perp(mu)) * log(u))) / (2.0 * fpara * M_V) +
-                (3.0 * fperp(mu) * (model->m_s_msbar(mu) + model->m_ud_msbar(mu) / 2.0) * (2.0 + 9.0 * a1perp(mu) * (-1.0 + 2.0 * u) +
+                (3.0 * fperp(mu) * (ms + mud / 2.0) * (2.0 + 9.0 * a1perp(mu) * (-1.0 + 2.0 * u) +
                 2.0 * a2perp(mu) * (11.0 - 30.0 * (1.0 - u) * u) + (1.0 + 3.0 * a1perp(mu) + 6.0 * a2perp(mu)) * log(1.0 - u) +
                 (1.0 - 3.0 * a1perp(mu) + 6.0 * a2perp(mu)) * log(u))) / (2.0 * fpara * M_V);
+        }
+        inline double Barpsi3para(const double & u, const double & mu) const
+        {
+            const double ms = model->m_s_msbar(mu), mud = model->m_ud_msbar(mu);
+
+            return (u * u * (3.0 * fpara * (ms - 11.0 * a1para(mu) * ms + 31.0 * a2para(mu) * ms + mud / 2.0 + 7.0 * a1para(mu) * mud / 2.0 + 11.0 * a2para(mu) * mud / 2.0) +
+                fperp(mu) * M_V * (6.0 + 6.0 * a2perp(mu) - 30.0 * kappa3perp(mu) + 3.0 * lambda3perp(mu) + 10.0 * omega3perp(mu) -
+                6.0 * a1perp(mu) * power_of<2>(-1.0 + u) - 4.0 * u + u * (-20.0 * (lambda3perp(mu) + 2.0 * omega3perp(mu)) -
+                30.0 * kappa3perp(mu) * (-2.0 + u) + 10.0 * omega3perp(mu) * (5.0 - 2.0 * u) * u +
+                lambda3perp(mu) * u * (45.0 + 14.0 * (-3.0 + u) * u) - 6.0 * a2perp(mu) * (4.0 + u * (-5.0 + 2.0 * u)))) -
+                fpara * u * (ms * (2.0 + 6.0 * a1para(mu) * (-5.0 + u) + 3.0 * a2para(mu) * (44.0 + u * (-25.0 + 6.0 * u))) +
+                mud / 2.0 * (2.0 + 6.0 * a1para(mu) * (1.0 + u) + 3.0 * a2para(mu) * (4.0 + u * (-5.0 + 6.0 * u))))) -
+                3.0 * (1.0 + 3.0 * a1para(mu) + 6.0 * a2para(mu)) * fpara * mud / 2.0 * (-((-2.0 + u) * u) + 2.0 * power_of<2>(-1.0 + u) * log(1.0 - u)) +
+                3.0 * (1.0 - 3.0 * a1para(mu) + 6.0 * a2para(mu)) * fpara * ms * u * u * (-1.0 + 2.0 * log(u))) / (2.0 * fperp(mu) * M_V);
+        }
+        inline double Barphi3para(const double & u, const double & mu) const
+        {
+            const double ms = model->m_s_msbar(mu), mud = model->m_ud_msbar(mu);
+
+            return (u * (6.0 - 6.0 * a1perp(mu) + 6.0 * a2perp(mu) + 10.0 * omega3perp(mu) - 12.0 * u + 24.0 * a1perp(mu) * u - 42.0 * a2perp(mu) * u - 100.0 * omega3perp(mu) * u +
+                8 * u * u - 36.0 * a1perp(mu) * u * u + 108.0 * a2perp(mu) * u * u + 300.0 * omega3perp(mu) * u * u + 18.0 * a1perp(mu) * power_of<3>(u) - 120.0 * a2perp(mu) * power_of<3>(u) -
+                350.0 * omega3perp(mu) * power_of<3>(u) + 48.0 * a2perp(mu) * power_of<4>(u) + 140.0 * omega3perp(mu) * power_of<4>(u) +
+                3.0 * (10.0 * kappa3perp(mu) - lambda3perp(mu)) * (-1.0 + u) * (1.0 + 5.0 * (-1.0 + u) * u) + (3.0 * fpara * (ms + mud / 2.0) * (-1.0 + u) * (5.0 * (a1para(mu) - 3.0 * a2para(mu) + 6.0 * a2para(mu) * u) +
+                (1.0 + 3.0 * a1para(mu) + 6.0 * a2para(mu)) * log(1.0 - u) + (-1.0 + 3.0 * a1para(mu) - 6.0 * a2para(mu)) * log(u))) / (fperp(mu) * M_V) -
+                (3.0 * fpara * (ms - mud / 2.0) * (-1.0 + u) * (1.0 + 6.0 * a1para(mu) * (-1.0 + 2.0 * u) + 2.0 * a2para(mu) * (8.0 + 15.0 * (-1.0 + u) * u) +
+                6.0 * a1para(mu) * atanh(1.0 - 2.0 * u) + (1.0 + 6.0 * a2para(mu)) * log(-((-1.0 + u) * u)))) / (fperp(mu) * M_V))) / 2;
+        }
+        inline double Barpsi3perp(const double & u, const double & mu) const
+        {
+            const double ms = model->m_s_msbar(mu), mud = model->m_ud_msbar(mu);
+
+            return (fpara * M_V * u * u * (12.0 + 15.0 * lambda3para(mu) - 30.0 * lambda3paratilde(mu) + 30 * omega3para(mu) - 15.0 * omega3paratilde(mu) - 12.0 * a1para(mu) * power_of<2>(-1.0 + u) -
+                80.0 * kappa3para(mu) * power_of<2>(-1.0 + u) - 8.0 * u - 12.0 * a2para(mu) * power_of<2>(-1.0 + u) * (-1.0 + 2.0 * u) + 80.0 * zeta3para(mu) +
+                5.0 * u * (lambda3paratilde(mu) * (40.0 - 2.0 * u * (45.0 + 14.0 * (-3.0 + u) * u)) + lambda3para(mu) * (-20.0 + u * (45.0 + 14.0 * (-3.0 + u) * u)) -
+                (4.0 + u * (-5.0 + 2.0 * u)) * (6.0 * omega3para(mu) - 3.0 * omega3paratilde(mu) + 16.0 * zeta3para(mu)))) - 4.0 * fperp(mu) * (ms + mud / 2.0) * (3.0 * (1.0 + 3.0 * a1perp(mu) +
+                6.0 * a2perp(mu)) * power_of<2>(-1.0 + u) * log(1.0 - u) + u * (3.0 - 6.0 * u + 4.0 * u * u + 6.0 * a2perp(mu) * (-1.0 + u) * (-1.0 + 2.0 * u) * (3.0 + 2.0 * (-1.0 + u) * u) +
+                9.0 * a1perp(mu) * (1.0 + (-2.0 + u) * u * u) + 3.0 * (-1.0 + 3.0 * a1perp(mu) - 6.0 * a2perp(mu)) * u * log(u))) + 12.0 * fperp(mu) * (ms - mud / 2.0) * ((1.0 + 3.0 * a1perp(mu) +
+                6.0 * a2perp(mu)) * power_of<2>(-1.0 + u) * log(1.0 - u) + u * ((-1.0 + u) * (-1.0 + a1perp(mu) * (-3.0 + 6.0 * u) + 2.0 * a2perp(mu) * (-3.0 - 5.0 * u + 5.0 * u * u)) +
+                (1.0 - 3.0 * a1perp(mu) + 6.0 * a2perp(mu)) * u * log(u)))) / (4.0 * fpara * M_V);
+        }
+        inline double Barphi3perp(const double & u, const double & mu) const
+        {
+            const double ms = model->m_s_msbar(mu), mud = model->m_ud_msbar(mu);
+
+            return (6.0 * u - 6.0 * a1para(mu) * u - 6.0 * u * u + 18.0 * a1para(mu) * u * u + 4.0 * power_of<3>(u) - 24.0 * a1para(mu) * power_of<3>(u) + 12.0 * a1para(mu) * power_of<4>(u) +
+                (5.0 * (16.0 * kappa3para(mu) - 3.0 * lambda3para(mu) + 6.0 * lambda3paratilde(mu)) * (-1.0 + u) * u * (1.0 + 5.0 * (-1.0 + u) * u)) / 2.0 + (3.0 * (12.0 * a2para(mu) +
+                70.0 * omega3para(mu) - 35.0 * omega3paratilde(mu)) * (-1.0 + u) * u * (-1.0 + 2.0 * u) * (1.0 + 7.0 * (-1.0 + u) * u)) / 14.0 + (8.0 * u * (1.0 - 3.0 * u +
+                2.0 * u * u) * (3.0 * a2para(mu) + 35.0 * zeta3para(mu))) / 7.0 - (6.0 * fperp(mu) * (ms - mud / 2.0) * ((-1.0 + u) * u * (2.0 + a1perp(mu) * (-3.0 + 6.0*u) +
+                a2perp(mu) * (22.0 - 20.0 * u + 20.0 * u * u)) + (1.0 + 3.0 * a1perp(mu) + 6.0 * a2perp(mu)) * (-1.0 + u) * log(1.0 - u) + (-1.0 + 3.0 * a1perp(mu) -
+                6.0 * a2perp(mu)) * u * log(u))) / (fpara * M_V) + (6.0 * fperp(mu) * (ms + mud / 2.0) * ((-1.0 + u) * u * (9.0 * a1perp(mu) + 10.0 * a2perp(mu) * (-1.0 + 2.0 * u)) +
+                (1.0 + 3.0 * a1perp(mu) + 6.0 * a2perp(mu)) * (-1.0 + u) * log(1.0 - u) + (1.0 - 3.0 * a1perp(mu) + 6.0 * a2perp(mu)) * u * log(u))) / (fpara * M_V)) / 4.0;
+        }
+        inline double BarBarpsi3para(const double & u, const double & mu) const
+        {
+            const double ms = model->m_s_msbar(mu), mud = model->m_ud_msbar(mu);
+
+            return (power_of<3>(u) * (-2.0 * fperp(mu) * M_V * (3.0 * a1perp(mu) * (10.0 - 15.0 * u + 6.0 * u * u) + 5.0 * (-6.0 - 3.0 * lambda3perp(mu) - 10.0 * omega3perp(mu) +
+                6.0 * a2perp(mu) * power_of<3>(-1.0 + u) + 3.0 * u + 15.0 * lambda3perp(mu) * u + 30.0 * omega3perp(mu) * u - 27.0 * lambda3perp(mu) * u * u - 30.0 * omega3perp(mu) * u * u +
+                21.0 * lambda3perp(mu) * power_of<3>(u) + 10.0 * omega3perp(mu) * power_of<3>(u) - 6.0 * lambda3perp(mu) * power_of<4>(u) + 3.0 * kappa3perp(mu) * (10.0 - 15.0 * u + 6.0 * u * u))) -
+                3.0 * fpara * (a1para(mu) * ms * (110.0 - 75.0 * u + 12.0 * u * u) + a1para(mu) * mud / 2.0 * (-70.0 + 15.0 * u + 12.0 * u * u) + 5.0 * ms * (-2.0 + u + a2para(mu) * (-62.0 + 66.0 * u -
+                30.0 * u * u + 6.0 * power_of<3>(u))) + 5.0 * mud / 2.0 * (-2.0 + u + a2para(mu) * (-22.0 + 6.0 * u - 6.0 * u * u + 6.0 * power_of<3>(u))))) - 10.0 * (1.0 + 3.0 * a1para(mu) +
+                6.0 * a2para(mu)) * fpara * mud / 2.0 * (u * (-6.0 + 15.0 * u - 5.0 * u * u) + 6.0 * power_of<3>(-1.0 + u) * log(1.0 - u)) + 10.0 * (1.0 - 3.0 * a1para(mu) +
+                6.0 * a2para(mu)) * fpara * ms*power_of<3>(u) * (-5.0 + 6.0 * log(u))) / (60.0 * fperp(mu) * M_V);
+        }
+        inline double BarBarphi3para(const double & u, const double & mu) const
+        {
+            const double ms = model->m_s_msbar(mu), mud = model->m_ud_msbar(mu);
+
+            return (30.0 * (1.0 + 3.0 * a1para(mu) + 6.0 * a2para(mu)) * fpara * mud / 2.0 * power_of<2>(-1.0 + u) * (1.0 + 2.0 * u) * log(1.0 - u) + u * (fperp(mu) * M_V * u * (6.0 * a1perp(mu) * (-15.0 +
+                40.0 * u - 45.0 * u * u + 18.0 * power_of<3>(u)) + 5.0 * (18.0 + 9.0 * lambda3perp(mu) + 30.0 * omega3perp(mu) - 24.0 * u - 36.0 * lambda3perp(mu) * u - 200.0 * omega3perp(mu) * u +
+                12.0 * u * u + 45.0 * lambda3perp(mu) * u * u + 450.0 * omega3perp(mu) * u * u - 18.0 * lambda3perp(mu) * power_of<3>(u) - 420.0 * omega3perp(mu) * power_of<3>(u) +
+                140.0 * omega3perp(mu) * power_of<4>(u) + 90.0 * kappa3perp(mu) * power_of<2>(-1.0 + u) * (-1.0 + 2.0 * u) + 6.0 * a2perp(mu) * power_of<2>(-1.0 + u) * (3.0 - 8.0 * u + 8.0 * u * u))) +
+                5.0 * fpara * (mud / 2.0 * (18.0 * a1para(mu) * power_of<2>(-1.0 + u) * (1.0 + 3.0 * u) + 2.0 * (3.0 - 3.0 * u + u * u) + 9 * a2para(mu) * power_of<2>(-1.0 + u) * (4.0 + 9.0 * u +
+                12.0 * u * u)) - ms * u * (2.0 * u + 18.0 * a1para(mu) * (4.0 - 7.0 * u + 3.0 * u * u) + 9.0 * a2para(mu) * (-25.0 + 58.0 * u - 45.0 * u * u + 12.0 * power_of<3>(u)))) +
+                30.0 * (-1.0 + 3.0 * a1para(mu) - 6.0 * a2para(mu)) * fpara * ms * u * (-3.0 + 2.0 * u) * log(u))) / (60.0 * fperp(mu) * M_V);
+        }
+        inline double BarBarpsi3perp(const double & u, const double & mu) const
+        {
+            const double ms = model->m_s_msbar(mu), mud = model->m_ud_msbar(mu);
+
+            return (-4.0 * fperp(mu) * u * (ms * u * u * (-5.0 + 15.0 * u + 3.0 * a1perp(mu) * (35.0 - 45.0 * u + 9.0 * u * u) + 30.0 * a2perp(mu) * (-11.0 + 18.0 * u - 9.0 * u * u +
+                2.0 * power_of<3>(u))) + mud / 2.0 * (3.0 * a1perp(mu) * (-30.0 + 75.0 * u - 55.0 * u * u + 9.0 * power_of<4>(u)) + 5.0 * (-6.0 + 15.0 * u - 11.0 * u * u + 3.0 * power_of<3>(u) +
+                6.0 * a2perp(mu) * power_of<3>(-1.0 + u) * (6.0 + 3.0 * u + 2.0 * u * u)))) + fpara * M_V * power_of<3>(u) * (-6.0 * a1para(mu) * (10.0 - 15.0 * u + 6.0 * u * u) -
+                5.0 * (-12.0 - 15.0 * lambda3para(mu) + 30.0 * lambda3paratilde(mu) - 30.0 * omega3para(mu) + 15.0 * omega3paratilde(mu) + 12.0 * a2para(mu) * power_of<3>(-1.0 + u) +
+                6.0 * u + 75.0 * lambda3para(mu) * u - 150.0 * lambda3paratilde(mu) * u + 90.0 * omega3para(mu) * u - 45.0 * omega3paratilde(mu) * u - 135.0 * lambda3para(mu) * u * u +
+                270.0 * lambda3paratilde(mu) * u * u - 90.0 * omega3para(mu) * u * u + 45.0 * omega3paratilde(mu) * u * u + 105.0 * lambda3para(mu) * power_of<3>(u) -
+                210.0 * lambda3paratilde(mu) * power_of<3>(u) + 30.0 * omega3para(mu) * power_of<3>(u) - 15.0 * omega3paratilde(mu) * power_of<3>(u) - 30.0 * lambda3para(mu) * power_of<4>(u) +
+                60.0 * lambda3paratilde(mu) * power_of<4>(u) + 8.0 * kappa3para(mu) * (10.0 - 15.0 * u + 6.0 * u * u) - 80.0 * zeta3para(mu) + 240.0 * u * zeta3para(mu) - 240.0 * u * u * zeta3para(mu) +
+                80.0 * power_of<3>(u) * zeta3para(mu))) - 120.0 * (1.0 + 3.0 * a1perp(mu) + 6.0 * a2perp(mu)) * fperp(mu) * mud / 2.0 * power_of<3>(-1.0 + u) * log(1.0 - u) - 120.0 * (-1.0 +
+                3.0 * a1perp(mu) - 6.0 * a2perp(mu)) * fperp(mu) * ms * power_of<3>(u) * log(u)) / (60.0 * fpara * M_V);
+        }
+        inline double BarBarphi3perp(const double & u, const double & mu) const
+        {
+            const double ms = model->m_s_msbar(mu), mud = model->m_ud_msbar(mu);
+
+            return (3.0 * u * u - 3.0 * a1para(mu) * u * u + (12.0 * a2para(mu) * u * u) / 7.0 - 2.0 * power_of<3>(u) + 6.0 * a1para(mu) * power_of<3>(u) - (24.0 * a2para(mu) * power_of<3>(u)) / 7.0 +
+                power_of<4>(u) - 6.0 * a1para(mu) * power_of<4>(u) + (12.0 * a2para(mu) * power_of<4>(u)) / 7.0 + (12.0 * a1para(mu) * power_of<5>(u)) / 5.0 + (5.0 * (16.0 * kappa3para(mu) -
+                3.0 * lambda3para(mu) + 6.0 * lambda3paratilde(mu)) * power_of<2>(-1.0 + u) * u * u * (-1.0 + 2.0 * u)) / 4.0 + ((12.0 * a2para(mu) + 70.0 * omega3para(mu) -
+                35.0 * omega3paratilde(mu)) * power_of<2>(-1.0 + u) * u * u * (3.0 + 14.0 * (-1.0 + u) * u)) / 28.0 + 20.0 * u * u * zeta3para(mu) - 40.0 * power_of<3>(u) * zeta3para(mu) +
+                20.0 * power_of<4>(u) * zeta3para(mu) - (fperp(mu) * (ms - mud / 2.0) * (3.0 * (1.0 + 3.0 * a1perp(mu) + 6.0 * a2perp(mu)) * power_of<2>(-1.0 + u) * log(1.0 - u) +
+                u * (3.0 - 6.0 * u + 4.0 * u * u + 6.0 * a2perp(mu) * (-1.0 + u) * (-1.0 + 2.0 * u) * (3.0 + 2.0 * (-1.0 + u) * u) + 9.0 * a1perp(mu) * (1.0 + (-2.0 + u) * u * u) +
+                3.0 * (-1.0 + 3.0 * a1perp(mu) - 6.0 * a2perp(mu)) * u * log(u)))) / (fpara * M_V) + (3.0 * fperp(mu) * (ms + mud / 2.0) * ((1.0 + 3.0 * a1perp(mu) +
+                6.0 * a2perp(mu)) * power_of<2>(-1.0 + u) * log(1.0 - u) + u * ((-1.0 + u) * (-1.0 + a1perp(mu) * (-3.0 + 6.0 * u) + 2.0 * a2perp(mu)*(-3.0 - 5.0 * u + 5.0 * u * u)) +
+                (1.0 - 3.0 * a1perp(mu) + 6.0 * a2perp(mu)) * u * log(u)))) / (fpara * M_V)) / 4.0;
         }
         // definition of chiral even parameters appearing in three-particle twist 4 LCDAs, [BBL:2007A], eq. 3.22 (renormalon model)
         inline double psi0para(const double &) const
@@ -452,7 +564,7 @@ namespace eos
             return 840.0 * u1 * u2 * u3 * u3 * u3 * xi0para(mu);
         }
 
-        // definition of chiral odd G conserving parameters appearing in three-particle twist 4 LCDAs, [BBL:2007A], eq. 4.13, setting zeta4perptilde = -zeta4perp (renormalon model)
+        // definition of chiral odd G conserving parameters appearing in three-particle twist 4 LCDAs, [BBL:2007A], eq. 4.13, setting zeta4perptilde = -zeta4perp(mu) (renormalon model)
         inline double psi0perp(const double & mu) const
         {
             return zeta4perp(mu);
@@ -700,7 +812,7 @@ namespace eos
                 mud * (41.0 + 108.0 * a1perp(mu) + 216 * a2perp(mu) + 5.0 * (1.0 - 2.0 * u) * u)) + 5.0 * fpara * M_V * (-1.0 + u) * (-16.0 * kappa3para(mu) * (1.0 + 2.0 * u) +
                 3.0 * u * u * (6.0 * a2para(mu) - 9.0 * omega3para(mu) + 14.0 * zeta3para(mu)))) * log(1.0 - u) - 8.0 * u * (72.0 * (-1.0 + 3.0 * a1perp(mu) - 6.0 * a2perp(mu)) * fperp(mu) * ms +
                 30.0 * fperp(mu) * (-ms + mud) * u + 20.0 * fperp(mu) * (ms - mud) * u * u + fpara * M_V * u * (80.0 * kappa3para(mu) * (3.0 - 2.0 * u) + 90.0 * a2para(mu) * (-1.0 + u) * (-1.0 + u) +
-                6.0 * a1para(mu) * (-3.0 + 2.0 * u) - 15.0 * (-1 + u) * (-1 + u) * (9.0 * omega3para(mu) - 14.0 * zeta3para(mu)))) * log(u));
+                6.0 * a1para(mu) * (-3.0 + 2.0 * u) - 15.0 * (-1.0 + u) * (-1.0 + u) * (9.0 * omega3para(mu) - 14.0 * zeta3para(mu)))) * log(u));
         }
     };
 
@@ -954,6 +1066,18 @@ namespace eos
     }
 
     double
+    AntiKStarLCDAs::psi3perp(const double & u, const double & mu) const
+    {
+        return _imp->psi3perp(u, mu);
+    }
+
+    double
+    AntiKStarLCDAs::phi3perp(const double & u, const double & mu) const
+    {
+        return _imp->phi3perp(u, mu);
+    }
+
+    double
     AntiKStarLCDAs::psi3para(const double & u, const double & mu) const
     {
         return _imp->psi3para(u, mu);
@@ -966,15 +1090,51 @@ namespace eos
     }
 
     double
-    AntiKStarLCDAs::psi3perp(const double & u, const double & mu) const
+    AntiKStarLCDAs::Barpsi3perp(const double & u, const double & mu) const
     {
-        return _imp->psi3perp(u, mu);
+        return _imp->Barpsi3perp(u, mu);
     }
 
     double
-    AntiKStarLCDAs::phi3perp(const double & u, const double & mu) const
+    AntiKStarLCDAs::Barphi3perp(const double & u, const double & mu) const
     {
-        return _imp->phi3perp(u, mu);
+        return _imp->Barphi3perp(u, mu);
+    }
+
+    double
+    AntiKStarLCDAs::Barpsi3para(const double & u, const double & mu) const
+    {
+        return _imp->Barpsi3para(u, mu);
+    }
+
+    double
+    AntiKStarLCDAs::Barphi3para(const double & u, const double & mu) const
+    {
+        return _imp->Barphi3para(u, mu);
+    }
+
+    double
+    AntiKStarLCDAs::BarBarphi3perp(const double & u, const double & mu) const
+    {
+        return _imp->BarBarphi3perp(u, mu);
+    }
+
+    double
+    AntiKStarLCDAs::BarBarpsi3para(const double & u, const double & mu) const
+    {
+        return _imp->psi3para(u, mu);
+    }
+
+    double
+    AntiKStarLCDAs::BarBarphi3para(const double & u, const double & mu) const
+    {
+        return _imp->BarBarphi3para(u, mu);
+    }
+
+    double
+    AntiKStarLCDAs::BarBarpsi3perp(const double & u, const double & mu) const
+    {
+        return _imp->BarBarpsi3perp(u, mu);
     }
 
     double
@@ -1432,51 +1592,163 @@ namespace eos
         // inline functions for two particle twist 3 LCDAs (exchange m_s <-> m_ud with respect to AntiKStar case)
         inline double psi3para(const double & u, const double & mu) const
         {
-            return 6.0 * (1.0 - u) * u* (1.0 + 3.0 * (a1perp(mu) / 3.0 + (5.0 * kappa3perp(mu)) / 3.0) * (-1.0 + 2.0 * u) +
-            (a2perp(mu) / 6.0 + (5.0 * omega3perp(mu)) / 18.0) * (-1.5 + (15.0 * power_of<2>(-1.0 + 2.0 * u)) / 2.0) -
-            (lambda3perp(mu) * ((-15.0 * (-1.0 + 2.0 * u)) / 2.0 + (35.0 * power_of<3>(-1.0 + 2.0 * u)) / 2.0)) / 20.0) -
-            (3.0 * fpara * (-1.0) * (model->m_s_msbar(mu) - model->m_ud_msbar(mu) / 2.0) * ((1.0 - u) * u * (9.0 * a1para(mu) + 10.0 * a2para(mu) * (-1.0 + 2.0 * u)) +
-            (1.0 + 3.0 * a1para(mu) + 6.0 * a2para(mu)) * (1.0 - u) * log(1.0 - u) - (1.0 - 3.0 * a1para(mu) + 6.0 * a2para(mu)) * u * log(u))) / (fperp(mu) * M_V) +
-            (3.0 * fpara * (model->m_s_msbar(mu) + model->m_ud_msbar(mu) / 2.0) * ((1.0 - u) * u * (1.0 + 2.0 * a1para(mu) * (-1.0 + 2.0 * u) + 3.0 * a2para(mu) * (7.0 - 5.0 * (1.0 - u) * u)) +
-            (1.0 + 3.0 * a1para(mu) + 6.0 * a2para(mu)) * (1.0 - u) * log(1.0 - u) + (1.0 - 3.0 * a1para(mu) + 6.0 * a2para(mu)) * u * log(u))) / (fperp(mu) * M_V);
+            const double mud = 2.0 * model->m_s_msbar(mu), ms = 0.5 * model->m_ud_msbar(mu);
+
+            return 6.0 * (1.0 - u) * u * (1.0 + 3.0 * (a1perp(mu) / 3.0 + (5.0 * kappa3perp(mu)) / 3.0) * (-1.0 + 2.0 * u) +
+                (a2perp(mu) / 6.0 + (5.0 * omega3perp(mu)) / 18.0) * (-1.5 + (15.0 * power_of<2>(-1.0 + 2.0 * u)) / 2.0) -
+                (lambda3perp(mu) * ((-15.0 * (-1.0 + 2.0 * u)) / 2.0 + (35.0 * power_of<3>(-1.0 + 2.0 * u)) / 2.0)) / 20.0) -
+                (3.0 * fpara * (ms - mud / 2.0) * ((1.0 - u) * u * (9.0 * a1para(mu) + 10.0 * a2para(mu) * (-1.0 + 2.0 * u)) +
+                (1.0 + 3.0 * a1para(mu) + 6.0 * a2para(mu)) * (1.0 - u) * log(1.0 - u) - (1.0 - 3.0 * a1para(mu) + 6.0 * a2para(mu)) * u * log(u))) / (fperp(mu) * M_V) +
+                (3.0 * fpara * (ms + mud / 2.0) * ((1.0 - u) * u * (1.0 + 2.0 * a1para(mu) * (-1.0 + 2.0 * u) + 3.0 * a2para(mu) * (7.0 - 5.0 * (1.0 - u) * u)) +
+                (1.0 + 3.0 * a1para(mu) + 6.0 * a2para(mu)) * (1.0 - u) * log(1.0 - u) + (1.0 - 3.0 * a1para(mu) + 6.0 * a2para(mu)) * u * log(u))) / (fperp(mu) * M_V);
         }
         inline double phi3para(const double & u, const double & mu) const
         {
+            const double mud = 2.0 * model->m_s_msbar(mu), ms = 0.5 * model->m_ud_msbar(mu);
+
             return 3.0 * power_of<2>(-1.0 + 2.0 * u) + (3.0 * a1perp(mu) * (-1.0 + 2.0 * u) * (-1.0 + 3.0 * power_of<2>(-1.0 + 2.0 * u))) / 2.0 +
                 ((15.0 * kappa3perp(mu)) / 2.0 - (3.0 * lambda3perp(mu)) / 4.0) * (-1.0 + 2.0 * u) * (-3.0 + 5.0 * power_of<2>(-1.0 + 2.0 * u)) +
                 (3.0 * a2perp(mu) * power_of<2>(-1.0 + 2.0 * u) * (-3.0 + 5.0 * power_of<2>(-1.0 + 2.0 * u))) / 2.0 +
                 (5.0 * omega3perp(mu) * (3.0 - 30.0 * power_of<2>(-1.0 + 2.0 * u) + 35.0 * power_of<4>(-1.0 + 2.0 * u)))/8.0 -
-                (3.0 * fpara * (-1.0) * (model->m_s_msbar(mu) - model->m_ud_msbar(mu) / 2.0) * (-1.0 + 2.0 * u) * (2.0 + 9.0 * a1para(mu) * (-1.0 + 2.0 * u) +
+                (3.0 * fpara * (ms - mud / 2.0) * (-1.0 + 2.0 * u) * (2.0 + 9.0 * a1para(mu) * (-1.0 + 2.0 * u) +
                 2.0 * a2para(mu) * (11.0 - 30.0 * (1.0 - u) * u) + (1.0 + 3.0 * a1para(mu) + 6.0 * a2para(mu)) * log(1 - u) +
                 (1.0 - 3.0 * a1para(mu) + 6.0 * a2para(mu)) * log(u))) / (2.0 * fperp(mu) * M_V) +
-                (3.0 * fpara * (model->m_s_msbar(mu) + model->m_ud_msbar(mu) / 2.0) * (1.0 + 8.0 * a1para(mu) * (-1.0 + 2.0 * u) +
+                (3.0 * fpara * (ms + mud / 2.0) * (1.0 + 8.0 * a1para(mu) * (-1.0 + 2.0 * u) +
                 3.0 * a2para(mu) * (7.0 - 30.0 * (1.0 - u) * u) + (1.0 + 3.0 * a1para(mu) + 6.0 * a2para(mu)) * (-1.0 + 2.0 * u) * log(1.0 - u) -
                 (1.0 - 3.0 * a1para(mu) + 6.0 * a2para(mu)) * (-1.0 + 2.0 * u) * log(u))) / (2.0 * fperp(mu) * M_V);
         }
         inline double psi3perp(const double & u, const double & mu) const
         {
+            const double mud = 2.0 * model->m_s_msbar(mu), ms = 0.5 * model->m_ud_msbar(mu);
+
             return 6.0 * (1.0 - u) * u * (1.0 + 3.0 * (a1para(mu) / 3.0 + (20.0 * kappa3para(mu)) / 9.0) * (-1.0 + 2.0 * u) +
                 (-0.125 * lambda3para(mu) + lambda3paratilde(mu) / 4.0) * ((-15.0 * (-1.0 + 2.0 * u)) / 2.0 + (35.0 * power_of<3>(-1.0 + 2.0 * u)) / 2.0) +
                 (-1.5 + (15.0 * power_of<2>(-1.0 + 2.0 * u)) / 2.0) * (a2para(mu) / 6.0 + (5.0 * omega3para(mu)) / 12.0 - (5.0 * omega3paratilde(mu)) / 24.0 +
                 (10.0 * zeta3para(mu)) / 9.0)) -
-                (6.0 * fperp(mu) * (-1.0) * (model->m_s_msbar(mu) - model->m_ud_msbar(mu) / 2.0) * ((1.0 - u) * u * (9.0 * a1perp(mu) + 10.0 * a2perp(mu) * (-1.0 + 2.0 * u)) +
+                (6.0 * fperp(mu) * (ms - mud / 2.0) * ((1.0 - u) * u * (9.0 * a1perp(mu) + 10.0 * a2perp(mu) * (-1.0 + 2.0 * u)) +
                 (1.0 + 3.0 * a1perp(mu) + 6.0 * a2perp(mu)) * (1.0 - u) * log(1.0 - u) - (1.0 - 3.0 * a1perp(mu) + 6.0 * a2perp(mu)) * u * log(u))) / (fpara * M_V) +
-                (6.0 * fperp(mu) * (model->m_s_msbar(mu) + model->m_ud_msbar(mu) / 2.0) * ((1.0 - u) * u * (2.0 + 3.0 * a1perp(mu) * (-1.0 + 2.0 * u) +
+                (6.0 * fperp(mu) * (ms + mud / 2.0) * ((1.0 - u) * u * (2.0 + 3.0 * a1perp(mu) * (-1.0 + 2.0 * u) +
                 2.0 * a2perp(mu) * (11.0 - 10.0 * (1.0 - u) * u)) + (1.0 + 3.0 * a1perp(mu) + 6.0 * a2perp(mu)) * (1.0 - u) * log(1.0 - u) +
                 (1.0 - 3.0 * a1perp(mu) + 6.0 * a2perp(mu)) * u * log(u))) / (fpara * M_V);
         }
         inline double phi3perp(const double & u, const double & mu) const
         {
+            const double mud = 2.0 * model->m_s_msbar(mu), ms = 0.5 * model->m_ud_msbar(mu);
+
             return (3.0 * a1para(mu) * power_of<3>(-1.0 + 2.0 * u)) / 2.0 + (3.0 * (1.0 + power_of<2>(-1.0 + 2.0 * u))) / 4.0 +
                 (5.0 * kappa3para(mu) - (15.0 * lambda3para(mu)) / 16.0 + (15.0 * lambda3paratilde(mu)) / 8.0) * (-1.0 + 2.0 * u) * (-3.0 + 5.0 * power_of<2>(-1.0 + 2.0 * u)) +
                 ((9.0 * a2para(mu)) / 112.0 + (15.0 * omega3para(mu)) / 32.0 - (15.0 * omega3paratilde(mu)) / 64.0) * (3.0 - 30.0 * power_of<2>(-1.0 + 2.0 * u) +
                 35.0 * power_of<4>(-1.0 + 2.0 * u)) + (-1.0 + 3.0 * power_of<2>(-1.0 + 2.0 * u)) * ((3.0 * a2para(mu)) / 7.0 + 5.0 * zeta3para(mu)) -
-                (3.0 * fperp(mu) * (-1.0) * (model->m_s_msbar(mu) - model->m_ud_msbar(mu) / 2.0) * (2.0 * (-1.0 + 2.0 * u) +
+                (3.0 * fperp(mu) * (ms - mud / 2.0) * (2.0 * (-1.0 + 2.0 * u) +
                 2.0 * a2perp(mu) * (-1.0 + 2.0 * u) * (11.0 - 20.0 * (1.0 - u) * u) + 9.0 * a1perp(mu) * (1.0 - 2.0 * (1.0 - u) * u) +
                 (1.0 + 3.0 * a1perp(mu) + 6.0 * a2perp(mu)) * log(1 - u) - (1.0 - 3.0 * a1perp(mu) + 6.0 * a2perp(mu)) * log(u))) / (2.0 * fpara * M_V) +
-                (3.0 * fperp(mu) * (model->m_s_msbar(mu) + model->m_ud_msbar(mu) / 2.0) * (2.0 + 9.0 * a1perp(mu) * (-1.0 + 2.0 * u) +
+                (3.0 * fperp(mu) * (ms + mud / 2.0) * (2.0 + 9.0 * a1perp(mu) * (-1.0 + 2.0 * u) +
                 2.0 * a2perp(mu) * (11.0 - 30.0 * (1.0 - u) * u) + (1.0 + 3.0 * a1perp(mu) + 6.0 * a2perp(mu)) * log(1.0 - u) +
                 (1.0 - 3.0 * a1perp(mu) + 6.0 * a2perp(mu)) * log(u))) / (2.0 * fpara * M_V);
+        }
+        inline double Barpsi3para(const double & u, const double & mu) const
+        {
+            const double mud = 2.0 * model->m_s_msbar(mu), ms = 0.5 * model->m_ud_msbar(mu);
+
+            return (u * u * (3.0 * fpara * (ms - 11.0 * a1para(mu) * ms + 31.0 * a2para(mu) * ms + mud / 2.0 + 7.0 * a1para(mu) * mud / 2.0 + 11.0 * a2para(mu) * mud / 2.0) +
+                fperp(mu) * M_V * (6.0 + 6.0 * a2perp(mu) - 30.0 * kappa3perp(mu) + 3.0 * lambda3perp(mu) + 10.0 * omega3perp(mu) -
+                6.0 * a1perp(mu) * power_of<2>(-1.0 + u) - 4.0 * u + u * (-20.0 * (lambda3perp(mu) + 2.0 * omega3perp(mu)) -
+                30.0 * kappa3perp(mu) * (-2.0 + u) + 10.0 * omega3perp(mu) * (5.0 - 2.0 * u) * u +
+                lambda3perp(mu) * u * (45.0 + 14.0 * (-3.0 + u) * u) - 6.0 * a2perp(mu) * (4.0 + u * (-5.0 + 2.0 * u)))) -
+                fpara * u * (ms * (2.0 + 6.0 * a1para(mu) * (-5.0 + u) + 3.0 * a2para(mu) * (44.0 + u * (-25.0 + 6.0 * u))) +
+                mud / 2.0 * (2.0 + 6.0 * a1para(mu) * (1.0 + u) + 3.0 * a2para(mu) * (4.0 + u * (-5.0 + 6.0 * u))))) -
+                3.0 * (1.0 + 3.0 * a1para(mu) + 6.0 * a2para(mu)) * fpara * mud / 2.0 * (-((-2.0 + u) * u) + 2.0 * power_of<2>(-1.0 + u) * log(1.0 - u)) +
+                3.0 * (1.0 - 3.0 * a1para(mu) + 6.0 * a2para(mu)) * fpara * ms * u * u * (-1.0 + 2.0 * log(u))) / (2.0 * fperp(mu) * M_V);
+        }
+        inline double Barphi3para(const double & u, const double & mu) const
+        {
+            const double mud = 2.0 * model->m_s_msbar(mu), ms = 0.5 * model->m_ud_msbar(mu);
+
+            return (u * (6.0 - 6.0 * a1perp(mu) + 6.0 * a2perp(mu) + 10.0 * omega3perp(mu) - 12.0 * u + 24.0 * a1perp(mu) * u - 42.0 * a2perp(mu) * u - 100.0 * omega3perp(mu) * u +
+                8 * u * u - 36.0 * a1perp(mu) * u * u + 108.0 * a2perp(mu) * u * u + 300.0 * omega3perp(mu) * u * u + 18.0 * a1perp(mu) * power_of<3>(u) - 120.0 * a2perp(mu) * power_of<3>(u) -
+                350.0 * omega3perp(mu) * power_of<3>(u) + 48.0 * a2perp(mu) * power_of<4>(u) + 140.0 * omega3perp(mu) * power_of<4>(u) +
+                3.0 * (10.0 * kappa3perp(mu) - lambda3perp(mu)) * (-1.0 + u) * (1.0 + 5.0 * (-1.0 + u) * u) + (3.0 * fpara * (ms + mud / 2.0) * (-1.0 + u) * (5.0 * (a1para(mu) - 3.0 * a2para(mu) + 6.0 * a2para(mu) * u) +
+                (1.0 + 3.0 * a1para(mu) + 6.0 * a2para(mu)) * log(1.0 - u) + (-1.0 + 3.0 * a1para(mu) - 6.0 * a2para(mu)) * log(u))) / (fperp(mu) * M_V) -
+                (3.0 * fpara * (ms - mud / 2.0) * (-1.0 + u) * (1.0 + 6.0 * a1para(mu) * (-1.0 + 2.0 * u) + 2.0 * a2para(mu) * (8.0 + 15.0 * (-1.0 + u) * u) +
+                6.0 * a1para(mu) * atanh(1.0 - 2.0 * u) + (1.0 + 6.0 * a2para(mu)) * log(-((-1.0 + u) * u)))) / (fperp(mu) * M_V))) / 2;
+        }
+        inline double Barpsi3perp(const double & u, const double & mu) const
+        {
+            const double mud = 2.0 * model->m_s_msbar(mu), ms = 0.5 * model->m_ud_msbar(mu);
+
+            return (fpara * M_V * u * u * (12.0 + 15.0 * lambda3para(mu) - 30.0 * lambda3paratilde(mu) + 30 * omega3para(mu) - 15.0 * omega3paratilde(mu) - 12.0 * a1para(mu) * power_of<2>(-1.0 + u) -
+                80.0 * kappa3para(mu) * power_of<2>(-1.0 + u) - 8.0 * u - 12.0 * a2para(mu) * power_of<2>(-1.0 + u) * (-1.0 + 2.0 * u) + 80.0 * zeta3para(mu) +
+                5.0 * u * (lambda3paratilde(mu) * (40.0 - 2.0 * u * (45.0 + 14.0 * (-3.0 + u) * u)) + lambda3para(mu) * (-20.0 + u * (45.0 + 14.0 * (-3.0 + u) * u)) -
+                (4.0 + u * (-5.0 + 2.0 * u)) * (6.0 * omega3para(mu) - 3.0 * omega3paratilde(mu) + 16.0 * zeta3para(mu)))) - 4.0 * fperp(mu) * (ms + mud / 2.0) * (3.0 * (1.0 + 3.0 * a1perp(mu) +
+                6.0 * a2perp(mu)) * power_of<2>(-1.0 + u) * log(1.0 - u) + u * (3.0 - 6.0 * u + 4.0 * u * u + 6.0 * a2perp(mu) * (-1.0 + u) * (-1.0 + 2.0 * u) * (3.0 + 2.0 * (-1.0 + u) * u) +
+                9.0 * a1perp(mu) * (1.0 + (-2.0 + u) * u * u) + 3.0 * (-1.0 + 3.0 * a1perp(mu) - 6.0 * a2perp(mu)) * u * log(u))) + 12.0 * fperp(mu) * (ms - mud / 2.0) * ((1.0 + 3.0 * a1perp(mu) +
+                6.0 * a2perp(mu)) * power_of<2>(-1.0 + u) * log(1.0 - u) + u * ((-1.0 + u) * (-1.0 + a1perp(mu) * (-3.0 + 6.0 * u) + 2.0 * a2perp(mu) * (-3.0 - 5.0 * u + 5.0 * u * u)) +
+                (1.0 - 3.0 * a1perp(mu) + 6.0 * a2perp(mu)) * u * log(u)))) / (4.0 * fpara * M_V);
+        }
+        inline double Barphi3perp(const double & u, const double & mu) const
+        {
+            const double mud = 2.0 * model->m_s_msbar(mu), ms = 0.5 * model->m_ud_msbar(mu);
+
+            return (6.0 * u - 6.0 * a1para(mu) * u - 6.0 * u * u + 18.0 * a1para(mu) * u * u + 4.0 * power_of<3>(u) - 24.0 * a1para(mu) * power_of<3>(u) + 12.0 * a1para(mu) * power_of<4>(u) +
+                (5.0 * (16.0 * kappa3para(mu) - 3.0 * lambda3para(mu) + 6.0 * lambda3paratilde(mu)) * (-1.0 + u) * u * (1.0 + 5.0 * (-1.0 + u) * u)) / 2.0 + (3.0 * (12.0 * a2para(mu) +
+                70.0 * omega3para(mu) - 35.0 * omega3paratilde(mu)) * (-1.0 + u) * u * (-1.0 + 2.0 * u) * (1.0 + 7.0 * (-1.0 + u) * u)) / 14.0 + (8.0 * u * (1.0 - 3.0 * u +
+                2.0 * u * u) * (3.0 * a2para(mu) + 35.0 * zeta3para(mu))) / 7.0 - (6.0 * fperp(mu) * (ms - mud / 2.0) * ((-1.0 + u) * u * (2.0 + a1perp(mu) * (-3.0 + 6.0*u) +
+                a2perp(mu) * (22.0 - 20.0 * u + 20.0 * u * u)) + (1.0 + 3.0 * a1perp(mu) + 6.0 * a2perp(mu)) * (-1.0 + u) * log(1.0 - u) + (-1.0 + 3.0 * a1perp(mu) -
+                6.0 * a2perp(mu)) * u * log(u))) / (fpara * M_V) + (6.0 * fperp(mu) * (ms + mud / 2.0) * ((-1.0 + u) * u * (9.0 * a1perp(mu) + 10.0 * a2perp(mu) * (-1.0 + 2.0 * u)) +
+                (1.0 + 3.0 * a1perp(mu) + 6.0 * a2perp(mu)) * (-1.0 + u) * log(1.0 - u) + (1.0 - 3.0 * a1perp(mu) + 6.0 * a2perp(mu)) * u * log(u))) / (fpara * M_V)) / 4.0;
+        }
+        inline double BarBarpsi3para(const double & u, const double & mu) const
+        {
+            const double mud = 2.0 * model->m_s_msbar(mu), ms = 0.5 * model->m_ud_msbar(mu);
+
+            return (power_of<3>(u) * (-2.0 * fperp(mu) * M_V * (3.0 * a1perp(mu) * (10.0 - 15.0 * u + 6.0 * u * u) + 5.0 * (-6.0 - 3.0 * lambda3perp(mu) - 10.0 * omega3perp(mu) +
+                6.0 * a2perp(mu) * power_of<3>(-1.0 + u) + 3.0 * u + 15.0 * lambda3perp(mu) * u + 30.0 * omega3perp(mu) * u - 27.0 * lambda3perp(mu) * u * u - 30.0 * omega3perp(mu) * u * u +
+                21.0 * lambda3perp(mu) * power_of<3>(u) + 10.0 * omega3perp(mu) * power_of<3>(u) - 6.0 * lambda3perp(mu) * power_of<4>(u) + 3.0 * kappa3perp(mu) * (10.0 - 15.0 * u + 6.0 * u * u))) -
+                3.0 * fpara * (a1para(mu) * ms * (110.0 - 75.0 * u + 12.0 * u * u) + a1para(mu) * mud / 2.0 * (-70.0 + 15.0 * u + 12.0 * u * u) + 5.0 * ms * (-2.0 + u + a2para(mu) * (-62.0 + 66.0 * u -
+                30.0 * u * u + 6.0 * power_of<3>(u))) + 5.0 * mud / 2.0 * (-2.0 + u + a2para(mu) * (-22.0 + 6.0 * u - 6.0 * u * u + 6.0 * power_of<3>(u))))) - 10.0 * (1.0 + 3.0 * a1para(mu) +
+                6.0 * a2para(mu)) * fpara * mud / 2.0 * (u * (-6.0 + 15.0 * u - 5.0 * u * u) + 6.0 * power_of<3>(-1.0 + u) * log(1.0 - u)) + 10.0 * (1.0 - 3.0 * a1para(mu) +
+                6.0 * a2para(mu)) * fpara * ms*power_of<3>(u) * (-5.0 + 6.0 * log(u))) / (60.0 * fperp(mu) * M_V);
+        }
+        inline double BarBarphi3para(const double & u, const double & mu) const
+        {
+            const double mud = 2.0 * model->m_s_msbar(mu), ms = 0.5 * model->m_ud_msbar(mu);
+
+            return (30.0 * (1.0 + 3.0 * a1para(mu) + 6.0 * a2para(mu)) * fpara * mud / 2.0 * power_of<2>(-1.0 + u) * (1.0 + 2.0 * u) * log(1.0 - u) + u * (fperp(mu) * M_V * u * (6.0 * a1perp(mu) * (-15.0 +
+                40.0 * u - 45.0 * u * u + 18.0 * power_of<3>(u)) + 5.0 * (18.0 + 9.0 * lambda3perp(mu) + 30.0 * omega3perp(mu) - 24.0 * u - 36.0 * lambda3perp(mu) * u - 200.0 * omega3perp(mu) * u +
+                12.0 * u * u + 45.0 * lambda3perp(mu) * u * u + 450.0 * omega3perp(mu) * u * u - 18.0 * lambda3perp(mu) * power_of<3>(u) - 420.0 * omega3perp(mu) * power_of<3>(u) +
+                140.0 * omega3perp(mu) * power_of<4>(u) + 90.0 * kappa3perp(mu) * power_of<2>(-1.0 + u) * (-1.0 + 2.0 * u) + 6.0 * a2perp(mu) * power_of<2>(-1.0 + u) * (3.0 - 8.0 * u + 8.0 * u * u))) +
+                5.0 * fpara * (mud / 2.0 * (18.0 * a1para(mu) * power_of<2>(-1.0 + u) * (1.0 + 3.0 * u) + 2.0 * (3.0 - 3.0 * u + u * u) + 9 * a2para(mu) * power_of<2>(-1.0 + u) * (4.0 + 9.0 * u +
+                12.0 * u * u)) - ms * u * (2.0 * u + 18.0 * a1para(mu) * (4.0 - 7.0 * u + 3.0 * u * u) + 9.0 * a2para(mu) * (-25.0 + 58.0 * u - 45.0 * u * u + 12.0 * power_of<3>(u)))) +
+                30.0 * (-1.0 + 3.0 * a1para(mu) - 6.0 * a2para(mu)) * fpara * ms * u * (-3.0 + 2.0 * u) * log(u))) / (60.0 * fperp(mu) * M_V);
+        }
+        inline double BarBarpsi3perp(const double & u, const double & mu) const
+        {
+            const double mud = 2.0 * model->m_s_msbar(mu), ms = 0.5 * model->m_ud_msbar(mu);
+
+            return (-4.0 * fperp(mu) * u * (ms * u * u * (-5.0 + 15.0 * u + 3.0 * a1perp(mu) * (35.0 - 45.0 * u + 9.0 * u * u) + 30.0 * a2perp(mu) * (-11.0 + 18.0 * u - 9.0 * u * u +
+                2.0 * power_of<3>(u))) + mud / 2.0 * (3.0 * a1perp(mu) * (-30.0 + 75.0 * u - 55.0 * u * u + 9.0 * power_of<4>(u)) + 5.0 * (-6.0 + 15.0 * u - 11.0 * u * u + 3.0 * power_of<3>(u) +
+                6.0 * a2perp(mu) * power_of<3>(-1.0 + u) * (6.0 + 3.0 * u + 2.0 * u * u)))) + fpara * M_V * power_of<3>(u) * (-6.0 * a1para(mu) * (10.0 - 15.0 * u + 6.0 * u * u) -
+                5.0 * (-12.0 - 15.0 * lambda3para(mu) + 30.0 * lambda3paratilde(mu) - 30.0 * omega3para(mu) + 15.0 * omega3paratilde(mu) + 12.0 * a2para(mu) * power_of<3>(-1.0 + u) +
+                6.0 * u + 75.0 * lambda3para(mu) * u - 150.0 * lambda3paratilde(mu) * u + 90.0 * omega3para(mu) * u - 45.0 * omega3paratilde(mu) * u - 135.0 * lambda3para(mu) * u * u +
+                270.0 * lambda3paratilde(mu) * u * u - 90.0 * omega3para(mu) * u * u + 45.0 * omega3paratilde(mu) * u * u + 105.0 * lambda3para(mu) * power_of<3>(u) -
+                210.0 * lambda3paratilde(mu) * power_of<3>(u) + 30.0 * omega3para(mu) * power_of<3>(u) - 15.0 * omega3paratilde(mu) * power_of<3>(u) - 30.0 * lambda3para(mu) * power_of<4>(u) +
+                60.0 * lambda3paratilde(mu) * power_of<4>(u) + 8.0 * kappa3para(mu) * (10.0 - 15.0 * u + 6.0 * u * u) - 80.0 * zeta3para(mu) + 240.0 * u * zeta3para(mu) - 240.0 * u * u * zeta3para(mu) +
+                80.0 * power_of<3>(u) * zeta3para(mu))) - 120.0 * (1.0 + 3.0 * a1perp(mu) + 6.0 * a2perp(mu)) * fperp(mu) * mud / 2.0 * power_of<3>(-1.0 + u) * log(1.0 - u) - 120.0 * (-1.0 +
+                3.0 * a1perp(mu) - 6.0 * a2perp(mu)) * fperp(mu) * ms * power_of<3>(u) * log(u)) / (60.0 * fpara * M_V);
+        }
+        inline double BarBarphi3perp(const double & u, const double & mu) const
+        {
+            const double mud = 2.0 * model->m_s_msbar(mu), ms = 0.5 * model->m_ud_msbar(mu);
+
+            return (3.0 * u * u - 3.0 * a1para(mu) * u * u + (12.0 * a2para(mu) * u * u) / 7.0 - 2.0 * power_of<3>(u) + 6.0 * a1para(mu) * power_of<3>(u) - (24.0 * a2para(mu) * power_of<3>(u)) / 7.0 +
+                power_of<4>(u) - 6.0 * a1para(mu) * power_of<4>(u) + (12.0 * a2para(mu) * power_of<4>(u)) / 7.0 + (12.0 * a1para(mu) * power_of<5>(u)) / 5.0 + (5.0 * (16.0 * kappa3para(mu) -
+                3.0 * lambda3para(mu) + 6.0 * lambda3paratilde(mu)) * power_of<2>(-1.0 + u) * u * u * (-1.0 + 2.0 * u)) / 4.0 + ((12.0 * a2para(mu) + 70.0 * omega3para(mu) -
+                35.0 * omega3paratilde(mu)) * power_of<2>(-1.0 + u) * u * u * (3.0 + 14.0 * (-1.0 + u) * u)) / 28.0 + 20.0 * u * u * zeta3para(mu) - 40.0 * power_of<3>(u) * zeta3para(mu) +
+                20.0 * power_of<4>(u) * zeta3para(mu) - (fperp(mu) * (ms - mud / 2.0) * (3.0 * (1.0 + 3.0 * a1perp(mu) + 6.0 * a2perp(mu)) * power_of<2>(-1.0 + u) * log(1.0 - u) +
+                u * (3.0 - 6.0 * u + 4.0 * u * u + 6.0 * a2perp(mu) * (-1.0 + u) * (-1.0 + 2.0 * u) * (3.0 + 2.0 * (-1.0 + u) * u) + 9.0 * a1perp(mu) * (1.0 + (-2.0 + u) * u * u) +
+                3.0 * (-1.0 + 3.0 * a1perp(mu) - 6.0 * a2perp(mu)) * u * log(u)))) / (fpara * M_V) + (3.0 * fperp(mu) * (ms + mud / 2.0) * ((1.0 + 3.0 * a1perp(mu) +
+                6.0 * a2perp(mu)) * power_of<2>(-1.0 + u) * log(1.0 - u) + u * ((-1.0 + u) * (-1.0 + a1perp(mu) * (-3.0 + 6.0 * u) + 2.0 * a2perp(mu)*(-3.0 - 5.0 * u + 5.0 * u * u)) +
+                (1.0 - 3.0 * a1perp(mu) + 6.0 * a2perp(mu)) * u * log(u)))) / (fpara * M_V)) / 4.0;
         }
         // definition of chiral even parameters appearing in three-particle twist 4 LCDAs, [BBL:2007A], eq. 3.22 (renormalon model)
         inline double psi0para(const double &) const
@@ -1555,7 +1827,7 @@ namespace eos
             return 840.0 * u1 * u2 * u3 * u3 * u3 * xi0para(mu);
         }
 
-        // definition of chiral odd G conserving parameters appearing in three-particle twist 4 LCDAs, [BBL:2007A], eq. 4.13, setting zeta4perptilde = -zeta4perp (renormalon model)
+        // definition of chiral odd G conserving parameters appearing in three-particle twist 4 LCDAs, [BBL:2007A], eq. 4.13, setting zeta4perptilde = -zeta4perp(mu) (renormalon model)
         inline double psi0perp(const double & mu) const
         {
             return zeta4perp(mu);
@@ -1803,7 +2075,7 @@ namespace eos
                 mud * (41.0 + 108.0 * a1perp(mu) + 216 * a2perp(mu) + 5.0 * (1.0 - 2.0 * u) * u)) + 5.0 * fpara * M_V * (-1.0 + u) * (-16.0 * kappa3para(mu) * (1.0 + 2.0 * u) +
                 3.0 * u * u * (6.0 * a2para(mu) - 9.0 * omega3para(mu) + 14.0 * zeta3para(mu)))) * log(1.0 - u) - 8.0 * u * (72.0 * (-1.0 + 3.0 * a1perp(mu) - 6.0 * a2perp(mu)) * fperp(mu) * ms +
                 30.0 * fperp(mu) * (-1.0) * (-ms + mud) * u + 20.0 * fperp(mu) * (-1.0) * (ms - mud) * u * u + fpara * M_V * u * (80.0 * kappa3para(mu) * (3.0 - 2.0 * u) + 90.0 * a2para(mu) * (-1.0 + u) * (-1.0 + u) +
-                6.0 * a1para(mu) * (-3.0 + 2.0 * u) - 15.0 * (-1 + u) * (-1 + u) * (9.0 * omega3para(mu) - 14.0 * zeta3para(mu)))) * log(u));
+                6.0 * a1para(mu) * (-3.0 + 2.0 * u) - 15.0 * (-1.0 + u) * (-1.0 + u) * (9.0 * omega3para(mu) - 14.0 * zeta3para(mu)))) * log(u));
         }
     };
 
@@ -2078,6 +2350,54 @@ namespace eos
     KStarLCDAs::phi3perp(const double & u, const double & mu) const
     {
         return _imp->phi3perp(u, mu);
+    }
+
+    double
+    KStarLCDAs::Barpsi3para(const double & u, const double & mu) const
+    {
+        return _imp->Barpsi3para(u, mu);
+    }
+
+    double
+    KStarLCDAs::Barphi3para(const double & u, const double & mu) const
+    {
+        return _imp->Barphi3para(u, mu);
+    }
+
+    double
+    KStarLCDAs::Barpsi3perp(const double & u, const double & mu) const
+    {
+        return _imp->Barpsi3perp(u, mu);
+    }
+
+    double
+    KStarLCDAs::Barphi3perp(const double & u, const double & mu) const
+    {
+        return _imp->Barphi3perp(u, mu);
+    }
+
+    double
+    KStarLCDAs::BarBarpsi3para(const double & u, const double & mu) const
+    {
+        return _imp->BarBarpsi3para(u, mu);
+    }
+
+    double
+    KStarLCDAs::BarBarphi3para(const double & u, const double & mu) const
+    {
+        return _imp->BarBarphi3para(u, mu);
+    }
+
+    double
+    KStarLCDAs::BarBarpsi3perp(const double & u, const double & mu) const
+    {
+        return _imp->BarBarpsi3perp(u, mu);
+    }
+
+    double
+    KStarLCDAs::BarBarphi3perp(const double & u, const double & mu) const
+    {
+        return _imp->BarBarphi3perp(u, mu);
     }
 
     double

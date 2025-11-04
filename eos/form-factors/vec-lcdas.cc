@@ -55,6 +55,54 @@ namespace eos
         return 0.0;
     }
     double
+    VectorLCDAs::Barphi3para(const double &, const double &) const
+    {
+        throw InternalError("Not implemented!");
+        return 0.0;
+    }
+    double
+    VectorLCDAs::Barphi3perp(const double &, const double &) const
+    {
+        throw InternalError("Not implemented!");
+        return 0.0;
+    }
+    double
+    VectorLCDAs::Barpsi3para(const double &, const double &) const
+    {
+        throw InternalError("Not implemented!");
+        return 0.0;
+    }
+    double
+    VectorLCDAs::Barpsi3perp(const double &, const double &) const
+    {
+        throw InternalError("Not implemented!");
+        return 0.0;
+    }
+    double
+    VectorLCDAs::BarBarphi3para(const double &, const double &) const
+    {
+        throw InternalError("Not implemented!");
+        return 0.0;
+    }
+    double
+    VectorLCDAs::BarBarphi3perp(const double &, const double &) const
+    {
+        throw InternalError("Not implemented!");
+        return 0.0;
+    }
+    double
+    VectorLCDAs::BarBarpsi3para(const double &, const double &) const
+    {
+        throw InternalError("Not implemented!");
+        return 0.0;
+    }
+    double
+    VectorLCDAs::BarBarpsi3perp(const double &, const double &) const
+    {
+        throw InternalError("Not implemented!");
+        return 0.0;
+    }
+    double
     VectorLCDAs::phi4paraprime(const double &, const double &) const
     {
         throw InternalError("Not implemented!");

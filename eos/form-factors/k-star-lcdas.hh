@@ -86,6 +86,14 @@ namespace eos
             virtual double phi3perp(const double & u, const double & mu) const override;
             virtual double psi3para(const double & u, const double & mu) const override;
             virtual double psi3perp(const double & u, const double & mu) const override;
+            virtual double Barphi3para(const double & u, const double & mu) const override;
+            virtual double Barphi3perp(const double & u, const double & mu) const override;
+            virtual double Barpsi3para(const double & u, const double & mu) const override;
+            virtual double Barpsi3perp(const double & u, const double & mu) const override;
+            virtual double BarBarphi3para(const double & u, const double & mu) const override;
+            virtual double BarBarphi3perp(const double & u, const double & mu) const override;
+            virtual double BarBarpsi3para(const double & u, const double & mu) const override;
+            virtual double BarBarpsi3perp(const double & u, const double & mu) const override;
 
             /* Twist 3 three particle LCDAs */
             double Phi3para(const double & u1, const double & u2, const double & u3, const double & mu) const override;
@@ -177,7 +185,7 @@ namespace eos
             double kappa4para(const double & mu) const override;
             double kappa4perp(const double & mu) const override;
 
-            /* Twist 2 LCDAs */
+            /* Twist 2 LCDAs and their integrals */
             double phi2para(const double & u, const double & mu) const override;
             double phi2perp(const double & u, const double & mu) const override;
             double Barphi2para(const double & u, const double & mu) const override;
@@ -185,11 +193,19 @@ namespace eos
             double BarBarphi2para(const double & u, const double & mu) const override;
             double BarBarphi2perp(const double & u, const double & mu) const override;
 
-            /* Twist 3 two particle LCDAs */
+            /* Twist 3 two particle LCDAs and their integrals */
             virtual double phi3para(const double & u, const double & mu) const override;
             virtual double phi3perp(const double & u, const double & mu) const override;
             virtual double psi3para(const double & u, const double & mu) const override;
             virtual double psi3perp(const double & u, const double & mu) const override;
+            virtual double Barphi3para(const double & u, const double & mu) const override;
+            virtual double Barphi3perp(const double & u, const double & mu) const override;
+            virtual double Barpsi3para(const double & u, const double & mu) const override;
+            virtual double Barpsi3perp(const double & u, const double & mu) const override;
+            virtual double BarBarphi3para(const double & u, const double & mu) const override;
+            virtual double BarBarphi3perp(const double & u, const double & mu) const override;
+            virtual double BarBarpsi3para(const double & u, const double & mu) const override;
+            virtual double BarBarpsi3perp(const double & u, const double & mu) const override;
 
             /* Twist 3 three particle LCDAs */
             double Phi3para(const double & u1, const double & u2, const double & u3, const double & mu) const override;

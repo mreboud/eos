@@ -45,7 +45,7 @@ namespace eos
             virtual double a4perp(const double & mu) const = 0;
             virtual double fperp(const double & mu) const = 0;
 
-            /* Twist 2 LCDAs */
+            /* Twist 2 LCDAs and their integrals */
             virtual double phi2para(const double & u, const double & mu) const = 0;
             virtual double phi2perp(const double & u, const double & mu) const = 0;
             virtual double Barphi2para(const double & u, const double & mu) const;
@@ -64,11 +64,19 @@ namespace eos
             virtual double omega3perp(const double & mu) const = 0;
             virtual double lambda3perp(const double & mu) const = 0;
 
-            /* Twist 3 two particle LCDAs */
+            /* Twist 3 two particle LCDAs and their integrals */
             virtual double phi3para(const double & u, const double & mu) const = 0;
             virtual double phi3perp(const double & u, const double & mu) const = 0;
             virtual double psi3para(const double & u, const double & mu) const = 0;
             virtual double psi3perp(const double & u, const double & mu) const = 0;
+            virtual double Barphi3para(const double & u, const double & mu) const;
+            virtual double Barphi3perp(const double & u, const double & mu) const;
+            virtual double Barpsi3para(const double & u, const double & mu) const;
+            virtual double Barpsi3perp(const double & u, const double & mu) const;
+            virtual double BarBarphi3para(const double & u, const double & mu) const;
+            virtual double BarBarphi3perp(const double & u, const double & mu) const;
+            virtual double BarBarpsi3para(const double & u, const double & mu) const;
+            virtual double BarBarpsi3perp(const double & u, const double & mu) const;
 
             /* Twist 3 three particle LCDAs */
             virtual double Phi3para(const double & u1, const double & u2, const double & u3, const double & mu) const = 0;
