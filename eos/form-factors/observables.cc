@@ -30,9 +30,10 @@
 #include <eos/form-factors/parametric-bgjvd2019.hh>
 #include <eos/form-factors/parametric-bgl1997.hh>
 #include <eos/form-factors/parametric-bfw2010.hh>
-#include <eos/form-factors/parametric-g2026.hh>
+#include <eos/form-factors/parametric-bhkmnr2026.hh>
 #include <eos/form-factors/parametric-bmrvd2022.hh>
 #include <eos/form-factors/parametric-fvdv2018.hh>
+#include <eos/form-factors/parametric-g2026.hh>
 #include <eos/form-factors/parametric-hkvt2025.hh>
 #include <eos/form-factors/parametric-kkrvd2024.hh>
 #include <eos/form-factors/parametric-kkvdz2022.hh>
@@ -3110,7 +3111,7 @@ namespace eos
     ObservableGroup
     make_vacuum_to_pipi_form_factors_group()
     {
-        auto imp = new Implementation<ObservableGroup>{
+        auto imp = new Implementation<ObservableGroup>(
             R"(Form factors for $0 \to \pi \pi$ transitions)",
             R"(Pseudo observables representing the full basis of $0 \to \pi \pi$ form factors. )"
             R"(The specific parametrization can be chosen via the "form-factors" option.)",
@@ -3149,9 +3150,35 @@ namespace eos
                         &KKRvD2024FormFactors<VacuumToPiPi>::r_pi_squared),
 
                 make_observable("0->pipi::Saturation@KKRvD2024", R"(\textrm{Saturation})", Unit::None(),
-                        &KKRvD2024FormFactors<VacuumToPiPi>::saturation)
+                        &KKRvD2024FormFactors<VacuumToPiPi>::saturation),
+
+                make_observable("0->pipi::Abs{f_+}^2(Re{psi},Im{psi})@BHKMNR2026", R"(|f_+^{0\to\pi\pi}(\psi)|^2)", Unit::None(),
+                        &BHKMNR2026FormFactors<VacuumToPiPi>::abs2_f_p_of_psi, std::make_tuple("Re{psi}", "Im{psi}")),
+
+                make_observable("0->pipi::Arg{f_+}(Re{psi},Im{psi})@BHKMNR2026", R"(\textrm{Arg}(f_+^{0\to\pi\pi}(\psi)))", Unit::None(),
+                        &BHKMNR2026FormFactors<VacuumToPiPi>::arg_f_p_of_psi, std::make_tuple("Re{psi}", "Im{psi}")),
+
+                make_observable("0->pipi::Re{t_1^1}(q2)@BHKMNR2026", R"(\textrm{Re}(t_1^{1, 0\to \pi\pi}(q^2)))",
+                        Unit::None(),
+                        &BHKMNR2026FormFactors<VacuumToPiPi>::re_partial_wave, std::make_tuple("q2")),
+
+                make_observable("0->pipi::Im{t_1^1}(q2)@BHKMNR2026", R"(\textrm{Im}(t_1^{1, 0\to \pi\pi}(q^2)))",
+                        Unit::None(),
+                        &BHKMNR2026FormFactors<VacuumToPiPi>::im_partial_wave, std::make_tuple("q2")),
+
+                make_observable("0->pipi::d2fdpsi2_over_f@BHKMNR2026", R"(f^{(2)}(s_+)/f(s_+))", Unit::None(),
+                        &BHKMNR2026FormFactors<VacuumToPiPi>::d2fdpsi2_over_f),
+
+                make_observable("0->pipi::d3fdpsi3_over_f@BHKMNR2026", R"(f^{(3)}(s_+)/f(s_+))", Unit::None(),
+                        &BHKMNR2026FormFactors<VacuumToPiPi>::d3fdpsi3_over_f),
+
+                make_observable("0->pipi::d{f_+}_dpsi_at_0@BHKMNR2026", R"(df_+/d\psi)", Unit::None(),
+                        &BHKMNR2026FormFactors<VacuumToPiPi>::dfdpsi_11_at_0),
+
+                make_observable("0->pipi::Saturation@BHKMNR2026", R"(\textrm{Saturation})", Unit::None(),
+                        &BHKMNR2026FormFactors<VacuumToPiPi>::saturation),
             }
-        };
+        );
 
         return ObservableGroup(imp);
     }

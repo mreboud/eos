@@ -32,6 +32,7 @@
 #include <eos/form-factors/parametric-bfw2010.hh>
 #include <eos/form-factors/parametric-bgl1997.hh>
 #include <eos/form-factors/parametric-bgjvd2019.hh>
+#include <eos/form-factors/parametric-bhkmnr2026.hh>
 #include <eos/form-factors/parametric-bsz2015.hh>
 #include <eos/form-factors/parametric-fvdv2018.hh>
 #include <eos/form-factors/parametric-g2026.hh>
@@ -716,8 +717,9 @@ namespace eos
     const std::map<FormFactorFactory<VacuumToPP>::KeyType, FormFactorFactory<VacuumToPP>::ValueType>
     FormFactorFactory<VacuumToPP>::form_factors
     {
-        { "0->pipi::KKRvD2024",     &KKRvD2024FormFactors<VacuumToPiPi>::make },
-        { "0->Kpi::KSvD2025",       &KSvD2025FormFactors<VacuumToKPi>::make   },
+        { "0->pipi::KKRvD2024",     &KKRvD2024FormFactors<VacuumToPiPi>::make  },
+        { "0->pipi::BHKMNR2026",    &BHKMNR2026FormFactors<VacuumToPiPi>::make },
+        { "0->Kpi::KSvD2025",       &KSvD2025FormFactors<VacuumToKPi>::make    },
     };
 
     std::shared_ptr<FormFactors<VacuumToPP>>
