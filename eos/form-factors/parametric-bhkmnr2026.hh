@@ -1,3 +1,23 @@
+/* vim: set sw=4 sts=4 et foldmethod=syntax : */
+
+/*
+ * Copyright (c) 2026 Fatemeh Nouri
+ * Copyright (c) 2026 Méril Reboud
+ *
+ * This file is part of the EOS project. EOS is free software;
+ * you can redistribute it and/or modify it under the terms of the GNU General
+ * Public License version 2, as published by the Free Software Foundation.
+ *
+ * EOS is distributed in the hope that it will be useful, but WITHOUT ANY
+ * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more
+ * details.
+ *
+ * You should have received a copy of the GNU General Public License along with
+ * this program; if not, write to the Free Software Foundation, Inc., 59 Temple
+ * Place, Suite 330, Boston, MA  02111-1307  USA
+ */
+
 #ifndef EOS_GUARD_EOS_FORM_FACTORS_PARAMETRIC_BHKMNR2026_HH
 #define EOS_GUARD_EOS_FORM_FACTORS_PARAMETRIC_BHKMNR2026_HH 1
 
@@ -5,6 +25,7 @@
 #include <eos/form-factors/mesonic-processes.hh>
 #include <eos/maths/complex.hh>
 #include <eos/maths/power-of.hh>
+#include <eos/utils/exception.hh>
 #include <eos/utils/parameters.hh>
 #include <eos/utils/reference-name.hh>
 #include <gsl/gsl_linalg.h>
@@ -198,6 +219,29 @@ namespace eos
             }
 
 
+            inline complex<double> _P_residue(const unsigned & k) const
+            {
+                const std::size_t num_resonances = stoi(_n_resonances.value());
+
+                if (k > num_resonances)
+                    throw InternalError("The residue index must be smaller than the number of used resonances.");
+
+                complex<double> psi_residue   = _psi_r(_M_fp_I1[k](), _G_fp_I1[k]());
+                complex<double> result        = power_of<2>(psi_residue - 1.0) / (psi_residue - std::conj(psi_residue));
+
+                for (auto i = 0u; i < num_resonances; i++)
+                {
+                    if (i != k)
+                    {
+                        complex<double> psi_r   = _psi_r(_M_fp_I1[i](), _G_fp_I1[i]());
+                        result /= (psi_residue - psi_r) * (psi_residue - std::conj(psi_r));
+                    }
+                }
+
+                return result;
+            }
+
+
 
             inline complex<double> _dPdpsi(const complex<double> & psi) const
             {
@@ -307,7 +351,7 @@ namespace eos
             complex<double> P(const complex<double> & psi) const;
             complex<double> dPdpsi(const complex<double> & psi) const;
             complex<double> dfdpsi_terms(const unsigned k, const complex<double> & psi) const;
-            complex<double> series(const complex<double> & psi, const std::array<double, 12u> & a) const;
+            complex<double> series(const complex<double> & psi, const std::array<double, 13> & a) const;
             complex<double> f_p_of_psi(const complex<double> & psi) const;
             double abs2_f_p_of_psi(const double & re_psi, const double & im_psi) const
             {
@@ -360,6 +404,14 @@ namespace eos
             }
             double dispersive_integrand(const double & s) const;
             double saturation() const;
+
+            //residue functions
+            complex<double> residue(const unsigned & k) const;
+            double re_residue_rho() const;
+            double im_residue_rho() const;
+            //complex<double> residue_rho_s() const
+            //double re_residue_rho_s() const
+            //double im_residue_rho_s() const
 
 
             static std::vector<OptionSpecification>::const_iterator begin_options();

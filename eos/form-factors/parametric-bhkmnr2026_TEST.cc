@@ -157,7 +157,8 @@ class ParametricBHKMNR2026Test :
                     TEST_CHECK_NEARLY_EQUAL(real(ff.dfdpsi_11(1.0)),                                           0.00000000,    eps);
                     TEST_CHECK_NEARLY_EQUAL(real(ff.dfdpsi_11(1.0)),                                           0.00000000,    eps);
 
-                    TEST_CHECK_NEARLY_EQUAL(ff.saturation(),                                                   0.26055869,    eps);
+                    // Lowering the precision to align with the integration precision
+                    TEST_CHECK_RELATIVE_ERROR(ff.saturation(),                                                 0.26055906,    1e-5);
 
                     TEST_CHECK_NEARLY_EQUAL(real(ff.f_p_of_psi(complex<double>(0.5, 0.5))),                    0.08387160,    eps);
                     TEST_CHECK_NEARLY_EQUAL(imag(ff.f_p_of_psi(complex<double>(0.5, 0.5))),                   -0.65190022,    eps);
@@ -174,7 +175,8 @@ class ParametricBHKMNR2026Test :
                     TEST_CHECK_NEARLY_EQUAL(ff.arg_f_p_of_psi( 0.0, 0.0),                                      0.00000000,    eps);
                     TEST_CHECK_NEARLY_EQUAL(ff.arg_f_p_of_psi(-1.0, 0.0),                                      0.00000000,    eps);
 
-                    //residue at the rho pole should be real and positive
+                    TEST_CHECK_NEARLY_EQUAL(ff.re_residue_rho(),                                               0.04063694,    eps);
+                    TEST_CHECK_NEARLY_EQUAL(ff.im_residue_rho(),                                               0.25969762,    eps);
                 }
             }
         }

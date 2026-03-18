@@ -3177,6 +3177,12 @@ namespace eos
 
                 make_observable("0->pipi::Saturation@BHKMNR2026", R"(\textrm{Saturation})", Unit::None(),
                         &BHKMNR2026FormFactors<VacuumToPiPi>::saturation),
+
+                 make_observable("0->pipi::Re{Res_psi{f_+}}@BHKMNR2026", R"(\textrm{Re}\,\textrm{Res}_{\psi} (s_\rho^2)\,f_+^{0\to\pi\pi})", Unit::None(),
+                        &BHKMNR2026FormFactors<VacuumToPiPi>::re_residue_rho),
+
+                make_observable("0->pipi::Im{Res_psi{f_+}}@BHKMNR2026", R"(\textrm{Im}\,\textrm{Res}_{\psi} (s_\rho^2)\,f_+^{0\to\pi\pi})", Unit::None(),
+                        &BHKMNR2026FormFactors<VacuumToPiPi>::im_residue_rho),
             }
         );
 
