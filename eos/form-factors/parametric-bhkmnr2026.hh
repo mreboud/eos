@@ -69,13 +69,13 @@ namespace eos
 
             inline complex<double> _s_p() const
             {
-                return 4.0 * power_of<2>(_m_pi()); // pair-production threshold s_plus
+                return complex<double>(4.0 * power_of<2>(_m_pi()), 0.0); // pair-production threshold s_plus
             }
 
 
             inline complex<double> _s_m() const
             {
-                return complex<double>(0.0); // start of the left-hand cut s_minus
+                return complex<double>(0.0, 0.0); // start of the left-hand cut s_minus
             }
 
 
@@ -90,10 +90,12 @@ namespace eos
             inline complex<double> _s_to_phi_11(const complex<double> & s, const complex<double> & s_in) const
             {
                 const complex<double> s_p = _s_p();
-                const double  eps = 1e-14;
+                const double eps          = 1e-14;
 
                 if (std::abs(s - s_p) < eps)
-                    return 0.0;
+                {
+                    return complex<double>(0.0, 0.0);
+                }
 
                 return (std::sqrt(s_in - s) - std::sqrt(s_in - s_p)) / std::sqrt(s_p - s);
             }
@@ -102,10 +104,12 @@ namespace eos
             inline complex<double> _s_to_phi_21(const complex<double> & s, const complex<double> & s_in) const
             {
                 const complex<double> s_p = _s_p();
-                const double  eps = 1e-14;
+                const double eps          = 1e-14;
 
-                if (std::abs(s - s_p ) < eps)
-                    return 0.0;
+                if (std::abs(s - s_p) < eps)
+                {
+                    return complex<double>(0.0, 0.0);
+                }
 
                 return (- std::sqrt(s_in - s) + std::sqrt(s_in - s_p)) / std::sqrt(s_p - s);
             }
@@ -115,10 +119,12 @@ namespace eos
             inline complex<double> _s_to_phi_22(const complex<double> & s, const complex<double> & s_in) const
             {
                 const complex<double> s_p = _s_p();
-                const double  eps = 1e-14;
+                const double eps          = 1e-14;
 
-                if (std::abs(s - s_p ) < eps)
-                    return 0.0;
+                if (std::abs(s - s_p) < eps)
+                {
+                    return complex<double>(0.0, 0.0);
+                }
 
                 return (std::sqrt(s_in - s) + std::sqrt(s_in - s_p)) / std::sqrt(s_p - s);
             }
@@ -128,17 +134,18 @@ namespace eos
             inline complex<double> _s_to_phi_12(const complex<double> & s, const complex<double> & s_in) const
             {
                 const complex<double> s_p = _s_p();
-                const double  eps = 1e-14;
+                const double eps          = 1e-14;
 
-                if (std::abs(s - s_p ) < eps)
-                    return 0.0;
+                if (std::abs(s - s_p) < eps)
+                {
+                    return complex<double>(0.0, 0.0);
+                }
 
                 return (- std::sqrt(s_in - s) - std::sqrt(s_in - s_p)) / std::sqrt(s_p - s);
             }
 
 
             // The name chi is chosen to be consistent with eq. (4.3) of arxiv:2510.25584
-
             inline complex<double> _chi(const complex<double> & x, const complex<double> & x_L, const complex<double> & x_0) const
             {
                 const complex<double> A = (x * power_of<2>(x_L - 1.0) - x_L * power_of<2>(x - 1.0)) * power_of<2>(x_0 - 1.0);
@@ -146,7 +153,6 @@ namespace eos
 
                 return (std::sqrt(A) - std::sqrt(B)) / (std::sqrt(A) + std::sqrt(B));
             }
-
 
             inline complex<double> _s_to_psi_11(const complex<double> & s) const
             {
@@ -157,8 +163,6 @@ namespace eos
                 return _chi(_s_to_phi_11(s, s_in), phi_L, _s_to_phi_11(s_0, s_in));
             }
 
-
-
             inline complex<double> _s_to_psi_21(const complex<double> & s) const
             {
                 const complex<double> s_0   = _s_0();
@@ -167,7 +171,6 @@ namespace eos
 
                 return _chi(_s_to_phi_21(s, s_in), phi_L, _s_to_phi_11(s_0, s_in));
             }
-
 
             inline complex<double> _s_to_psi_22(const complex<double> & s) const
             {
@@ -188,7 +191,6 @@ namespace eos
             }
 
 
-
             inline complex<double> _psi_r(const double & M, const double & Gamma) const
             {
                 if (M * M < _s_in()) // the resonance is below the inelastic threshold, so we are on the 21 Riemann sheet
@@ -207,7 +209,7 @@ namespace eos
             {
                 complex<double> psi_r;
                 const std::size_t num_resonances = stoi(_n_resonances.value());
-                complex<double> result  = power_of<2>(psi - 1.0);
+                complex<double> result           = power_of<2>(psi - 1.0);
 
                 for (auto i = 0u; i < num_resonances; i++)
                 {
@@ -226,14 +228,14 @@ namespace eos
                 if (k > num_resonances)
                     throw InternalError("The residue index must be smaller than the number of used resonances.");
 
-                complex<double> psi_residue   = _psi_r(_M_fp_I1[k](), _G_fp_I1[k]());
-                complex<double> result        = power_of<2>(psi_residue - 1.0) / (psi_residue - std::conj(psi_residue));
+                complex<double> psi_residue = _psi_r(_M_fp_I1[k](), _G_fp_I1[k]());
+                complex<double> result      = power_of<2>(psi_residue - 1.0) / (psi_residue - std::conj(psi_residue));
 
                 for (auto i = 0u; i < num_resonances; i++)
                 {
                     if (i != k)
                     {
-                        complex<double> psi_r   = _psi_r(_M_fp_I1[i](), _G_fp_I1[i]());
+                        complex<double> psi_r = _psi_r(_M_fp_I1[i](), _G_fp_I1[i]());
                         result /= (psi_residue - psi_r) * (psi_residue - std::conj(psi_r));
                     }
                 }
@@ -246,15 +248,12 @@ namespace eos
             inline complex<double> _dPdpsi(const complex<double> & psi) const
             {
                 const std::size_t num_resonances = stoi(_n_resonances.value());
+                const complex<double> P_val      = _P(psi);
+                complex<double> sum              = complex<double>(0.0, 0.0);
 
-                const complex<double> P_val = _P(psi);
-
-                complex<double> sum = 0.0;
-
-                for (std::size_t i = 0; i < num_resonances; ++i)
+                for (auto i = 0u; i < num_resonances; ++i)
                 {
                     const complex<double> psi_r = _psi_r(_M_fp_I1[i](), _G_fp_I1[i]());
-
                     const complex<double> denom = (psi - psi_r) * (psi - std::conj(psi_r));
 
                     sum += (2.0 * psi - psi_r - std::conj(psi_r)) / denom;
@@ -265,9 +264,9 @@ namespace eos
 
 
 
-            inline std::complex<double> _dfdpsi_terms(const unsigned k, const std::complex<double> & psi) const
+            inline complex<double> _dfdpsi_terms(const unsigned k, const complex<double> & psi) const
             {
-                const std::complex<double> dP_val = _dPdpsi(psi);
+                const complex<double> dP_val = _dPdpsi(psi);
 
                 switch (k)
                 {
@@ -276,8 +275,8 @@ namespace eos
                     case 1:
                         return dP_val * psi + _P(psi);
                     default:
-                        std::complex<double> psi_km1 = std::pow(psi, k - 1);
-                        std::complex<double> psi_k   = psi_km1 * psi;
+                        complex<double> psi_km1 = std::pow(psi, k - 1);
+                        complex<double> psi_k   = psi_km1 * psi;
                         return dP_val * psi_k + static_cast<double>(k) * _P(psi) * psi_km1;
                 }
             }
@@ -286,22 +285,22 @@ namespace eos
             //This function will be used to find scattering lenght
             struct PDerivatives
             {
-                std::complex<double> P1;  // first derivative respect to psi
-                std::complex<double> P2;  // second derivative respect to psi
-                std::complex<double> P3;  // third derivative respect to psi
+                complex<double> P1;  // first derivative respect to psi
+                complex<double> P2;  // second derivative respect to psi
+                complex<double> P3;  // third derivative respect to psi
             };
 
-            inline PDerivatives _P_derivatives(const std::complex<double>& psi) const
+            inline PDerivatives _P_derivatives(const complex<double>& psi) const
             {
                 const std::size_t num_resonances = stoi(_n_resonances.value());
 
                 const complex<double> P_val = _P(psi);
 
-                std::complex<double> L  =  2.0 / (psi - 1.0);
-                std::complex<double> L1 = -2.0 / power_of<2>(psi - 1.0);
-                std::complex<double> L2 =  4.0 / power_of<3>(psi - 1.0);
+                complex<double> L  =  2.0 / (psi - 1.0);
+                complex<double> L1 = -2.0 / power_of<2>(psi - 1.0);
+                complex<double> L2 =  4.0 / power_of<3>(psi - 1.0);
 
-                for (std::size_t i = 0; i < num_resonances; ++i)
+                for (auto i = 0u; i < num_resonances; ++i)
                 {
                     const complex<double> psi_r = _psi_r(_M_fp_I1[i](), _G_fp_I1[i]());
 
@@ -339,7 +338,6 @@ namespace eos
 
 
         public:
-
             BHKMNR2026FormFactors(const Parameters & p, const Options & o);
             ~BHKMNR2026FormFactors();
 

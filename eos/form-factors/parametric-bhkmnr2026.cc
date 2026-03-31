@@ -119,13 +119,11 @@ namespace eos
         return new BHKMNR2026FormFactors<VacuumToPiPi>(p, o);
     }
 
-
     complex<double>
     BHKMNR2026FormFactors<VacuumToPiPi>::psi(const complex<double> & s) const
     {
         return this->_s_to_psi_11(s);
     }
-
 
     complex<double>
     BHKMNR2026FormFactors<VacuumToPiPi>::P(const complex<double> & psi) const
@@ -133,13 +131,11 @@ namespace eos
         return this->_P(psi);
     }
 
-
     complex<double>
     BHKMNR2026FormFactors<VacuumToPiPi>::dPdpsi(const complex<double> & psi) const
     {
         return this->_dPdpsi(psi);
     }
-
 
     complex<double>
     BHKMNR2026FormFactors<VacuumToPiPi>::dfdpsi_terms(const unsigned k, const complex<double> & psi) const
@@ -147,13 +143,13 @@ namespace eos
         return this->_dfdpsi_terms(k, psi);
     }
 
-
-    complex<double> BHKMNR2026FormFactors<VacuumToPiPi>::series(const complex<double> & psi, const std::array<double, 13> & a) const
+    complex<double>
+    BHKMNR2026FormFactors<VacuumToPiPi>::series(const complex<double> & psi, const std::array<double, 13> & a) const
     {
         complex<double> series    = 0.0;
         complex<double> psi_power = 1.0;
 
-        for (std::size_t k = 0; k < a.size(); ++k)
+        for (auto k = 0u; k < 12; k++)
         {
             series    += a[k] * psi_power;
             psi_power *= psi;
@@ -162,20 +158,18 @@ namespace eos
         return series;
     }
 
-
     std::array<double, 4u>
     BHKMNR2026FormFactors<VacuumToPiPi>::constrained_a_fp_I1() const
     {
-
         const complex<double> psi_p  = _s_to_psi_11(_s_p());
         const complex<double> psi_in = _s_to_psi_11(_s_in());
         const complex<double> psi_0  = _s_to_psi_11(_s_0());
         const complex<double> P0     = _P(psi_0);
 
         //Fill M
-        complex<double> psi0_pow = 1.0;
+        complex<double> psi0_pow = complex<double>(1.0, 0.0);
 
-        for (unsigned k = 0; k < 4; ++k)
+        for (auto k = 0u; k < 4; k++)
         {
             const complex<double> val_p  = _dfdpsi_terms(k, psi_p);
             const complex<double> val_in = _dfdpsi_terms(k, psi_in);
@@ -191,11 +185,11 @@ namespace eos
         //Fill L
         const unsigned n = 3 + _a_fp_I1.size();
 
-        complex<double> sum_p    = 0.0;
-        complex<double> sum_in   = 0.0;
-        complex<double> sum_0    = 0.0;
+        complex<double> sum_p  = complex<double>(0.0, 0.0);
+        complex<double> sum_in = complex<double>(0.0, 0.0);
+        complex<double> sum_0  = complex<double>(0.0, 0.0);
 
-        for (unsigned k = 4; k <= n; ++k)
+        for (auto k = 4u; k <= n; k++)
         {
             const double ak = _a_fp_I1[k - 4]();
 
@@ -222,7 +216,7 @@ namespace eos
         gsl_blas_dgemv(CblasNoTrans, 1.0, _inv_M, _L, 0.0, _constrained_coefficents);
 
         std::array<double, 4u> result;
-        for (unsigned i = 0; i < 4; ++i)
+        for (auto i = 0u; i < 4; ++i)
         {
             result[i] = gsl_vector_get(_constrained_coefficents, i);
         }
@@ -238,8 +232,7 @@ namespace eos
         std::copy(constrained_a.cbegin(), constrained_a.cend(), a.begin()); // copy constrained coefficients
         std::copy(_a_fp_I1.cbegin(), _a_fp_I1.cend(), a.begin() + 4);       // copy unconstrained coefficients
 
-        const auto series = this->series(psi, a);
-        return this->_P(psi) * series;
+        return this->_P(psi) * this->series(psi, a);
     }
 
 
@@ -247,7 +240,6 @@ namespace eos
     BHKMNR2026FormFactors<VacuumToPiPi>::f_p(const complex<double> & s) const
     {
         const complex<double> psi  = this->_s_to_psi_11(s);
-        const complex<double> P    = this->_P(psi);
 
         // prepare expansion coefficients
         std::array<double, 13> a;
@@ -255,10 +247,8 @@ namespace eos
         std::copy(constrained_a.cbegin(), constrained_a.cend(), a.begin()); // copy constrained coefficients
         std::copy(_a_fp_I1.cbegin(), _a_fp_I1.cend(), a.begin() + 4);       // copy unconstrained coefficients
 
-        const auto series = this->series(psi, a);
-        return P * series;
+        return this->_P(psi) * this->series(psi, a);
     }
-
 
     complex<double>
     BHKMNR2026FormFactors<VacuumToPiPi>::f_p(const double & s) const
@@ -267,12 +257,10 @@ namespace eos
         return f_p(complex<double>(s, eps));
     }
 
-
     complex<double>
     BHKMNR2026FormFactors<VacuumToPiPi>::f_p_21(const complex<double> & s) const
     {
-        const complex<double> psi  = this->_s_to_psi_21(s);
-        const complex<double> P    = this->_P(psi);
+        const complex<double> psi = this->_s_to_psi_21(s);
 
         // prepare expansion coefficients
         std::array<double, 13> a;
@@ -280,10 +268,8 @@ namespace eos
         std::copy(constrained_a.cbegin(), constrained_a.cend(), a.begin()); // copy constrained coefficients
         std::copy(_a_fp_I1.cbegin(), _a_fp_I1.cend(), a.begin() + 4);       // copy unconstrained coefficients
 
-        return P * this->series(psi, a);
+        return this->_P(psi) * this->series(psi, a);
     }
-
-
 
     complex<double>
     BHKMNR2026FormFactors<VacuumToPiPi>::f_p_21(const double & s) const
@@ -298,9 +284,12 @@ namespace eos
     BHKMNR2026FormFactors<VacuumToPiPi>::partial_wave(const complex<double> & s) const
     {
         const complex<double> s_p = this->_s_p();
-        const double  eps = 1e-14;
+        static const double eps   = 1.0e-14;
+
         if (std::abs(s - s_p ) < eps)
+        {
             return 0.0;
+        }
 
         const complex<double> f_p_11 = this->f_p(s);
         const complex<double> f_p_21 = this->f_p_21(s);
@@ -325,9 +314,9 @@ namespace eos
         const complex<double> P     = this->_P(psi_p);
 
         const auto derivs = this->_P_derivatives(psi_p);
-        const std::complex<double> P1 = derivs.P1;
-        const std::complex<double> P2 = derivs.P2;
-        const std::complex<double> P3 = derivs.P3;
+        const complex<double> P1 = derivs.P1;
+        const complex<double> P2 = derivs.P2;
+        const complex<double> P3 = derivs.P3;
 
         // prepare expansion coefficients
         std::array<double, 13> a;
@@ -335,17 +324,17 @@ namespace eos
         std::copy(constrained_a.cbegin(), constrained_a.cend(), a.begin()); // copy constrained coefficients
         std::copy(_a_fp_I1.cbegin(), _a_fp_I1.cend(), a.begin() + 4);       // copy unconstrained coefficients
 
-        std::complex<double> psi_k   = 1.0;
-        std::complex<double> psi_km1 = 0.0;
-        std::complex<double> psi_km2 = 0.0;
-        std::complex<double> psi_km3 = 0.0;
+        complex<double> psi_k   = 1.0;
+        complex<double> psi_km1 = 0.0;
+        complex<double> psi_km2 = 0.0;
+        complex<double> psi_km3 = 0.0;
 
-        std::complex<double> S  = 0.0; // S = \sum a_k psi^k
-        std::complex<double> S1 = 0.0; // S1 = \sum a_k k psi^(k-1)
-        std::complex<double> S2 = 0.0; // S2 = \sum a_k k (k-1) psi^(k-2)
-        std::complex<double> S3 = 0.0; // S3 = \sum a_k k (k-1) (k-2) psi^(k-3)
+        complex<double> S  = 0.0; // S = \sum a_k psi^k
+        complex<double> S1 = 0.0; // S1 = \sum a_k k psi^(k-1)
+        complex<double> S2 = 0.0; // S2 = \sum a_k k (k-1) psi^(k-2)
+        complex<double> S3 = 0.0; // S3 = \sum a_k k (k-1) (k-2) psi^(k-3)
 
-        for (std::size_t k = 0; k < a.size(); ++k)
+        for (auto k = 0u; k < a.size(); k++)
         {
             S  += a[k] * psi_k;
             S1 += a[k] * k * psi_km1;
@@ -369,11 +358,9 @@ namespace eos
     complex<double>
     BHKMNR2026FormFactors<VacuumToPiPi>::dfdpsi_11(const complex<double> & s) const
     {
-        const complex<double> psi  = this->_s_to_psi_11(s);
-        const complex<double> P    = this->_P(psi);
-
-
-        const std::complex<double> P1 = this->_dPdpsi(psi); //first derivative of P with respect to psi
+        const complex<double> psi = this->_s_to_psi_11(s);
+        const complex<double> P   = this->_P(psi);
+        const complex<double> P1  = this->_dPdpsi(psi); //first derivative of P with respect to psi
 
         // prepare expansion coefficients
         std::array<double, 13> a;
@@ -381,14 +368,12 @@ namespace eos
         std::copy(constrained_a.cbegin(), constrained_a.cend(), a.begin()); // copy constrained coefficients
         std::copy(_a_fp_I1.cbegin(), _a_fp_I1.cend(), a.begin() + 4);       // copy unconstrained coefficients
 
-        std::complex<double> psi_k    = 1.0;
-        std::complex<double> psi_km1  = 0.0;
+        complex<double> psi_k    = 1.0;
+        complex<double> psi_km1  = 0.0;
+        complex<double> S        = 0.0; // S = \sum a_k psi^k
+        complex<double> S1       = 0.0; // S1 = \sum a_k k psi^(k-1)
 
-        std::complex<double> S  = 0.0; // S = \sum a_k psi^k
-        std::complex<double> S1 = 0.0; // S1 = \sum a_k k psi^(k-1)
-
-
-        for (std::size_t k = 0; k < a.size(); ++k)
+        for (auto k = 0u; k < a.size(); k++)
         {
             S  += a[k] * psi_k;
             S1 += a[k] * k * psi_km1;
