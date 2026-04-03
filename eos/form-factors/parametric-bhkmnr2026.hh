@@ -30,6 +30,7 @@
 #include <eos/utils/reference-name.hh>
 #include <gsl/gsl_linalg.h>
 #include <gsl/gsl_matrix.h>
+#include <gsl/gsl_poly.h>
 
 #include <array>
 
@@ -61,6 +62,7 @@ namespace eos
             gsl_vector * _L;
             gsl_permutation * _perm;
             gsl_vector * _constrained_coefficents;
+            gsl_poly_complex_workspace * _poly_workspace;
 
             inline std::string _par_name(const std::string & ff, const std::string & isospin, const std::string & index) const
             {
@@ -152,6 +154,14 @@ namespace eos
                 const complex<double> B = (x_0 * power_of<2>(x_L - 1.0) - x_L * power_of<2>(x_0 - 1.0)) * power_of<2>(x - 1.0);
 
                 return (std::sqrt(A) - std::sqrt(B)) / (std::sqrt(A) + std::sqrt(B));
+            }
+
+            inline complex<double> _chi_inverse(const complex<double> & y, const complex<double> & x_L, const complex<double> & x_0) const
+            {
+                const complex<double> A = power_of<2>(y - 1.0) * power_of<2>(x_L - 1.0) * power_of<2>(x_0 - 1.0);
+                const complex<double> B = 4.0 * x_0 * power_of<2>(y + 1.0) * power_of<2>(x_L - 1.0) - 16.0 * y * x_L * power_of<2>(x_0 - 1.0);
+
+                return (std::sqrt(A + B) - std::sqrt(A)) / (std::sqrt(A + B) + std::sqrt(A));
             }
 
             inline complex<double> _s_to_psi_11(const complex<double> & s) const
@@ -345,6 +355,23 @@ namespace eos
 
             /* auxiliary functions */
             std::array<double, 4u> constrained_a_fp_I1() const;
+            double a_0() const
+            {
+                return this->constrained_a_fp_I1()[0];
+            }
+            double a_1() const
+            {
+                return this->constrained_a_fp_I1()[1];
+            }
+            double a_2() const
+            {
+                return this->constrained_a_fp_I1()[2];
+            }
+            double a_3() const
+            {
+                return this->constrained_a_fp_I1()[3];
+            }
+
             complex<double> psi(const complex<double> & s) const;
             complex<double> P(const complex<double> & psi) const;
             complex<double> dPdpsi(const complex<double> & psi) const;
@@ -411,6 +438,9 @@ namespace eos
             //double re_residue_rho_s() const
             //double im_residue_rho_s() const
 
+            // Test of roots on the first RS
+            // Returns the sum of the inverse of the modulus of the roots in the first Riemann sheet
+            double root_penalty() const;
 
             static std::vector<OptionSpecification>::const_iterator begin_options();
             static std::vector<OptionSpecification>::const_iterator end_options();

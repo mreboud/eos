@@ -3183,6 +3183,21 @@ namespace eos
 
                 make_observable("0->pipi::Im{Res_psi{f_+}}@BHKMNR2026", R"(\textrm{Im}\,\textrm{Res}_{\psi} (s_\rho^2)\,f_+^{0\to\pi\pi})", Unit::None(),
                         &BHKMNR2026FormFactors<VacuumToPiPi>::im_residue_rho),
+
+                make_observable("0->pipi::root_penalty@BHKMNR2026", R"(\textrm{roots on} (11))", Unit::None(),
+                        &BHKMNR2026FormFactors<VacuumToPiPi>::root_penalty),
+
+                make_observable("0->pipi::a_(+,1)^0@BHKMNR2026", R"(a_0^{0 \to \pi\pi})", Unit::None(),
+                        &BHKMNR2026FormFactors<VacuumToPiPi>::a_0),
+
+                make_observable("0->pipi::a_(+,1)^1@BHKMNR2026", R"(a_1^{0 \to \pi\pi})", Unit::None(),
+                        &BHKMNR2026FormFactors<VacuumToPiPi>::a_1),
+
+                make_observable("0->pipi::a_(+,1)^2@BHKMNR2026", R"(a_2^{0 \to \pi\pi})", Unit::None(),
+                        &BHKMNR2026FormFactors<VacuumToPiPi>::a_2),
+
+                make_observable("0->pipi::a_(+,1)^3@BHKMNR2026", R"(a_3^{0 \to \pi\pi})", Unit::None(),
+                        &BHKMNR2026FormFactors<VacuumToPiPi>::a_3),
             }
         );
 

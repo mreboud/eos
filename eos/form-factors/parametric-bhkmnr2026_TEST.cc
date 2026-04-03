@@ -177,6 +177,30 @@ class ParametricBHKMNR2026Test :
 
                     TEST_CHECK_NEARLY_EQUAL(ff.re_residue_rho(),                                               0.04063694,    eps);
                     TEST_CHECK_NEARLY_EQUAL(ff.im_residue_rho(),                                               0.25969762,    eps);
+
+                    TEST_CHECK_NEARLY_EQUAL(ff.root_penalty(),                                                 1.00000000,    eps);
+                }
+
+                p["mass::pi^+"]                        =  0.13957;
+                p["0->pipi::s_0@BHKMNR2026"]           =  0.0;
+                p["0->pipi::s_in@BHKMNR2026"]          =  0.85051;
+                p["0->pipi::a_(+,1)^4@BHKMNR2026"]     = -0.54508094;
+                p["0->pipi::a_(+,1)^5@BHKMNR2026"]     =  0.06982185;
+                p["0->pipi::a_(+,1)^6@BHKMNR2026"]     = -0.3837015;
+                p["0->pipi::a_(+,1)^7@BHKMNR2026"]     =  0.23947605;
+                p["0->pipi::a_(+,1)^8@BHKMNR2026"]     = -0.23656627;
+                p["0->pipi::a_(+,1)^9@BHKMNR2026"]     =  0.09873716;
+                p["0->pipi::a_(+,1)^10@BHKMNR2026"]    =  0.;
+                p["0->pipi::a_(+,1)^11@BHKMNR2026"]    =  0.001;
+                p["0->pipi::a_(+,1)^12@BHKMNR2026"]    =  0;
+                p["0->pipi::M_(+,1,0)@BHKMNR2026"]     =  0.76000036;
+                p["0->pipi::Gamma_(+,1,0)@BHKMNR2026"] =  0.14483015;
+
+                {
+                    Options o{ { "n-resonances"_ok, "1" } };
+                    BHKMNR2026FormFactors<VacuumToPiPi> ff(p, o);
+
+                    TEST_CHECK_NEARLY_EQUAL(ff.root_penalty(),                                                 1.00000000,    eps);
                 }
             }
         }

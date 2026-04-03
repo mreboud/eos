@@ -28,7 +28,7 @@
 #include <eos/maths/integrate.hh>
 #include <gsl/gsl_linalg.h>
 #include <gsl/gsl_matrix.h>
-
+#include <gsl/gsl_poly.h>
 
 #include <functional>
 #include <numeric>
@@ -68,8 +68,8 @@ namespace eos
         _inv_M(gsl_matrix_alloc(4, 4)),
         _L(gsl_vector_alloc(4)),
         _perm(gsl_permutation_calloc(4)),
-        _constrained_coefficents(gsl_vector_alloc(4))
-
+        _constrained_coefficents(gsl_vector_alloc(4)),
+        _poly_workspace(gsl_poly_complex_workspace_alloc(13))
     {
         // Perform pointer checks
         if (_M == nullptr)
@@ -81,6 +81,8 @@ namespace eos
         if (_perm == nullptr)
             throw std::bad_alloc();
         if (_constrained_coefficents == nullptr)
+            throw std::bad_alloc();
+        if (_poly_workspace == nullptr)
             throw std::bad_alloc();
     }
 
@@ -111,6 +113,11 @@ namespace eos
             gsl_matrix_free(_M);
         }
         _M = nullptr;
+        if (_poly_workspace)
+        {
+            gsl_poly_complex_workspace_free(_poly_workspace);
+        }
+        _poly_workspace = nullptr;
     }
 
     FormFactors<VacuumToPP> *
@@ -444,6 +451,55 @@ namespace eos
     //{
     //    return std::imag(this->residue_rho_s());
     //}
+
+
+    double BHKMNR2026FormFactors<VacuumToPiPi>::root_penalty() const
+    {
+        // prepare expansion coefficients
+        std::array<double, 13> reversed_a;
+        const auto constrained_a = this->constrained_a_fp_I1();
+
+        if (constrained_a[0] < 1e-14)
+        {
+            throw InternalError("Not implemented!"); //TODO
+            return 0.0;
+        }
+
+        std::copy(constrained_a.cbegin(), constrained_a.cend(), reversed_a.rbegin()); // reverse copy constrained coefficients
+        std::copy(_a_fp_I1.cbegin(), _a_fp_I1.cend(), reversed_a.rbegin() + 4);       // reverse copy unconstrained coefficients
+
+        // Fill the root array with values on the second Riemann sheet
+        std::array<complex<double>, 12> roots;
+        roots.fill(-1.0);
+        // Find the roots of the reciprocal adjoint polynomial since a_0 != 0 is less likely
+        double adjoint_roots[24];
+        gsl_poly_complex_solve(reversed_a.data(), 13, _poly_workspace, adjoint_roots);
+
+        // Convert the roots back to our polynomial roots (no need for complex conjugation since the roots are conjugated)
+        for (size_t i = 0; i < 12; ++i)
+        {
+            complex<double> adjoint_root = complex<double>(adjoint_roots[2 * i], adjoint_roots[2 * i + 1]);
+            if (abs(adjoint_root) > 1e-12)
+            {
+                roots[i] = 1.0 / adjoint_root;
+            }
+        }
+
+        double penalty = 0.0;
+        for (auto r: roots)
+        {
+            if (abs(r) < 1.0)
+            {
+                const complex<double> phi_root = _chi_inverse(r, _s_to_phi_21(_s_m(), _s_in()), _s_to_phi_11(_s_0(), _s_in()));
+                if (std::real(phi_root) > 0.0 && std::abs(phi_root) < 1.0)
+                {
+                    penalty += 1.0 / std::abs(phi_root) - 1.0;
+                }
+            }
+        }
+
+        return 1.0 + penalty;
+    }
 
 
 
