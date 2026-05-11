@@ -171,7 +171,7 @@ namespace eos
         const complex<double> psi_p  = _s_to_psi_11(_s_p());
         const complex<double> psi_in = _s_to_psi_11(_s_in());
         const complex<double> psi_0  = _s_to_psi_11(_s_0());
-        const complex<double> P0     = _P(psi_0);
+        const complex<double> P0     = _P(0.0);
 
         //Fill M
         complex<double> psi0_pow = complex<double>(1.0, 0.0);
