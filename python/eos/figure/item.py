@@ -2155,6 +2155,8 @@ class ConstraintResidueItem(Item):
     :type range: tuple[int, int] | None
     :param parameters: The set of parameters used to evaluate the constraint's observables, given as a dictionary mapping parameter names to their values.
     :type parameters: dict[eos.QualifiedName, float] | None
+    :param options: The set of options used to evaluate the constraint's observables.
+    :type options: dict[str, float] | None
     :param rescale_by_width: Rescales binned constraints by the inverse of the bin width. This is often required to compare theory (integrated) predictions and experimental (averaged) measurements. Defaults to false.
     :type rescale_by_width: bool
 
@@ -2188,6 +2190,7 @@ class ConstraintResidueItem(Item):
     observable:eos.QualifiedName|None=None
     range:tuple[int, int]|None=field(default=None)
     parameters:dict[eos.QualifiedName,float]|None=field(default=None)
+    options:dict[str,float]|None=field(default=None)
     rescale_by_width:bool=False
 
     _api_doc = inspect.cleandoc("""\
@@ -2212,6 +2215,7 @@ class ConstraintResidueItem(Item):
         * ``range`` (list of int) -- The interval in which the observable is plotted in the case of a multivariate constraint.
         * ``parameters`` (dict of [eos.QualifiedName, float]) -- The set of parameters used to evaluate the constraint's observables,
         given as a dictionary mapping parameter names to their values. If None, EOS default parameters will be used.
+        * ``options`` (dict of [str, float]) -- The set of options used to evaluate the constraint's observables
         * ``rescale_by_width`` (*bool*) -- Rescales binned constraints by the inverse of the bin width. This is often required
         to compare theory (integrated) predictions and experimental (averaged) measurements. Defaults to false.
 
@@ -2307,9 +2311,10 @@ class ConstraintResidueItem(Item):
                     obs_kinematics.declare(self.variable + '_max', var_max)
                     obs_kinematics.declare(self.variable + '_min', var_min)
 
+                options.update(self.options)
                 observable_value = eos.Observable.make(self.observable, self._parameters, obs_kinematics, eos.Options(options)).evaluate()
                 if _np.isnan(observable_value):
-                    eos.warn(f'    observable {self.observable} evaluated to NaN')
+                    eos.warn(f'    observable {self.observable} evaluated to NaN for the options {options}')
                 yvalues = [(float(constraint['mean']) - observable_value) / width]
                 sigma_hi = _np.sqrt(float(constraint['sigma-stat']['hi'])**2 + float(constraint['sigma-sys']['hi'])**2) / width
                 sigma_lo = _np.sqrt(float(constraint['sigma-stat']['lo'])**2 + float(constraint['sigma-sys']['lo'])**2) / width
@@ -2352,9 +2357,11 @@ class ConstraintResidueItem(Item):
                         obs_kinematics.declare(self.variable + '_max', var_max)
                         obs_kinematics.declare(self.variable + '_min', var_min)
 
-                    observable_value = eos.Observable.make(self.observable, self._parameters, obs_kinematics, eos.Options(options[i])).evaluate()
+                    obs_options = options[i]
+                    obs_options.update(self.options)
+                    observable_value = eos.Observable.make(self.observable, self._parameters, obs_kinematics, eos.Options(obs_options)).evaluate()
                     if _np.isnan(observable_value):
-                        eos.warn(f'    observable {self.observable} evaluated to NaN')
+                        eos.warn(f'    observable {self.observable} evaluated to NaN for the options {options}')
                     yvalues.append((_np.double(means[i]) - observable_value) / width)
                     yerrors.append(_np.sqrt(_np.double(covariance[i, i])) / width)
             elif constraint['type'] == 'MultivariateGaussian':
