@@ -59,11 +59,28 @@ namespace eos
             UsedParameter(p["0->pipi::Gamma_(+,1,1)@BHKMNR2026"], *this),
             UsedParameter(p["0->pipi::Gamma_(+,1,2)@BHKMNR2026"], *this)
         }},
-        _n_resonances(o, option_specifications, "n-resonances"_ok),
+        _n_resonances_I1(o, option_specifications, "n-resonances-I1"_ok),
+        _a_fp_I0{{
+            UsedParameter(p[_par_name("+", "0", "4")], *this),
+            UsedParameter(p[_par_name("+", "0", "5")], *this),
+            UsedParameter(p[_par_name("+", "0", "6")], *this),
+            UsedParameter(p[_par_name("+", "0", "7")], *this),
+            UsedParameter(p[_par_name("+", "0", "8")], *this)
+        }},
+        _M_fp_I0{{
+            UsedParameter(p["0->pipi::M_(+,0,0)@BHKMNR2026"], *this),
+            UsedParameter(p["0->pipi::M_(+,0,1)@BHKMNR2026"], *this),
+        }},
+        _G_fp_I0{{
+            UsedParameter(p["0->pipi::Gamma_(+,0,0)@BHKMNR2026"], *this),
+            UsedParameter(p["0->pipi::Gamma_(+,0,1)@BHKMNR2026"], *this),
+        }},
+        _n_resonances_I0(o, option_specifications, "n-resonances-I0"_ok),
         _m_pi(p["mass::pi^+"], *this),
         _s_0(p["0->pipi::s_0@BHKMNR2026"], *this),
         _s_in(p["0->pipi::s_in@BHKMNR2026"], *this),
         _hbar(p["QM::hbar"], *this),
+        _opt_I(o, option_specifications, "I"_ok),
         _M(gsl_matrix_alloc(4, 4)),
         _inv_M(gsl_matrix_alloc(4, 4)),
         _L(gsl_vector_alloc(4)),
@@ -84,6 +101,9 @@ namespace eos
             throw std::bad_alloc();
         if (_poly_workspace == nullptr)
             throw std::bad_alloc();
+
+        _switch_I[0] = (_opt_I.value() && Isospin::zero);
+        _switch_I[1] = (_opt_I.value() && Isospin::one);
     }
 
     BHKMNR2026FormFactors<VacuumToPiPi>::~BHKMNR2026FormFactors()
@@ -145,9 +165,15 @@ namespace eos
     }
 
     complex<double>
+    BHKMNR2026FormFactors<VacuumToPiPi>::Q(const complex<double> & psi) const
+    {
+        return this->_Q(psi);
+    }
+
+    complex<double>
     BHKMNR2026FormFactors<VacuumToPiPi>::dfdpsi_terms(const unsigned k, const complex<double> & psi) const
     {
-        return this->_dfdpsi_terms(k, psi);
+        return this->_dfdpsi_terms_I1(k, psi);
     }
 
     complex<double>
@@ -178,8 +204,8 @@ namespace eos
 
         for (auto k = 0u; k < 4; k++)
         {
-            const complex<double> val_p  = _dfdpsi_terms(k, psi_p);
-            const complex<double> val_in = _dfdpsi_terms(k, psi_in);
+            const complex<double> val_p  = _dfdpsi_terms_I1(k, psi_p);
+            const complex<double> val_in = _dfdpsi_terms_I1(k, psi_in);
 
             gsl_matrix_set(_M, 0, k, val_p.real());
             gsl_matrix_set(_M, 1, k, val_in.real());
@@ -200,8 +226,8 @@ namespace eos
         {
             const double ak = _a_fp_I1[k - 4]();
 
-            sum_p  += ak * _dfdpsi_terms(k, psi_p);
-            sum_in += ak * _dfdpsi_terms(k, psi_in);
+            sum_p  += ak * _dfdpsi_terms_I1(k, psi_p);
+            sum_in += ak * _dfdpsi_terms_I1(k, psi_in);
             sum_0  += ak * psi0_pow;
 
             psi0_pow *= psi_0;
@@ -211,7 +237,72 @@ namespace eos
         gsl_vector_set(_L, 1, -sum_in.real());
         gsl_vector_set(_L, 2, -sum_in.imag());
 
-        const complex<double> entry = 1.0 - P0  * sum_0;
+        const complex<double> entry = 1.0 - P0  * sum_0; // f_p_I1(s=0) = 1.0
+        gsl_vector_set(_L, 3, entry.real());
+
+        // Invert M and solve for the constrained coefficients
+        int signum = 0;
+        gsl_permutation_init(_perm);
+        gsl_linalg_LU_decomp(_M, _perm, &signum);
+        gsl_linalg_LU_invert(_M, _perm, _inv_M);
+
+        gsl_blas_dgemv(CblasNoTrans, 1.0, _inv_M, _L, 0.0, _constrained_coefficents);
+
+        std::array<double, 4u> result;
+        for (auto i = 0u; i < 4; ++i)
+        {
+            result[i] = gsl_vector_get(_constrained_coefficents, i);
+        }
+        return result;
+    }
+
+    std::array<double, 4u>
+    BHKMNR2026FormFactors<VacuumToPiPi>::constrained_a_fp_I0() const
+    {
+        const complex<double> psi_p  = _s_to_psi_11(_s_p());
+        const complex<double> psi_in = _s_to_psi_11(_s_in());
+        const complex<double> psi_0  = _s_to_psi_11(_s_0());
+        const complex<double> Q0     = _Q(0.0);
+
+        //Fill M
+        complex<double> psi0_pow = complex<double>(1.0, 0.0);
+
+        for (auto k = 0u; k < 4; k++)
+        {
+            const complex<double> val_p  = _dfdpsi_terms_I0(k, psi_p);
+            const complex<double> val_in = _dfdpsi_terms_I0(k, psi_in);
+
+            gsl_matrix_set(_M, 0, k, val_p.real());
+            gsl_matrix_set(_M, 1, k, val_in.real());
+            gsl_matrix_set(_M, 2, k, val_in.imag());
+            gsl_matrix_set(_M, 3, k, (Q0 * psi0_pow).real());
+
+            psi0_pow *= psi_0;
+        }
+
+        //Fill L
+        const unsigned n = 3 + _a_fp_I0.size();
+
+        complex<double> sum_p  = complex<double>(0.0, 0.0);
+        complex<double> sum_in = complex<double>(0.0, 0.0);
+        complex<double> sum_0  = complex<double>(0.0, 0.0);
+
+        for (auto k = 4u; k <= n; k++)
+        {
+            const double ak = _a_fp_I0[k - 4]();
+
+            sum_p  += ak * _dfdpsi_terms_I0(k, psi_p);
+            sum_in += ak * _dfdpsi_terms_I0(k, psi_in);
+            sum_0  += ak * psi0_pow;
+
+            psi0_pow *= psi_0;
+        }
+
+        gsl_vector_set(_L, 0, -sum_p.real());
+        gsl_vector_set(_L, 1, -sum_in.real());
+        gsl_vector_set(_L, 2, -sum_in.imag());
+
+        const complex<double> entry = - Q0  * sum_0; // delta_I0(s=0) = 0.0
         gsl_vector_set(_L, 3, entry.real());
 
         // Invert M and solve for the constrained coefficients
@@ -233,28 +324,36 @@ namespace eos
     complex<double>
     BHKMNR2026FormFactors<VacuumToPiPi>::f_p_of_psi(const complex<double> & psi) const
     {
-        // prepare expansion coefficients
-        std::array<double, 13> a;
-        const auto constrained_a = this->constrained_a_fp_I1();
-        std::copy(constrained_a.cbegin(), constrained_a.cend(), a.begin()); // copy constrained coefficients
-        std::copy(_a_fp_I1.cbegin(), _a_fp_I1.cend(), a.begin() + 4);       // copy unconstrained coefficients
+        // prepare I=1 expansion coefficients
+        std::array<double, 13> a_I1;
+        const auto constrained_a_I1 = this->constrained_a_fp_I1();
+        std::copy(constrained_a_I1.cbegin(), constrained_a_I1.cend(), a_I1.begin()); // copy constrained coefficients
+        std::copy(_a_fp_I1.cbegin(), _a_fp_I1.cend(), a_I1.begin() + 4);             // copy unconstrained coefficients
 
-        return this->_P(psi) * this->series(psi, a);
+        const complex<double> f_I1 = this->_P(psi) * this->series(psi, a_I1);
+
+        complex<double> delta_I0 = 0.0;
+
+        if (_switch_I[0])
+        {
+            // prepare I=1 expansion coefficients
+            std::array<double, 13> a_I0;
+            a_I0.fill(0.0);
+            const auto constrained_a_I0 = this->constrained_a_fp_I0();
+            std::copy(constrained_a_I0.cbegin(), constrained_a_I0.cend(), a_I0.begin()); // copy constrained coefficients
+            std::copy(_a_fp_I0.cbegin(), _a_fp_I0.cend(), a_I0.begin() + 4);             // copy unconstrained coefficients
+
+            delta_I0 = this->_Q(psi) * this->series(psi, a_I0);
+        }
+
+        return f_I1 * (static_cast<double>(_switch_I[1]) + delta_I0);
     }
 
 
     complex<double>
     BHKMNR2026FormFactors<VacuumToPiPi>::f_p(const complex<double> & s) const
     {
-        const complex<double> psi  = this->_s_to_psi_11(s);
-
-        // prepare expansion coefficients
-        std::array<double, 13> a;
-        const auto constrained_a = this->constrained_a_fp_I1();
-        std::copy(constrained_a.cbegin(), constrained_a.cend(), a.begin()); // copy constrained coefficients
-        std::copy(_a_fp_I1.cbegin(), _a_fp_I1.cend(), a.begin() + 4);       // copy unconstrained coefficients
-
-        return this->_P(psi) * this->series(psi, a);
+        return f_p_of_psi(this->_s_to_psi_11(s));
     }
 
     complex<double>
@@ -267,15 +366,7 @@ namespace eos
     complex<double>
     BHKMNR2026FormFactors<VacuumToPiPi>::f_p_21(const complex<double> & s) const
     {
-        const complex<double> psi = this->_s_to_psi_21(s);
-
-        // prepare expansion coefficients
-        std::array<double, 13> a;
-        const auto constrained_a = this->constrained_a_fp_I1();
-        std::copy(constrained_a.cbegin(), constrained_a.cend(), a.begin()); // copy constrained coefficients
-        std::copy(_a_fp_I1.cbegin(), _a_fp_I1.cend(), a.begin() + 4);       // copy unconstrained coefficients
-
-        return this->_P(psi) * this->series(psi, a);
+        return f_p_of_psi(this->_s_to_psi_21(s));
     }
 
     complex<double>
@@ -491,9 +582,13 @@ namespace eos
             if (abs(r) < 1.0)
             {
                 const complex<double> phi_root = _chi_inverse(r, _s_to_phi_21(_s_m(), _s_in()), _s_to_phi_11(_s_0(), _s_in()));
-                if (std::real(phi_root) > 0.0 && std::abs(phi_root) < 1.0)
+                if (std::real(phi_root) > 0.0 && std::abs(phi_root) < 1.0) // Root on RS11
                 {
-                    penalty += 1.0 / std::abs(phi_root) - 1.0;
+                    penalty += 1.0 / std::abs(r) - 1.0;
+                }
+                else if (std::real(phi_root) < 0.0 && std::abs(phi_root) < 1.0 && std::abs(std::imag(r)) < 1e-12)  // Root on the real axis of RS21
+                {
+                    penalty += 1.0 / std::abs(r) - 1.0;
                 }
             }
         }
@@ -532,7 +627,9 @@ namespace eos
     const std::vector<OptionSpecification>
     BHKMNR2026FormFactors<VacuumToPiPi>::option_specifications
     {
-        { "n-resonances"_ok, { "1"s, "2"s, "3"s }, "1"s }
+        { "n-resonances-I1"_ok, { "1"s, "2"s, "3"s }, "1"s   },
+        { "n-resonances-I0"_ok, { "1"s, "2"s       }, "1"s   },
+        { "I"_ok,               { "0|1"s           }, "0|1"s }
     };
 
     std::vector<OptionSpecification>::const_iterator

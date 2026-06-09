@@ -47,7 +47,14 @@ namespace eos
             std::array<UsedParameter, 3u> _M_fp_I1; // masses of the rho, rho', etc.
             std::array<UsedParameter, 3u> _G_fp_I1; // widths of the rho, rho', etc.
 
-            RestrictedOption _n_resonances; // number of resonances
+            RestrictedOption _n_resonances_I1; // number of used I = 1 resonances
+
+            // parameters for form factor f_+ (I=0 projection)
+            std::array<UsedParameter, 5u> _a_fp_I0; // unconstrained expansion coefficients
+            std::array<UsedParameter, 2u> _M_fp_I0; // masses of the omega, phi, etc.
+            std::array<UsedParameter, 2u> _G_fp_I0; // widths of the omega, phi, etc.
+
+            RestrictedOption _n_resonances_I0; // number of used I = 0 resonances
 
             UsedParameter _m_pi; // pion mass
 
@@ -55,6 +62,10 @@ namespace eos
             UsedParameter _s_in; // inelastic threshold
 
             UsedParameter _hbar;
+
+            // Isospin option
+            std::array<bool, 2> _switch_I;
+            IsospinOption       _opt_I;
 
             // matrices and vectors needed for the linear system of equations to determine the constrained coefficients
             gsl_matrix * _M;
@@ -203,22 +214,21 @@ namespace eos
 
             inline complex<double> _psi_r(const double & M, const double & Gamma) const
             {
-                if (M * M < _s_in()) // the resonance is below the inelastic threshold, so we are on the 21 Riemann sheet
+                if (M * M < _s_in()) // the resonance is below the inelastic threshold, the pole is on the 21 Riemann sheet
                 {
                     return _s_to_psi_21(power_of<2>(complex<double>(M, -Gamma / 2.0)));
                 }
-                else // the resonance is above the inelastic threshold, so we are on the 22 Riemann sheet
+                else // the resonance is above the inelastic threshold, we only consider the pole on the 22 Riemann sheet
                 {
                     return _s_to_psi_22(power_of<2>(complex<double>(M, -Gamma / 2.0)));
                 }
             }
 
 
-
             inline complex<double> _P(const complex<double> & psi) const
             {
                 complex<double> psi_r;
-                const std::size_t num_resonances = stoi(_n_resonances.value());
+                const std::size_t num_resonances = stoi(_n_resonances_I1.value());
                 complex<double> result           = power_of<2>(psi - 1.0);
 
                 for (auto i = 0u; i < num_resonances; i++)
@@ -230,18 +240,33 @@ namespace eos
                 return result;
             }
 
+            inline complex<double> _Q(const complex<double> & psi) const
+            {
+                complex<double> psi_r;
+                const std::size_t num_resonances = stoi(_n_resonances_I0.value());
+                complex<double> result           = 1.0;
+
+                for (auto i = 0u; i < num_resonances; i++)
+                {
+                    psi_r = _psi_r(_M_fp_I0[i](), _G_fp_I0[i]());
+                    result /= (psi - psi_r) * (psi - std::conj(psi_r));
+                }
+
+                return result;
+            }
+
 
             inline complex<double> _P_residue(const unsigned & k) const
             {
-                const std::size_t num_resonances = stoi(_n_resonances.value());
+                const std::size_t num_resonances_I1 = stoi(_n_resonances_I1.value());
 
-                if (k > num_resonances)
+                if (k > num_resonances_I1)
                     throw InternalError("The residue index must be smaller than the number of used resonances.");
 
                 complex<double> psi_residue = _psi_r(_M_fp_I1[k](), _G_fp_I1[k]());
                 complex<double> result      = power_of<2>(psi_residue - 1.0) / (psi_residue - std::conj(psi_residue));
 
-                for (auto i = 0u; i < num_resonances; i++)
+                for (auto i = 0u; i < num_resonances_I1; i++)
                 {
                     if (i != k)
                     {
@@ -254,14 +279,13 @@ namespace eos
             }
 
 
-
             inline complex<double> _dPdpsi(const complex<double> & psi) const
             {
-                const std::size_t num_resonances = stoi(_n_resonances.value());
-                const complex<double> P_val      = _P(psi);
-                complex<double> sum              = complex<double>(0.0, 0.0);
+                const std::size_t num_resonances_I1 = stoi(_n_resonances_I1.value());
+                const complex<double> P_val         = _P(psi);
+                complex<double> sum                 = complex<double>(0.0, 0.0);
 
-                for (auto i = 0u; i < num_resonances; ++i)
+                for (auto i = 0u; i < num_resonances_I1; ++i)
                 {
                     const complex<double> psi_r = _psi_r(_M_fp_I1[i](), _G_fp_I1[i]());
                     const complex<double> denom = (psi - psi_r) * (psi - std::conj(psi_r));
@@ -272,9 +296,25 @@ namespace eos
                 return P_val * (2.0 / (psi - 1.0) - sum);
             }
 
+            inline complex<double> _dQdpsi(const complex<double> & psi) const
+            {
+                const std::size_t num_resonances_I0 = stoi(_n_resonances_I1.value());
+                const complex<double> Q_val         = _Q(psi);
+                complex<double> sum                 = complex<double>(0.0, 0.0);
+
+                for (auto i = 0u; i < num_resonances_I0; ++i)
+                {
+                    const complex<double> psi_r = _psi_r(_M_fp_I0[i](), _G_fp_I0[i]());
+                    const complex<double> denom = (psi - psi_r) * (psi - std::conj(psi_r));
+
+                    sum += (2.0 * psi - psi_r - std::conj(psi_r)) / denom;
+                }
+
+                return - Q_val * sum;
+            }
 
 
-            inline complex<double> _dfdpsi_terms(const unsigned k, const complex<double> & psi) const
+            inline complex<double> _dfdpsi_terms_I1(const unsigned k, const complex<double> & psi) const
             {
                 const complex<double> dP_val = _dPdpsi(psi);
 
@@ -291,6 +331,23 @@ namespace eos
                 }
             }
 
+            inline complex<double> _dfdpsi_terms_I0(const unsigned k, const complex<double> & psi) const
+            {
+                const complex<double> dQ_val = _dQdpsi(psi);
+
+                switch (k)
+                {
+                    case 0:
+                        return dQ_val;
+                    case 1:
+                        return dQ_val * psi + _Q(psi);
+                    default:
+                        complex<double> psi_km1 = std::pow(psi, k - 1);
+                        complex<double> psi_k   = psi_km1 * psi;
+                        return dQ_val * psi_k + static_cast<double>(k) * _Q(psi) * psi_km1;
+                }
+            }
+
 
             //This function will be used to find scattering lenght
             struct PDerivatives
@@ -302,7 +359,7 @@ namespace eos
 
             inline PDerivatives _P_derivatives(const complex<double>& psi) const
             {
-                const std::size_t num_resonances = stoi(_n_resonances.value());
+                const std::size_t num_resonances = stoi(_n_resonances_I1.value());
 
                 const complex<double> P_val = _P(psi);
 
@@ -372,8 +429,11 @@ namespace eos
                 return this->constrained_a_fp_I1()[3];
             }
 
+            std::array<double, 4u> constrained_a_fp_I0() const;
+
             complex<double> psi(const complex<double> & s) const;
             complex<double> P(const complex<double> & psi) const;
+            complex<double> Q(const complex<double> & psi) const;
             complex<double> dPdpsi(const complex<double> & psi) const;
             complex<double> dfdpsi_terms(const unsigned k, const complex<double> & psi) const;
             complex<double> series(const complex<double> & psi, const std::array<double, 13> & a) const;

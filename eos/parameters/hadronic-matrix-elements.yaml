@@ -6807,6 +6807,39 @@ groups:
           matrix:
             - [0, 1, 2]
           comments: ''
+      '0->pipi::a_(+,0)^%1%@BHKMNR2026':
+          central:  0.0
+          min:     -1.0
+          max:     +1.0
+          unit:     '1'
+          latex:
+            template: '$a^{(+,I=0)}_{%1%}$'
+            map: {}
+          matrix:
+            - [4, 5, 6, 7, 8, 9, 10, 11, 12]
+          comments: ''
+      '0->pipi::M_(+,0,%1%)@BHKMNR2026':
+          central:  0.0
+          min:     -1.0
+          max:     +1.0
+          unit:     'GeV'
+          latex:
+            template: '$M_{(+,I=0,%1%)}$'
+            map: {}
+          matrix:
+            - [0, 1]
+          comments: ''
+      '0->pipi::Gamma_(+,0,%1%)@BHKMNR2026':
+          central:  0.0
+          min:     -1.0
+          max:     +1.0
+          unit:     'GeV'
+          latex:
+            template: '$\Gamma_{(+,I=0,%1%)}$'
+            map: {}
+          matrix:
+            - [0, 1]
+          comments: ''
       '0->pipi::s_0@BHKMNR2026' :
           central:  0.0
           min:     -2.0

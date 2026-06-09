@@ -68,7 +68,11 @@ class ParametricBHKMNR2026Test :
 
 
                 {
-                    Options o{ { "n-resonances"_ok, "1" } };
+                    Options o
+                    {
+                        { "n-resonances-I1"_ok, "1"},
+                        {"I"_ok, "1" }
+                    };
                     BHKMNR2026FormFactors<VacuumToPiPi> ff(p, o);
 
 
@@ -180,6 +184,49 @@ class ParametricBHKMNR2026Test :
 
                     TEST_CHECK_NEARLY_EQUAL(ff.root_penalty(),                                                 1.00000000,    eps);
                 }
+
+
+                p["0->pipi::a_(+,0)^4@BHKMNR2026"]     =  0.30;
+                p["0->pipi::a_(+,0)^5@BHKMNR2026"]     = -0.12;
+                p["0->pipi::M_(+,0,0)@BHKMNR2026"]     =  0.782;
+                p["0->pipi::Gamma_(+,0,0)@BHKMNR2026"] =  0.010;
+
+                {
+                    Options o
+                    {
+                        { "n-resonances-I1"_ok, "1"},
+                        { "n-resonances-I0"_ok, "1"},
+                        { "I"_ok, "1|0" }
+                    };
+                    BHKMNR2026FormFactors<VacuumToPiPi> ff(p, o);
+
+                    TEST_CHECK_NEARLY_EQUAL(real(ff.Q(0.0)),                                                  2.63724195,    eps);
+                    TEST_CHECK_NEARLY_EQUAL(imag(ff.Q(0.0)),                                                  0.00000000,    eps);
+                    TEST_CHECK_NEARLY_EQUAL(real(ff.Q(0.5)),                                                  1.58692260,    eps);
+                    TEST_CHECK_NEARLY_EQUAL(imag(ff.Q(0.5)),                                                  0.00000000,    eps);
+                    TEST_CHECK_NEARLY_EQUAL(real(ff.Q(complex<double>(0.5, 0.5))),                            0.96123390,    eps);
+                    TEST_CHECK_NEARLY_EQUAL(imag(ff.Q(complex<double>(0.5, 0.5))),                           -1.26672457,    eps);
+                    TEST_CHECK_NEARLY_EQUAL(real(ff.Q(1.0)),                                                  0.72405168,    eps);
+                    TEST_CHECK_NEARLY_EQUAL(imag(ff.Q(1.0)),                                                  0.00000000,    eps);
+
+                    const auto constrained_a = ff.constrained_a_fp_I0();
+                    TEST_CHECK_NEARLY_EQUAL(constrained_a[0],                                                 0.,            eps);
+                    TEST_CHECK_NEARLY_EQUAL(constrained_a[1],                                                -0.00237374,    eps);
+                    TEST_CHECK_NEARLY_EQUAL(constrained_a[2],                                                 0.44717112,    eps);
+                    TEST_CHECK_NEARLY_EQUAL(constrained_a[3],                                                 1.25746412,    eps);
+
+
+                    TEST_CHECK_NEARLY_EQUAL(real(ff.f_p(0.0)),                                                1.00000000,    eps);
+                    TEST_CHECK_NEARLY_EQUAL(imag(ff.f_p(0.0)),                                                0.00000000,    eps);
+                    TEST_CHECK_NEARLY_EQUAL(real(ff.f_p(0.5)),                                                0.03288033,    eps);
+                    TEST_CHECK_NEARLY_EQUAL(imag(ff.f_p(0.5)),                                                11.8361762,    eps);
+                    TEST_CHECK_NEARLY_EQUAL(real(ff.f_p(complex<double>(0.5, 0.5))),                          0.90218100,    eps);
+                    TEST_CHECK_NEARLY_EQUAL(imag(ff.f_p(complex<double>(0.5, 0.5))),                          0.07778476,    eps);
+                    TEST_CHECK_NEARLY_EQUAL(real(ff.f_p(1.0)),                                                2.44129372,    eps);
+                    TEST_CHECK_NEARLY_EQUAL(imag(ff.f_p(1.0)),                                                2.74205472,    eps);
+                }
+
+
 
                 p["mass::pi^+"]                        =  0.13957;
                 p["0->pipi::s_0@BHKMNR2026"]           =  0.0;
