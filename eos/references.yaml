@@ -251,6 +251,11 @@ BES:2008A:
   inspire-id: BES:2008rkr
   title: Measurements of the line shapes of D anti-D production and the ratio of the production rates of D+ D- and
     D0 anti-D0 in e+ e- annihilation at psi(3770) resonance
+BES:2015A:
+  authors: Ablikim, M. et al.
+  collaboration: BES
+  inspire-id: BESIII:2015equ
+  title: Measurement of the $e^+ e^- \to \pi^+ \pi^-$ cross section between 600 and 900 MeV using initial state radiation
 BES:2017A:
   authors: Julin, Andy Jarod
   collaboration: BES
@@ -1169,6 +1174,30 @@ CLEO:2008A:
     id: oai:arXiv.org:0801.3418
   inspire-id: CLEO:2008ojp
   title: Measurement of Charm Production Cross Sections in $e^+ e^-$ Annihilation at Energies between 3.97 and 4.26-GeV
+CMD2:2003A:
+  authors: Akhmetshin, R. R. et al.
+  collaboration: CMD-2
+  eprint:
+    archive: arXiv
+    id: oai:arXiv.org:hep-ex/0308008
+  inspire-id: CMD-2:2003gqi
+  title: Reanalysis of hadronic cross-section measurements at CMD-2
+CMD2:2006A:
+  authors: Aulchenko, V. M.  et al.
+  collaboration: CMD-2
+  eprint:
+    archive: arXiv
+    id: oai:arXiv.org:hep-ex/0610016
+  inspire-id: Aulchenko:2006dxz
+  title: Measurement of the $e^+ e^- \to \pi^+ \pi^-$ cross section with the CMD-2 detector in the 370 - 520-MeV c.m. energy range
+CMD2:2006B:
+  authors: Akhmetshin, R. R. et al.
+  collaboration: CMD-2
+  eprint:
+    archive: arXiv
+    id: oai:arXiv.org:hep-ex/0610021
+  inspire-id: CMD-2:2006gxt
+  title: High-statistics measurement of the pion form factor in the rho-meson energy range with the CMD-2 detector
 CMD3:2023A:
   authors: Ignatov, F. V. et al.
   eprint:
@@ -2574,6 +2603,22 @@ S:2025A:
     id: oai:arXiv.org:2504.21732
   inspire-id: Rodriguez-Sanchez:2025nsm
   title: Hadronic tau decays
+SND:2006A:
+  authors: Achasov, M. N. et al.
+  collaboration: SND
+  eprint:
+    archive: arXiv
+    id: oai:arXiv.org:hep-ex/0605013
+  inspire-id: Achasov:2006vp
+  title: Update of the $e^+ e^- \to \pi^+ \pi^-$ cross-section measured by SND detector in the energy region 400 MeV $< \sqrt{s}<$ 1000 MeV
+SND:2020A:
+  authors: Achasov, M. N. et al.
+  collaboration: SND
+  eprint:
+    archive: arXiv
+    id: oai:arXiv.org:2004.00263
+  inspire-id: SND:2020nwa
+  title: Measurement of the $e^+e^- \to \pi^+\pi^- $ process cross section with the SND detector at the VEPP-2000 collider in the energy region $0.525<\sqrt{s}<0.883$ GeV
 STTW:2013A:
   authors: Sakaki, Yasuhito and Tanaka, Minoru and Tayduganov, Andrey and Watanabe,
     Ryoutaro
