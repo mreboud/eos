@@ -229,7 +229,7 @@ namespace eos
             {
                 complex<double> psi_r;
                 const std::size_t num_resonances = stoi(_n_resonances_I1.value());
-                complex<double> result           = power_of<2>(psi - 1.0);
+                complex<double> result           = power_of<2>(psi - 1.0) * (psi + 1.0);
 
                 for (auto i = 0u; i < num_resonances; i++)
                 {
@@ -255,7 +255,7 @@ namespace eos
                 return result;
             }
 
-
+            // TODO
             inline complex<double> _P_residue(const unsigned & k) const
             {
                 const std::size_t num_resonances_I1 = stoi(_n_resonances_I1.value());
@@ -293,7 +293,7 @@ namespace eos
                     sum += (2.0 * psi - psi_r - std::conj(psi_r)) / denom;
                 }
 
-                return P_val * (2.0 / (psi - 1.0) - sum);
+                return P_val * (1.0 / (psi + 1.0) + 2.0 / (psi - 1.0) - sum);
             }
 
             inline complex<double> _dQdpsi(const complex<double> & psi) const
@@ -349,7 +349,8 @@ namespace eos
             }
 
 
-            //This function will be used to find scattering lenght
+            // TODO
+            // This function will be used to find scattering lenght
             struct PDerivatives
             {
                 complex<double> P1;  // first derivative respect to psi

@@ -199,7 +199,8 @@ namespace eos
         const complex<double> psi_0  = _s_to_psi_11(_s_0());
         const complex<double> P0     = _P(0.0);
 
-        //Fill M
+        // Solve the system M.{a0, a1, a2, a3} = L
+        // Fill M
         complex<double> psi0_pow = complex<double>(1.0, 0.0);
 
         for (auto k = 0u; k < 4; k++)
@@ -215,7 +216,7 @@ namespace eos
             psi0_pow *= psi_0;
         }
 
-        //Fill L
+        // Fill L
         const unsigned n = 3 + _a_fp_I1.size();
 
         complex<double> sum_p  = complex<double>(0.0, 0.0);
@@ -237,7 +238,7 @@ namespace eos
         gsl_vector_set(_L, 1, -sum_in.real());
         gsl_vector_set(_L, 2, -sum_in.imag());
 
-        const complex<double> entry = 1.0 - P0  * sum_0; // f_p_I1(s=0) = 1.0
+        const complex<double> entry = 1.0 - P0 * sum_0; // f_p_I1(s=0) = 1.0
         gsl_vector_set(_L, 3, entry.real());
 
         // Invert M and solve for the constrained coefficients
@@ -264,7 +265,8 @@ namespace eos
         const complex<double> psi_0  = _s_to_psi_11(_s_0());
         const complex<double> Q0     = _Q(0.0);
 
-        //Fill M
+        // Solve the system M.{a0, a1, a2, a3} = L
+        // Fill M
         complex<double> psi0_pow = complex<double>(1.0, 0.0);
 
         for (auto k = 0u; k < 4; k++)
@@ -280,7 +282,7 @@ namespace eos
             psi0_pow *= psi_0;
         }
 
-        //Fill L
+        // Fill L
         const unsigned n = 3 + _a_fp_I0.size();
 
         complex<double> sum_p  = complex<double>(0.0, 0.0);
@@ -377,7 +379,7 @@ namespace eos
     }
 
 
-
+    // Todo, fix special cases
     complex<double>
     BHKMNR2026FormFactors<VacuumToPiPi>::partial_wave(const complex<double> & s) const
     {
@@ -402,7 +404,7 @@ namespace eos
         return partial_wave(complex<double>(s, eps));
     }
 
-
+    // TODO
     std::array<complex<double>, 2>
     BHKMNR2026FormFactors<VacuumToPiPi>::scattering_lenght_parameters() const
     {
@@ -502,7 +504,8 @@ namespace eos
         return integrate<1, 1>(f, 0, 1, cubature::Config().epsrel(1.0e-5));
     }
 
-     complex<double> BHKMNR2026FormFactors<VacuumToPiPi>::residue(const unsigned & k) const
+    // Todo
+    complex<double> BHKMNR2026FormFactors<VacuumToPiPi>::residue(const unsigned & k) const
     {
         // prepare expansion coefficients
         std::array<double, 13> a;
@@ -550,7 +553,7 @@ namespace eos
         std::array<double, 13> reversed_a;
         const auto constrained_a = this->constrained_a_fp_I1();
 
-        if (constrained_a[0] < 1e-14)
+        if (abs(constrained_a[0]) < 1e-14)
         {
             throw InternalError("Not implemented!"); //TODO
             return 0.0;
@@ -627,9 +630,9 @@ namespace eos
     const std::vector<OptionSpecification>
     BHKMNR2026FormFactors<VacuumToPiPi>::option_specifications
     {
-        { "n-resonances-I1"_ok, { "1"s, "2"s, "3"s }, "1"s   },
-        { "n-resonances-I0"_ok, { "1"s, "2"s       }, "1"s   },
-        { "I"_ok,               { "0|1"s           }, "0|1"s }
+        { "n-resonances-I1"_ok, { "1"_ov, "2"_ov, "3"_ov }, "1"_ov   },
+        { "n-resonances-I0"_ok, { "1"_ov, "2"_ov         }, "1"_ov   },
+        { "I"_ok,               { "0|1"_ov               }, "0|1"_ov }
     };
 
     std::vector<OptionSpecification>::const_iterator
