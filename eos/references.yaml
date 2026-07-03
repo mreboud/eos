@@ -55,6 +55,13 @@ AGV:2019A:
     id: oai:arXiv.org:1912.09099
   inspire-id: Asatrian:2019kbk
   title: Exact NLO matching and analyticity in $b\to s\ell\ell$
+ALEPH:2013A:
+  authors: Davier, Michel and H{\"o}cker, Andreas and Malaescu, Bogdan and Yuan, Chang-Zheng and Zhang, Zhiqing
+  eprint:
+    archive: arXiv
+    id: oai:arXiv.org:1312.1501
+  inspire-id: Davier:2013sfa
+  title: Update of the ALEPH non-strange spectral functions from hadronic $\tau$ decays
 ALGH:2001A:
   authors: Ali, A. and Lunghi, E. and Greub, C. and Hiller, G.
   eprint:
