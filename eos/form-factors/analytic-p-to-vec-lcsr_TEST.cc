@@ -42,7 +42,7 @@ class PToVLCSRFormFactorsTest : public TestCase
         virtual void
         run() const
         {
-            /* B -> K^* diagnostic values */
+            /* B -> K^* LO diagnostic values */
             {
                 Parameters p                       = Parameters::Defaults();
                 // Checking with unphysical mu for ease of comparison with Stefan's Mathematica's implementation
@@ -77,7 +77,135 @@ class PToVLCSRFormFactorsTest : public TestCase
                 // p["B->K^*::s_0^T23B,0@Kstar-LCSR"] = 30.;
 
                 Options o{
-                    { "2pt-twist"_ok, "2|3|4|5"_ov }
+                    { "2pt-twist"_ok, "2|3|4|5"_ov },
+                    {       "NLO"_ok,   "false"_ov }
+                };
+
+                AnalyticFormFactorPToVLCSR<BToKstar> ff{ p, o };
+                auto                                 diagnostics = ff.diagnostics();
+
+                std::cout << "Diagnostics:" << std::endl;
+                for (auto & d : diagnostics)
+                {
+                    std::cout << std::setprecision(15) << d.description << ": " << d.value << std::endl;
+                }
+                std::cout << "Diagnostics ended" << std::endl;
+
+                const double eps = 1e-5;
+
+                static const std::vector<std::pair<double, double>> reference{
+                    std::make_pair(6.64457, eps),      // m_b(mu)
+                    std::make_pair(0.126841, eps),     // m_s(mu)
+                    std::make_pair(0.0106813, eps),    // m_ud(mu)
+                    std::make_pair(-0.00208224, eps),  // eta(u = 0.3, q2 = 1.0)
+                    std::make_pair(-0.0138584, eps),   // eta'(u = 0.3, q2 = 1.0)
+                    std::make_pair(-0.0458859, eps),   // eta''(u = 0.3, q2 = 1.0)
+                    std::make_pair(0.05458868, eps),   // exp(-s(0.3, 1.0) / M2())
+                    std::make_pair(0.04, eps),         // a1perp(mu)
+                    std::make_pair(1.16172, eps),      // phi2perp(u = 0.3)
+                    std::make_pair(1.1088, eps),       // phi2para(u = 0.3)
+                    std::make_pair(0.82814, eps),      // phi3perp(u = 0.3)
+                    std::make_pair(0.514421, eps),     // phi3para(u = 0.3)
+                    std::make_pair(0., eps),           // phi4perp(u = 0.3)
+                    std::make_pair(1.27397, eps),      // phi4para(u = 0.3)
+                    std::make_pair(0., eps),           // psi4perp(u = 0.3)
+                    std::make_pair(1.24213, eps),      // psi4para(u = 0.3)
+                    std::make_pair(0.231876, eps),     // Barphi2perp(u = 0.3)
+                    std::make_pair(0.242989, eps),     // Barphi2para(u = 0.3)
+                    std::make_pair(0.0265496, eps),    // BarBarphi2perp(u = 0.3)
+                    std::make_pair(0.0289051, eps),    // BarBarphi2para(u = 0.3)
+                    std::make_pair(0.294102, eps),     // Barphi3perp(u = 0.3)
+                    std::make_pair(0.334127, eps),     // Barphi3para(u = 0.3)
+                    std::make_pair(0.0476302, eps),    // BarBarphi3perp(u = 0.3)
+                    std::make_pair(0.0655413, eps),    // BarBarphi3para(u = 0.3)
+                    std::make_pair(0.213218, eps),     // Barphi4para(u = 0.3)
+                    std::make_pair(0., eps),           // Barpsi4perp(u = 0.3)
+                    std::make_pair(0.151422, eps),     // Barpsi4para(u = 0.3)
+                    std::make_pair(0., eps),           // BarBarpsi4perp(u = 0.3)
+                    std::make_pair(0.00724092, eps),   // BarBarpsi4para(u = 0.3)
+                    std::make_pair(0., eps),           // Barphi5perp(u = 0.3)
+                    std::make_pair(3.8724, eps),       // I_perp[0](u = 0.3, q2 = 1.0)
+                    std::make_pair(43.5454, eps),      // I_perp[1](u = 0.3, q2 = 1.0)
+                    std::make_pair(17.2077, eps),      // I_T5_q[0](u = 0.3, q2 = 1.0)
+                    std::make_pair(1686.40771, eps),   // I_T5_q[1](u = 0.3, q2 = 1.0)
+                    std::make_pair(-2548.15321, eps),  // I_T5_q[2](u = 0.3, q2 = 1.0)
+                    std::make_pair(-39040.30919, eps), // I_T5_q[3](u = 0.3, q2 = 1.0)
+                    std::make_pair(-14.20645, eps),    // D_I_T5_q[2][1](u = 0.3, q2 = 1.0)
+                    std::make_pair(-325.28181, eps),   // D_I_T5_q[3][1](u = 0.3, q2 = 1.0)
+                    std::make_pair(0.605815, eps),     // D_I_T5_q[3][2](u = 0.3, q2 = 1.0)
+                    std::make_pair(0.346531, eps),     // a_1(q2 = 1.0)
+                    std::make_pair(0.241599, eps),     // a_2(q2 = 1.0)
+                    std::make_pair(-0.490255, eps),    // a_30(q2 = 1.0)
+                    std::make_pair(0.210074, eps),     // v(q2 = 1.0)
+                    std::make_pair(0.252742, eps),     // t_1(q2 = 1.0)
+                    std::make_pair(0.253642, eps),     // t_23A(q2 = 1.0)
+                    std::make_pair(0.270041, eps),     // t_23B(q2 = 1.0)
+                    std::make_pair(56.1782, eps),      // a_1_dsr(q2 = 1.0)
+                    std::make_pair(58.6195, eps),      // a_2_dsr(q2 = 1.0)
+                    std::make_pair(59.317, eps),       // a_30_dsr(q2 = 1.0)
+                    std::make_pair(55.5508, eps),      // v_dsr(q2 = 1.0)
+                    std::make_pair(55.9687, eps),      // t_1_dsr(q2 = 1.0)
+                    std::make_pair(56.0522, eps),      // t_23A_dsr(q2 = 1.0)
+                    std::make_pair(57.3846, eps),      // t_23B_dsr(q2 = 1.0)
+                };
+                TEST_CHECK_DIAGNOSTICS(diagnostics, reference);
+
+                TEST_CHECK_RELATIVE_ERROR(ff.v(-5.0), 0.849651, eps);
+                TEST_CHECK_RELATIVE_ERROR(ff.a_0(-5.0), 0.849651, eps);
+                TEST_CHECK_RELATIVE_ERROR(ff.a_1(-5.0), 0.849651, eps);
+                TEST_CHECK_RELATIVE_ERROR(ff.a_2(-5.0), 0.849651, eps);
+                TEST_CHECK_RELATIVE_ERROR(ff.a_12(-5.0), 0.849651, eps);
+                TEST_CHECK_RELATIVE_ERROR(ff.t_1(-5.0), 0.849651, eps);
+                TEST_CHECK_RELATIVE_ERROR(ff.t_2(-5.0), 0.849651, eps);
+                TEST_CHECK_RELATIVE_ERROR(ff.t_23(-5.0), 0.849651, eps);
+                TEST_CHECK_RELATIVE_ERROR(ff.t_3(-5.0), 0.849651, eps);
+
+                TEST_CHECK_RELATIVE_ERROR(ff.v_dsr(-5.0), 0.849651, eps);
+                TEST_CHECK_RELATIVE_ERROR(ff.a_1_dsr(-5.0), 0.849651, eps);
+                TEST_CHECK_RELATIVE_ERROR(ff.a_2_dsr(-5.0), 0.849651, eps);
+                TEST_CHECK_RELATIVE_ERROR(ff.a_30_dsr(-5.0), 0.849651, eps);
+                TEST_CHECK_RELATIVE_ERROR(ff.t_1_dsr(-5.0), 0.849651, eps);
+                TEST_CHECK_RELATIVE_ERROR(ff.t_23A_dsr(-5.0), 0.849651, eps);
+                TEST_CHECK_RELATIVE_ERROR(ff.t_23B_dsr(-5.0), 0.849651, eps);
+            }
+
+            /* B -> K^* NLO diagnostic values */
+            {
+                Parameters p                       = Parameters::Defaults();
+                // Checking with unphysical mu for ease of comparison with Stefan's Mathematica's implementation
+                p["mass::B_d"]                     = 5.2795;
+                p["mass::K_d^*"]                   = 0.896;
+                p["mass::K_u^*"]                   = 0.896;
+                p["decay-constant::B_d"]           = 0.180;
+                p["B->K^*::mu@Kstar-LCSR"]         = 2.2;
+                p["B->K^*::M^2@Kstar-LCSR"]        = 50.;
+                p["B->K^*::s_0^A1,0@Kstar-LCSR"]   = 70.;
+                p["B->K^*::s_0^A1,1@Kstar-LCSR"]   = 0.0;
+                p["B->K^*::s_0^A2,0@Kstar-LCSR"]   = 70.;
+                p["B->K^*::s_0^A2,1@Kstar-LCSR"]   = 0.0;
+                p["B->K^*::s_0^A30,0@Kstar-LCSR"]  = 70.;
+                p["B->K^*::s_0^A30,1@Kstar-LCSR"]  = 0.0;
+                p["B->K^*::s_0^V,0@Kstar-LCSR"]    = 70.;
+                p["B->K^*::s_0^V,1@Kstar-LCSR"]    = 0.0;
+                p["B->K^*::s_0^T1,0@Kstar-LCSR"]   = 70.;
+                p["B->K^*::s_0^T1,1@Kstar-LCSR"]   = 0.0;
+                p["B->K^*::s_0^T23A,0@Kstar-LCSR"] = 70.;
+                p["B->K^*::s_0^T23A,1@Kstar-LCSR"] = 0.0;
+                p["B->K^*::s_0^T23B,0@Kstar-LCSR"] = 70.;
+                p["B->K^*::s_0^T23B,1@Kstar-LCSR"] = 0.0;
+                // p["B->K^*::mu@Kstar-LCSR"]         = 3.0;
+                // p["B->K^*::M^2@Kstar-LCSR"]        = 35.;
+                // p["B->K^*::s_0^A1,0@Kstar-LCSR"]   = 30.;
+                // p["B->K^*::s_0^A2,0@Kstar-LCSR"]   = 30.;
+                // p["B->K^*::s_0^A30,0@Kstar-LCSR"]  = 30.;
+                // p["B->K^*::s_0^V,0@Kstar-LCSR"]    = 30.;
+                // p["B->K^*::s_0^T1,0@Kstar-LCSR"]   = 30.;
+                // p["B->K^*::s_0^T23A,0@Kstar-LCSR"] = 30.;
+                // p["B->K^*::s_0^T23B,0@Kstar-LCSR"] = 30.;
+
+                Options o{
+                    { "2pt-twist"_ok, "2|3|4|5"_ov },
+                    {       "NLO"_ok,    "true"_ov }
                 };
 
                 AnalyticFormFactorPToVLCSR<BToKstar> ff{ p, o };

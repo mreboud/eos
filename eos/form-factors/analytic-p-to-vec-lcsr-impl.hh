@@ -33,6 +33,8 @@
 #include <eos/utils/qcd.hh>
 #include <eos/utils/stringify.hh>
 
+#include <gsl/gsl_sf_dilog.h>
+
 #include <functional>
 
 namespace eos
@@ -70,9 +72,10 @@ namespace eos
 
             std::shared_ptr<VectorLCDAs> lcdas;
 
-            // // switches to enable/disable certain contributions
+            // switches to enable/disable certain contributions
             TwistOption           opt_2pt;
             std::array<double, 4> switch_2pt;
+            BooleanOption         opt_NLO;
             // SwitchOption opt_3pt;
             // double switch_2pt_g;
             // double switch_3pt;
@@ -105,6 +108,7 @@ namespace eos
                 mu(p[stringify(Process_::label) + "::mu@Kstar-LCSR"], u),
                 lcdas(VectorLCDAs::make(Process_::lcsr_V, p, o)),
                 opt_2pt(o, options, "2pt-twist"_ok),
+                opt_NLO(o, options, "NLO"_ok),
                 cub_conf(cubature::Config().epsrel(1e-3))
             {
                 u.uses(*lcdas);
@@ -393,7 +397,7 @@ namespace eos
             }
 
             const std::array<double, 4>
-            I_perp(const double & u, const double &) const
+            I_perp(const double & u, const double & q2) const
             {
                 const double          m_b  = this->m_b();
                 const double          m_V2 = m_V * m_V, m_b2 = m_b * m_b, u2 = u * u;
@@ -412,6 +416,50 @@ namespace eos
                 result[2] = -0.25 * (m_b2 * m_V2 * phi4perp_u) / power_of<3>(u);
                 // I_perp_3
                 result[3] = -0.125 * (f_V_para * power_of<3>(m_b * m_V) * psi5perp(u)) / (f_V_perp * power_of<4>(u));
+
+                if (opt_NLO.value())
+                {
+                    const double ubar = 1.0 - u, ubar2 = ubar * ubar, q4 = q2 * q2, q6 = q2 * q4, m_b4 = m_b2 * m_b2;
+                    const double alpha_s = model->alpha_s(mu);
+                    const double CF      = 4.0 / 3.0;
+
+                    // Test the validity of the dilogarithm calculation
+                    if ((q2 > m_b2) || (m_b2 * u > m_b2 - q2 * ubar))
+                    {
+                        throw InternalError("The NLO correction of I_perp cannot be evaluated at q2 = " + stringify(q2));
+                    }
+
+                    result[0] +=
+                            3.0 * alpha_s / (4.0 * M_PI) * CF / m_b
+                            * (-8.0 * ubar * power_of<2>(log(m_b))
+                               + (2.0 * (m_b2 * m_b4 * (2.0 - 6.0 * u + 4.0 * u2) + m_b2 * q4 * (-4.0 - u + 5.0 * u2) - m_b4 * q2 * (1.0 - 13.0 * u + 10.0 * u2) + 3.0 * q6 * ubar2)
+                                  * log(u))
+                                         / (power_of<2>(m_b2 - q2) * (m_b2 - q2 * ubar))
+                               - 2.0 * ubar * power_of<2>(log(u))
+                               + (2.0 * ubar * (m_b2 * (-7.0 + 4.0 * u) + 7.0 * q2 * ubar + 6.0 * (m_b2 - q2 * ubar) * log(u)) * log(ubar)) / (m_b2 - q2 * ubar)
+                               - 4.0 * ubar * power_of<2>(log(ubar))
+                               + 2.0 * ubar * log(m_b2 - q2)
+                                         * ((m_b4 - m_b2 * q2 * (-3.0 + u) - 4.0 * q4 * ubar) / (q2 * (-m_b2 + q2 * ubar)) + 4.0 * log(u) - 4.0 * log(m_b2 - q2 * ubar))
+                               + 2.0 * ((q2 * (m_b2 * (-5.0 + 3.0 * u) + 5.0 * q2 * ubar)) / power_of<2>(m_b2 - q2) - 4.0 * ubar * log(u) - 2.0 * ubar * log(ubar))
+                                         * log(m_b2 - q2 * ubar)
+                               + 6.0 * ubar * power_of<2>(log(m_b2 - q2 * ubar))
+                               + 4.0 * log(m_b)
+                                         * ((m_b4 * q4 * (-19.0 + 32.0 * u - 11.0 * u2) + m_b2 * m_b4 * q2 * (6.0 - 7.0 * u + u2) + m_b4 * m_b4 * ubar + 16.0 * m_b2 * q6 * ubar2
+                                             - 4.0 * q4 * q4 * ubar2)
+                                                    / (power_of<2>(m_b2 - q2) * q2 * (m_b2 - q2 * ubar))
+                                            + 4.0 * ubar * log(m_b2 - q2) + 2 * ubar * log(ubar) - 2.0 * ubar * log(m_b2 - q2 * ubar))
+                               + 16.0 * ubar * log(mu() / m_b)
+                               + (ubar
+                                  * (m_b4 - 2.0 * m_b2 * q2 + q4 + m_b4 * u + 7.0 * m_b2 * q2 * u - 8.0 * q4 * u - 3.0 * m_b2 * q2 * u2 + 7.0 * q4 * u2
+                                     - 4.0 * (m_b2 - q2) * u * (m_b2 - q2 * ubar) * gsl_sf_dilog(q2 / m_b2)
+                                     + 12.0 * (m_b2 - q2) * u * (m_b2 - q2 * ubar) * gsl_sf_dilog((m_b2 * u) / (m_b2 - q2 * ubar))))
+                                         / ((m_b2 - q2) * u * (m_b2 - q2 * ubar)));
+
+                    result[1] += 3.0 * alpha_s / (4.0 * M_PI) * CF / u2 / m_b
+                                 * (5.0 * (-m_b2 + q2) * ubar2 * log(m_b2 - q2) + 5.0 * (m_b2 - q2) * (1.0 - 4.0 * u + 2.0 * u2) * log(u)
+                                    + ubar * (5.0 * (-m_b2 + q2) * ubar * log(ubar) + u * (-21.0 * m_b2 + 5.0 * q2 - 24.0 * m_b2 * log(mu() / m_b))));
+                }
+
 
                 return result;
             }
@@ -1861,7 +1909,8 @@ namespace eos
 
     template <typename Process_>
     const std::vector<OptionSpecification> Implementation<AnalyticFormFactorPToVLCSR<Process_>>::options{
-        { "2pt-twist"_ok, "2|3|4|5"s, "2|3|4|5"s }
+        { "2pt-twist"_ok,              "2|3|4|5"_ov, "2|3|4|5"_ov },
+        {       "NLO"_ok, { "true"_ov, "false"_ov },    "true"_ov }
     };
 
     template <typename Process_>
